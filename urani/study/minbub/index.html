@@ -735,7 +735,20 @@ let filtered=[], idx=0;
 let statusPage=0;
 const PAGE_SIZE=50;
 
-function load(){try{const s=localStorage.getItem('mb2');if(s)state=JSON.parse(s)}catch(e){}}
+function load(){
+  try{const s=localStorage.getItem('mb2');if(s)state=JSON.parse(s)}catch(e){}
+  // Restore current tab
+  const savedTab=localStorage.getItem('curTab');
+  if(savedTab)curTab=savedTab;
+  // Restore login state
+  const savedUserId=localStorage.getItem('currentUserId');
+  if(savedUserId){
+    currentUserId=savedUserId;
+    document.getElementById('login-btn').style.display='none';
+    document.getElementById('user-info').style.display='inline';
+    document.getElementById('logout-btn').style.display='inline';
+  }
+}
 async function save(){
   localStorage.setItem('mb2',JSON.stringify(state));
   if(currentUserId){
@@ -770,6 +783,7 @@ window.setSF=function(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').f
 
 window.switchTab=function(t){
   curTab=t;
+  localStorage.setItem('curTab',t);
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
   document.getElementById('tab-trace').style.display=t==='trace'?'':'none';
   document.getElementById('tab-test').style.display=t==='test'?'':'none';
@@ -1019,6 +1033,7 @@ window.handleLogin=async function(){
       alert('✨ 새로운 계정이 만들어졌어요!\n이제 다른 기기에서도 같은 암호로 로그인하면 진도가 동기화됩니다.');
     }
 
+    localStorage.setItem('currentUserId',currentUserId);
     document.getElementById('login-btn').style.display='none';
     document.getElementById('user-info').style.display='inline';
     document.getElementById('logout-btn').style.display='inline';
@@ -1034,6 +1049,7 @@ window.handleLogin=async function(){
 window.handleLogout=function(){
   if(confirm('로그아웃하시겠어요?\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')){
     currentUserId=null;
+    localStorage.removeItem('currentUserId');
     document.getElementById('login-btn').style.display='inline';
     document.getElementById('user-info').style.display='none';
     document.getElementById('logout-btn').style.display='none';
@@ -1053,6 +1069,8 @@ async function init(){
     return;
   }
   applyFilter();
+  // Restore tab state after data is loaded
+  switchTab(curTab);
 }
 init();
 </script>
