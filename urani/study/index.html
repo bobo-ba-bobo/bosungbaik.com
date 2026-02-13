@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study - Bobo's Home</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress"></div>
+
+  <nav>
+    <div class="container">
+      <div class="nav-name"><a href="../../index.html">Bobo's Home</a></div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="../../about.html">About</a></li>
+        <li><a href="../../writings.html">Writings</a></li>
+        <li><a href="../../quarterly-reports.html">Reports</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <a href="../index.html" class="back-link">Back to urani</a>
+
+      <section>
+        <h1>Study</h1>
+        <p>Learning materials, notes, and research.</p>
+      </section>
+
+      <div class="separator"></div>
+
+      <section>
+        <h2>Materials</h2>
+        <ul class="link-list">
+          <li><a href="minbub/" class="internal">Minbub</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="inverted">
+    <div class="container">
+      <h2>Contact</h2>
+      <ul class="link-list">
+        <li><a href="mailto:bbs@mashupventures.co">bbs@mashupventures.co</a></li>
+        <li><a href="https://www.linkedin.com/in/bosungbaik/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/bobo_sung_00/" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Bobo's Home</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      scrollProgress.style.width = progress + '%';
+    });
+
+    // Section vertical line on scroll
+    const sections = document.querySelectorAll('main section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
