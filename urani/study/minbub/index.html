@@ -109,11 +109,16 @@ textarea::placeholder{color:var(--t3)}
 .srow .info{flex:1;min-width:0}
 .srow .title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .srow .meta{font-size:11px;color:var(--t2);margin-top:2px}
-.srow .score-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0}
+.srow .score-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;gap:6px}
 .sb-high{background:rgba(0,184,148,.15);color:var(--g)}
 .sb-mid{background:rgba(253,203,110,.15);color:var(--o)}
 .sb-low{background:rgba(225,112,85,.15);color:var(--r)}
 .sb-none{background:var(--s2);color:var(--t3)}
+.score-edit-btn{background:var(--p);color:#fff;border:none;border-radius:4px;width:20px;height:20px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity .2s}
+.score-edit-btn:hover{opacity:1}
+.score-quick-edit{display:flex;gap:4px;margin-left:4px}
+.score-quick-edit button{background:var(--s2);border:1px solid var(--bd);color:var(--t1);border-radius:4px;padding:2px 8px;font-size:11px;cursor:pointer}
+.score-quick-edit button:hover{background:var(--bd)}
 
 /* STATUS EDIT MODAL */
 .modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -446,13 +451,22 @@ function renderStatus(){
     const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'dot-new';
     const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'sb-none';
     const scText=st.n>0?st.sc+'%':'—';
-    return`<div class="srow" onclick="openModal('${c.id}')">
+    return`<div class="srow">
       <div class="dot ${dotCls}"></div>
-      <div class="info">
+      <div class="info" onclick="openModal('${c.id}')" style="cursor:pointer">
         <div class="title">${esc(c.prompt)}</div>
         <div class="meta">${c.part}${c.page?' (p.'+c.page+')':''} · ${c.category}${c.exam?' · 기출':''}${st.n>0?' · '+st.n+'회':''}</div>
       </div>
-      <div class="score-badge ${sbCls}">${scText}</div>
+      <div class="score-badge ${sbCls}">
+        ${scText}
+        <button class="score-edit-btn" onclick="event.stopPropagation();toggleQuickEdit('${c.id}')" title="점수 조정">✏️</button>
+      </div>
+      <div id="qe-${c.id}" class="score-quick-edit" style="display:none">
+        <button onclick="quickScore('${c.id}',-10)">-10</button>
+        <button onclick="quickScore('${c.id}',-5)">-5</button>
+        <button onclick="quickScore('${c.id}',5)">+5</button>
+        <button onclick="quickScore('${c.id}',10)">+10</button>
+      </div>
     </div>`;
   }).join('');
 
@@ -464,6 +478,24 @@ function renderStatus(){
 
 let statusShowCount=PAGE_SIZE;
 function loadMore(){statusShowCount+=PAGE_SIZE;renderStatus()}
+
+// ===== QUICK SCORE EDIT =====
+function toggleQuickEdit(id){
+  const el=document.getElementById('qe-'+id);
+  const isHidden=el.style.display==='none';
+  // Hide all other quick edits
+  document.querySelectorAll('.score-quick-edit').forEach(e=>e.style.display='none');
+  // Toggle this one
+  el.style.display=isHidden?'flex':'none';
+}
+
+function quickScore(id,delta){
+  const st=gs(id);
+  const newScore=Math.max(0,Math.min(100,st.sc+delta));
+  ss(id,{sc:newScore});
+  renderStatus();
+  render();
+}
 
 // ===== MODAL =====
 let modalCardId=null;
