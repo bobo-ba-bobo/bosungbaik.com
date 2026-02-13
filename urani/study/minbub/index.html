@@ -425,52 +425,6 @@ textarea::placeholder {
   color: #fff;
 }
 
-.score-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.score-edit-btn {
-  background: #000;
-  color: #fff;
-  border: none;
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.score-edit-btn:hover {
-  opacity: 1;
-}
-
-.score-quick-edit {
-  display: flex;
-  gap: 4px;
-  margin-left: 4px;
-}
-
-.score-quick-edit button {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  color: #000;
-  padding: 2px 8px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.score-quick-edit button:hover {
-  background: #000;
-  color: #fff;
-}
-
 .load-more {
   text-align: center;
   padding: 16px;
@@ -940,22 +894,13 @@ window.renderStatus=function(){
     const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'';
     const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'';
     const scText=st.sc+'%';
-    return`<div class="srow">
+    return`<div class="srow" onclick="openModal('${c.id}')">
       <div class="dot ${dotCls}"></div>
-      <div class="info" onclick="openModal('${c.id}')" style="cursor:pointer">
+      <div class="info">
         <div class="title">${esc(c.prompt)}</div>
         <div class="meta">${c.part}${c.page?' (p.'+c.page+')':''} · ${c.category}${c.exam?' · 기출':''}${st.n>0?' · '+st.n+'회':''}</div>
       </div>
-      <div class="score-badge ${sbCls}">
-        ${scText}
-        <button class="score-edit-btn" onclick="event.stopPropagation();toggleQuickEdit('${c.id}')" title="점수 조정">✏️</button>
-      </div>
-      <div id="qe-${c.id}" class="score-quick-edit" style="display:none">
-        <button onclick="quickScore('${c.id}',-10)">-10</button>
-        <button onclick="quickScore('${c.id}',-5)">-5</button>
-        <button onclick="quickScore('${c.id}',5)">+5</button>
-        <button onclick="quickScore('${c.id}',10)">+10</button>
-      </div>
+      <div class="score-badge ${sbCls}">${scText}</div>
     </div>`;
   }).join('');
 
@@ -967,24 +912,6 @@ window.renderStatus=function(){
 
 let statusShowCount=PAGE_SIZE;
 window.loadMore=function(){statusShowCount+=PAGE_SIZE;renderStatus()}
-
-// ===== QUICK SCORE EDIT =====
-window.toggleQuickEdit=function(id){
-  const el=document.getElementById('qe-'+id);
-  const isHidden=el.style.display==='none';
-  // Hide all other quick edits
-  document.querySelectorAll('.score-quick-edit').forEach(e=>e.style.display='none');
-  // Toggle this one
-  el.style.display=isHidden?'flex':'none';
-}
-
-window.quickScore=function(id,delta){
-  const st=gs(id);
-  const newScore=Math.max(0,Math.min(100,st.sc+delta));
-  ss(id,{sc:newScore});
-  renderStatus();
-  render();
-}
 
 // ===== MODAL =====
 let modalCardId=null;
