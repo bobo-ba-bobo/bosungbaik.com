@@ -6,7 +6,7 @@
 <title>Urani Minbub Ganbare <3</title>
 <link rel="stylesheet" href="../../../style.css">
 <style>
-/* Minimal custom styles for flashcard app */
+/* Additional styles for mode selection */
 body {
   background: #fff;
 }
@@ -32,230 +32,11 @@ nav h1 {
   gap: 14px;
   font-size: 12px;
   color: #616161;
+  align-items: center;
 }
 
 .nav-stats b {
   color: #000;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 40px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.tab {
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 400;
-  cursor: pointer;
-  color: #616161;
-  transition: all 0.2s;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-}
-
-.tab:hover {
-  color: #000;
-}
-
-.tab.active {
-  color: #000;
-  border-bottom-color: #000;
-}
-
-/* Filters */
-.filters {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.fbtn {
-  padding: 5px 12px;
-  border: 1px solid #e0e0e0;
-  background: transparent;
-  color: #616161;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.fbtn:hover {
-  border-color: #000;
-  color: #000;
-}
-
-.fbtn.on {
-  background: #000;
-  border-color: #000;
-  color: #fff;
-}
-
-/* Card */
-.card {
-  border: 1px solid #e0e0e0;
-  margin-bottom: 50px;
-}
-
-.card-head {
-  padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.badge {
-  font-size: 11px;
-  padding: 3px 8px;
-  background: #f5f5f5;
-  color: #616161;
-  font-weight: 500;
-}
-
-.card-num {
-  font-size: 12px;
-  color: #616161;
-}
-
-.card-body {
-  padding: 20px 16px;
-}
-
-.card-body .part {
-  font-size: 11px;
-  color: #616161;
-  margin-bottom: 4px;
-}
-
-.card-body h2 {
-  font-size: 17px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  text-transform: none;
-  letter-spacing: -0.01em;
-}
-
-.exam-tag {
-  font-size: 11px;
-  color: #616161;
-  background: #f5f5f5;
-  padding: 2px 8px;
-}
-
-/* Trace answer box */
-.trace-answer {
-  background: #f5f5f5;
-  padding: 14px 16px;
-  margin: 0 16px 12px;
-  font-size: 14px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  color: #000;
-  border-left: 2px solid #000;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-/* Textarea */
-.input-wrap {
-  padding: 0 16px 14px;
-}
-
-textarea {
-  width: 100%;
-  min-height: 140px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  color: #000;
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.7;
-  padding: 12px;
-  resize: vertical;
-  transition: border-color 0.2s;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #000;
-}
-
-textarea::placeholder {
-  color: #999;
-}
-
-/* Match result */
-.match-result {
-  padding: 0 16px 14px;
-  display: none;
-}
-
-.match-result.show {
-  display: block;
-}
-
-.match-bar {
-  height: 6px;
-  background: #f5f5f5;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-
-.match-fill {
-  height: 100%;
-  background: #000;
-  transition: width 0.4s;
-}
-
-.match-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #616161;
-}
-
-.match-pct {
-  font-weight: 500;
-  color: #000;
-}
-
-/* Answer reveal */
-.reveal {
-  background: #f5f5f5;
-  padding: 14px 16px;
-  margin: 0 16px 14px;
-  display: none;
-  font-size: 14px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  border-left: 2px solid #000;
-}
-
-.reveal.show {
-  display: block;
-}
-
-.reveal-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: #000;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Actions */
-.actions {
-  padding: 12px 16px;
-  display: flex;
-  gap: 6px;
-  border-top: 1px solid #e0e0e0;
-  flex-wrap: wrap;
 }
 
 .btn {
@@ -285,149 +66,85 @@ textarea::placeholder {
   color: #fff;
 }
 
-.spacer {
-  flex: 1;
-}
-
-.hint {
-  text-align: center;
-  font-size: 11px;
-  color: #999;
-  margin-top: 10px;
-}
-
-.hint kbd {
-  background: #f5f5f5;
-  padding: 2px 6px;
-  border: 1px solid #e0e0e0;
-  font-size: 10px;
-}
-
-/* Status tab */
-.status-header {
+.mode-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+@media (max-width: 640px) {
+  .mode-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-card {
+  border: 1px solid #e0e0e0;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: #000;
+}
+
+.mode-card:hover {
+  border-color: #000;
+  background: #f5f5f5;
+}
+
+.mode-card .icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.mode-card h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.mode-card p {
+  font-size: 13px;
+  color: #616161;
+  margin-bottom: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
   margin-bottom: 30px;
 }
 
-@media(max-width: 640px) {
-  .status-header {
-    grid-template-columns: 1fr 1fr;
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-.scard {
+.stat-card {
   border: 1px solid #e0e0e0;
-  padding: 14px;
+  padding: 16px;
+  text-align: center;
 }
 
-.scard h4 {
+.stat-card h3 {
   font-size: 10px;
   color: #616161;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 500;
 }
 
-.scard .num {
-  font-size: 24px;
+.stat-card .num {
+  font-size: 28px;
   font-weight: 500;
   color: #000;
-}
-
-.search-box {
-  width: 100%;
-  padding: 10px 12px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  color: #000;
-  font-size: 13px;
-  outline: none;
-  margin-bottom: 10px;
-}
-
-.search-box:focus {
-  border-color: #000;
-}
-
-.status-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.srow {
-  border: 1px solid #e0e0e0;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-
-.srow:hover {
-  border-color: #000;
-}
-
-.srow .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: #e0e0e0;
-}
-
-.dot-mastered {
-  background: #000;
-}
-
-.dot-learning {
-  background: #616161;
-}
-
-.srow .info {
-  flex: 1;
-  min-width: 0;
-}
-
-.srow .title {
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.srow .meta {
-  font-size: 11px;
-  color: #616161;
-  margin-top: 2px;
-}
-
-.srow .score-badge {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 8px;
-  background: #f5f5f5;
-  color: #616161;
-  flex-shrink: 0;
-}
-
-.sb-high {
-  background: #000;
-  color: #fff;
-}
-
-.sb-mid {
-  background: #616161;
-  color: #fff;
-}
-
-.load-more {
-  text-align: center;
-  padding: 16px;
 }
 
 /* Modal */
@@ -451,10 +168,8 @@ textarea::placeholder {
 
 .modal {
   background: #fff;
-  max-width: 520px;
+  max-width: 400px;
   width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
   padding: 24px;
   border: 1px solid #000;
 }
@@ -466,22 +181,10 @@ textarea::placeholder {
   letter-spacing: -0.01em;
 }
 
-.modal .part {
-  font-size: 11px;
-  color: #616161;
-  margin-bottom: 14px;
-}
-
-.modal pre {
-  font-family: inherit;
-  white-space: pre-wrap;
-  line-height: 1.7;
+.modal p {
   font-size: 13px;
-  background: #f5f5f5;
-  padding: 12px;
-  margin-bottom: 14px;
-  max-height: 220px;
-  overflow-y: auto;
+  color: #616161;
+  margin-bottom: 20px;
 }
 
 .modal label {
@@ -493,32 +196,43 @@ textarea::placeholder {
   letter-spacing: 0.05em;
 }
 
-.modal select {
+.modal input[type=password] {
   width: 100%;
   padding: 10px;
   background: #fff;
   border: 1px solid #e0e0e0;
   color: #000;
-  font-size: 13px;
-  margin-bottom: 14px;
+  font-size: 14px;
+  margin-bottom: 16px;
   outline: none;
 }
 
-.modal .score-edit {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 14px;
+.modal input[type=password]:focus {
+  border-color: #000;
 }
 
-.modal input[type=range] {
+.modal .error {
+  display: none;
+  color: #000;
+  background: #f5f5f5;
+  padding: 8px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.modal .btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.modal .btn {
   flex: 1;
 }
 
-.modal .score-val {
-  font-size: 16px;
-  font-weight: 500;
-  min-width: 48px;
+.modal .hint {
+  font-size: 11px;
+  color: #999;
+  margin-top: 16px;
   text-align: center;
 }
 </style>
@@ -530,129 +244,60 @@ textarea::placeholder {
     <h1>Urani Minbub Ganbare <3</h1>
     <div class="nav-stats">
       <span id="sync-status" style="display:none;margin-right:8px;color:#000;font-size:11px">☁️ 동기화</span>
-      <button id="login-btn" class="btn btn-s" onclick="showLoginModal()" style="padding:5px 10px;font-size:11px;margin-right:8px">로그인</button>
-      <span id="user-info" style="display:none;margin-right:8px;font-size:11px">🔒 로그인됨</span>
-      <button id="logout-btn" class="btn btn-ghost" onclick="handleLogout()" style="display:none;padding:5px 10px;font-size:11px;margin-right:8px">로그아웃</button>
-      <span>완료 <b id="n-done">0</b></span>
-      <span>학습 <b id="n-learn">0</b></span>
-      <span>전체 <b id="n-total">0</b></span>
+      <button id="login-btn" class="btn btn-ghost" onclick="showLoginModal()" style="padding:5px 10px;font-size:11px">로그인</button>
+      <span id="user-info" style="display:none;font-size:11px">🔒 로그인됨</span>
+      <button id="logout-btn" class="btn btn-ghost" onclick="handleLogout()" style="display:none;padding:5px 10px;font-size:11px">로그아웃</button>
     </div>
   </div>
 </nav>
 
 <main>
   <div class="container">
-    <div class="tabs">
-      <div class="tab active" data-tab="trace" onclick="switchTab('trace')">따라쓰기</div>
-      <div class="tab" data-tab="test" onclick="switchTab('test')">암기테스트</div>
-      <div class="tab" data-tab="status" onclick="switchTab('status')">암기현황</div>
-    </div>
+    <section>
+      <h1>민법의 맥</h1>
+      <p>암기 트레이너</p>
+    </section>
 
-    <!-- Shared filters (for tab 1 & 2) -->
-    <div id="shared-filters">
-      <div class="filters">
-        <button class="fbtn on" data-f="all" onclick="setF('all',this)">전체</button>
-        <button class="fbtn" data-f="요건효과" onclick="setF('요건효과',this)">요건/효과</button>
-        <button class="fbtn" data-f="비교" onclick="setF('비교',this)">비교</button>
-        <button class="fbtn" data-f="핵심숫자" onclick="setF('핵심숫자',this)">핵심숫자</button>
-        <button class="fbtn" data-f="판례" onclick="setF('판례',this)">판례</button>
-        <button class="fbtn" data-f="조문" onclick="setF('조문',this)">조문</button>
-      </div>
-      <div class="filters">
-        <button class="fbtn on" data-p="all" onclick="setP('all',this)">전편</button>
-        <button class="fbtn" data-p="제1편 민법총칙" onclick="setP('제1편 민법총칙',this)">총칙</button>
-        <button class="fbtn" data-p="제2편 채권총론" onclick="setP('제2편 채권총론',this)">채권총론</button>
-        <button class="fbtn" data-p="제3편 채권각론" onclick="setP('제3편 채권각론',this)">채권각론</button>
-        <button class="fbtn" data-p="제4편 물권법" onclick="setP('제4편 물권법',this)">물권법</button>
-        <button class="fbtn" data-p="제5편 친족상속법" onclick="setP('제5편 친족상속법',this)">친족상속</button>
-      </div>
-    </div>
+    <div class="separator"></div>
 
-    <!-- ========== TAB 1: 따라쓰기 ========== -->
-    <div id="tab-trace">
-      <div class="card">
-        <div class="card-head">
-          <span class="badge" id="t1-badge">요건효과</span>
-          <span class="card-num" id="t1-num">1/1033</span>
+    <section>
+      <h2>진행 현황</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>진도율</h3>
+          <div class="num" id="progress">0%</div>
         </div>
-        <div class="card-body">
-          <div class="part" id="t1-part"></div>
-          <h2 id="t1-title">로딩 중...</h2>
-          <span class="exam-tag" id="t1-exam" style="display:none"></span>
+        <div class="stat-card">
+          <h3>완료</h3>
+          <div class="num" id="done">0</div>
         </div>
-        <div class="trace-answer" id="t1-answer">정답이 여기에 표시됩니다. 아래에 그대로 따라 쓰세요.</div>
-        <div class="input-wrap">
-          <textarea id="t1-input" placeholder="위의 내용을 보면서 그대로 따라 쓰세요..."></textarea>
-        </div>
-        <div class="match-result" id="t1-match">
-          <div class="match-bar"><div class="match-fill" id="t1-fill"></div></div>
-          <div class="match-info"><span id="t1-match-msg"></span><span class="match-pct" id="t1-pct"></span></div>
-        </div>
-        <div class="actions">
-          <button class="btn" onclick="traceCheck()">일치도 확인</button>
-          <button class="btn" onclick="traceDone()">다 썼다 → 다음</button>
-          <span class="spacer"></span>
-          <button class="btn btn-ghost" onclick="prevCard()">← 이전</button>
-          <button class="btn btn-ghost" onclick="nextCard()">다음 →</button>
+        <div class="stat-card">
+          <h3>전체</h3>
+          <div class="num" id="total">1033</div>
         </div>
       </div>
-      <div class="hint">정답을 보면서 따라 쓰는 단계입니다. 익숙해지면 <b>암기테스트</b> 탭으로!</div>
-    </div>
+    </section>
 
-    <!-- ========== TAB 2: 암기테스트 ========== -->
-    <div id="tab-test" style="display:none">
-      <div class="card">
-        <div class="card-head">
-          <span class="badge" id="t2-badge">요건효과</span>
-          <span class="card-num" id="t2-num">1/1033</span>
-        </div>
-        <div class="card-body">
-          <div class="part" id="t2-part"></div>
-          <h2 id="t2-title">로딩 중...</h2>
-          <span class="exam-tag" id="t2-exam" style="display:none"></span>
-        </div>
-        <div class="input-wrap">
-          <textarea id="t2-input" placeholder="정답을 안 보고 써보세요..."></textarea>
-        </div>
-        <div class="match-result" id="t2-match">
-          <div class="match-bar"><div class="match-fill" id="t2-fill"></div></div>
-          <div class="match-info"><span id="t2-match-msg"></span><span class="match-pct" id="t2-pct"></span></div>
-        </div>
-        <div class="reveal" id="t2-reveal">
-          <div class="reveal-label">정답</div>
-          <span id="t2-answer"></span>
-        </div>
-        <div class="actions">
-          <button class="btn" id="t2-btn-check" onclick="testCheck()">정답 확인</button>
-          <button class="btn" id="t2-btn-ok" style="display:none" onclick="testMark('mastered')">외웠다</button>
-          <button class="btn" id="t2-btn-half" style="display:none" onclick="testMark('learning')">좀 더</button>
-          <button class="btn btn-ghost" id="t2-btn-fail" style="display:none" onclick="testMark('new')">모르겠다</button>
-          <span class="spacer"></span>
-          <button class="btn btn-ghost" onclick="prevCard()">←</button>
-          <button class="btn btn-ghost" onclick="nextCard()">→</button>
-        </div>
+    <section>
+      <h2>학습 모드 선택</h2>
+      <div class="mode-grid">
+        <a href="trace/" class="mode-card">
+          <div class="icon">✍️</div>
+          <h2>따라쓰기</h2>
+          <p>정답을 보면서 따라 쓰기</p>
+        </a>
+        <a href="test/" class="mode-card">
+          <div class="icon">💪</div>
+          <h2>암기테스트</h2>
+          <p>정답 없이 암기해서 쓰기</p>
+        </a>
+        <a href="status/" class="mode-card">
+          <div class="icon">📊</div>
+          <h2>암기현황</h2>
+          <p>학습 진도 확인</p>
+        </a>
       </div>
-      <div class="hint"><kbd>Ctrl+Enter</kbd> 정답확인 · <kbd>1</kbd> 외웠다 · <kbd>2</kbd> 좀 더 · <kbd>3</kbd> 모르겠다</div>
-    </div>
-
-    <!-- ========== TAB 3: 암기현황 ========== -->
-    <div id="tab-status" style="display:none">
-      <div class="status-header">
-        <div class="scard"><h4>전체 진도</h4><div class="num" id="s-pct">0%</div></div>
-        <div class="scard"><h4>완료</h4><div class="num" id="s-done">0</div></div>
-        <div class="scard"><h4>학습중</h4><div class="num" id="s-learn">0</div></div>
-        <div class="scard"><h4>미학습</h4><div class="num" id="s-new">0</div></div>
-      </div>
-      <div class="filters" id="status-filters">
-        <button class="fbtn on" onclick="setSF('all',this)">전체</button>
-        <button class="fbtn" onclick="setSF('mastered',this)">완료</button>
-        <button class="fbtn" onclick="setSF('learning',this)">학습중</button>
-        <button class="fbtn" onclick="setSF('new',this)">미학습</button>
-      </div>
-      <input class="search-box" id="s-search" placeholder="검색 (제목, 내용)..." oninput="renderStatus()">
-      <div class="status-list" id="s-list"></div>
-      <div class="load-more" id="s-more"></div>
-    </div>
+    </section>
   </div>
 </main>
 
@@ -662,43 +307,19 @@ textarea::placeholder {
   </div>
 </footer>
 
-<!-- Modal -->
-<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="part" id="m-part"></div>
-    <h2 id="m-title"></h2>
-    <pre id="m-answer"></pre>
-    <label>암기 상태</label>
-    <select id="m-status" onchange="modalStatusChange()">
-      <option value="new">미학습</option>
-      <option value="learning">학습중</option>
-      <option value="mastered">완료</option>
-    </select>
-    <label>점수 (직접 조정)</label>
-    <div class="score-edit">
-      <input type="range" id="m-score" min="0" max="100" value="0" oninput="document.getElementById('m-score-val').textContent=this.value+'%'">
-      <div class="score-val" id="m-score-val">0%</div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn" style="flex:1" onclick="saveModal()">저장</button>
-      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">닫기</button>
-    </div>
-  </div>
-</div>
-
 <!-- Login Modal -->
 <div class="modal-bg" id="login-modal" onclick="if(event.target===this)closeLoginModal()">
-  <div class="modal" style="max-width:400px">
+  <div class="modal">
     <h2>☁️ 클라우드 동기화</h2>
-    <p style="font-size:13px;color:#616161;margin-bottom:20px">암호를 입력하면 다른 기기에서도 진도를 이어서 볼 수 있어요</p>
+    <p>암호를 입력하면 다른 기기에서도 진도를 이어서 볼 수 있어요</p>
     <label>암호 (4자 이상)</label>
-    <input type="password" id="login-password" placeholder="암호 입력" style="width:100%;padding:10px;background:#fff;border:1px solid #e0e0e0;color:#000;font-size:14px;margin-bottom:16px;outline:none">
-    <div id="login-error" style="display:none;color:#000;background:#f5f5f5;padding:8px;font-size:12px;margin-bottom:12px"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn" style="flex:1" onclick="handleLogin()">로그인</button>
-      <button class="btn btn-ghost" style="flex:1" onclick="closeLoginModal()">취소</button>
+    <input type="password" id="login-password" placeholder="암호 입력">
+    <div id="login-error" class="error"></div>
+    <div class="btn-group">
+      <button class="btn" onclick="handleLogin()">로그인</button>
+      <button class="btn btn-ghost" onclick="closeLoginModal()">취소</button>
     </div>
-    <p style="font-size:11px;color:#999;margin-top:16px;text-align:center">💡 같은 암호로 모든 기기에서 접속하세요</p>
+    <p class="hint">💡 같은 암호로 모든 기기에서 접속하세요</p>
   </div>
 </div>
 
@@ -730,349 +351,118 @@ async function hashPassword(password) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-let CARDS=[], state={}, curTab='trace', curF='all', curP='all', curSF='all';
-let filtered=[], idx=0;
-let statusPage=0;
-const PAGE_SIZE=50;
+// Load progress data
+function loadProgress() {
+  try {
+    const s = localStorage.getItem('mb2');
+    const state = s ? JSON.parse(s) : {};
 
-function load(){
-  try{const s=localStorage.getItem('mb2');if(s)state=JSON.parse(s)}catch(e){}
-  // Restore current tab
-  const savedTab=localStorage.getItem('curTab');
-  if(savedTab)curTab=savedTab;
-  // Restore login state
-  const savedUserId=localStorage.getItem('currentUserId');
-  if(savedUserId){
-    currentUserId=savedUserId;
-    document.getElementById('login-btn').style.display='none';
-    document.getElementById('user-info').style.display='inline';
-    document.getElementById('logout-btn').style.display='inline';
+    let done = 0;
+    let total = 1033;
+
+    Object.values(state).forEach(item => {
+      if (item.s === 'mastered') done++;
+    });
+
+    const progress = total ? Math.round(done / total * 100) : 0;
+
+    document.getElementById('progress').textContent = progress + '%';
+    document.getElementById('done').textContent = done;
+    document.getElementById('total').textContent = total;
+  } catch (e) {
+    console.error('Load error:', e);
   }
 }
-async function save(){
-  localStorage.setItem('mb2',JSON.stringify(state));
-  if(currentUserId){
-    try{
-      await setDoc(doc(db,'users',currentUserId),{progress:state,lastUpdated:Date.now()},{merge:true});
-      document.getElementById('sync-status').style.display='inline';
-      setTimeout(()=>document.getElementById('sync-status').style.display='none',2000);
-    }catch(e){console.error('Sync error:',e)}
+
+// Restore login state
+function restoreLoginState() {
+  const savedUserId = localStorage.getItem('currentUserId');
+  if (savedUserId) {
+    currentUserId = savedUserId;
+    document.getElementById('login-btn').style.display = 'none';
+    document.getElementById('user-info').style.display = 'inline';
+    document.getElementById('logout-btn').style.display = 'inline';
   }
 }
-function gs(id){return state[id]||{s:'new',sc:0,n:0}}
-function ss(id,u){if(!state[id])state[id]={s:'new',sc:0,n:0};Object.assign(state[id],u);save()}
 
-function applyFilter(){
-  filtered=CARDS.filter(c=>{
-    if(curF!=='all'&&c.category!==curF)return false;
-    if(curP!=='all'&&c.part!==curP)return false;
-    return true;
-  });
-  filtered.sort((a,b)=>{
-    if(a.priority!==b.priority)return a.priority-b.priority;
-    const o={new:0,learning:1,mastered:2};
-    return(o[gs(a.id).s]||0)-(o[gs(b.id).s]||0);
-  });
-  idx=0;
-  render();
-}
-
-window.setF=function(f,el){curF=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));applyFilter()}
-window.setP=function(p,el){curP=p;document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));applyFilter()}
-window.setSF=function(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStatus()}
-
-window.switchTab=function(t){
-  curTab=t;
-  localStorage.setItem('curTab',t);
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
-  document.getElementById('tab-trace').style.display=t==='trace'?'':'none';
-  document.getElementById('tab-test').style.display=t==='test'?'':'none';
-  document.getElementById('tab-status').style.display=t==='status'?'':'none';
-  document.getElementById('shared-filters').style.display=t==='status'?'none':'';
-  render();
-}
-
-window.render=function(){
-  updateNav();
-  if(curTab==='trace')renderTrace();
-  else if(curTab==='test')renderTest();
-  else renderStatus();
-}
-
-function updateNav(){
-  let done=0,learn=0;
-  CARDS.forEach(c=>{const s=gs(c.id).s;if(s==='mastered')done++;else if(s==='learning')learn++});
-  document.getElementById('n-done').textContent=done;
-  document.getElementById('n-learn').textContent=learn;
-  document.getElementById('n-total').textContent=CARDS.length;
-}
-
-// ===== TAB 1: TRACE =====
-window.renderTrace=function(){
-  if(!filtered.length)return;
-  const c=filtered[idx];
-  document.getElementById('t1-badge').textContent=c.category;
-  document.getElementById('t1-num').textContent=`${idx+1}/${filtered.length}`;
-  const partText = c.page ? `${c.part} (p.${c.page})` : c.part;
-  document.getElementById('t1-part').textContent=partText;
-  document.getElementById('t1-title').textContent=c.prompt;
-  document.getElementById('t1-answer').textContent=c.answer;
-  document.getElementById('t1-input').value='';
-  document.getElementById('t1-match').classList.remove('show');
-  if(c.exam){document.getElementById('t1-exam').style.display='inline';document.getElementById('t1-exam').textContent='기출: '+c.exam}
-  else document.getElementById('t1-exam').style.display='none';
-}
-
-window.traceCheck=function(){
-  const c=filtered[idx];
-  const sc=score(document.getElementById('t1-input').value, c.answer);
-  showMatch('t1',sc);
-}
-
-window.traceDone=function(){
-  const c=filtered[idx];
-  const sc=score(document.getElementById('t1-input').value, c.answer);
-  const prev=gs(c.id);
-  ss(c.id,{s:prev.s==='new'?'learning':prev.s, sc:Math.max(prev.sc,sc), n:prev.n+1});
-  nextCard();
-}
-
-// ===== TAB 2: TEST =====
-window.renderTest=function(){
-  if(!filtered.length)return;
-  const c=filtered[idx];
-  document.getElementById('t2-badge').textContent=c.category;
-  document.getElementById('t2-num').textContent=`${idx+1}/${filtered.length}`;
-  const partText2 = c.page ? `${c.part} (p.${c.page})` : c.part;
-  document.getElementById('t2-part').textContent=partText2;
-  document.getElementById('t2-title').textContent=c.prompt;
-  document.getElementById('t2-input').value='';
-  document.getElementById('t2-match').classList.remove('show');
-  document.getElementById('t2-reveal').classList.remove('show');
-  document.getElementById('t2-btn-check').style.display='';
-  document.getElementById('t2-btn-ok').style.display='none';
-  document.getElementById('t2-btn-half').style.display='none';
-  document.getElementById('t2-btn-fail').style.display='none';
-  if(c.exam){document.getElementById('t2-exam').style.display='inline';document.getElementById('t2-exam').textContent='기출: '+c.exam}
-  else document.getElementById('t2-exam').style.display='none';
-}
-
-window.testCheck=function(){
-  const c=filtered[idx];
-  const sc=score(document.getElementById('t2-input').value, c.answer);
-  showMatch('t2',sc);
-  document.getElementById('t2-answer').textContent=c.answer;
-  document.getElementById('t2-reveal').classList.add('show');
-  document.getElementById('t2-btn-check').style.display='none';
-  document.getElementById('t2-btn-ok').style.display='';
-  document.getElementById('t2-btn-half').style.display='';
-  document.getElementById('t2-btn-fail').style.display='';
-  ss(c.id,{sc, n:(gs(c.id).n||0)+1});
-}
-
-window.testMark=function(status){
-  const c=filtered[idx];
-  ss(c.id,{s:status});
-  updateNav();
-  nextCard();
-}
-
-// ===== TAB 3: STATUS =====
-window.renderStatus=function(){
-  let done=0,learn=0,nw=0;
-  CARDS.forEach(c=>{const s=gs(c.id).s;if(s==='mastered')done++;else if(s==='learning')learn++;else nw++});
-  const pct=CARDS.length?Math.round(done/CARDS.length*100):0;
-  document.getElementById('s-pct').textContent=pct+'%';
-  document.getElementById('s-done').textContent=done;
-  document.getElementById('s-learn').textContent=learn;
-  document.getElementById('s-new').textContent=nw;
-
-  const q=(document.getElementById('s-search').value||'').toLowerCase();
-  let items=CARDS.filter(c=>{
-    const st=gs(c.id).s;
-    if(curSF!=='all'&&st!==curSF)return false;
-    if(q&&!c.prompt.toLowerCase().includes(q)&&!c.answer.toLowerCase().includes(q))return false;
-    return true;
-  });
-
-  // Sort: mastered last
-  items.sort((a,b)=>{
-    const o={new:0,learning:1,mastered:2};
-    return(o[gs(a.id).s]||0)-(o[gs(b.id).s]||0);
-  });
-
-  const list=document.getElementById('s-list');
-  const show=items.slice(0, PAGE_SIZE);
-  list.innerHTML=show.map(c=>{
-    const st=gs(c.id);
-    const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'';
-    const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'';
-    const scText=st.sc+'%';
-    return`<div class="srow" onclick="openModal('${c.id}')">
-      <div class="dot ${dotCls}"></div>
-      <div class="info">
-        <div class="title">${esc(c.prompt)}</div>
-        <div class="meta">${c.part}${c.page?' (p.'+c.page+')':''} · ${c.category}${c.exam?' · 기출':''}${st.n>0?' · '+st.n+'회':''}</div>
-      </div>
-      <div class="score-badge ${sbCls}">${scText}</div>
-    </div>`;
-  }).join('');
-
-  const moreEl=document.getElementById('s-more');
-  if(items.length>PAGE_SIZE){
-    moreEl.innerHTML=`<button class="btn btn-ghost" onclick="loadMore()">더 보기 (${items.length-PAGE_SIZE}개 남음)</button>`;
-  } else moreEl.innerHTML='';
-}
-
-let statusShowCount=PAGE_SIZE;
-window.loadMore=function(){statusShowCount+=PAGE_SIZE;renderStatus()}
-
-// ===== MODAL =====
-let modalCardId=null;
-window.openModal=function(id){
-  modalCardId=id;
-  const c=CARDS.find(x=>x.id===id);
-  const st=gs(id);
-  const modalPart = c.page ? `${c.part} (p.${c.page}) · ${c.category}` : `${c.part} · ${c.category}`;
-  document.getElementById('m-part').textContent=modalPart;
-  document.getElementById('m-title').textContent=c.prompt;
-  document.getElementById('m-answer').textContent=c.answer;
-  document.getElementById('m-status').value=st.s;
-  document.getElementById('m-score').value=st.sc;
-  document.getElementById('m-score-val').textContent=st.sc+'%';
-  document.getElementById('modal').classList.add('show');
-}
-window.closeModal=function(){document.getElementById('modal').classList.remove('show');modalCardId=null}
-window.modalStatusChange=function(){}
-window.saveModal=function(){
-  if(!modalCardId)return;
-  const newStatus=document.getElementById('m-status').value;
-  const newScore=parseInt(document.getElementById('m-score').value);
-  ss(modalCardId,{s:newStatus, sc:newScore});
-  closeModal();
-  render();
-}
-
-// ===== SCORING =====
-function score(user,answer){
-  const kw=t=>(t.match(/[가-힣]{2,}/g)||[]);
-  const ak=[...new Set(kw(answer))];
-  if(!ak.length)return 100;
-  const un=user.replace(/[\s.,;:!?()\[\]{}·•→←①-⑩/\\'"~`]/g,'').toLowerCase();
-  let hit=0;
-  ak.forEach(w=>{if(un.includes(w.toLowerCase()))hit++});
-  return Math.round(hit/ak.length*100);
-}
-
-function showMatch(prefix,sc){
-  const el=document.getElementById(prefix+'-match');
-  el.classList.add('show');
-  const fill=document.getElementById(prefix+'-fill');
-  fill.style.width=sc+'%';
-  document.getElementById(prefix+'-pct').textContent=sc+'%';
-  const msg=sc>=80?'거의 완벽!':sc>=50?'절반 이상 맞았어요':sc>0?'다시 한번 확인해보세요':'정답을 확인하세요';
-  document.getElementById(prefix+'-match-msg').textContent=msg;
-}
-
-function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-// ===== NAV =====
-window.nextCard=function(){idx=(idx+1)%filtered.length;render()}
-window.prevCard=function(){idx=(idx-1+filtered.length)%filtered.length;render()}
-
-// ===== KEYBOARD =====
-document.addEventListener('keydown',e=>{
-  if(curTab==='status')return;
-  if(e.target.tagName==='TEXTAREA'){
-    if(e.key==='Enter'&&e.ctrlKey){e.preventDefault();curTab==='trace'?traceCheck():testCheck()}
-    return;
-  }
-  if(e.key==='ArrowRight')nextCard();
-  if(e.key==='ArrowLeft')prevCard();
-  if(curTab==='test'){
-    if(e.key==='1')testMark('mastered');
-    if(e.key==='2')testMark('learning');
-    if(e.key==='3')testMark('new');
-  }
-});
-
-// ===== LOGIN/LOGOUT =====
-window.showLoginModal=function(){
+// Login/Logout functions
+window.showLoginModal = function() {
   document.getElementById('login-modal').classList.add('show');
-  document.getElementById('login-password').value='';
-  document.getElementById('login-error').style.display='none';
-  setTimeout(()=>document.getElementById('login-password').focus(),100);
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  setTimeout(() => document.getElementById('login-password').focus(), 100);
 }
 
-window.closeLoginModal=function(){
+window.closeLoginModal = function() {
   document.getElementById('login-modal').classList.remove('show');
 }
 
-window.handleLogin=async function(){
-  const password=document.getElementById('login-password').value;
-  const errorEl=document.getElementById('login-error');
+window.handleLogin = async function() {
+  const password = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
 
-  if(!password||password.length<4){
-    errorEl.textContent='암호는 최소 4자 이상이어야 해요';
-    errorEl.style.display='block';
+  if (!password || password.length < 4) {
+    errorEl.textContent = '암호는 최소 4자 이상이어야 해요';
+    errorEl.style.display = 'block';
     return;
   }
 
-  try{
-    currentUserId=await hashPassword(password);
-    const docRef=doc(db,'users',currentUserId);
-    const docSnap=await getDoc(docRef);
+  try {
+    currentUserId = await hashPassword(password);
+    const docRef = doc(db, 'users', currentUserId);
+    const docSnap = await getDoc(docRef);
 
-    if(docSnap.exists()){
-      const cloudData=docSnap.data();
-      state=cloudData.progress||{};
-      localStorage.setItem('mb2',JSON.stringify(state));
+    if (docSnap.exists()) {
+      const cloudData = docSnap.data();
+      localStorage.setItem('mb2', JSON.stringify(cloudData.progress || {}));
       alert('☁️ 클라우드에서 진도를 불러왔어요!');
-    }else{
-      await setDoc(docRef,{progress:state,createdAt:Date.now(),lastUpdated:Date.now()});
+    } else {
+      const state = JSON.parse(localStorage.getItem('mb2') || '{}');
+      await setDoc(docRef, { progress: state, createdAt: Date.now(), lastUpdated: Date.now() });
       alert('✨ 새로운 계정이 만들어졌어요!\n이제 다른 기기에서도 같은 암호로 로그인하면 진도가 동기화됩니다.');
     }
 
-    localStorage.setItem('currentUserId',currentUserId);
-    document.getElementById('login-btn').style.display='none';
-    document.getElementById('user-info').style.display='inline';
-    document.getElementById('logout-btn').style.display='inline';
+    localStorage.setItem('currentUserId', currentUserId);
+    document.getElementById('login-btn').style.display = 'none';
+    document.getElementById('user-info').style.display = 'inline';
+    document.getElementById('logout-btn').style.display = 'inline';
     closeLoginModal();
-    render();
-  }catch(e){
-    console.error('Login error:',e);
-    errorEl.textContent='로그인 실패: '+e.message;
-    errorEl.style.display='block';
+    loadProgress();
+  } catch (e) {
+    console.error('Login error:', e);
+    errorEl.textContent = '로그인 실패: ' + e.message;
+    errorEl.style.display = 'block';
   }
 }
 
-window.handleLogout=function(){
-  if(confirm('로그아웃하시겠어요?\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')){
-    currentUserId=null;
+window.handleLogout = function() {
+  if (confirm('로그아웃하시겠어요?\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')) {
+    currentUserId = null;
     localStorage.removeItem('currentUserId');
-    document.getElementById('login-btn').style.display='inline';
-    document.getElementById('user-info').style.display='none';
-    document.getElementById('logout-btn').style.display='none';
-    document.getElementById('sync-status').style.display='none';
+    document.getElementById('login-btn').style.display = 'inline';
+    document.getElementById('user-info').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
   }
 }
 
-// ===== INIT =====
-async function init(){
-  load();
-  try{
-    const r=await fetch('cards_data.json');
-    const d=await r.json();
-    CARDS=d.cards;
-  }catch(e){
-    document.getElementById('t1-title').textContent='cards_data.json 로드 실패';
-    return;
-  }
-  applyFilter();
-  // Restore tab state after data is loaded
-  switchTab(curTab);
-}
-init();
+// Initialize
+restoreLoginState();
+loadProgress();
+
+// Section animations
+const sections = document.querySelectorAll('main section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.1 });
+
+sections.forEach(section => {
+  observer.observe(section);
+});
 </script>
+
 </body>
 </html>

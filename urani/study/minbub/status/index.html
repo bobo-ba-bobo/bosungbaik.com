@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>암기현황 - Urani Minbub</title>
+<link rel="stylesheet" href="../../../../style.css">
+<style>
+body {
+  background: #fff;
+}
+
+nav {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.nav-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: #616161;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #000;
+  border-color: #e0e0e0;
+}
+
+.btn-ghost:hover {
+  background: #000;
+  color: #fff;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 10px;
+  color: #616161;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.stat-card .num {
+  font-size: 28px;
+  font-weight: 500;
+  color: #000;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.controls select {
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #000;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.controls select:hover {
+  border-color: #000;
+}
+
+.card-list {
+  border: 1px solid #e0e0e0;
+}
+
+.card-item {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-item:last-child {
+  border-bottom: none;
+}
+
+.card-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-item-cat {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.card-item-q {
+  font-size: 13px;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-item-status {
+  font-size: 11px;
+  padding: 4px 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.card-item-status.new {
+  color: #616161;
+}
+
+.card-item-status.learning {
+  color: #000;
+}
+
+.card-item-status.mastered {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.card-item-score {
+  font-size: 12px;
+  color: #616161;
+  min-width: 40px;
+  text-align: right;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <h1>암기현황 - Urani Minbub</h1>
+    <div class="nav-stats">
+      <button id="login-btn" class="btn btn-ghost" onclick="showLoginModal()" style="padding:5px 10px;font-size:11px">로그인</button>
+      <span id="user-info" style="display:none;font-size:11px">🔒 로그인됨</span>
+      <button id="logout-btn" class="btn btn-ghost" onclick="handleLogout()" style="display:none;padding:5px 10px;font-size:11px">로그아웃</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+    <section>
+      <a href="../" class="back-link">← 모드 선택</a>
+
+      <h2>진행 현황</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>진도율</h3>
+          <div class="num" id="progress">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>완료</h3>
+          <div class="num" id="done">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>전체</h3>
+          <div class="num" id="total">1033</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <select id="filter-cat" onchange="applyFilter()">
+          <option value="">전체 카테고리</option>
+        </select>
+        <select id="filter-part" onchange="applyFilter()">
+          <option value="">전체 Part</option>
+        </select>
+        <select id="filter-status" onchange="applyFilter()">
+          <option value="">전체 상태</option>
+          <option value="new">새로운 카드</option>
+          <option value="learning">학습중</option>
+          <option value="mastered">완료</option>
+        </select>
+      </div>
+
+      <div class="card-list" id="card-list">
+        <div style="padding:20px;text-align:center;color:#999;font-size:12px">카드를 불러오는 중...</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Bobo's Home</p>
+  </div>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal-bg" id="login-modal" onclick="if(event.target===this)closeLoginModal()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:center;justify-content:center;padding:20px">
+  <div class="modal" style="background:#fff;max-width:400px;width:100%;padding:24px;border:1px solid #000">
+    <h2 style="font-size:16px;margin-bottom:6px;text-transform:none;letter-spacing:-0.01em">☁️ 클라우드 동기화</h2>
+    <p style="font-size:13px;color:#616161;margin-bottom:20px">암호를 입력하면 다른 기기에서도 진도를 이어서 볼 수 있어요</p>
+    <label style="font-size:12px;color:#616161;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em">암호 (4자 이상)</label>
+    <input type="password" id="login-password" placeholder="암호 입력" style="width:100%;padding:10px;background:#fff;border:1px solid #e0e0e0;color:#000;font-size:14px;margin-bottom:16px;outline:none">
+    <div id="login-error" style="display:none;color:#000;background:#f5f5f5;padding:8px;font-size:12px;margin-bottom:12px"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="handleLogin()" style="flex:1">로그인</button>
+      <button class="btn btn-ghost" onclick="closeLoginModal()" style="flex:1">취소</button>
+    </div>
+    <p style="font-size:11px;color:#999;margin-top:16px;text-align:center">💡 같은 암호로 모든 기기에서 접속하세요</p>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAaMrOed3Zhj4ceappFkMozjYBF-CYx4g8",
+  authDomain: "urani-study.firebaseapp.com",
+  projectId: "urani-study",
+  storageBucket: "urani-study.firebasestorage.app",
+  messagingSenderId: "595550201149",
+  appId: "1:595550201149:web:328525a314582c70ac5154"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let currentUserId = null;
+let cards = [];
+let state = {};
+
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function save() {
+  localStorage.setItem('mb2', JSON.stringify(state));
+  if (currentUserId) {
+    setDoc(doc(db, 'users', currentUserId), {
+      progress: state,
+      lastUpdated: Date.now()
+    }, { merge: true }).catch(e => console.error('Sync error:', e));
+  }
+}
+
+function load() {
+  try {
+    const s = localStorage.getItem('mb2');
+    if (s) state = JSON.parse(s);
+  } catch (e) {}
+
+  const savedUserId = localStorage.getItem('currentUserId');
+  if (savedUserId) {
+    currentUserId = savedUserId;
+    document.getElementById('login-btn').style.display = 'none';
+    document.getElementById('user-info').style.display = 'inline';
+    document.getElementById('logout-btn').style.display = 'inline';
+  }
+}
+
+window.showLoginModal = function() {
+  document.getElementById('login-modal').style.display = 'flex';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  setTimeout(() => document.getElementById('login-password').focus(), 100);
+}
+
+window.closeLoginModal = function() {
+  document.getElementById('login-modal').style.display = 'none';
+}
+
+window.handleLogin = async function() {
+  const password = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
+
+  if (!password || password.length < 4) {
+    errorEl.textContent = '암호는 최소 4자 이상이어야 해요';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    currentUserId = await hashPassword(password);
+    const docRef = doc(db, 'users', currentUserId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const cloudData = docSnap.data();
+      localStorage.setItem('mb2', JSON.stringify(cloudData.progress || {}));
+      state = cloudData.progress || {};
+      alert('☁️ 클라우드에서 진도를 불러왔어요!');
+    } else {
+      await setDoc(docRef, { progress: state, createdAt: Date.now(), lastUpdated: Date.now() });
+      alert('✨ 새로운 계정이 만들어졌어요!\\n이제 다른 기기에서도 같은 암호로 로그인하면 진도가 동기화됩니다.');
+    }
+
+    localStorage.setItem('currentUserId', currentUserId);
+    document.getElementById('login-btn').style.display = 'none';
+    document.getElementById('user-info').style.display = 'inline';
+    document.getElementById('logout-btn').style.display = 'inline';
+    closeLoginModal();
+    loadProgress();
+    renderList();
+  } catch (e) {
+    console.error('Login error:', e);
+    errorEl.textContent = '로그인 실패: ' + e.message;
+    errorEl.style.display = 'block';
+  }
+}
+
+window.handleLogout = function() {
+  if (confirm('로그아웃하시겠어요?\\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')) {
+    currentUserId = null;
+    localStorage.removeItem('currentUserId');
+    document.getElementById('login-btn').style.display = 'inline';
+    document.getElementById('user-info').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+  }
+}
+
+function loadProgress() {
+  try {
+    let done = 0;
+    let total = cards.length || 1033;
+
+    Object.values(state).forEach(item => {
+      if (item.s === 'mastered') done++;
+    });
+
+    const progress = total ? Math.round(done / total * 100) : 0;
+
+    document.getElementById('progress').textContent = progress + '%';
+    document.getElementById('done').textContent = done;
+    document.getElementById('total').textContent = total;
+  } catch (e) {
+    console.error('Load error:', e);
+  }
+}
+
+async function loadCards() {
+  try {
+    const cached = sessionStorage.getItem('cards_data');
+    if (cached) {
+      cards = JSON.parse(cached);
+    } else {
+      const res = await fetch('../cards_data.json');
+      cards = await res.json();
+      sessionStorage.setItem('cards_data', JSON.stringify(cards));
+    }
+
+    const cats = [...new Set(cards.map(c => c.cat))];
+    const parts = [...new Set(cards.map(c => c.part))];
+
+    const catSel = document.getElementById('filter-cat');
+    cats.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      catSel.appendChild(opt);
+    });
+
+    const partSel = document.getElementById('filter-part');
+    parts.forEach(part => {
+      const opt = document.createElement('option');
+      opt.value = part;
+      opt.textContent = part;
+      partSel.appendChild(opt);
+    });
+
+    loadProgress();
+    applyFilter();
+  } catch (e) {
+    console.error('Load cards error:', e);
+  }
+}
+
+window.applyFilter = function() {
+  const cat = document.getElementById('filter-cat').value;
+  const part = document.getElementById('filter-part').value;
+  const status = document.getElementById('filter-status').value;
+
+  const filtered = cards.filter(c => {
+    if (cat && c.cat !== cat) return false;
+    if (part && c.part !== part) return false;
+    if (status) {
+      const s = state[c.id] ? state[c.id].s : 'new';
+      if (s !== status) return false;
+    }
+    return true;
+  });
+
+  renderList(filtered);
+}
+
+function renderList(filtered = cards) {
+  const listEl = document.getElementById('card-list');
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#999;font-size:12px">카드가 없습니다</div>';
+    return;
+  }
+
+  listEl.innerHTML = '';
+
+  filtered.forEach(c => {
+    const st = state[c.id] || { s: 'new', sc: 0, n: 0 };
+    const item = document.createElement('div');
+    item.className = 'card-item';
+
+    item.innerHTML = `
+      <div class="card-item-info">
+        <div class="card-item-cat">${c.cat} > ${c.part}</div>
+        <div class="card-item-q">${c.q}</div>
+      </div>
+      <div class="card-item-status ${st.s}">${st.s === 'new' ? '새로움' : st.s === 'learning' ? '학습중' : '완료'}</div>
+      <div class="card-item-score">${st.sc}%</div>
+    `;
+
+    listEl.appendChild(item);
+  });
+}
+
+load();
+loadCards();
+
+const sections = document.querySelectorAll('main section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.1 });
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+</script>
+
+</body>
+</html>
