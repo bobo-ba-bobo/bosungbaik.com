@@ -171,7 +171,7 @@ section:last-child {
 .inverted {
   background-color: #000;
   color: #fff;
-  padding: 80px 0;
+  padding: 60px 0;
 }
 
 .inverted a {
@@ -195,7 +195,7 @@ section:last-child {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
 .link-list li {
@@ -291,7 +291,7 @@ section:last-child {
 
 /* Footer */
 footer {
-  padding: 60px 0;
+  padding: 40px 0;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -654,7 +654,7 @@ main section.in-view::before {
 }
 
 .link-list li {
-  padding: 10px 0;
+  padding: 6px 0;
   border-bottom: 1px solid #fafafa;
 }
 
@@ -669,7 +669,7 @@ main section.in-view::before {
 }
 
 .inverted .link-list li {
-  padding: 10px 0;
+  padding: 6px 0;
   border-bottom: none;
 }
 
