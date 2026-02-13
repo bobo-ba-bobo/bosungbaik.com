@@ -666,19 +666,25 @@ main section.in-view::before {
 
 /* Contact section - no lines, no hover effects */
 .inverted .link-list {
-  border-left: none;
-  padding-left: 0;
+  border-left: none !important;
+  padding-left: 0 !important;
 }
 
 .inverted .link-list li {
-  padding: 6px 0;
-  border-bottom: none;
+  padding: 6px 0 !important;
+  border-bottom: none !important;
+  position: static !important;
+  transition: none !important;
 }
 
 .inverted .link-list li::before {
-  display: none;
+  display: none !important;
 }
 
 .inverted .link-list li:hover {
-  padding-left: 0;
+  padding-left: 0 !important;
+}
+
+.inverted .link-list li:hover::before {
+  width: 0 !important;
 }
