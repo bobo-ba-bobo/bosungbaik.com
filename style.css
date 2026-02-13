@@ -18,6 +18,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -58,19 +59,19 @@ nav .container {
 }
 
 .nav-name a {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: -0.01em;
 }
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 32px;
   list-style: none;
 }
 
 .nav-links a {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 300;
   color: #616161;
   transition: color 0.3s ease;
@@ -91,36 +92,36 @@ main {
 
 /* Headings */
 h1 {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.3;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 h2 {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 24px;
   color: #616161;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  line-height: 1.4;
+  line-height: 1.35;
   margin-bottom: 20px;
 }
 
 /* Paragraph */
 p {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 300;
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: #000;
 }
 
@@ -130,11 +131,40 @@ p:last-child {
 
 /* Section spacing */
 section {
-  margin-bottom: 120px;
+  margin-bottom: 100px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+section:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+section:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+section:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+section:nth-child(4) {
+  animation-delay: 0.4s;
 }
 
 section:last-child {
   margin-bottom: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Inverted section */
@@ -165,11 +195,37 @@ section:last-child {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+}
+
+.link-list li {
+  position: relative;
+  padding-left: 0;
+  transition: padding-left 0.3s ease;
+}
+
+.link-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 1px;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.link-list li:hover {
+  padding-left: 24px;
+}
+
+.link-list li:hover::before {
+  width: 16px;
 }
 
 .link-list a {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 300;
   display: inline-block;
   transition: color 0.3s ease;
@@ -177,13 +233,16 @@ section:last-child {
 
 .link-list a::after {
   content: ' \2197';
-  font-size: 12px;
+  font-size: 13px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  transform: translate(-4px, -2px);
 }
 
 .link-list a:hover::after {
   opacity: 1;
+  transform: translate(0, -2px);
 }
 
 /* Internal link (no arrow) */
@@ -193,14 +252,41 @@ section:last-child {
 
 /* Separator */
 .separator {
-  width: 100%;
+  width: 0%;
   height: 1px;
   background-color: #e0e0e0;
   margin: 60px 0;
+  animation: expandLine 1.2s ease-out forwards;
+}
+
+@keyframes expandLine {
+  to {
+    width: 100%;
+  }
 }
 
 .inverted .separator {
   background-color: #333;
+}
+
+/* Decorative lines */
+.line-accent {
+  width: 60px;
+  height: 1px;
+  background-color: #000;
+  margin-bottom: 32px;
+  animation: slideInLine 0.8s ease-out;
+}
+
+@keyframes slideInLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    opacity: 1;
+  }
 }
 
 /* Footer */
@@ -398,4 +484,180 @@ footer .footer-links a:hover {
     gap: 16px;
     align-items: flex-start;
   }
+}
+
+/* ========================================
+   Dynamic Elements
+   ======================================== */
+
+/* Hover line effect for h2 */
+h2 {
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #616161;
+  transition: width 0.4s ease;
+}
+
+h2:hover::after {
+  width: 100%;
+}
+
+/* Scroll reveal for main content */
+main {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Subtle nav animation */
+nav {
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Inverted section with line accent */
+.inverted {
+  position: relative;
+}
+
+.inverted::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background-color: #333;
+  animation: expandFromCenter 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes expandFromCenter {
+  to {
+    width: 100%;
+  }
+}
+
+/* Footer line animation */
+footer {
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  animation: expandLine 1s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes expandLine {
+  to {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   Additional Minimal Dynamic Elements
+   ======================================== */
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: #000;
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* Nav link animated underline */
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: #000;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::before,
+.nav-links a.active::before {
+  width: 100%;
+}
+
+/* Section vertical line */
+main section {
+  position: relative;
+  padding-left: 16px;
+}
+
+main section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 0;
+  background: #e0e0e0;
+  transition: height 0.8s ease-out 0.2s;
+}
+
+main section.in-view::before {
+  height: 100%;
+}
+
+/* Link list with subtle grid */
+.link-list {
+  border-left: 1px solid #f5f5f5;
+  padding-left: 20px;
+}
+
+.link-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.link-list li:last-child {
+  border-bottom: none;
 }
