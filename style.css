@@ -661,3 +661,22 @@ main section.in-view::before {
 .link-list li:last-child {
   border-bottom: none;
 }
+
+/* Contact section - no lines, no hover effects */
+.inverted .link-list {
+  border-left: none;
+  padding-left: 0;
+}
+
+.inverted .link-list li {
+  padding: 10px 0;
+  border-bottom: none;
+}
+
+.inverted .link-list li::before {
+  display: none;
+}
+
+.inverted .link-list li:hover {
+  padding-left: 0;
+}
