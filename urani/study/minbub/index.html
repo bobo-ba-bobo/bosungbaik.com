@@ -3,264 +3,660 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>민법의 맥 - 암기 트레이너</title>
+<title>Urani Minbub Ganbare <3</title>
+<link rel="stylesheet" href="../../../style.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0f0f13;--s1:#1a1a24;--s2:#232334;--bd:#2d2d44;
-  --t1:#e8e8f0;--t2:#9090a8;--t3:#606078;
-  --p:#6c5ce7;--pl:#a29bfe;--g:#00b894;--o:#fdcb6e;--r:#e17055;--b:#74b9ff;
+/* Minimal custom styles for flashcard app */
+body {
+  background: #fff;
 }
-body{font-family:'Apple SD Gothic Neo',-apple-system,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh}
 
-/* NAV */
-nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-nav h1{font-size:17px;font-weight:700}
-nav h1 span{color:var(--pl)}
-.nav-stats{display:flex;gap:14px;font-size:12px;color:var(--t2)}
-.nav-stats b{color:var(--t1)}
+nav {
+  border-bottom: 1px solid #e0e0e0;
+}
 
-.container{max-width:900px;margin:0 auto;padding:20px}
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-/* TABS */
-.tabs{display:flex;gap:4px;background:var(--s1);padding:4px;border-radius:14px;margin-bottom:20px;border:1px solid var(--bd)}
-.tab{flex:1;padding:12px;text-align:center;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;color:var(--t2);transition:all .2s;user-select:none}
-.tab.active{background:var(--p);color:#fff}
-.tab:hover:not(.active){color:var(--t1)}
-.tab .tab-icon{font-size:18px;display:block;margin-bottom:2px}
+nav h1 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
 
-/* FILTERS */
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.fbtn{padding:6px 14px;border:1px solid var(--bd);border-radius:20px;background:transparent;color:var(--t2);font-size:12px;cursor:pointer;transition:all .2s}
-.fbtn:hover{border-color:var(--p);color:var(--pl)}
-.fbtn.on{background:var(--p);border-color:var(--p);color:#fff}
+.nav-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: #616161;
+}
 
-/* CARD */
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
-.card-head{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
-.badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600}
-.b-요건효과{background:rgba(108,92,231,.2);color:var(--pl)}
-.b-비교{background:rgba(0,184,148,.2);color:var(--g)}
-.b-핵심숫자{background:rgba(253,203,110,.2);color:var(--o)}
-.b-판례{background:rgba(116,185,255,.2);color:var(--b)}
-.b-조문{background:rgba(225,112,85,.2);color:var(--r)}
-.card-num{font-size:12px;color:var(--t2)}
+.nav-stats b {
+  color: #000;
+}
 
-.card-body{padding:24px 20px}
-.card-body .part{font-size:11px;color:var(--t2);margin-bottom:4px}
-.card-body h2{font-size:20px;font-weight:700;line-height:1.4;margin-bottom:6px}
-.exam-tag{font-size:11px;color:var(--r);background:rgba(225,112,85,.12);padding:2px 8px;border-radius:4px}
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-/* TRACE MODE - answer visible above textarea */
-.trace-answer{background:var(--s2);border-radius:10px;padding:16px;margin:0 20px 12px;font-size:14px;line-height:1.9;white-space:pre-wrap;color:var(--pl);border-left:3px solid var(--p);max-height:300px;overflow-y:auto}
+.tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #616161;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
 
-/* TEXTAREA */
-.input-wrap{padding:0 20px 16px}
-textarea{width:100%;min-height:160px;background:var(--s2);border:2px solid var(--bd);border-radius:10px;color:var(--t1);font-family:inherit;font-size:14px;line-height:1.8;padding:14px;resize:vertical;transition:border-color .2s}
-textarea:focus{outline:none;border-color:var(--p)}
-textarea::placeholder{color:var(--t3)}
+.tab:hover {
+  color: #000;
+}
 
-/* MATCH HIGHLIGHT */
-.match-result{padding:0 20px 16px;display:none}
-.match-result.show{display:block}
-.match-bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;margin-bottom:8px}
-.match-fill{height:100%;border-radius:4px;transition:width .4s}
-.match-info{display:flex;justify-content:space-between;font-size:13px}
-.match-pct{font-weight:700}
+.tab.active {
+  color: #000;
+  border-bottom-color: #000;
+}
 
-/* ANSWER REVEAL */
-.reveal{background:var(--s2);border-radius:10px;padding:16px;margin:0 20px 16px;display:none;font-size:14px;line-height:1.9;white-space:pre-wrap;border-left:3px solid var(--g)}
-.reveal.show{display:block}
-.reveal-label{font-size:12px;font-weight:600;color:var(--g);margin-bottom:8px}
+/* Filters */
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
 
-/* ACTIONS */
-.actions{padding:14px 20px;display:flex;gap:8px;border-top:1px solid var(--bd);flex-wrap:wrap}
-.btn{padding:10px 18px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
-.btn-p{background:var(--p);color:#fff}
-.btn-p:hover{background:#5b4bd5}
-.btn-g{background:var(--g);color:#fff}
-.btn-g:hover{opacity:.9}
-.btn-o{background:var(--o);color:#333}
-.btn-r{background:rgba(225,112,85,.2);color:var(--r)}
-.btn-s{background:var(--s2);color:var(--t2)}
-.btn-s:hover{background:var(--bd);color:var(--t1)}
-.btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--bd)}
-.spacer{flex:1}
+.fbtn {
+  padding: 5px 12px;
+  border: 1px solid #e0e0e0;
+  background: transparent;
+  color: #616161;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-.hint{text-align:center;font-size:11px;color:var(--t3);margin-top:10px}
-.hint kbd{background:var(--s2);padding:1px 5px;border-radius:3px;border:1px solid var(--bd);font-size:10px}
+.fbtn:hover {
+  border-color: #000;
+  color: #000;
+}
 
-/* === TAB 3: STATUS === */
-.status-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px}
-@media(max-width:640px){.status-header{grid-template-columns:1fr 1fr}}
-.scard{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px}
-.scard h4{font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.scard .num{font-size:28px;font-weight:700}
-.num-g{color:var(--g)}.num-o{color:var(--o)}.num-b{color:var(--b)}.num-r{color:var(--r)}
+.fbtn.on {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
 
-.search-box{width:100%;padding:10px 14px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-size:13px;outline:none;margin-bottom:12px}
-.search-box:focus{border-color:var(--p)}
+/* Card */
+.card {
+  border: 1px solid #e0e0e0;
+  margin-bottom: 50px;
+}
 
-.status-list{display:flex;flex-direction:column;gap:6px}
-.srow{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .15s}
-.srow:hover{border-color:var(--p)}
-.srow .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.dot-mastered{background:var(--g)}.dot-learning{background:var(--o)}.dot-new{background:var(--bd)}
-.srow .info{flex:1;min-width:0}
-.srow .title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.srow .meta{font-size:11px;color:var(--t2);margin-top:2px}
-.srow .score-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0}
-.sb-high{background:rgba(0,184,148,.15);color:var(--g)}
-.sb-mid{background:rgba(253,203,110,.15);color:var(--o)}
-.sb-low{background:rgba(225,112,85,.15);color:var(--r)}
-.sb-none{background:var(--s2);color:var(--t3)}
+.card-head {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-/* STATUS EDIT MODAL */
-.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-bg.show{display:flex}
-.modal{background:var(--s1);border-radius:14px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:28px}
-.modal h2{font-size:17px;margin-bottom:6px}
-.modal .part{font-size:11px;color:var(--t2);margin-bottom:16px}
-.modal pre{font-family:inherit;white-space:pre-wrap;line-height:1.8;font-size:13px;background:var(--s2);padding:14px;border-radius:8px;margin-bottom:16px;max-height:250px;overflow-y:auto}
-.modal label{font-size:13px;color:var(--t2);display:block;margin-bottom:6px}
-.modal select{width:100%;padding:10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-size:14px;margin-bottom:16px;outline:none}
-.modal .score-edit{display:flex;gap:8px;align-items:center;margin-bottom:16px}
-.modal input[type=range]{flex:1;accent-color:var(--p)}
-.modal .score-val{font-size:18px;font-weight:700;min-width:48px;text-align:center}
+.badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: #f5f5f5;
+  color: #616161;
+  font-weight: 500;
+}
 
-.load-more{text-align:center;padding:16px}
+.card-num {
+  font-size: 12px;
+  color: #616161;
+}
+
+.card-body {
+  padding: 20px 16px;
+}
+
+.card-body .part {
+  font-size: 11px;
+  color: #616161;
+  margin-bottom: 4px;
+}
+
+.card-body h2 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.exam-tag {
+  font-size: 11px;
+  color: #616161;
+  background: #f5f5f5;
+  padding: 2px 8px;
+}
+
+/* Trace answer box */
+.trace-answer {
+  background: #f5f5f5;
+  padding: 14px 16px;
+  margin: 0 16px 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: #000;
+  border-left: 2px solid #000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Textarea */
+.input-wrap {
+  padding: 0 16px 14px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #000;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 12px;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #000;
+}
+
+textarea::placeholder {
+  color: #999;
+}
+
+/* Match result */
+.match-result {
+  padding: 0 16px 14px;
+  display: none;
+}
+
+.match-result.show {
+  display: block;
+}
+
+.match-bar {
+  height: 6px;
+  background: #f5f5f5;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.match-fill {
+  height: 100%;
+  background: #000;
+  transition: width 0.4s;
+}
+
+.match-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #616161;
+}
+
+.match-pct {
+  font-weight: 500;
+  color: #000;
+}
+
+/* Answer reveal */
+.reveal {
+  background: #f5f5f5;
+  padding: 14px 16px;
+  margin: 0 16px 14px;
+  display: none;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  border-left: 2px solid #000;
+}
+
+.reveal.show {
+  display: block;
+}
+
+.reveal-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Actions */
+.actions {
+  padding: 12px 16px;
+  display: flex;
+  gap: 6px;
+  border-top: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #000;
+  border-color: #e0e0e0;
+}
+
+.btn-ghost:hover {
+  background: #000;
+  color: #fff;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.hint {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  margin-top: 10px;
+}
+
+.hint kbd {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border: 1px solid #e0e0e0;
+  font-size: 10px;
+}
+
+/* Status tab */
+.status-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+@media(max-width: 640px) {
+  .status-header {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.scard {
+  border: 1px solid #e0e0e0;
+  padding: 14px;
+}
+
+.scard h4 {
+  font-size: 10px;
+  color: #616161;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.scard .num {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000;
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #000;
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.search-box:focus {
+  border-color: #000;
+}
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.srow {
+  border: 1px solid #e0e0e0;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.srow:hover {
+  border-color: #000;
+}
+
+.srow .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #e0e0e0;
+}
+
+.dot-mastered {
+  background: #000;
+}
+
+.dot-learning {
+  background: #616161;
+}
+
+.srow .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.srow .title {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.srow .meta {
+  font-size: 11px;
+  color: #616161;
+  margin-top: 2px;
+}
+
+.srow .score-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 8px;
+  background: #f5f5f5;
+  color: #616161;
+  flex-shrink: 0;
+}
+
+.sb-high {
+  background: #000;
+  color: #fff;
+}
+
+.sb-mid {
+  background: #616161;
+  color: #fff;
+}
+
+.load-more {
+  text-align: center;
+  padding: 16px;
+}
+
+/* Modal */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-bg.show {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid #000;
+}
+
+.modal h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.modal .part {
+  font-size: 11px;
+  color: #616161;
+  margin-bottom: 14px;
+}
+
+.modal pre {
+  font-family: inherit;
+  white-space: pre-wrap;
+  line-height: 1.7;
+  font-size: 13px;
+  background: #f5f5f5;
+  padding: 12px;
+  margin-bottom: 14px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.modal label {
+  font-size: 12px;
+  color: #616161;
+  display: block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modal select {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #000;
+  font-size: 13px;
+  margin-bottom: 14px;
+  outline: none;
+}
+
+.modal .score-edit {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal input[type=range] {
+  flex: 1;
+}
+
+.modal .score-val {
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 48px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <h1><span>민법의 맥</span> 암기 트레이너</h1>
-  <div class="nav-stats">
-    <span>완료 <b id="n-done">0</b></span>
-    <span>학습 <b id="n-learn">0</b></span>
-    <span>전체 <b id="n-total">0</b></span>
+  <div class="container">
+    <h1>Urani Minbub Ganbare <3</h1>
+    <div class="nav-stats">
+      <span>완료 <b id="n-done">0</b></span>
+      <span>학습 <b id="n-learn">0</b></span>
+      <span>전체 <b id="n-total">0</b></span>
+    </div>
   </div>
 </nav>
 
-<div class="container">
-  <div class="tabs">
-    <div class="tab active" data-tab="trace" onclick="switchTab('trace')">
-      <span class="tab-icon">&#9998;</span>따라쓰기
+<main>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" data-tab="trace" onclick="switchTab('trace')">따라쓰기</div>
+      <div class="tab" data-tab="test" onclick="switchTab('test')">암기테스트</div>
+      <div class="tab" data-tab="status" onclick="switchTab('status')">암기현황</div>
     </div>
-    <div class="tab" data-tab="test" onclick="switchTab('test')">
-      <span class="tab-icon">&#128170;</span>암기테스트
-    </div>
-    <div class="tab" data-tab="status" onclick="switchTab('status')">
-      <span class="tab-icon">&#128202;</span>암기현황
-    </div>
-  </div>
 
-  <!-- Shared filters (for tab 1 & 2) -->
-  <div id="shared-filters">
-    <div class="filters">
-      <button class="fbtn on" data-f="all" onclick="setF('all',this)">전체</button>
-      <button class="fbtn" data-f="요건효과" onclick="setF('요건효과',this)">요건/효과</button>
-      <button class="fbtn" data-f="비교" onclick="setF('비교',this)">비교</button>
-      <button class="fbtn" data-f="핵심숫자" onclick="setF('핵심숫자',this)">핵심숫자</button>
-      <button class="fbtn" data-f="판례" onclick="setF('판례',this)">판례</button>
-      <button class="fbtn" data-f="조문" onclick="setF('조문',this)">조문</button>
+    <!-- Shared filters (for tab 1 & 2) -->
+    <div id="shared-filters">
+      <div class="filters">
+        <button class="fbtn on" data-f="all" onclick="setF('all',this)">전체</button>
+        <button class="fbtn" data-f="요건효과" onclick="setF('요건효과',this)">요건/효과</button>
+        <button class="fbtn" data-f="비교" onclick="setF('비교',this)">비교</button>
+        <button class="fbtn" data-f="핵심숫자" onclick="setF('핵심숫자',this)">핵심숫자</button>
+        <button class="fbtn" data-f="판례" onclick="setF('판례',this)">판례</button>
+        <button class="fbtn" data-f="조문" onclick="setF('조문',this)">조문</button>
+      </div>
+      <div class="filters">
+        <button class="fbtn on" data-p="all" onclick="setP('all',this)">전편</button>
+        <button class="fbtn" data-p="제1편 민법총칙" onclick="setP('제1편 민법총칙',this)">총칙</button>
+        <button class="fbtn" data-p="제2편 채권총론" onclick="setP('제2편 채권총론',this)">채권총론</button>
+        <button class="fbtn" data-p="제3편 채권각론" onclick="setP('제3편 채권각론',this)">채권각론</button>
+        <button class="fbtn" data-p="제4편 물권법" onclick="setP('제4편 물권법',this)">물권법</button>
+        <button class="fbtn" data-p="제5편 친족상속법" onclick="setP('제5편 친족상속법',this)">친족상속</button>
+      </div>
     </div>
-    <div class="filters">
-      <button class="fbtn on" data-p="all" onclick="setP('all',this)">전편</button>
-      <button class="fbtn" data-p="제1편 민법총칙" onclick="setP('제1편 민법총칙',this)">총칙</button>
-      <button class="fbtn" data-p="제2편 채권총론" onclick="setP('제2편 채권총론',this)">채권총론</button>
-      <button class="fbtn" data-p="제3편 채권각론" onclick="setP('제3편 채권각론',this)">채권각론</button>
-      <button class="fbtn" data-p="제4편 물권법" onclick="setP('제4편 물권법',this)">물권법</button>
-      <button class="fbtn" data-p="제5편 친족상속법" onclick="setP('제5편 친족상속법',this)">친족상속</button>
-    </div>
-  </div>
 
-  <!-- ========== TAB 1: 따라쓰기 ========== -->
-  <div id="tab-trace">
-    <div class="card">
-      <div class="card-head">
-        <span class="badge" id="t1-badge">요건효과</span>
-        <span class="card-num" id="t1-num">1/1033</span>
+    <!-- ========== TAB 1: 따라쓰기 ========== -->
+    <div id="tab-trace">
+      <div class="card">
+        <div class="card-head">
+          <span class="badge" id="t1-badge">요건효과</span>
+          <span class="card-num" id="t1-num">1/1033</span>
+        </div>
+        <div class="card-body">
+          <div class="part" id="t1-part"></div>
+          <h2 id="t1-title">로딩 중...</h2>
+          <span class="exam-tag" id="t1-exam" style="display:none"></span>
+        </div>
+        <div class="trace-answer" id="t1-answer">정답이 여기에 표시됩니다. 아래에 그대로 따라 쓰세요.</div>
+        <div class="input-wrap">
+          <textarea id="t1-input" placeholder="위의 내용을 보면서 그대로 따라 쓰세요..."></textarea>
+        </div>
+        <div class="match-result" id="t1-match">
+          <div class="match-bar"><div class="match-fill" id="t1-fill"></div></div>
+          <div class="match-info"><span id="t1-match-msg"></span><span class="match-pct" id="t1-pct"></span></div>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="traceCheck()">일치도 확인</button>
+          <button class="btn" onclick="traceDone()">다 썼다 → 다음</button>
+          <span class="spacer"></span>
+          <button class="btn btn-ghost" onclick="prevCard()">← 이전</button>
+          <button class="btn btn-ghost" onclick="nextCard()">다음 →</button>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="part" id="t1-part"></div>
-        <h2 id="t1-title">로딩 중...</h2>
-        <span class="exam-tag" id="t1-exam" style="display:none"></span>
-      </div>
-      <div class="trace-answer" id="t1-answer">정답이 여기에 표시됩니다. 아래에 그대로 따라 쓰세요.</div>
-      <div class="input-wrap">
-        <textarea id="t1-input" placeholder="위의 내용을 보면서 그대로 따라 쓰세요..."></textarea>
-      </div>
-      <div class="match-result" id="t1-match">
-        <div class="match-bar"><div class="match-fill" id="t1-fill"></div></div>
-        <div class="match-info"><span id="t1-match-msg"></span><span class="match-pct" id="t1-pct"></span></div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-p" onclick="traceCheck()">일치도 확인</button>
-        <button class="btn btn-g" onclick="traceDone()">다 썼다 → 다음</button>
-        <span class="spacer"></span>
-        <button class="btn btn-ghost" onclick="prevCard()">← 이전</button>
-        <button class="btn btn-ghost" onclick="nextCard()">다음 →</button>
-      </div>
+      <div class="hint">정답을 보면서 따라 쓰는 단계입니다. 익숙해지면 <b>암기테스트</b> 탭으로!</div>
     </div>
-    <div class="hint">정답을 보면서 따라 쓰는 단계입니다. 익숙해지면 <b>암기테스트</b> 탭으로!</div>
-  </div>
 
-  <!-- ========== TAB 2: 암기테스트 ========== -->
-  <div id="tab-test" style="display:none">
-    <div class="card">
-      <div class="card-head">
-        <span class="badge" id="t2-badge">요건효과</span>
-        <span class="card-num" id="t2-num">1/1033</span>
+    <!-- ========== TAB 2: 암기테스트 ========== -->
+    <div id="tab-test" style="display:none">
+      <div class="card">
+        <div class="card-head">
+          <span class="badge" id="t2-badge">요건효과</span>
+          <span class="card-num" id="t2-num">1/1033</span>
+        </div>
+        <div class="card-body">
+          <div class="part" id="t2-part"></div>
+          <h2 id="t2-title">로딩 중...</h2>
+          <span class="exam-tag" id="t2-exam" style="display:none"></span>
+        </div>
+        <div class="input-wrap">
+          <textarea id="t2-input" placeholder="정답을 안 보고 써보세요..."></textarea>
+        </div>
+        <div class="match-result" id="t2-match">
+          <div class="match-bar"><div class="match-fill" id="t2-fill"></div></div>
+          <div class="match-info"><span id="t2-match-msg"></span><span class="match-pct" id="t2-pct"></span></div>
+        </div>
+        <div class="reveal" id="t2-reveal">
+          <div class="reveal-label">정답</div>
+          <span id="t2-answer"></span>
+        </div>
+        <div class="actions">
+          <button class="btn" id="t2-btn-check" onclick="testCheck()">정답 확인</button>
+          <button class="btn" id="t2-btn-ok" style="display:none" onclick="testMark('mastered')">외웠다</button>
+          <button class="btn" id="t2-btn-half" style="display:none" onclick="testMark('learning')">좀 더</button>
+          <button class="btn btn-ghost" id="t2-btn-fail" style="display:none" onclick="testMark('new')">모르겠다</button>
+          <span class="spacer"></span>
+          <button class="btn btn-ghost" onclick="prevCard()">←</button>
+          <button class="btn btn-ghost" onclick="nextCard()">→</button>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="part" id="t2-part"></div>
-        <h2 id="t2-title">로딩 중...</h2>
-        <span class="exam-tag" id="t2-exam" style="display:none"></span>
-      </div>
-      <div class="input-wrap">
-        <textarea id="t2-input" placeholder="정답을 안 보고 써보세요..."></textarea>
-      </div>
-      <div class="match-result" id="t2-match">
-        <div class="match-bar"><div class="match-fill" id="t2-fill"></div></div>
-        <div class="match-info"><span id="t2-match-msg"></span><span class="match-pct" id="t2-pct"></span></div>
-      </div>
-      <div class="reveal" id="t2-reveal">
-        <div class="reveal-label">정답</div>
-        <span id="t2-answer"></span>
-      </div>
-      <div class="actions">
-        <button class="btn btn-p" id="t2-btn-check" onclick="testCheck()">정답 확인</button>
-        <button class="btn btn-g" id="t2-btn-ok" style="display:none" onclick="testMark('mastered')">외웠다</button>
-        <button class="btn btn-o" id="t2-btn-half" style="display:none" onclick="testMark('learning')">좀 더</button>
-        <button class="btn btn-r" id="t2-btn-fail" style="display:none" onclick="testMark('new')">모르겠다</button>
-        <span class="spacer"></span>
-        <button class="btn btn-ghost" onclick="prevCard()">←</button>
-        <button class="btn btn-ghost" onclick="nextCard()">→</button>
-      </div>
+      <div class="hint"><kbd>Ctrl+Enter</kbd> 정답확인 · <kbd>1</kbd> 외웠다 · <kbd>2</kbd> 좀 더 · <kbd>3</kbd> 모르겠다</div>
     </div>
-    <div class="hint"><kbd>Ctrl+Enter</kbd> 정답확인 · <kbd>1</kbd> 외웠다 · <kbd>2</kbd> 좀 더 · <kbd>3</kbd> 모르겠다</div>
-  </div>
 
-  <!-- ========== TAB 3: 암기현황 ========== -->
-  <div id="tab-status" style="display:none">
-    <div class="status-header">
-      <div class="scard"><h4>전체 진도</h4><div class="num num-g" id="s-pct">0%</div></div>
-      <div class="scard"><h4>완료</h4><div class="num num-g" id="s-done">0</div></div>
-      <div class="scard"><h4>학습중</h4><div class="num num-o" id="s-learn">0</div></div>
-      <div class="scard"><h4>미학습</h4><div class="num num-r" id="s-new">0</div></div>
+    <!-- ========== TAB 3: 암기현황 ========== -->
+    <div id="tab-status" style="display:none">
+      <div class="status-header">
+        <div class="scard"><h4>전체 진도</h4><div class="num" id="s-pct">0%</div></div>
+        <div class="scard"><h4>완료</h4><div class="num" id="s-done">0</div></div>
+        <div class="scard"><h4>학습중</h4><div class="num" id="s-learn">0</div></div>
+        <div class="scard"><h4>미학습</h4><div class="num" id="s-new">0</div></div>
+      </div>
+      <div class="filters" id="status-filters">
+        <button class="fbtn on" onclick="setSF('all',this)">전체</button>
+        <button class="fbtn" onclick="setSF('mastered',this)">완료</button>
+        <button class="fbtn" onclick="setSF('learning',this)">학습중</button>
+        <button class="fbtn" onclick="setSF('new',this)">미학습</button>
+      </div>
+      <input class="search-box" id="s-search" placeholder="검색 (제목, 내용)..." oninput="renderStatus()">
+      <div class="status-list" id="s-list"></div>
+      <div class="load-more" id="s-more"></div>
     </div>
-    <div class="filters" id="status-filters">
-      <button class="fbtn on" onclick="setSF('all',this)">전체</button>
-      <button class="fbtn" onclick="setSF('mastered',this)">완료</button>
-      <button class="fbtn" onclick="setSF('learning',this)">학습중</button>
-      <button class="fbtn" onclick="setSF('new',this)">미학습</button>
-    </div>
-    <input class="search-box" id="s-search" placeholder="검색 (제목, 내용)..." oninput="renderStatus()">
-    <div class="status-list" id="s-list"></div>
-    <div class="load-more" id="s-more"></div>
   </div>
-</div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Bobo's Home</p>
+  </div>
+</footer>
 
 <!-- Modal -->
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
@@ -280,8 +676,8 @@ textarea::placeholder{color:var(--t3)}
       <div class="score-val" id="m-score-val">0%</div>
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn btn-p" style="flex:1" onclick="saveModal()">저장</button>
-      <button class="btn btn-s" style="flex:1" onclick="closeModal()">닫기</button>
+      <button class="btn" style="flex:1" onclick="saveModal()">저장</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">닫기</button>
     </div>
   </div>
 </div>
@@ -345,7 +741,6 @@ function updateNav(){
 function renderTrace(){
   if(!filtered.length)return;
   const c=filtered[idx];
-  document.getElementById('t1-badge').className='badge b-'+c.category;
   document.getElementById('t1-badge').textContent=c.category;
   document.getElementById('t1-num').textContent=`${idx+1}/${filtered.length}`;
   const partText = c.page ? `${c.part} (p.${c.page})` : c.part;
@@ -376,7 +771,6 @@ function traceDone(){
 function renderTest(){
   if(!filtered.length)return;
   const c=filtered[idx];
-  document.getElementById('t2-badge').className='badge b-'+c.category;
   document.getElementById('t2-badge').textContent=c.category;
   document.getElementById('t2-num').textContent=`${idx+1}/${filtered.length}`;
   const partText2 = c.page ? `${c.part} (p.${c.page})` : c.part;
@@ -427,8 +821,6 @@ function renderStatus(){
   let items=CARDS.filter(c=>{
     const st=gs(c.id).s;
     if(curSF!=='all'&&st!==curSF)return false;
-    if(curF!=='all'&&c.category!==curF)return false;
-    if(curP!=='all'&&c.part!==curP)return false;
     if(q&&!c.prompt.toLowerCase().includes(q)&&!c.answer.toLowerCase().includes(q))return false;
     return true;
   });
@@ -443,8 +835,8 @@ function renderStatus(){
   const show=items.slice(0, PAGE_SIZE);
   list.innerHTML=show.map(c=>{
     const st=gs(c.id);
-    const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'dot-new';
-    const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'sb-none';
+    const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'';
+    const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'';
     const scText=st.n>0?st.sc+'%':'—';
     return`<div class="srow" onclick="openModal('${c.id}')">
       <div class="dot ${dotCls}"></div>
@@ -458,7 +850,7 @@ function renderStatus(){
 
   const moreEl=document.getElementById('s-more');
   if(items.length>PAGE_SIZE){
-    moreEl.innerHTML=`<button class="btn btn-s" onclick="loadMore()">더 보기 (${items.length-PAGE_SIZE}개 남음)</button>`;
+    moreEl.innerHTML=`<button class="btn btn-ghost" onclick="loadMore()">더 보기 (${items.length-PAGE_SIZE}개 남음)</button>`;
   } else moreEl.innerHTML='';
 }
 
@@ -507,9 +899,7 @@ function showMatch(prefix,sc){
   el.classList.add('show');
   const fill=document.getElementById(prefix+'-fill');
   fill.style.width=sc+'%';
-  fill.style.background=sc>=80?'var(--g)':sc>=50?'var(--o)':'var(--r)';
   document.getElementById(prefix+'-pct').textContent=sc+'%';
-  document.getElementById(prefix+'-pct').style.color=sc>=80?'var(--g)':sc>=50?'var(--o)':'var(--r)';
   const msg=sc>=80?'거의 완벽!':sc>=50?'절반 이상 맞았어요':sc>0?'다시 한번 확인해보세요':'정답을 확인하세요';
   document.getElementById(prefix+'-match-msg').textContent=msg;
 }
