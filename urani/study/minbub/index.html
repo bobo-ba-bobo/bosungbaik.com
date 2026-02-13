@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>유라니의 민법 공부 - 암기 트레이너</title>
+<title>민법의 맥 - 암기 트레이너</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0f1419;--s1:#1a2332;--s2:#233041;--bd:#2d3e50;
-  --t1:#e8f4f8;--t2:#90b4c8;--t3:#607888;
-  --p:#4a9eff;--pl:#74b9ff;--g:#00b894;--o:#fdcb6e;--r:#e17055;--b:#6dd5ed;
+  --bg:#0f0f13;--s1:#1a1a24;--s2:#232334;--bd:#2d2d44;
+  --t1:#e8e8f0;--t2:#9090a8;--t3:#606078;
+  --p:#6c5ce7;--pl:#a29bfe;--g:#00b894;--o:#fdcb6e;--r:#e17055;--b:#74b9ff;
 }
 body{font-family:'Apple SD Gothic Neo',-apple-system,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh}
 
@@ -104,25 +104,16 @@ textarea::placeholder{color:var(--t3)}
 .status-list{display:flex;flex-direction:column;gap:6px}
 .srow{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .15s}
 .srow:hover{border-color:var(--p)}
-.srow .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;cursor:pointer;transition:transform .2s}
-.srow .dot:hover{transform:scale(1.3)}
+.srow .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .dot-mastered{background:var(--g)}.dot-learning{background:var(--o)}.dot-new{background:var(--bd)}
 .srow .info{flex:1;min-width:0}
 .srow .title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .srow .meta{font-size:11px;color:var(--t2);margin-top:2px}
-.srow .score-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;gap:6px}
+.srow .score-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0}
 .sb-high{background:rgba(0,184,148,.15);color:var(--g)}
 .sb-mid{background:rgba(253,203,110,.15);color:var(--o)}
 .sb-low{background:rgba(225,112,85,.15);color:var(--r)}
 .sb-none{background:var(--s2);color:var(--t3)}
-.score-edit-btn{background:var(--p);color:#fff;border:none;border-radius:4px;width:20px;height:20px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity .2s}
-.score-edit-btn:hover{opacity:1}
-.score-slider-container{display:none;position:absolute;right:0;top:100%;margin-top:8px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;box-shadow:0 4px 12px rgba(0,0,0,.3);z-index:10;min-width:200px}
-.score-slider-container.show{display:block}
-.score-slider-label{font-size:11px;color:var(--t2);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
-.score-slider-value{font-size:14px;font-weight:700;color:var(--p)}
-.score-slider{width:100%;accent-color:var(--p);height:6px}
-.srow{position:relative}
 
 /* STATUS EDIT MODAL */
 .modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -143,12 +134,8 @@ textarea::placeholder{color:var(--t3)}
 <body>
 
 <nav>
-  <h1>💙 <span>유라니의 민법 공부</span></h1>
+  <h1><span>민법의 맥</span> 암기 트레이너</h1>
   <div class="nav-stats">
-    <span id="sync-status" style="display:none;margin-right:8px;color:var(--g);font-size:11px">☁️ 동기화</span>
-    <button id="login-btn" class="btn btn-s" onclick="showLoginModal()" style="padding:5px 10px;font-size:11px;margin-right:8px">로그인</button>
-    <span id="user-info" style="display:none;margin-right:8px;font-size:11px;color:var(--g)">🔒 로그인됨</span>
-    <button id="logout-btn" class="btn btn-ghost" onclick="handleLogout()" style="display:none;padding:5px 10px;font-size:11px;margin-right:8px">로그아웃</button>
     <span>완료 <b id="n-done">0</b></span>
     <span>학습 <b id="n-learn">0</b></span>
     <span>전체 <b id="n-total">0</b></span>
@@ -299,66 +286,14 @@ textarea::placeholder{color:var(--t3)}
   </div>
 </div>
 
-<!-- Login Modal -->
-<div class="modal-bg" id="login-modal" onclick="if(event.target===this)closeLoginModal()">
-  <div class="modal" style="max-width:400px">
-    <h2>☁️ 클라우드 동기화</h2>
-    <p style="font-size:13px;color:var(--t2);margin-bottom:20px">암호를 입력하면 다른 기기에서도 진도를 이어서 볼 수 있어요</p>
-    <label>암호 (4자 이상)</label>
-    <input type="password" id="login-password" placeholder="암호 입력" style="width:100%;padding:10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-size:14px;margin-bottom:16px;outline:none">
-    <div id="login-error" style="display:none;color:var(--r);font-size:12px;margin-bottom:12px"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-p" style="flex:1" onclick="handleLogin()">로그인</button>
-      <button class="btn btn-s" style="flex:1" onclick="closeLoginModal()">취소</button>
-    </div>
-    <p style="font-size:11px;color:var(--t3);margin-top:16px;text-align:center">💡 같은 암호로 모든 기기에서 접속하세요</p>
-  </div>
-</div>
-
-<script type="module">
-// Firebase imports
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyAaMrOed3Zhj4ceappFkMozjYBF-CYx4g8",
-  authDomain: "urani-study.firebaseapp.com",
-  projectId: "urani-study",
-  storageBucket: "urani-study.firebasestorage.app",
-  messagingSenderId: "595550201149",
-  appId: "1:595550201149:web:328525a314582c70ac5154"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-let currentUserId = null;
-
-// Hash password to create user ID
-async function hashPassword(password) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
+<script>
 let CARDS=[], state={}, curTab='trace', curF='all', curP='all', curSF='all';
 let filtered=[], idx=0;
 let statusPage=0;
 const PAGE_SIZE=50;
 
 function load(){try{const s=localStorage.getItem('mb2');if(s)state=JSON.parse(s)}catch(e){}}
-async function save(){
-  localStorage.setItem('mb2',JSON.stringify(state));
-  if(currentUserId){
-    try{
-      await setDoc(doc(db,'users',currentUserId),{progress:state,lastUpdated:Date.now()},{merge:true});
-      document.getElementById('sync-status').style.display='inline';
-      setTimeout(()=>document.getElementById('sync-status').style.display='none',2000);
-    }catch(e){console.error('Sync error:',e)}
-  }
-}
+function save(){localStorage.setItem('mb2',JSON.stringify(state))}
 function gs(id){return state[id]||{s:'new',sc:0,n:0}}
 function ss(id,u){if(!state[id])state[id]={s:'new',sc:0,n:0};Object.assign(state[id],u);save()}
 
@@ -377,11 +312,11 @@ function applyFilter(){
   render();
 }
 
-window.setF=function(f,el){curF=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));applyFilter()}
-window.setP=function(p,el){curP=p;document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));applyFilter()}
-window.setSF=function(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStatus()}
+function setF(f,el){curF=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));applyFilter()}
+function setP(p,el){curP=p;document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));applyFilter()}
+function setSF(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStatus()}
 
-window.switchTab=function(t){
+function switchTab(t){
   curTab=t;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
   document.getElementById('tab-trace').style.display=t==='trace'?'':'none';
@@ -391,7 +326,7 @@ window.switchTab=function(t){
   render();
 }
 
-window.render=function(){
+function render(){
   updateNav();
   if(curTab==='trace')renderTrace();
   else if(curTab==='test')renderTest();
@@ -407,7 +342,7 @@ function updateNav(){
 }
 
 // ===== TAB 1: TRACE =====
-window.renderTrace=function(){
+function renderTrace(){
   if(!filtered.length)return;
   const c=filtered[idx];
   document.getElementById('t1-badge').className='badge b-'+c.category;
@@ -423,13 +358,13 @@ window.renderTrace=function(){
   else document.getElementById('t1-exam').style.display='none';
 }
 
-window.traceCheck=function(){
+function traceCheck(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t1-input').value, c.answer);
   showMatch('t1',sc);
 }
 
-window.traceDone=function(){
+function traceDone(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t1-input').value, c.answer);
   const prev=gs(c.id);
@@ -438,7 +373,7 @@ window.traceDone=function(){
 }
 
 // ===== TAB 2: TEST =====
-window.renderTest=function(){
+function renderTest(){
   if(!filtered.length)return;
   const c=filtered[idx];
   document.getElementById('t2-badge').className='badge b-'+c.category;
@@ -458,7 +393,7 @@ window.renderTest=function(){
   else document.getElementById('t2-exam').style.display='none';
 }
 
-window.testCheck=function(){
+function testCheck(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t2-input').value, c.answer);
   showMatch('t2',sc);
@@ -471,7 +406,7 @@ window.testCheck=function(){
   ss(c.id,{sc, n:(gs(c.id).n||0)+1});
 }
 
-window.testMark=function(status){
+function testMark(status){
   const c=filtered[idx];
   ss(c.id,{s:status});
   updateNav();
@@ -479,7 +414,7 @@ window.testMark=function(status){
 }
 
 // ===== TAB 3: STATUS =====
-window.renderStatus=function(){
+function renderStatus(){
   let done=0,learn=0,nw=0;
   CARDS.forEach(c=>{const s=gs(c.id).s;if(s==='mastered')done++;else if(s==='learning')learn++;else nw++});
   const pct=CARDS.length?Math.round(done/CARDS.length*100):0;
@@ -510,28 +445,14 @@ window.renderStatus=function(){
     const st=gs(c.id);
     const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'dot-new';
     const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'sb-none';
-    const scText=st.sc+'%';
-    return`<div class="srow">
-      <div class="dot ${dotCls}" onclick="event.stopPropagation();cycleStatus('${c.id}')" title="클릭하여 상태 변경"></div>
-      <div class="info" onclick="openModal('${c.id}')" style="cursor:pointer;flex:1">
+    const scText=st.n>0?st.sc+'%':'—';
+    return`<div class="srow" onclick="openModal('${c.id}')">
+      <div class="dot ${dotCls}"></div>
+      <div class="info">
         <div class="title">${esc(c.prompt)}</div>
         <div class="meta">${c.part}${c.page?' (p.'+c.page+')':''} · ${c.category}${c.exam?' · 기출':''}${st.n>0?' · '+st.n+'회':''}</div>
       </div>
-      <div style="position:relative">
-        <div class="score-badge ${sbCls}">
-          ${scText}
-          <button class="score-edit-btn" onclick="event.stopPropagation();toggleScoreSlider('${c.id}')" title="점수 조정">✏️</button>
-        </div>
-        <div id="slider-${c.id}" class="score-slider-container">
-          <div class="score-slider-label">
-            <span>점수</span>
-            <span class="score-slider-value" id="slider-val-${c.id}">${st.sc}%</span>
-          </div>
-          <input type="range" class="score-slider" min="0" max="100" value="${st.sc}"
-                 oninput="updateSliderScore('${c.id}',this.value)"
-                 onchange="saveSliderScore('${c.id}')">
-        </div>
-      </div>
+      <div class="score-badge ${sbCls}">${scText}</div>
     </div>`;
   }).join('');
 
@@ -542,54 +463,11 @@ window.renderStatus=function(){
 }
 
 let statusShowCount=PAGE_SIZE;
-window.loadMore=function(){statusShowCount+=PAGE_SIZE;renderStatus()}
-
-// ===== STATUS CYCLE =====
-window.cycleStatus=function(id){
-  const st=gs(id);
-  const statusOrder=['new','learning','mastered'];
-  const currentIndex=statusOrder.indexOf(st.s);
-  const nextIndex=(currentIndex+1)%3;
-  const newStatus=statusOrder[nextIndex];
-  ss(id,{s:newStatus});
-  renderStatus();
-  render();
-}
-
-// ===== SCORE SLIDER =====
-window.toggleScoreSlider=function(id){
-  const el=document.getElementById('slider-'+id);
-  const isShown=el.classList.contains('show');
-  // Hide all other sliders
-  document.querySelectorAll('.score-slider-container').forEach(e=>e.classList.remove('show'));
-  // Toggle this one
-  if(!isShown){
-    el.classList.add('show');
-  }
-}
-
-window.updateSliderScore=function(id,value){
-  document.getElementById('slider-val-'+id).textContent=value+'%';
-}
-
-window.saveSliderScore=function(id){
-  const slider=document.querySelector(`#slider-${id} input`);
-  const newScore=parseInt(slider.value);
-  ss(id,{sc:newScore});
-  renderStatus();
-  render();
-}
-
-// Close sliders when clicking outside
-document.addEventListener('click',(e)=>{
-  if(!e.target.closest('.score-slider-container')&&!e.target.closest('.score-edit-btn')){
-    document.querySelectorAll('.score-slider-container').forEach(el=>el.classList.remove('show'));
-  }
-});
+function loadMore(){statusShowCount+=PAGE_SIZE;renderStatus()}
 
 // ===== MODAL =====
 let modalCardId=null;
-window.openModal=function(id){
+function openModal(id){
   modalCardId=id;
   const c=CARDS.find(x=>x.id===id);
   const st=gs(id);
@@ -602,9 +480,9 @@ window.openModal=function(id){
   document.getElementById('m-score-val').textContent=st.sc+'%';
   document.getElementById('modal').classList.add('show');
 }
-window.closeModal=function(){document.getElementById('modal').classList.remove('show');modalCardId=null}
+function closeModal(){document.getElementById('modal').classList.remove('show');modalCardId=null}
 function modalStatusChange(){}
-window.saveModal=function(){
+function saveModal(){
   if(!modalCardId)return;
   const newStatus=document.getElementById('m-status').value;
   const newScore=parseInt(document.getElementById('m-score').value);
@@ -639,8 +517,8 @@ function showMatch(prefix,sc){
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ===== NAV =====
-window.nextCard=function(){idx=(idx+1)%filtered.length;render()}
-window.prevCard=function(){idx=(idx-1+filtered.length)%filtered.length;render()}
+function nextCard(){idx=(idx+1)%filtered.length;render()}
+function prevCard(){idx=(idx-1+filtered.length)%filtered.length;render()}
 
 // ===== KEYBOARD =====
 document.addEventListener('keydown',e=>{
@@ -657,65 +535,6 @@ document.addEventListener('keydown',e=>{
     if(e.key==='3')testMark('new');
   }
 });
-
-// ===== LOGIN/LOGOUT =====
-window.showLoginModal=function(){
-  document.getElementById('login-modal').classList.add('show');
-  document.getElementById('login-password').value='';
-  document.getElementById('login-error').style.display='none';
-  setTimeout(()=>document.getElementById('login-password').focus(),100);
-}
-
-window.closeLoginModal=function(){
-  document.getElementById('login-modal').classList.remove('show');
-}
-
-window.handleLogin=async function(){
-  const password=document.getElementById('login-password').value;
-  const errorEl=document.getElementById('login-error');
-
-  if(!password||password.length<4){
-    errorEl.textContent='암호는 최소 4자 이상이어야 해요';
-    errorEl.style.display='block';
-    return;
-  }
-
-  try{
-    currentUserId=await hashPassword(password);
-    const docRef=doc(db,'users',currentUserId);
-    const docSnap=await getDoc(docRef);
-
-    if(docSnap.exists()){
-      const cloudData=docSnap.data();
-      state=cloudData.progress||{};
-      localStorage.setItem('mb2',JSON.stringify(state));
-      alert('☁️ 클라우드에서 진도를 불러왔어요!');
-    }else{
-      await setDoc(docRef,{progress:state,createdAt:Date.now(),lastUpdated:Date.now()});
-      alert('✨ 새로운 계정이 만들어졌어요!\n이제 다른 기기에서도 같은 암호로 로그인하면 진도가 동기화됩니다.');
-    }
-
-    document.getElementById('login-btn').style.display='none';
-    document.getElementById('user-info').style.display='inline';
-    document.getElementById('logout-btn').style.display='inline';
-    closeLoginModal();
-    render();
-  }catch(e){
-    console.error('Login error:',e);
-    errorEl.textContent='로그인 실패: '+e.message;
-    errorEl.style.display='block';
-  }
-}
-
-window.handleLogout=function(){
-  if(confirm('로그아웃하시겠어요?\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')){
-    currentUserId=null;
-    document.getElementById('login-btn').style.display='inline';
-    document.getElementById('user-info').style.display='none';
-    document.getElementById('logout-btn').style.display='none';
-    document.getElementById('sync-status').style.display='none';
-  }
-}
 
 // ===== INIT =====
 async function init(){
