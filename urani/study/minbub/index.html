@@ -450,7 +450,7 @@ function renderStatus(){
     const st=gs(c.id);
     const dotCls=st.s==='mastered'?'dot-mastered':st.s==='learning'?'dot-learning':'dot-new';
     const sbCls=st.sc>=80?'sb-high':st.sc>=50?'sb-mid':st.sc>0?'sb-low':'sb-none';
-    const scText=st.n>0?st.sc+'%':'—';
+    const scText=st.sc+'%';
     return`<div class="srow">
       <div class="dot ${dotCls}"></div>
       <div class="info" onclick="openModal('${c.id}')" style="cursor:pointer">
