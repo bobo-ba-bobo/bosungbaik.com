@@ -141,6 +141,10 @@ textarea::placeholder{color:var(--t3)}
 <nav>
   <h1>💙 <span>유라니의 민법 공부</span></h1>
   <div class="nav-stats">
+    <span id="sync-status" style="display:none;margin-right:8px;color:var(--g);font-size:11px">☁️ 동기화</span>
+    <button id="login-btn" class="btn btn-s" onclick="showLoginModal()" style="padding:5px 10px;font-size:11px;margin-right:8px">로그인</button>
+    <span id="user-info" style="display:none;margin-right:8px;font-size:11px;color:var(--g)">🔒 로그인됨</span>
+    <button id="logout-btn" class="btn btn-ghost" onclick="handleLogout()" style="display:none;padding:5px 10px;font-size:11px;margin-right:8px">로그아웃</button>
     <span>완료 <b id="n-done">0</b></span>
     <span>학습 <b id="n-learn">0</b></span>
     <span>전체 <b id="n-total">0</b></span>
@@ -291,14 +295,66 @@ textarea::placeholder{color:var(--t3)}
   </div>
 </div>
 
-<script>
+<!-- Login Modal -->
+<div class="modal-bg" id="login-modal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="modal" style="max-width:400px">
+    <h2>☁️ 클라우드 동기화</h2>
+    <p style="font-size:13px;color:var(--t2);margin-bottom:20px">암호를 입력하면 다른 기기에서도 진도를 이어서 볼 수 있어요</p>
+    <label>암호 (4자 이상)</label>
+    <input type="password" id="login-password" placeholder="암호 입력" style="width:100%;padding:10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-size:14px;margin-bottom:16px;outline:none">
+    <div id="login-error" style="display:none;color:var(--r);font-size:12px;margin-bottom:12px"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-p" style="flex:1" onclick="handleLogin()">로그인</button>
+      <button class="btn btn-s" style="flex:1" onclick="closeLoginModal()">취소</button>
+    </div>
+    <p style="font-size:11px;color:var(--t3);margin-top:16px;text-align:center">💡 같은 암호로 모든 기기에서 접속하세요</p>
+  </div>
+</div>
+
+<script type="module">
+// Firebase imports
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAaMrOed3Zhj4ceappFkMozjYBF-CYx4g8",
+  authDomain: "urani-study.firebaseapp.com",
+  projectId: "urani-study",
+  storageBucket: "urani-study.firebasestorage.app",
+  messagingSenderId: "595550201149",
+  appId: "1:595550201149:web:328525a314582c70ac5154"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let currentUserId = null;
+
+// Hash password to create user ID
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 let CARDS=[], state={}, curTab='trace', curF='all', curP='all', curSF='all';
 let filtered=[], idx=0;
 let statusPage=0;
 const PAGE_SIZE=50;
 
 function load(){try{const s=localStorage.getItem('mb2');if(s)state=JSON.parse(s)}catch(e){}}
-function save(){localStorage.setItem('mb2',JSON.stringify(state))}
+async function save(){
+  localStorage.setItem('mb2',JSON.stringify(state));
+  if(currentUserId){
+    try{
+      await setDoc(doc(db,'users',currentUserId),{progress:state,lastUpdated:Date.now()},{merge:true});
+      document.getElementById('sync-status').style.display='inline';
+      setTimeout(()=>document.getElementById('sync-status').style.display='none',2000);
+    }catch(e){console.error('Sync error:',e)}
+  }
+}
 function gs(id){return state[id]||{s:'new',sc:0,n:0}}
 function ss(id,u){if(!state[id])state[id]={s:'new',sc:0,n:0};Object.assign(state[id],u);save()}
 
@@ -567,6 +623,65 @@ document.addEventListener('keydown',e=>{
     if(e.key==='3')testMark('new');
   }
 });
+
+// ===== LOGIN/LOGOUT =====
+window.showLoginModal=function(){
+  document.getElementById('login-modal').classList.add('show');
+  document.getElementById('login-password').value='';
+  document.getElementById('login-error').style.display='none';
+  setTimeout(()=>document.getElementById('login-password').focus(),100);
+}
+
+window.closeLoginModal=function(){
+  document.getElementById('login-modal').classList.remove('show');
+}
+
+window.handleLogin=async function(){
+  const password=document.getElementById('login-password').value;
+  const errorEl=document.getElementById('login-error');
+
+  if(!password||password.length<4){
+    errorEl.textContent='암호는 최소 4자 이상이어야 해요';
+    errorEl.style.display='block';
+    return;
+  }
+
+  try{
+    currentUserId=await hashPassword(password);
+    const docRef=doc(db,'users',currentUserId);
+    const docSnap=await getDoc(docRef);
+
+    if(docSnap.exists()){
+      const cloudData=docSnap.data();
+      state=cloudData.progress||{};
+      localStorage.setItem('mb2',JSON.stringify(state));
+      alert('☁️ 클라우드에서 진도를 불러왔어요!');
+    }else{
+      await setDoc(docRef,{progress:state,createdAt:Date.now(),lastUpdated:Date.now()});
+      alert('✨ 새로운 계정이 만들어졌어요!\n이제 다른 기기에서도 같은 암호로 로그인하면 진도가 동기화됩니다.');
+    }
+
+    document.getElementById('login-btn').style.display='none';
+    document.getElementById('user-info').style.display='inline';
+    document.getElementById('logout-btn').style.display='inline';
+    closeLoginModal();
+    render();
+  }catch(e){
+    console.error('Login error:',e);
+    errorEl.textContent='로그인 실패: '+e.message;
+    errorEl.style.display='block';
+  }
+}
+
+window.handleLogout=function(){
+  if(confirm('로그아웃하시겠어요?\n로컬 진도는 유지되지만 클라우드 동기화는 중지됩니다.')){
+    currentUserId=null;
+    document.getElementById('login-btn').style.display='inline';
+    document.getElementById('user-info').style.display='none';
+    document.getElementById('logout-btn').style.display='none';
+    document.getElementById('sync-status').style.display='none';
+  }
+}
 
 // ===== INIT =====
 async function init(){
