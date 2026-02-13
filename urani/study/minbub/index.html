@@ -373,11 +373,11 @@ function applyFilter(){
   render();
 }
 
-function setF(f,el){curF=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));applyFilter()}
-function setP(p,el){curP=p;document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));applyFilter()}
-function setSF(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStatus()}
+window.setF=function(f,el){curF=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));applyFilter()}
+window.setP=function(p,el){curP=p;document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));applyFilter()}
+window.setSF=function(f,el){curSF=f;el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStatus()}
 
-function switchTab(t){
+window.switchTab=function(t){
   curTab=t;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
   document.getElementById('tab-trace').style.display=t==='trace'?'':'none';
@@ -387,7 +387,7 @@ function switchTab(t){
   render();
 }
 
-function render(){
+window.render=function(){
   updateNav();
   if(curTab==='trace')renderTrace();
   else if(curTab==='test')renderTest();
@@ -403,7 +403,7 @@ function updateNav(){
 }
 
 // ===== TAB 1: TRACE =====
-function renderTrace(){
+window.renderTrace=function(){
   if(!filtered.length)return;
   const c=filtered[idx];
   document.getElementById('t1-badge').className='badge b-'+c.category;
@@ -419,13 +419,13 @@ function renderTrace(){
   else document.getElementById('t1-exam').style.display='none';
 }
 
-function traceCheck(){
+window.traceCheck=function(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t1-input').value, c.answer);
   showMatch('t1',sc);
 }
 
-function traceDone(){
+window.traceDone=function(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t1-input').value, c.answer);
   const prev=gs(c.id);
@@ -434,7 +434,7 @@ function traceDone(){
 }
 
 // ===== TAB 2: TEST =====
-function renderTest(){
+window.renderTest=function(){
   if(!filtered.length)return;
   const c=filtered[idx];
   document.getElementById('t2-badge').className='badge b-'+c.category;
@@ -454,7 +454,7 @@ function renderTest(){
   else document.getElementById('t2-exam').style.display='none';
 }
 
-function testCheck(){
+window.testCheck=function(){
   const c=filtered[idx];
   const sc=score(document.getElementById('t2-input').value, c.answer);
   showMatch('t2',sc);
@@ -467,7 +467,7 @@ function testCheck(){
   ss(c.id,{sc, n:(gs(c.id).n||0)+1});
 }
 
-function testMark(status){
+window.testMark=function(status){
   const c=filtered[idx];
   ss(c.id,{s:status});
   updateNav();
@@ -475,7 +475,7 @@ function testMark(status){
 }
 
 // ===== TAB 3: STATUS =====
-function renderStatus(){
+window.renderStatus=function(){
   let done=0,learn=0,nw=0;
   CARDS.forEach(c=>{const s=gs(c.id).s;if(s==='mastered')done++;else if(s==='learning')learn++;else nw++});
   const pct=CARDS.length?Math.round(done/CARDS.length*100):0;
@@ -533,10 +533,10 @@ function renderStatus(){
 }
 
 let statusShowCount=PAGE_SIZE;
-function loadMore(){statusShowCount+=PAGE_SIZE;renderStatus()}
+window.loadMore=function(){statusShowCount+=PAGE_SIZE;renderStatus()}
 
 // ===== QUICK SCORE EDIT =====
-function toggleQuickEdit(id){
+window.toggleQuickEdit=function(id){
   const el=document.getElementById('qe-'+id);
   const isHidden=el.style.display==='none';
   // Hide all other quick edits
@@ -545,7 +545,7 @@ function toggleQuickEdit(id){
   el.style.display=isHidden?'flex':'none';
 }
 
-function quickScore(id,delta){
+window.quickScore=function(id,delta){
   const st=gs(id);
   const newScore=Math.max(0,Math.min(100,st.sc+delta));
   ss(id,{sc:newScore});
@@ -555,7 +555,7 @@ function quickScore(id,delta){
 
 // ===== MODAL =====
 let modalCardId=null;
-function openModal(id){
+window.openModal=function(id){
   modalCardId=id;
   const c=CARDS.find(x=>x.id===id);
   const st=gs(id);
@@ -568,9 +568,9 @@ function openModal(id){
   document.getElementById('m-score-val').textContent=st.sc+'%';
   document.getElementById('modal').classList.add('show');
 }
-function closeModal(){document.getElementById('modal').classList.remove('show');modalCardId=null}
+window.closeModal=function(){document.getElementById('modal').classList.remove('show');modalCardId=null}
 function modalStatusChange(){}
-function saveModal(){
+window.saveModal=function(){
   if(!modalCardId)return;
   const newStatus=document.getElementById('m-status').value;
   const newScore=parseInt(document.getElementById('m-score').value);
@@ -605,8 +605,8 @@ function showMatch(prefix,sc){
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ===== NAV =====
-function nextCard(){idx=(idx+1)%filtered.length;render()}
-function prevCard(){idx=(idx-1+filtered.length)%filtered.length;render()}
+window.nextCard=function(){idx=(idx+1)%filtered.length;render()}
+window.prevCard=function(){idx=(idx-1+filtered.length)%filtered.length;render()}
 
 // ===== KEYBOARD =====
 document.addEventListener('keydown',e=>{
