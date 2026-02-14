@@ -273,7 +273,7 @@ nav h1 {
         </div>
         <div class="stat-card">
           <h3>전체</h3>
-          <div class="num" id="total">1033</div>
+          <div class="num" id="total">2382</div>
         </div>
       </div>
     </section>
@@ -352,14 +352,22 @@ async function hashPassword(password) {
 }
 
 // Load progress data
-function loadProgress() {
+async function loadProgress() {
   try {
     const s = localStorage.getItem('mb2');
     const state = s ? JSON.parse(s) : {};
 
-    let done = 0;
-    let total = 1033;
+    // Fetch total from cards_data.json
+    let total = 2382; // Default
+    try {
+      const res = await fetch('cards_data.json');
+      const data = await res.json();
+      total = data.cards ? data.cards.length : 2382;
+    } catch (e) {
+      console.error('Failed to fetch total:', e);
+    }
 
+    let done = 0;
     Object.values(state).forEach(item => {
       if (item.s === 'mastered') done++;
     });
