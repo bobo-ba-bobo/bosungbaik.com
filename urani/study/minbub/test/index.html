@@ -354,14 +354,22 @@ window.handleLogout = function() {
 
 async function loadCards() {
   try {
-    const cached = sessionStorage.getItem('cards_data');
+    const CACHE_VERSION = 'v2_2026-02-14';
+    const cached = sessionStorage.getItem('cards_data_' + CACHE_VERSION);
     if (cached) {
       cards = JSON.parse(cached);
     } else {
-      const res = await fetch('../cards_data.json');
+      // Clear old cache versions
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.startsWith('cards_data_')) {
+          sessionStorage.removeItem(key);
+        }
+      }
+      const res = await fetch('../cards_data.json?v=' + CACHE_VERSION);
       const data = await res.json();
       cards = data.cards;
-      sessionStorage.setItem('cards_data', JSON.stringify(cards));
+      sessionStorage.setItem('cards_data_' + CACHE_VERSION, JSON.stringify(cards));
     }
 
     const cats = [...new Set(cards.map(c => c.category))];
