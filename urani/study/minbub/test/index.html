@@ -354,7 +354,7 @@ window.handleLogout = function() {
 
 async function loadCards() {
   try {
-    const CACHE_VERSION = 'v2_2026-02-14';
+    const CACHE_VERSION = 'v3_2026-02-14';
     const cached = sessionStorage.getItem('cards_data_' + CACHE_VERSION);
     if (cached) {
       cards = JSON.parse(cached);
