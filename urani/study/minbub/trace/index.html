@@ -344,11 +344,12 @@ async function loadCards() {
       cards = JSON.parse(cached);
     } else {
       const res = await fetch('../cards_data.json');
-      cards = await res.json();
+      const data = await res.json();
+      cards = data.cards;
       sessionStorage.setItem('cards_data', JSON.stringify(cards));
     }
 
-    const cats = [...new Set(cards.map(c => c.cat))];
+    const cats = [...new Set(cards.map(c => c.category))];
     const parts = [...new Set(cards.map(c => c.part))];
 
     const catSel = document.getElementById('filter-cat');
@@ -379,7 +380,7 @@ window.applyFilter = function() {
   const status = document.getElementById('filter-status').value;
 
   filtered = cards.filter(c => {
-    if (cat && c.cat !== cat) return false;
+    if (cat && c.category !== cat) return false;
     if (part && c.part !== part) return false;
     if (status) {
       const s = state[c.id] ? state[c.id].s : 'new';
@@ -405,9 +406,9 @@ function showCard() {
   const c = filtered[curIdx];
   const st = state[c.id] || { s: 'new', sc: 0, n: 0 };
 
-  document.getElementById('card-meta').textContent = `${curIdx + 1} / ${filtered.length} | ${c.cat} > ${c.part} | 상태: ${st.s}`;
-  document.getElementById('card-q').textContent = c.q;
-  document.getElementById('card-a').textContent = c.a;
+  document.getElementById('card-meta').textContent = `${curIdx + 1} / ${filtered.length} | ${c.category} > ${c.part} | 상태: ${st.s}`;
+  document.getElementById('card-q').textContent = c.prompt;
+  document.getElementById('card-a').textContent = c.answer;
   document.getElementById('card-input').value = '';
   document.getElementById('match-status').classList.remove('show');
 }
@@ -419,7 +420,7 @@ window.checkTrace = function() {
   const input = document.getElementById('card-input').value.trim();
   const statusEl = document.getElementById('match-status');
 
-  if (input === c.a) {
+  if (input === c.answer) {
     statusEl.textContent = '✓ 정확합니다!';
     statusEl.className = 'match-status show ok';
 

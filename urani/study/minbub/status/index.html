@@ -399,11 +399,12 @@ async function loadCards() {
       cards = JSON.parse(cached);
     } else {
       const res = await fetch('../cards_data.json');
-      cards = await res.json();
+      const data = await res.json();
+      cards = data.cards;
       sessionStorage.setItem('cards_data', JSON.stringify(cards));
     }
 
-    const cats = [...new Set(cards.map(c => c.cat))];
+    const cats = [...new Set(cards.map(c => c.category))];
     const parts = [...new Set(cards.map(c => c.part))];
 
     const catSel = document.getElementById('filter-cat');
@@ -435,7 +436,7 @@ window.applyFilter = function() {
   const status = document.getElementById('filter-status').value;
 
   const filtered = cards.filter(c => {
-    if (cat && c.cat !== cat) return false;
+    if (cat && c.category !== cat) return false;
     if (part && c.part !== part) return false;
     if (status) {
       const s = state[c.id] ? state[c.id].s : 'new';
@@ -464,8 +465,8 @@ function renderList(filtered = cards) {
 
     item.innerHTML = `
       <div class="card-item-info">
-        <div class="card-item-cat">${c.cat} > ${c.part}</div>
-        <div class="card-item-q">${c.q}</div>
+        <div class="card-item-cat">${c.category} > ${c.part}</div>
+        <div class="card-item-q">${c.prompt}</div>
       </div>
       <div class="card-item-status ${st.s}">${st.s === 'new' ? '새로움' : st.s === 'learning' ? '학습중' : '완료'}</div>
       <div class="card-item-score">${st.sc}%</div>
