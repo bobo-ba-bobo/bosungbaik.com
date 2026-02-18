@@ -3,9 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CV - Bosung Baik</title>
+  <title>CV — Bosung Baik</title>
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* CV Header */
+    .cv-header {
+      margin-bottom: clamp(36px, 5vw, 48px);
+    }
+
+    .cv-site {
+      font-size: 13px;
+      color: #616161;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+
+    .cv-header h1 {
+      margin-bottom: 4px;
+    }
+
+    .cv-tagline {
+      font-size: 15px;
+      color: #616161;
+      font-weight: 300;
+      margin-bottom: 0;
+    }
+
+    /* CV entry row — ReadCV two-column layout */
+    .cv-entry {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0 20px;
+      margin-bottom: 16px;
+    }
+
+    .cv-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .cv-year {
+      font-size: 13px;
+      color: #616161;
+      font-weight: 300;
+      padding-top: 2px;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
+
+    .cv-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cv-content a {
+      font-size: 15px;
+      font-weight: 300;
+      color: #000;
+      transition: color 0.3s ease;
+    }
+
+    .cv-content a::after {
+      content: ' \2197';
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cv-content a:hover {
+      color: #616161;
+    }
+
+    .cv-content a:hover::after {
+      opacity: 0.7;
+    }
+
+    .cv-content a.internal::after {
+      display: none;
+    }
+
+    .cv-content span {
+      font-size: 15px;
+      font-weight: 300;
+      color: #000;
+    }
+
+    .cv-location {
+      font-size: 13px;
+      color: #616161;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* Contact grid — ReadCV label + link style */
+    .cv-contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px 32px;
+      list-style: none;
+    }
+
+    .cv-contact-grid li {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .cv-contact-label {
+      font-size: 11px;
+      color: #616161;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 300;
+    }
+
+    .cv-contact-grid a {
+      font-size: 14px;
+      font-weight: 300;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    .cv-contact-grid a::after {
+      content: ' \2197';
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cv-contact-grid a:hover {
+      color: #a0a0a0;
+    }
+
+    .cv-contact-grid a:hover::after {
+      opacity: 0.7;
+    }
+
+    .cv-contact-grid a[href^="mailto"]::after {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .cv-entry {
+        grid-template-columns: 72px 1fr;
+        gap: 0 12px;
+      }
+
+      .cv-year {
+        font-size: 12px;
+      }
+
+      .cv-contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Scroll progress bar -->
@@ -29,19 +182,179 @@
     <div class="container">
       <a href="/" class="back-link">Home</a>
 
-      <h1>CV</h1>
+      <!-- CV Header — ReadCV style -->
+      <div class="cv-header">
+        <p class="cv-site">bosungbaik.com</p>
+        <h1>Bosung Baik</h1>
+        <p class="cv-tagline">Investing in Seoul, Korea</p>
+      </div>
 
+      <div class="separator"></div>
+
+      <!-- About -->
       <section>
-        <p style="color: #616161;">tba</p>
+        <h2>About</h2>
+        <p>Investment associate at <a href="https://www.mashupventures.co/" target="_blank">Mashup Ventures</a>, focused on early-stage Korean startups. Founder and CEO of <a href="https://yventures.ac/" target="_blank">Y-Ventures</a>, a Yonsei University-based accelerator. CFA Charterholder. Passionate about backing unconventional ideas and building deep relationships with young founders.</p>
       </section>
+
+      <!-- Work Experience -->
+      <section>
+        <h2>Work Experience</h2>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025 — Now</div>
+          <div class="cv-content">
+            <a href="https://www.mashupventures.co/" target="_blank">Investment Associate at Mashup Ventures</a>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2024 — Now</div>
+          <div class="cv-content">
+            <a href="https://yventures.ac/" target="_blank">CEO at Y-Ventures</a>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025</div>
+          <div class="cv-content">
+            <span>Product at ZUZU (Kodebox)</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2023</div>
+          <div class="cv-content">
+            <span>Strategy Intern at McKinsey &amp; Company</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2022</div>
+          <div class="cv-content">
+            <span>Investment Intern at Equis</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2022</div>
+          <div class="cv-content">
+            <span>Policy Intern at Korean National Assembly</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section>
+        <h2>Education</h2>
+
+        <div class="cv-entry">
+          <div class="cv-year">2018 — 2025</div>
+          <div class="cv-content">
+            <span>Yonsei University</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2023 — 2025</div>
+          <div class="cv-content">
+            <span>CFA Charterholder</span>
+            <span class="cv-location">CFA Institute</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Writings -->
+      <section>
+        <h2>Writings</h2>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025</div>
+          <div class="cv-content">
+            <a href="/writings#vc-vs-pe" class="internal">VC vs. PE</a>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025</div>
+          <div class="cv-content">
+            <a href="/writings#infrastructure" class="internal">Infrastructure</a>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025</div>
+          <div class="cv-content">
+            <a href="/writings#value-driven-investing" class="internal">Value-driven Investing</a>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
+
+  <!-- Contact — inverted with ReadCV label/link grid -->
+  <div class="inverted">
+    <div class="container">
+      <h2>Contact</h2>
+      <ul class="cv-contact-grid">
+        <li>
+          <span class="cv-contact-label">Email</span>
+          <a href="mailto:bbs@mashupventures.co">bbs@mashupventures.co</a>
+        </li>
+        <li>
+          <span class="cv-contact-label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/bosungbaik/" target="_blank">bosungbaik</a>
+        </li>
+        <li>
+          <span class="cv-contact-label">Instagram</span>
+          <a href="https://www.instagram.com/bobo_sung_00/" target="_blank">@bobo_sung_00</a>
+        </li>
+        <li>
+          <span class="cv-contact-label">VSCO</span>
+          <a href="https://vsco.co/bobobabobo/" target="_blank">bobobabobo</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
       <p>&copy; 2026 Bobo's Home</p>
     </div>
   </footer>
+
+  <script>
+    // Scroll progress bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      scrollProgress.style.width = progress + '%';
+    });
+
+    // Section vertical line on scroll
+    const sections = document.querySelectorAll('main section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 
 </body>
 </html>
