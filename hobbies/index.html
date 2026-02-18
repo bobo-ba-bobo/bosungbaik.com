@@ -6,6 +6,129 @@
   <title>Hobbies - Bosung Baik</title>
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Hobbies-specific styles */
+    .hobbies-intro {
+      margin-bottom: 40px;
+      font-size: 15px;
+      color: #616161;
+    }
+
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .hobby-card {
+      border: 1px solid #e0e0e0;
+      padding: 28px;
+      position: relative;
+      background: #fff;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .hobby-card:nth-child(1) { animation-delay: 0.1s; }
+    .hobby-card:nth-child(2) { animation-delay: 0.2s; }
+    .hobby-card:nth-child(3) { animation-delay: 0.3s; }
+    .hobby-card:nth-child(4) { animation-delay: 0.4s; }
+    .hobby-card:nth-child(5) { animation-delay: 0.5s; }
+    .hobby-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hobby-card:hover {
+      border-color: #000;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .hobby-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #000;
+      transition: width 0.4s ease;
+    }
+
+    .hobby-card:hover::before {
+      width: 100%;
+    }
+
+    .hobby-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .hobby-name {
+      font-size: 18px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.01em;
+    }
+
+    .hobby-status {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+    }
+
+    .hobby-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #616161;
+      margin-bottom: 16px;
+    }
+
+    .hobby-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f5f5f5;
+    }
+
+    .hobby-tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid #e0e0e0;
+      color: #616161;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+    }
+
+    .hobby-tag:hover {
+      border-color: #000;
+      color: #000;
+    }
+
+    @media (max-width: 640px) {
+      .hobbies-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .hobby-card {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Scroll progress bar -->
@@ -31,9 +154,97 @@
 
       <h1>Hobbies</h1>
 
-      <section>
-        <p>tba</p>
-      </section>
+      <div class="hobbies-intro">
+        Things I do when I'm not working.
+      </div>
+
+      <div class="hobbies-grid">
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Running</div>
+            <div class="hobby-status">Active</div>
+          </div>
+          <div class="hobby-description">
+            Early morning runs to clear my head. Currently training for longer distances and enjoying the meditative rhythm of steady pace.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">5-10km</span>
+            <span class="hobby-tag">Morning routine</span>
+          </div>
+        </div>
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Bouldering</div>
+            <div class="hobby-status">On & Off</div>
+          </div>
+          <div class="hobby-description">
+            Problem-solving with my body. The mental challenge of finding the right sequence is as satisfying as completing the climb.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">V3-V5</span>
+            <span class="hobby-tag">The Climb</span>
+          </div>
+        </div>
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Coffee</div>
+            <div class="hobby-status">Daily</div>
+          </div>
+          <div class="hobby-description">
+            Espresso in the morning, hand drip in the afternoon. Exploring different beans and brewing methods to find the perfect cup.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">Espresso</span>
+            <span class="hobby-tag">Pour over</span>
+          </div>
+        </div>
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Photography</div>
+            <div class="hobby-status">Occasional</div>
+          </div>
+          <div class="hobby-description">
+            Capturing moments with minimal gear. iPhone mostly, film camera sometimes. Check my VSCO for recent shots.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">iPhone</span>
+            <span class="hobby-tag">Film</span>
+          </div>
+        </div>
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Music</div>
+            <div class="hobby-status">Always</div>
+          </div>
+          <div class="hobby-description">
+            Curating playlists for different moods. From deep focus sessions to late night drives. Music shapes my day.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">Playlists</span>
+            <span class="hobby-tag">Spotify</span>
+          </div>
+        </div>
+
+        <div class="hobby-card">
+          <div class="hobby-header">
+            <div class="hobby-name">Design</div>
+            <div class="hobby-status">Learning</div>
+          </div>
+          <div class="hobby-description">
+            Minimal interfaces and clean typography. Building this site taught me more about design than any course could.
+          </div>
+          <div class="hobby-meta">
+            <span class="hobby-tag">Web design</span>
+            <span class="hobby-tag">Minimalism</span>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </main>
@@ -52,20 +263,6 @@
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const progress = (scrollTop / scrollHeight) * 100;
       scrollProgress.style.width = progress + '%';
-    });
-
-    // Section vertical line on scroll
-    const sections = document.querySelectorAll('main section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => {
-      observer.observe(section);
     });
   </script>
 
