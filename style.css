@@ -31,7 +31,7 @@ body {
 
 /* Container */
 .container {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 120px;
 }
@@ -417,8 +417,22 @@ footer .footer-links a:hover {
    Responsive
    ======================================== */
 
+@media (max-width: 1400px) {
+  .container {
+    padding: 0 100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 840px;
+    padding: 0 80px;
+  }
+}
+
 @media (max-width: 960px) {
   .container {
+    max-width: 720px;
     padding: 0 60px;
   }
 
@@ -428,6 +442,12 @@ footer .footer-links a:hover {
 
   h1 {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 40px;
   }
 }
 
