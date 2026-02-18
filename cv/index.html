@@ -7,16 +7,35 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="../style.css">
   <style>
-    /* CV Header */
+    /* CV Header — read.cv style with round photo */
     .cv-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
       margin-bottom: clamp(36px, 5vw, 48px);
+    }
+
+    .cv-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+    }
+
+    .cv-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 2px;
     }
 
     .cv-site {
       font-size: 13px;
       color: #616161;
       font-weight: 300;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
 
     .cv-header h1 {
@@ -30,10 +49,10 @@
       margin-bottom: 0;
     }
 
-    /* CV entry row — ReadCV two-column layout */
+    /* CV entry row — two-column layout */
     .cv-entry {
       display: grid;
-      grid-template-columns: 90px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 0 20px;
       margin-bottom: 16px;
     }
@@ -47,7 +66,6 @@
       color: #616161;
       font-weight: 300;
       padding-top: 2px;
-      white-space: nowrap;
       line-height: 1.5;
     }
 
@@ -96,7 +114,52 @@
       line-height: 1.5;
     }
 
-    /* Contact grid — ReadCV label + link style */
+    /* Blog section — listed entries */
+    .cv-blog-entry {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 0 20px;
+      margin-bottom: 10px;
+    }
+
+    .cv-blog-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .cv-blog-label {
+      font-size: 13px;
+      color: #616161;
+      font-weight: 300;
+      padding-top: 2px;
+    }
+
+    .cv-blog-entry a {
+      font-size: 15px;
+      font-weight: 300;
+      color: #000;
+      transition: color 0.3s ease;
+    }
+
+    .cv-blog-entry a.internal::after {
+      display: none;
+    }
+
+    .cv-blog-entry a::after {
+      content: ' \2197';
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cv-blog-entry a:hover {
+      color: #616161;
+    }
+
+    .cv-blog-entry a:hover::after {
+      opacity: 0.7;
+    }
+
+    /* Contact grid — read.cv label + link style */
     .cv-contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -145,7 +208,17 @@
     }
 
     @media (max-width: 640px) {
-      .cv-entry {
+      .cv-header {
+        gap: 14px;
+      }
+
+      .cv-photo {
+        width: 52px;
+        height: 52px;
+      }
+
+      .cv-entry,
+      .cv-blog-entry {
         grid-template-columns: 72px 1fr;
         gap: 0 12px;
       }
@@ -182,11 +255,14 @@
     <div class="container">
       <a href="/" class="back-link">Home</a>
 
-      <!-- CV Header — ReadCV style -->
+      <!-- CV Header — read.cv style -->
       <div class="cv-header">
-        <p class="cv-site">bosungbaik.com</p>
-        <h1>Bosung Baik</h1>
-        <p class="cv-tagline">Investing in Seoul, Korea</p>
+        <img class="cv-photo" src="백보성 매쉬업벤처스 증명사진 가디건.jpeg" alt="Bosung Baik">
+        <div class="cv-header-info">
+          <p class="cv-site">bosungbaik.com</p>
+          <h1>Bosung Baik</h1>
+          <p class="cv-tagline">Investing in Seoul, Korea</p>
+        </div>
       </div>
 
       <div class="separator"></div>
@@ -194,7 +270,7 @@
       <!-- About -->
       <section>
         <h2>About</h2>
-        <p>Investment associate at <a href="https://www.mashupventures.co/" target="_blank">Mashup Ventures</a>, focused on early-stage Korean startups. Founder and CEO of <a href="https://yventures.ac/" target="_blank">Y-Ventures</a>, a Yonsei University-based accelerator. CFA Charterholder. Passionate about backing unconventional ideas and building deep relationships with young founders.</p>
+        <p>Investment associate at <a href="https://www.mashupventures.co/" target="_blank">Mashup Ventures</a>, focused on early-stage Korean startups. Founder and president of <a href="https://yventures.ac/" target="_blank">Y-Ventures</a>, Yonsei's first VC-focused student society. Head of planning at <a href="https://youthstartupforum.com" target="_blank">Youth Startup Forum</a>. CFA Charterholder. Passionate about backing unconventional ideas and building deep relationships with founders.</p>
       </section>
 
       <!-- Work Experience -->
@@ -210,17 +286,17 @@
         </div>
 
         <div class="cv-entry">
-          <div class="cv-year">2024 — Now</div>
+          <div class="cv-year">2025</div>
           <div class="cv-content">
-            <a href="https://yventures.ac/" target="_blank">CEO at Y-Ventures</a>
+            <span>CEO Staff, Investment Squad at ZUZU (Kodebox)</span>
             <span class="cv-location">Seoul, Korea</span>
           </div>
         </div>
 
         <div class="cv-entry">
-          <div class="cv-year">2025</div>
+          <div class="cv-year">2024</div>
           <div class="cv-content">
-            <span>Product at ZUZU (Kodebox)</span>
+            <a href="https://www.mckinsey.com/" target="_blank">Student Researcher at McKinsey &amp; Company</a>
             <span class="cv-location">Seoul, Korea</span>
           </div>
         </div>
@@ -228,23 +304,68 @@
         <div class="cv-entry">
           <div class="cv-year">2023</div>
           <div class="cv-content">
-            <span>Strategy Intern at McKinsey &amp; Company</span>
+            <span>Investment Intern at Equis Development Pte. Ltd.</span>
             <span class="cv-location">Seoul, Korea</span>
           </div>
         </div>
 
         <div class="cv-entry">
-          <div class="cv-year">2022</div>
+          <div class="cv-year">2021 — 2022</div>
           <div class="cv-content">
-            <span>Investment Intern at Equis</span>
+            <span>Training Instructor, Republic of Korea Army</span>
+            <span class="cv-location">Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2020</div>
+          <div class="cv-content">
+            <span>International Affairs Intern, National Assembly of Korea</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activities -->
+      <section>
+        <h2>Activities</h2>
+
+        <div class="cv-entry">
+          <div class="cv-year">2025 — Now</div>
+          <div class="cv-content">
+            <a href="https://youthstartupforum.com" target="_blank">Head of Planning at Youth Startup Forum</a>
             <span class="cv-location">Seoul, Korea</span>
           </div>
         </div>
 
         <div class="cv-entry">
-          <div class="cv-year">2022</div>
+          <div class="cv-year">2024 — Now</div>
           <div class="cv-content">
-            <span>Policy Intern at Korean National Assembly</span>
+            <a href="https://yventures.ac/" target="_blank">President at Y-Ventures, Yonsei</a>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2023</div>
+          <div class="cv-content">
+            <span>Grand Prize (대상), KB Solveathon</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2022 — 2023</div>
+          <div class="cv-content">
+            <span>President, Sharing Business Analysis (SKY 연합경영학회)</span>
+            <span class="cv-location">Seoul, Korea</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-year">2019 — 2020</div>
+          <div class="cv-content">
+            <span>Vice President, Korea Intervarsity Debate Association</span>
             <span class="cv-location">Seoul, Korea</span>
           </div>
         </div>
@@ -257,8 +378,8 @@
         <div class="cv-entry">
           <div class="cv-year">2018 — 2025</div>
           <div class="cv-content">
-            <span>Yonsei University</span>
-            <span class="cv-location">Seoul, Korea</span>
+            <span>Yonsei University — UIC Economics, Business Admin (Minor)</span>
+            <span class="cv-location">GPA 3.77 / 4.3 · Seoul, Korea</span>
           </div>
         </div>
 
@@ -271,36 +392,30 @@
         </div>
       </section>
 
-      <!-- Writings -->
+      <!-- Blog -->
       <section>
-        <h2>Writings</h2>
+        <h2>Blog</h2>
 
-        <div class="cv-entry">
-          <div class="cv-year">2025</div>
-          <div class="cv-content">
-            <a href="/writings#vc-vs-pe" class="internal">VC vs. PE</a>
-          </div>
+        <div class="cv-blog-entry">
+          <span class="cv-blog-label">Quarterly</span>
+          <a href="/quarterly-reports" class="internal">Quarterly Reports</a>
         </div>
 
-        <div class="cv-entry">
-          <div class="cv-year">2025</div>
-          <div class="cv-content">
-            <a href="/writings#infrastructure" class="internal">Infrastructure</a>
-          </div>
+        <div class="cv-blog-entry">
+          <span class="cv-blog-label">Essays</span>
+          <a href="/writings" class="internal">Writings</a>
         </div>
 
-        <div class="cv-entry">
-          <div class="cv-year">2025</div>
-          <div class="cv-content">
-            <a href="/writings#value-driven-investing" class="internal">Value-driven Investing</a>
-          </div>
+        <div class="cv-blog-entry">
+          <span class="cv-blog-label">Research</span>
+          <a href="https://bobobabobo.notion.site/research" target="_blank">Research Notes</a>
         </div>
       </section>
 
     </div>
   </main>
 
-  <!-- Contact — inverted with ReadCV label/link grid -->
+  <!-- Contact — inverted with read.cv label/link grid -->
   <div class="inverted">
     <div class="container">
       <h2>Contact</h2>
@@ -332,28 +447,20 @@
   </footer>
 
   <script>
-    // Scroll progress bar
     const scrollProgress = document.querySelector('.scroll-progress');
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = progress + '%';
+      scrollProgress.style.width = (scrollTop / scrollHeight) * 100 + '%';
     });
 
-    // Section vertical line on scroll
     const sections = document.querySelectorAll('main section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
       });
     }, { threshold: 0.1 });
-
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    sections.forEach(s => observer.observe(s));
   </script>
 
 </body>
