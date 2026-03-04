@@ -124,6 +124,36 @@
       color: #bbb;
     }
 
+    /* Demo section */
+    .slide-demo {
+      gap: 48px;
+    }
+
+    .demo-intro {
+      max-width: 640px;
+    }
+
+    .demo-images {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 720px;
+    }
+
+    .demo-images img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #222;
+    }
+
+    .demo-caption {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
     footer {
       padding: 40px 120px;
       border-top: 1px solid #222;
@@ -150,6 +180,33 @@
   </style>
 </head>
 <body>
+
+  <!-- 0. Demo: 이 페이지를 어떻게 만들었나 -->
+  <section class="slide slide-demo">
+    <div class="demo-intro">
+      <div class="slide-label">시작 전에 — 00</div>
+      <h2>이 페이지, 어떻게 만들었을까요</h2>
+      <p>코딩 없이, Claude Code에 말 한마디만 했습니다.</p>
+      <p style="color:#555; font-size:0.9rem; margin-top:8px;">
+        "bosungbaik.com/vc 만들어주고 그 안에 bosungbaik.com/vc/yva도 만들어줘"
+      </p>
+    </div>
+    <div class="demo-images">
+      <div>
+        <img src="image 1901.png" alt="Claude Code - 폴더 생성">
+        <p class="demo-caption">요청 한 줄 → 폴더 자동 생성</p>
+      </div>
+      <div>
+        <img src="image 1902.png" alt="Claude Code - 링크 추가">
+        <p class="demo-caption">바로가기 추가도 말로</p>
+      </div>
+      <div>
+        <img src="image 1903.png" alt="Claude Code - 페이지 디자인">
+        <p class="demo-caption">디자인 지시 → 완성 + GitHub 자동 배포</p>
+      </div>
+    </div>
+    <div class="slide-number">00</div>
+  </section>
 
   <!-- Cover -->
   <section class="slide slide-cover">
