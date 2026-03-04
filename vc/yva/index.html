@@ -5,39 +5,254 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YVA - Bosung Baik</title>
   <link rel="icon" type="image/png" href="../../favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
-  <link rel="stylesheet" href="../../style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Each section = one "slide" */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 120px;
+      border-bottom: 1px solid #222;
+      position: relative;
+    }
+
+    .slide:last-of-type {
+      border-bottom: none;
+    }
+
+    .slide-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .slide h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .slide h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .slide p {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: #aaa;
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .slide p.placeholder {
+      color: #444;
+      font-style: italic;
+    }
+
+    .slide-number {
+      position: absolute;
+      bottom: 40px;
+      right: 120px;
+      font-size: 12px;
+      color: #333;
+      letter-spacing: 0.1em;
+    }
+
+    /* Cover slide */
+    .slide-cover {
+      justify-content: flex-end;
+      padding-bottom: 100px;
+    }
+
+    .slide-cover h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+    }
+
+    .slide-cover .subtitle {
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      color: #555;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      font-size: 12px;
+      color: #333;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Divider slide */
+    .slide-divider {
+      background: #fff;
+      color: #000;
+    }
+
+    .slide-divider h2 {
+      color: #000;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+    }
+
+    .slide-divider .slide-number {
+      color: #bbb;
+    }
+
+    footer {
+      padding: 40px 120px;
+      border-top: 1px solid #222;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 60px 32px;
+      }
+      .scroll-hint,
+      .slide-number {
+        left: 32px;
+        right: 32px;
+      }
+      footer {
+        padding: 40px 32px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="scroll-progress"></div>
 
-  <nav>
-    <div class="container">
-      <div class="nav-name"><a href="/">Bobo's Home</a></div>
-      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-        <span></span><span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="/about">About</a></li>
-        <li><a href="/quarterly-reports">Reports</a></li>
-        <li><a href="/writings">Writings</a></li>
-      </ul>
-    </div>
-  </nav>
+  <!-- Cover -->
+  <section class="slide slide-cover">
+    <div class="slide-label">YVA 2026 · Bosung Baik</div>
+    <h1>VC란<br>무엇인가</h1>
+    <p class="subtitle">벤처캐피탈의 기초부터 대졸 신입 VC의 삶까지</p>
+    <div class="scroll-hint">↓ Scroll</div>
+  </section>
 
-  <main>
-    <div class="container">
-      <a href="/vc" class="back-link">VC</a>
+  <!-- Part 1 Divider -->
+  <section class="slide slide-divider">
+    <div class="slide-label">Part 1</div>
+    <h2>VC 기본</h2>
+    <div class="slide-number">01</div>
+  </section>
 
-      <h1>YVA</h1>
+  <!-- VC 기본 1 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 01</div>
+    <h2>VC는 어떤 일을 하는가</h2>
+    <p class="placeholder">[ placeholder — VC의 역할, 펀드 구조, LP/GP 설명 ]</p>
+    <div class="slide-number">02</div>
+  </section>
 
-    </div>
-  </main>
+  <!-- VC 기본 2 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 02</div>
+    <h2>투자는 어떻게 이루어지는가</h2>
+    <p class="placeholder">[ placeholder — 딜소싱부터 투자집행까지 프로세스 ]</p>
+    <div class="slide-number">03</div>
+  </section>
+
+  <!-- VC 기본 3 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 03</div>
+    <h2>수익은 어떻게 나는가</h2>
+    <p class="placeholder">[ placeholder — 엑싯, 수익 구조, carried interest ]</p>
+    <div class="slide-number">04</div>
+  </section>
+
+  <!-- Part 2 Divider -->
+  <section class="slide slide-divider">
+    <div class="slide-label">Part 2</div>
+    <h2>나에 대해서</h2>
+    <div class="slide-number">05</div>
+  </section>
+
+  <!-- 나 1 -->
+  <section class="slide">
+    <div class="slide-label">나에 대해서 — 01</div>
+    <h2>어떻게 VC에 오게 됐나</h2>
+    <p class="placeholder">[ placeholder — 배경, 관심사, VC를 선택한 이유 ]</p>
+    <div class="slide-number">06</div>
+  </section>
+
+  <!-- 나 2 -->
+  <section class="slide">
+    <div class="slide-label">나에 대해서 — 02</div>
+    <h2>지금 하는 일</h2>
+    <p class="placeholder">[ placeholder — Mashup Ventures, 담당 섹터, 일상 ]</p>
+    <div class="slide-number">07</div>
+  </section>
+
+  <!-- Part 3 Divider -->
+  <section class="slide slide-divider">
+    <div class="slide-label">Part 3</div>
+    <h2>대졸 신입 VC의 삶</h2>
+    <div class="slide-number">08</div>
+  </section>
+
+  <!-- 신입 VC 1 -->
+  <section class="slide">
+    <div class="slide-label">신입 VC — 01</div>
+    <h2>하루가 어떻게 생겼나</h2>
+    <p class="placeholder">[ placeholder — 실제 하루 루틴, 딜 미팅, 리서치 ]</p>
+    <div class="slide-number">09</div>
+  </section>
+
+  <!-- 신입 VC 2 -->
+  <section class="slide">
+    <div class="slide-label">신입 VC — 02</div>
+    <h2>좋은 점과 어려운 점</h2>
+    <p class="placeholder">[ placeholder — 솔직한 이야기 ]</p>
+    <div class="slide-number">10</div>
+  </section>
+
+  <!-- 신입 VC 3 -->
+  <section class="slide">
+    <div class="slide-label">신입 VC — 03</div>
+    <h2>VC를 꿈꾼다면</h2>
+    <p class="placeholder">[ placeholder — 준비 방법, 현실적인 조언 ]</p>
+    <div class="slide-number">11</div>
+  </section>
+
+  <!-- Closing -->
+  <section class="slide slide-cover">
+    <h1>Q&A</h1>
+    <p class="subtitle">bosung@mashupventures.co</p>
+    <div class="slide-number">12</div>
+  </section>
 
   <footer>
-    <div class="container">
-      <p>&copy; 2026 Bobo's Home</p>
-    </div>
+    <p>&copy; 2026 Bobo's Home</p>
   </footer>
 
 </body>
