@@ -154,6 +154,123 @@
       margin-top: 4px;
     }
 
+    /* Two-column layout */
+    .slide-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .slide-two-col .slide-label {
+      grid-column: 1 / -1;
+    }
+
+    /* Big stat */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-top: 40px;
+      max-width: 720px;
+    }
+
+    .stat-item .stat-num {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-item .stat-label {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    /* Tag list */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      border: 1px solid #333;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: #888;
+      letter-spacing: 0.03em;
+    }
+
+    /* Step list */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+      max-width: 560px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+    }
+
+    .step-item .step-n {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.1em;
+      min-width: 24px;
+    }
+
+    .step-item .step-text {
+      font-size: 1rem;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    .step-item .step-sub {
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    /* Highlight text */
+    .hl {
+      color: #fff;
+    }
+
+    .dim {
+      color: #444;
+    }
+
+    /* Quote block */
+    .quote-block {
+      border-left: 1px solid #333;
+      padding-left: 24px;
+      margin-top: 32px;
+      max-width: 560px;
+    }
+
+    .quote-block p {
+      color: #777;
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    .quote-block .quote-attr {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      font-style: normal;
+    }
+
     footer {
       padding: 40px 120px;
       border-top: 1px solid #222;
@@ -223,35 +340,186 @@
     <div class="slide-number">01</div>
   </section>
 
-  <!-- VC 기본 1 -->
+  <!-- VC 기본 01: VC란 무엇인가 -->
   <section class="slide">
     <div class="slide-label">VC 기본 — 01</div>
-    <h2>VC는 어떤 일을 하는가</h2>
-    <p class="placeholder">[ placeholder — VC의 역할, 펀드 구조, LP/GP 설명 ]</p>
+    <h2>VC는 <span class="dim">자산군</span>이다</h2>
+    <p>주식·채권 같은 전통자산이 있다면, VC는 <span class="hl">대체자산(Alternative Asset)</span>의 한 종류다.<br>부동산, 헤지펀드, PEF — 그리고 벤처캐피탈.</p>
+    <div class="tag-list">
+      <span class="tag">고위험</span>
+      <span class="tag">고수익</span>
+      <span class="tag">장기투자 (7–10년)</span>
+      <span class="tag">비유동성</span>
+      <span class="tag">소수 홈런이 전체 수익을 결정</span>
+    </div>
+    <div class="quote-block">
+      <p>"불확실한 미래에 베팅하는 자본."</p>
+    </div>
     <div class="slide-number">02</div>
   </section>
 
-  <!-- VC 기본 2 -->
+  <!-- VC 기본 02: 구조 -->
   <section class="slide">
     <div class="slide-label">VC 기본 — 02</div>
-    <h2>투자는 어떻게 이루어지는가</h2>
-    <p class="placeholder">[ placeholder — 딜소싱부터 투자집행까지 프로세스 ]</p>
+    <h2>돈은 어디서 오고<br>어디로 가는가</h2>
+    <div class="step-list">
+      <div class="step-item">
+        <span class="step-n">LP</span>
+        <div>
+          <div class="step-text hl">출자자 (Limited Partner)</div>
+          <div class="step-sub">연기금, 정책기관, 대기업, 금융사 — 돈을 맡기는 사람들</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">↓</span>
+        <div><div class="step-text dim">펀드 결성 / 운용 책임</div></div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">GP</span>
+        <div>
+          <div class="step-text hl">운용사 (General Partner) = VC</div>
+          <div class="step-sub">투자 집행, 포트폴리오 관리, 수익 회수 — 실제로 뛰는 사람들</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">↓</span>
+        <div><div class="step-text dim">지분 투자</div></div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">PF</span>
+        <div>
+          <div class="step-text hl">스타트업 (Portfolio Company)</div>
+          <div class="step-sub">자본을 받아 성장하는 회사들</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:32px; font-size:0.85rem; color:#444;">Exit 발생 시 → 수익의 약 20%는 GP 몫 (Carried Interest)</p>
     <div class="slide-number">03</div>
   </section>
 
-  <!-- VC 기본 3 -->
+  <!-- VC 기본 03: 투자 단계 -->
   <section class="slide">
     <div class="slide-label">VC 기본 — 03</div>
-    <h2>수익은 어떻게 나는가</h2>
-    <p class="placeholder">[ placeholder — 엑싯, 수익 구조, carried interest ]</p>
+    <h2>스타트업 투자는<br>단계가 있다</h2>
+    <div class="step-list">
+      <div class="step-item"><span class="step-n">0</span><div><div class="step-text">Angel / Pre-seed</div><div class="step-sub">아이디어 단계. 창업자 자체를 보는 베팅</div></div></div>
+      <div class="step-item"><span class="step-n">1</span><div><div class="step-text hl">Seed ← Mashup이 여기</div><div class="step-sub">초기 제품, 초기 고객. 첫 번째 기관 투자자</div></div></div>
+      <div class="step-item"><span class="step-n">2</span><div><div class="step-text">Series A</div><div class="step-sub">PMF 검증. 본격 스케일업</div></div></div>
+      <div class="step-item"><span class="step-n">3</span><div><div class="step-text dim">Series B → C → Pre-IPO</div><div class="step-sub">성장 자본 확충. PE 영역으로 이동</div></div></div>
+    </div>
+    <p style="margin-top:28px; font-size:0.85rem; color:#555;">초기일수록 → 리스크 ↑ / 지분율 ↑ / 정보 비대칭 ↑</p>
     <div class="slide-number">04</div>
+  </section>
+
+  <!-- VC 기본 04: 하루 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 04</div>
+    <h2>심사역은<br>어떻게 일하는가</h2>
+    <div class="step-list">
+      <div class="step-item"><span class="step-n">01</span><div><div class="step-text hl">Deal Sourcing</div><div class="step-sub">커피챗, 콜드메일, 데모데이, 네트워킹 — 팀을 발굴한다</div></div></div>
+      <div class="step-item"><span class="step-n">02</span><div><div class="step-text hl">심사 (Due Diligence)</div><div class="step-sub">IR 검토, 시장 리서치, 투자심의위원회 보고서 작성</div></div></div>
+      <div class="step-item"><span class="step-n">03</span><div><div class="step-text hl">투자 집행</div><div class="step-sub">계약, 납입, 주주로 합류</div></div></div>
+      <div class="step-item"><span class="step-n">04</span><div><div class="step-text hl">Value-up</div><div class="step-sub">채용, 파트너십, 후속 투자 연결 — 진짜 일은 여기서 시작</div></div></div>
+      <div class="step-item"><span class="step-n">05</span><div><div class="step-text hl">Exit</div><div class="step-sub">IPO, M&A — 펀드 수익 실현</div></div></div>
+    </div>
+    <div class="slide-number">05</div>
+  </section>
+
+  <!-- VC 기본 05: 철학 전환 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 05</div>
+    <h2>그런데.<br>VC는 왜 존재하는가?</h2>
+    <p>세상에는 돈을 버는 방법이 많다.<br>그 중에서 굳이 VC를 하는 이유는 뭘까.</p>
+    <div class="quote-block">
+      <p>"세상이 바뀌는 방향을 먼저 알아보고,<br>그 변화를 만드는 사람 옆에 서는 일."</p>
+    </div>
+    <p style="margin-top: 32px; color: #555;">투자 기준이 달라진 것처럼 보여도 — <span class="hl">본질은 바뀐 적이 없다.</span><br>문제가 무엇인가. 팀이 그 문제를 풀 수 있는가.</p>
+    <div class="slide-number">06</div>
+  </section>
+
+  <!-- VC 기본 06: 문제 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 06</div>
+    <h2>문제가<br>먼저다</h2>
+    <p>좋은 투자는 좋은 문제를 알아보는 것에서 시작한다.</p>
+    <div class="step-list" style="margin-top:32px;">
+      <div class="step-item"><span class="step-n">1</span><div><div class="step-text hl">문제 (Problem)</div><div class="step-sub">왜 이 문제가 지금 풀려야 하는가</div></div></div>
+      <div class="step-item"><span class="step-n">2</span><div><div class="step-text hl">솔루션 (Solution)</div><div class="step-sub">이 팀만이 가진 접근법인가</div></div></div>
+      <div class="step-item"><span class="step-n">3</span><div><div class="step-text hl">현황 (Traction)</div><div class="step-sub">시장이 반응하고 있는가</div></div></div>
+    </div>
+    <div class="quote-block">
+      <p>"First Principle Thinking. 당연하게 여겨지던 것을 다시 의심하는 힘."</p>
+    </div>
+    <div class="slide-number">07</div>
+  </section>
+
+  <!-- VC 기본 07: Mashup -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 07</div>
+    <h2>For Founders,<br>By Founders</h2>
+    <p>Mashup Ventures는 창업자 출신들이 모인 VC다.<br>"Founder Friendly"를 넘어 — <span class="hl">창업자처럼 사고하고, 스타트업처럼 움직인다.</span></p>
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-num">219</div>
+        <div class="stat-label">포트폴리오</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">84%</div>
+        <div class="stat-label">첫 번째 투자자</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2.4조</div>
+        <div class="stat-label">누적 후속 투자유치</div>
+      </div>
+    </div>
+    <div class="tag-list" style="margin-top:32px;">
+      <span class="tag">초기 스타트업 전문</span>
+      <span class="tag">IT 전 분야</span>
+      <span class="tag">대학생 투자</span>
+      <span class="tag">첫 발굴</span>
+    </div>
+    <div class="slide-number">08</div>
+  </section>
+
+  <!-- VC 기본 08: 좋은 팀 -->
+  <section class="slide">
+    <div class="slide-label">VC 기본 — 08</div>
+    <h2>좋은 팀을<br>어떻게 알아보는가</h2>
+    <div class="step-list">
+      <div class="step-item">
+        <span class="step-n">01</span>
+        <div>
+          <div class="step-text hl">일원칙 사고 (First Principle Thinking)</div>
+          <div class="step-sub">남들이 당연하게 여기는 것을 처음부터 다시 묻는다</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">02</span>
+        <div>
+          <div class="step-text hl">장기적 사고 (Discipline)</div>
+          <div class="step-sub">단기 노이즈에 흔들리지 않고, 올라야 할 산을 정하고 오른다</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">03</span>
+        <div>
+          <div class="step-text hl">자기객관화 (메타인지)</div>
+          <div class="step-sub">내가 무엇을 모르는지 아는 사람 — 가장 빠르게 성장한다</div>
+        </div>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"The future will be better than the present, and I know what it will look like."</p>
+      <p class="quote-attr">Peter Thiel — Definite Optimism</p>
+    </div>
+    <div class="slide-number">09</div>
   </section>
 
   <!-- Part 2 Divider -->
   <section class="slide slide-divider">
     <div class="slide-label">Part 2</div>
     <h2>나에 대해서</h2>
-    <div class="slide-number">05</div>
+    <div class="slide-number">10</div>
   </section>
 
   <!-- 나 1 -->
@@ -259,7 +527,7 @@
     <div class="slide-label">나에 대해서 — 01</div>
     <h2>어떻게 VC에 오게 됐나</h2>
     <p class="placeholder">[ placeholder — 배경, 관심사, VC를 선택한 이유 ]</p>
-    <div class="slide-number">06</div>
+    <div class="slide-number">11</div>
   </section>
 
   <!-- 나 2 -->
@@ -267,14 +535,14 @@
     <div class="slide-label">나에 대해서 — 02</div>
     <h2>지금 하는 일</h2>
     <p class="placeholder">[ placeholder — Mashup Ventures, 담당 섹터, 일상 ]</p>
-    <div class="slide-number">07</div>
+    <div class="slide-number">12</div>
   </section>
 
   <!-- Part 3 Divider -->
   <section class="slide slide-divider">
     <div class="slide-label">Part 3</div>
     <h2>대졸 신입 VC의 삶</h2>
-    <div class="slide-number">08</div>
+    <div class="slide-number">13</div>
   </section>
 
   <!-- 신입 VC 1 -->
@@ -282,7 +550,7 @@
     <div class="slide-label">신입 VC — 01</div>
     <h2>하루가 어떻게 생겼나</h2>
     <p class="placeholder">[ placeholder — 실제 하루 루틴, 딜 미팅, 리서치 ]</p>
-    <div class="slide-number">09</div>
+    <div class="slide-number">14</div>
   </section>
 
   <!-- 신입 VC 2 -->
@@ -290,7 +558,7 @@
     <div class="slide-label">신입 VC — 02</div>
     <h2>좋은 점과 어려운 점</h2>
     <p class="placeholder">[ placeholder — 솔직한 이야기 ]</p>
-    <div class="slide-number">10</div>
+    <div class="slide-number">15</div>
   </section>
 
   <!-- 신입 VC 3 -->
@@ -298,14 +566,14 @@
     <div class="slide-label">신입 VC — 03</div>
     <h2>VC를 꿈꾼다면</h2>
     <p class="placeholder">[ placeholder — 준비 방법, 현실적인 조언 ]</p>
-    <div class="slide-number">11</div>
+    <div class="slide-number">16</div>
   </section>
 
   <!-- Closing -->
   <section class="slide slide-cover">
     <h1>Q&A</h1>
     <p class="subtitle">bosung@mashupventures.co</p>
-    <div class="slide-number">12</div>
+    <div class="slide-number">17</div>
   </section>
 
   <footer>
