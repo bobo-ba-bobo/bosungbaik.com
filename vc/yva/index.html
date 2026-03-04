@@ -1,46 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YVA - Bosung Baik</title>
+  <title>YVA 2026 — VC란 무엇인가</title>
   <link rel="icon" type="image/png" href="../../favicon.png">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #000;
       color: #fff;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 16px;
       line-height: 1.6;
     }
 
-    /* Each section = one "slide" */
     .slide {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 80px 120px;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid #111;
       position: relative;
     }
 
-    .slide:last-of-type {
-      border-bottom: none;
-    }
-
     .slide-label {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #555;
-      margin-bottom: 32px;
+      color: #3b82f6;
+      margin-bottom: 28px;
+      font-weight: 500;
     }
 
     .slide h1 {
@@ -53,532 +45,1909 @@
 
     .slide h2 {
       font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.2;
       letter-spacing: -0.01em;
       margin-bottom: 20px;
     }
 
     .slide p {
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
-      color: #aaa;
-      max-width: 640px;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    .slide p.placeholder {
-      color: #444;
-      font-style: italic;
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      color: #e2e8f0;
+      max-width: 680px;
+      line-height: 1.75;
+      margin-bottom: 12px;
     }
 
     .slide-number {
       position: absolute;
       bottom: 40px;
       right: 120px;
-      font-size: 12px;
-      color: #333;
+      font-size: 11px;
+      color: #1e1e1e;
       letter-spacing: 0.1em;
     }
 
-    /* Cover slide */
+    /* Cover */
     .slide-cover {
       justify-content: flex-end;
       padding-bottom: 100px;
     }
 
     .slide-cover h1 {
-      font-size: clamp(3rem, 8vw, 7rem);
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
     }
 
-    .slide-cover .subtitle {
-      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    .cover-meta {
+      font-size: 0.9rem;
+      color: #3b82f6;
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+    }
+
+    .cover-sub {
+      font-size: clamp(0.85rem, 1.4vw, 1rem);
       color: #555;
-      letter-spacing: 0.05em;
-      margin-top: 8px;
+      margin-top: 12px;
     }
 
     .scroll-hint {
       position: absolute;
       bottom: 40px;
       left: 120px;
-      font-size: 12px;
+      font-size: 11px;
       color: #333;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    /* Divider slide */
+    /* Blue divider slide */
     .slide-divider {
-      background: #fff;
-      color: #000;
+      background: #1d4ed8;
+    }
+
+    .slide-divider .slide-label {
+      color: rgba(255,255,255,0.45);
     }
 
     .slide-divider h2 {
-      color: #000;
       font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 700;
     }
 
     .slide-divider .slide-number {
-      color: #bbb;
+      color: rgba(255,255,255,0.1);
     }
 
-    /* Demo section */
-    .slide-demo {
-      gap: 48px;
-    }
-
-    .demo-intro {
-      max-width: 640px;
-    }
-
-    .demo-images {
+    .divider-chapters {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 720px;
-    }
-
-    .demo-images img {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #222;
-    }
-
-    .demo-caption {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    /* Two-column layout */
-    .slide-two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .slide-two-col .slide-label {
-      grid-column: 1 / -1;
-    }
-
-    /* Big stat */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 48px;
-      margin-top: 40px;
-      max-width: 720px;
-    }
-
-    .stat-item .stat-num {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-item .stat-label {
-      font-size: 12px;
-      color: #555;
-      letter-spacing: 0.05em;
-    }
-
-    /* Tag list */
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
       margin-top: 24px;
     }
 
-    .tag {
-      border: 1px solid #333;
-      padding: 6px 16px;
-      font-size: 13px;
-      color: #888;
-      letter-spacing: 0.03em;
+    .divider-chapter {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 4px 14px;
+      border-radius: 2px;
+    }
+
+    /* Demo section */
+    .slide-demo { gap: 36px; }
+    .demo-intro { max-width: 640px; }
+    .demo-images { display: flex; flex-direction: column; gap: 10px; max-width: 680px; }
+    .demo-images img { width: 100%; border-radius: 5px; border: 1px solid #1a1a1a; }
+    .demo-caption { font-size: 10px; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; }
+    .demo-command {
+      background: #060606;
+      border: 1px solid #1e1e1e;
+      border-radius: 4px;
+      padding: 10px 18px;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.85rem;
+      color: #3b82f6;
+      margin-top: 14px;
+      max-width: 620px;
+    }
+
+    /* Asset class table */
+    .asset-table {
+      width: 100%;
+      max-width: 960px;
+      border-collapse: collapse;
+      margin-top: 32px;
+    }
+
+    .asset-table th {
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #e2e8f0;
+      border-bottom: 1px solid #1e1e1e;
+      text-transform: uppercase;
+    }
+
+    .asset-table th:first-child { text-align: left; }
+
+    .asset-table td {
+      padding: 10px 16px;
+      text-align: center;
+      color: #b0b8c8;
+      border-bottom: 1px solid #0d0d0d;
+      font-size: 0.85rem;
+    }
+
+    .asset-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .asset-table .vc-row td {
+      background: #050d1f;
+      color: #93c5fd;
+      font-weight: 600;
+    }
+
+    .asset-table .vc-row td:first-child {
+      color: #3b82f6;
+    }
+
+    .badge-high { color: #f87171; }
+    .badge-low { color: #34d399; }
+    .badge-mid { color: #fbbf24; }
+
+    /* WHO cards */
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+      max-width: 1000px;
+    }
+
+    .who-card {
+      border: 1px solid #1a1a1a;
+      padding: 24px 20px;
+      border-radius: 4px;
+    }
+
+    .who-card.vc-card {
+      border-color: #3b82f6;
+      background: #050d1f;
+    }
+
+    .who-type {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3b82f6;
+      margin-bottom: 8px;
+    }
+
+    .who-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .who-desc {
+      font-size: 0.8rem;
+      color: #b0b8c8;
+      line-height: 1.6;
+    }
+
+    .who-ex {
+      font-size: 0.72rem;
+      color: #3b82f6;
+      margin-top: 10px;
+    }
+
+    /* WHAT - 2 columns */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+      max-width: 780px;
+    }
+
+    .what-card {
+      border: 1px solid #1a1a1a;
+      padding: 28px 24px;
+      border-radius: 4px;
+    }
+
+    .what-card.highlight {
+      border-color: #3b82f6;
+      background: #050d1f;
+    }
+
+    .what-card-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3b82f6;
+      margin-bottom: 8px;
+    }
+
+    .what-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .what-desc {
+      font-size: 0.83rem;
+      color: #b0b8c8;
+      line-height: 1.65;
+    }
+
+    .what-detail {
+      font-size: 0.78rem;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    /* WHEN - stage timeline */
+    .stage-flow {
+      display: flex;
+      margin-top: 36px;
+      max-width: 1100px;
+      overflow-x: auto;
+    }
+
+    .stage-item {
+      flex: 1;
+      min-width: 130px;
+      padding: 20px 16px;
+      border: 1px solid #1a1a1a;
+      border-right: none;
+      position: relative;
+    }
+
+    .stage-item:last-child {
+      border-right: 1px solid #1a1a1a;
+    }
+
+    .stage-item.active {
+      border-color: #3b82f6;
+      border-right: 1px solid #3b82f6;
+      background: #050d1f;
+    }
+
+    .stage-item.active + .stage-item {
+      border-left: none;
+    }
+
+    .stage-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .stage-amount {
+      font-size: 0.75rem;
+      color: #3b82f6;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .stage-desc {
+      font-size: 0.72rem;
+      color: #b0b8c8;
+      line-height: 1.55;
+    }
+
+    .stage-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      background: #3b82f6;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    /* HOW grid */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+      max-width: 1000px;
+    }
+
+    .how-step {
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .how-header {
+      padding: 12px 18px;
+      background: #0d1a2d;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3b82f6;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .how-body { padding: 14px 18px; }
+
+    .how-sub {
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      padding: 5px 0;
+      border-bottom: 1px solid #0d0d0d;
+      line-height: 1.4;
+    }
+
+    .how-sub:last-child { border-bottom: none; }
+
+    .how-sub.accent { color: #93c5fd; }
+
+    /* LP → GP → PF flow */
+    .lp-flow {
+      display: flex;
+      align-items: center;
+      margin-top: 40px;
+      max-width: 860px;
+    }
+
+    .lp-node {
+      flex: 1;
+      text-align: center;
+      padding: 28px 16px;
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+    }
+
+    .lp-node.gp-node {
+      border-color: #3b82f6;
+      background: #050d1f;
+    }
+
+    .lp-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #3b82f6;
+    }
+
+    .lp-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .lp-sub {
+      font-size: 0.78rem;
+      color: #b0b8c8;
+      line-height: 1.5;
+    }
+
+    .lp-ex {
+      font-size: 0.72rem;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    .lp-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+
+    .arrow-label {
+      font-size: 0.65rem;
+      color: #555;
+      letter-spacing: 0.04em;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .arrow-icon {
+      font-size: 1.2rem;
+      color: #3b82f6;
+    }
+
+    /* Bar chart — Global VC */
+    .bar-chart-wrap {
+      margin-top: 28px;
+      max-width: 1000px;
+    }
+
+    .chart-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    .bar-chart-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 200px;
+      border-bottom: 1px solid #1e1e1e;
+      border-left: 1px solid #1e1e1e;
+      padding: 0 0 0 8px;
+    }
+
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .bar-col .bar-val {
+      font-size: 0.6rem;
+      color: #93c5fd;
+      margin-bottom: 3px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .bar-col .bar {
+      width: 100%;
+      background: #1d4ed8;
+      border-radius: 2px 2px 0 0;
+      min-height: 3px;
+    }
+
+    .bar-col .bar.peak { background: #3b82f6; }
+    .bar-col .bar.recovery { background: #2563eb; }
+    .bar-col .bar.latest { background: #60a5fa; }
+
+    .bar-col .bar-year {
+      font-size: 0.6rem;
+      color: #555;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    .bar-col .bar-year.latest { color: #93c5fd; font-weight: 600; }
+
+    .chart-source {
+      font-size: 0.65rem;
+      color: #333;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #b0b8c8;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    /* Korea bar chart */
+    .korea-chart-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 180px;
+      border-bottom: 1px solid #1e1e1e;
+      border-left: 1px solid #1e1e1e;
+      padding: 0 0 0 8px;
+    }
+
+    .k-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .k-col .kval {
+      font-size: 0.6rem;
+      color: #93c5fd;
+      margin-bottom: 3px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .k-col .kbar {
+      width: 100%;
+      border-radius: 2px 2px 0 0;
+      min-height: 3px;
+    }
+
+    .k-col .kyr {
+      font-size: 0.6rem;
+      color: #555;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    /* Macro grid */
+    .macro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+      max-width: 900px;
+    }
+
+    .macro-card {
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .macro-head {
+      padding: 12px 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .macro-card.warn .macro-head { background: #1c0909; color: #f87171; }
+    .macro-card.ok .macro-head { background: #051a0f; color: #34d399; }
+
+    .macro-body {
+      padding: 16px 20px;
+    }
+
+    .macro-body h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .macro-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .macro-body ul li {
+      font-size: 0.83rem;
+      color: #b0b8c8;
+      padding: 5px 0;
+      border-bottom: 1px solid #0d0d0d;
+      display: flex;
+      gap: 8px;
+    }
+
+    .macro-body ul li:last-child { border-bottom: none; }
+    .macro-body ul li::before { content: "—"; color: #333; flex-shrink: 0; }
+
+    /* IR 십계명 */
+    .ir-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 28px;
+      max-width: 920px;
+    }
+
+    .ir-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border: 1px solid #1a1a1a;
+      border-radius: 3px;
+    }
+
+    .ir-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #3b82f6;
+      min-width: 22px;
+      padding-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .ir-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .ir-en {
+      font-size: 0.68rem;
+      color: #3b82f6;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .ir-desc {
+      font-size: 0.78rem;
+      color: #b0b8c8;
+      line-height: 1.5;
+    }
+
+    /* 투심 보고서 */
+    .tusim-box {
+      border: 1px solid #3b82f6;
+      background: #050d1f;
+      border-radius: 4px;
+      padding: 32px;
+      max-width: 720px;
+      margin-top: 28px;
+    }
+
+    .tusim-box h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #93c5fd;
+    }
+
+    .tusim-box p {
+      font-size: 0.9rem;
+      color: #b0b8c8;
+      max-width: none;
+      margin-bottom: 10px;
+    }
+
+    .tusim-step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 16px;
+    }
+
+    .tusim-step {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #0d1a2d;
+    }
+
+    .tusim-step:last-child { border-bottom: none; }
+
+    .tusim-step .t-n {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #3b82f6;
+      min-width: 24px;
+    }
+
+    .tusim-step .t-text {
+      font-size: 0.85rem;
+      color: #e2e8f0;
+    }
+
+    .tusim-step .t-arrow {
+      color: #3b82f6;
+      font-size: 0.8rem;
+      margin: 0 4px;
+    }
+
+    /* 역할 변화 */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+      max-width: 920px;
+    }
+
+    .role-col {
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .role-col.tobe { border-color: #3b82f6; }
+
+    .role-head {
+      padding: 12px 18px;
+      background: #111;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e2e8f0;
+    }
+
+    .role-col.tobe .role-head {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .role-body {
+      padding: 16px 18px;
+    }
+
+    .role-tag {
+      display: block;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      padding: 6px 0;
+      border-bottom: 1px solid #0d0d0d;
+    }
+
+    .role-tag:last-child { border-bottom: none; }
+    .role-tag.blue { color: #93c5fd; }
+    .role-tag.dim { color: #555; }
+
+    /* Deal sourcing */
+    .sourcing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      max-width: 720px;
+    }
+
+    .sourcing-card {
+      border: 1px solid #1a1a1a;
+      padding: 22px 20px;
+      border-radius: 4px;
+    }
+
+    .src-emoji { font-size: 1.5rem; margin-bottom: 8px; }
+
+    .sourcing-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .sourcing-card p {
+      font-size: 0.8rem;
+      color: #b0b8c8;
+      max-width: none;
+      margin: 0;
+    }
+
+    /* Stat grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 36px;
+      max-width: 680px;
+    }
+
+    .stat-num {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #3b82f6;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #b0b8c8;
     }
 
     /* Step list */
     .step-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-top: 24px;
-      max-width: 560px;
+      gap: 14px;
+      margin-top: 28px;
+      max-width: 640px;
     }
 
     .step-item {
       display: flex;
       gap: 20px;
-      align-items: baseline;
+      align-items: flex-start;
     }
 
-    .step-item .step-n {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.1em;
-      min-width: 24px;
+    .step-n {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #3b82f6;
+      min-width: 28px;
+      padding-top: 3px;
     }
 
-    .step-item .step-text {
+    .step-text {
       font-size: 1rem;
-      color: #ccc;
-      line-height: 1.5;
+      font-weight: 600;
+      margin-bottom: 3px;
     }
 
-    .step-item .step-sub {
+    .step-sub {
+      font-size: 0.82rem;
+      color: #b0b8c8;
+      line-height: 1.55;
+    }
+
+    /* Tag list */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      border: 1px solid #1e3a6e;
+      background: #050d1f;
+      padding: 5px 14px;
       font-size: 0.8rem;
-      color: #555;
-      margin-top: 2px;
-    }
-
-    /* Highlight text */
-    .hl {
-      color: #fff;
-    }
-
-    .dim {
-      color: #444;
+      color: #93c5fd;
+      border-radius: 2px;
     }
 
     /* Quote block */
     .quote-block {
-      border-left: 1px solid #333;
-      padding-left: 24px;
-      margin-top: 32px;
-      max-width: 560px;
+      border-left: 2px solid #3b82f6;
+      padding-left: 20px;
+      margin-top: 28px;
+      max-width: 620px;
     }
 
     .quote-block p {
-      color: #777;
       font-size: 1rem;
+      color: #e2e8f0;
       font-style: italic;
+      max-width: none;
+      margin: 0;
     }
 
-    .quote-block .quote-attr {
-      font-size: 11px;
-      color: #444;
+    .quote-attr {
+      font-size: 0.7rem;
+      color: #555;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-top: 8px;
       font-style: normal;
     }
 
+    /* Placeholder */
+    .placeholder-text {
+      font-size: 1rem;
+      color: #2a2a2a;
+      font-style: italic;
+    }
+
     footer {
       padding: 40px 120px;
-      border-top: 1px solid #222;
+      border-top: 1px solid #111;
     }
 
-    footer p {
-      font-size: 12px;
-      color: #444;
-    }
+    footer p { font-size: 11px; color: #333; }
 
-    @media (max-width: 768px) {
-      .slide {
-        padding: 60px 32px;
-      }
-      .scroll-hint,
-      .slide-number {
-        left: 32px;
-        right: 32px;
-      }
-      footer {
-        padding: 40px 32px;
-      }
+    @media (max-width: 900px) {
+      .slide { padding: 60px 32px; }
+      .scroll-hint { left: 32px; }
+      .slide-number { right: 32px; }
+      footer { padding: 40px 32px; }
+      .who-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: repeat(2, 1fr); }
+      .ir-grid { grid-template-columns: 1fr; }
+      .role-grid { grid-template-columns: 1fr; }
+      .macro-grid { grid-template-columns: 1fr; }
+      .lp-flow { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 0. Demo: 이 페이지를 어떻게 만들었나 -->
-  <section class="slide slide-demo">
-    <div class="demo-intro">
-      <div class="slide-label">시작 전에 — 00</div>
-      <h2>이 페이지, 어떻게 만들었을까요</h2>
-      <p>코딩 없이, Claude Code에 말 한마디만 했습니다.</p>
-      <p style="color:#555; font-size:0.9rem; margin-top:8px;">
-        "bosungbaik.com/vc 만들어주고 그 안에 bosungbaik.com/vc/yva도 만들어줘"
-      </p>
+<!-- ───────────────────────────── 00. Demo ────────────────────── -->
+<section class="slide slide-demo">
+  <div class="demo-intro">
+    <div class="slide-label">시작 전에 — 00</div>
+    <h2>이 페이지, 어떻게 만들었을까요</h2>
+    <p>코딩 한 줄 없이, Claude Code에 말 한마디만 했습니다.</p>
+    <div class="demo-command">"bosungbaik.com/vc 만들어주고 그 안에 bosungbaik.com/vc/yva도 만들어줘"</div>
+  </div>
+  <div class="demo-images">
+    <div>
+      <img src="image 1901.png" alt="Claude Code - 폴더 생성">
+      <p class="demo-caption">요청 한 줄 → 폴더 구조 자동 생성</p>
     </div>
-    <div class="demo-images">
+    <div>
+      <img src="image 1902.png" alt="Claude Code - 링크 추가">
+      <p class="demo-caption">바로가기 추가도 말로 — GitHub 자동 배포까지</p>
+    </div>
+    <div>
+      <img src="image 1903.png" alt="Claude Code - 페이지 디자인">
+      <p class="demo-caption">디자인·콘텐츠·슬라이드 구성 — 전부 대화로</p>
+    </div>
+  </div>
+  <div class="slide-number">00</div>
+</section>
+
+<!-- ───────────────────────────── Cover ───────────────────────── -->
+<section class="slide slide-cover">
+  <div class="cover-meta">YVA 2026 · Bosung Baik · Mashup Ventures</div>
+  <h1>VC란<br>무엇인가</h1>
+  <div class="cover-sub">벤처캐피탈의 기초부터 대졸 신입 VC의 삶까지</div>
+  <div class="scroll-hint">↓ Scroll to navigate</div>
+</section>
+
+<!-- ═══════════════════════ PART 1: VC 기본 ════════════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 1</div>
+  <h2>VC 기본</h2>
+  <div class="divider-chapters">
+    <span class="divider-chapter">투자란 무엇인가</span>
+    <span class="divider-chapter">WHO / WHAT / WHEN / HOW</span>
+    <span class="divider-chapter">이해관계인</span>
+    <span class="divider-chapter">Mashup 철학</span>
+  </div>
+  <div class="slide-number">01</div>
+</section>
+
+<!-- 02. 투자란 무엇인가 -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 01</div>
+  <h2>투자란<br>무엇인가</h2>
+  <p>자산은 크게 두 가지로 나뉜다. <strong>전통 자산</strong>과 <strong>대체 자산</strong>.</p>
+  <table class="asset-table">
+    <thead>
+      <tr>
+        <th>자산군</th>
+        <th>유동성</th>
+        <th>리스크</th>
+        <th>기대수익</th>
+        <th>투자기간</th>
+        <th>특징</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>주식 (Equity)</td>
+        <td class="badge-high">高</td>
+        <td class="badge-mid">中</td>
+        <td class="badge-mid">中</td>
+        <td>단기–장기</td>
+        <td>시장 연동</td>
+      </tr>
+      <tr>
+        <td>채권 (Bond)</td>
+        <td class="badge-high">高</td>
+        <td class="badge-low">低</td>
+        <td class="badge-low">低</td>
+        <td>단기–장기</td>
+        <td>이자 수익</td>
+      </tr>
+      <tr>
+        <td>부동산 (RE)</td>
+        <td class="badge-low">低</td>
+        <td class="badge-mid">中</td>
+        <td class="badge-mid">中</td>
+        <td>장기</td>
+        <td>실물 자산</td>
+      </tr>
+      <tr>
+        <td>사모펀드 (PE)</td>
+        <td class="badge-low">低</td>
+        <td class="badge-mid">中–高</td>
+        <td class="badge-mid">中–高</td>
+        <td>장기</td>
+        <td>경영 참여</td>
+      </tr>
+      <tr>
+        <td>헤지펀드 (HF)</td>
+        <td class="badge-mid">中</td>
+        <td class="badge-mid">中</td>
+        <td class="badge-mid">中</td>
+        <td>단기–중기</td>
+        <td>절대 수익 추구</td>
+      </tr>
+      <tr class="vc-row">
+        <td>▶ 벤처캐피탈 (VC)</td>
+        <td>最低</td>
+        <td>最高</td>
+        <td>最高 (잠재)</td>
+        <td>7–10년</td>
+        <td>소수 홈런이 전체 수익 결정</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="slide-number">02</div>
+</section>
+
+<!-- 03. WHO -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 02</div>
+  <h2>WHO<br>누가 투자하는가</h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-type">Angel</div>
+      <div class="who-name">엔젤 투자자</div>
+      <div class="who-desc">개인 자금으로 아이디어 단계 창업자에게 베팅. 창업자 지인·선배가 주를 이룸.</div>
+      <div class="who-ex">소규모 / 빠른 결정 / 비제도권</div>
+    </div>
+    <div class="who-card">
+      <div class="who-type">Accelerator</div>
+      <div class="who-name">액셀러레이터</div>
+      <div class="who-desc">초기 스타트업에 자금 + 집중 프로그램 제공. 배치(기수) 방식. 지분 인수 후 졸업.</div>
+      <div class="who-ex">YC, 스파크랩, 패스트파이브벤처스</div>
+    </div>
+    <div class="who-card vc-card">
+      <div class="who-type">VC ← 오늘의 주제</div>
+      <div class="who-name">벤처캐피탈</div>
+      <div class="who-desc">LP 출자금으로 펀드를 결성해 성장 가능성 있는 스타트업에 지분 투자. Exit 시 수익 실현.</div>
+      <div class="who-ex">Mashup, KV, SoftBank Ventures</div>
+    </div>
+    <div class="who-card">
+      <div class="who-type">PE</div>
+      <div class="who-name">사모펀드 (PE)</div>
+      <div class="who-desc">성숙한 기업을 대상으로 대규모 자금 투입. 경영권 인수 후 가치 제고, 회수.</div>
+      <div class="who-ex">MBK, Carlyle, KKR</div>
+    </div>
+  </div>
+  <div class="slide-number">03</div>
+</section>
+
+<!-- 04. WHAT -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 03</div>
+  <h2>WHAT<br>어떤 돈으로 투자하는가</h2>
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-card-label">01</div>
+      <div class="what-name">본계정</div>
+      <div class="what-desc">운용사가 자기 자본으로 투자. 규모가 작고 의사결정이 빠르다. LP 보고 의무 없음.</div>
+      <div class="what-detail">단건 투자, 빠른 실행, 유연한 조건</div>
+    </div>
+    <div class="what-card highlight">
+      <div class="what-card-label">02 — 대부분의 VC 투자</div>
+      <div class="what-name">투자조합 (펀드)</div>
+      <div class="what-desc">LP로부터 출자받은 자금을 펀드로 결성. 7–10년 운용 기간. 정기 보고 의무. VC의 주된 투자 수단.</div>
+      <div class="what-detail">GP 운용, LP 보고, Carried Interest 구조</div>
+    </div>
+  </div>
+  <div class="step-list" style="margin-top:32px; max-width:600px;">
+    <div class="step-item">
+      <span class="step-n">LP</span>
       <div>
-        <img src="image 1901.png" alt="Claude Code - 폴더 생성">
-        <p class="demo-caption">요청 한 줄 → 폴더 자동 생성</p>
+        <div class="step-text">출자자 (Limited Partner)</div>
+        <div class="step-sub">연기금, 정책기관(한국벤처투자), 대기업, 금융사 — 돈을 맡기는 사람들</div>
       </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">GP</span>
       <div>
-        <img src="image 1902.png" alt="Claude Code - 링크 추가">
-        <p class="demo-caption">바로가기 추가도 말로</p>
+        <div class="step-text">운용사 (General Partner) = VC</div>
+        <div class="step-sub">투자 집행, 포트폴리오 관리, 수익 회수. Carried Interest (보통 수익의 20%) 수취.</div>
       </div>
+    </div>
+  </div>
+  <div class="slide-number">04</div>
+</section>
+
+<!-- 05. WHEN -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 04</div>
+  <h2>WHEN<br>언제 투자하는가</h2>
+  <p>스타트업의 성장 단계에 따라 투자 주체와 규모가 달라진다.</p>
+  <div class="stage-flow">
+    <div class="stage-item">
+      <div class="stage-name">Pre-seed<br>/ Angel</div>
+      <div class="stage-amount">~5억원</div>
+      <div class="stage-desc">아이디어 + 창업팀. 제품 없음. 창업자 자체를 보는 베팅.</div>
+    </div>
+    <div class="stage-item active">
+      <div class="stage-name">Seed</div>
+      <div class="stage-amount">5–20억원</div>
+      <div class="stage-desc">초기 제품, 초기 고객. 첫 번째 기관 투자자가 합류하는 단계.</div>
+      <span class="stage-badge">Mashup 주력</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-name">Series A</div>
+      <div class="stage-amount">30–100억원</div>
+      <div class="stage-desc">PMF 검증 완료. 본격 스케일업. 성장 증거가 있어야 한다.</div>
+    </div>
+    <div class="stage-item">
+      <div class="stage-name">Series B</div>
+      <div class="stage-amount">100–500억원</div>
+      <div class="stage-desc">빠른 확장. 팀 증원, 해외 진출, 신사업 투자.</div>
+    </div>
+    <div class="stage-item">
+      <div class="stage-name">Series C+</div>
+      <div class="stage-amount">500억+</div>
+      <div class="stage-desc">글로벌 확장. 후기 VC + PE가 혼재.</div>
+    </div>
+    <div class="stage-item">
+      <div class="stage-name">Pre-IPO</div>
+      <div class="stage-amount">수천억</div>
+      <div class="stage-desc">상장 직전 마지막 자금 조달. 안정성 중심.</div>
+    </div>
+  </div>
+  <p style="margin-top:20px; font-size:0.82rem; color:#555;">초기 단계일수록 → 리스크 ↑  지분율 ↑  정보 비대칭 ↑</p>
+  <div class="slide-number">05</div>
+</section>
+
+<!-- 06. HOW -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 05</div>
+  <h2>HOW<br>어떻게 투자하는가</h2>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-header">01 · Deal Sourcing</div>
+      <div class="how-body">
+        <div class="how-sub accent">딜 소싱</div>
+        <div class="how-sub">커피챗 / 콜드메일</div>
+        <div class="how-sub">네트워킹 / 데모데이</div>
+        <div class="how-sub">예비 검토</div>
+        <div class="how-sub">IR 미팅</div>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-header">02 · Investment</div>
+      <div class="how-body">
+        <div class="how-sub accent">투자 심사</div>
+        <div class="how-sub">투심 보고서 작성</div>
+        <div class="how-sub">예비 투심위</div>
+        <div class="how-sub">투자 본심위</div>
+        <div class="how-sub">계약 체결 · 집행</div>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-header">03 · Value-up</div>
+      <div class="how-body">
+        <div class="how-sub accent">투자 후 관리</div>
+        <div class="how-sub">자금 사용 모니터링</div>
+        <div class="how-sub">채용 / 파트너십 연결</div>
+        <div class="how-sub">후속 투자 유치 지원</div>
+        <div class="how-sub">리스크 관리</div>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-header">04 · Exit</div>
+      <div class="how-body">
+        <div class="how-sub accent">회수</div>
+        <div class="how-sub">IPO (상장)</div>
+        <div class="how-sub">M&A (인수합병)</div>
+        <div class="how-sub">세컨더리 매각</div>
+        <div class="how-sub">펀드 수익 실현</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">06</div>
+</section>
+
+<!-- 07. 이해관계인 -->
+<section class="slide">
+  <div class="slide-label">VC 기본 — 06</div>
+  <h2>이해관계인들</h2>
+  <p>돈이 흐르는 방향과 수익이 돌아오는 방향 — 두 방향을 이해해야 한다.</p>
+  <div class="lp-flow">
+    <div class="lp-node">
+      <div class="lp-title">LP</div>
+      <div class="lp-role">출자자</div>
+      <div class="lp-sub">연기금 · 정책기관<br>대기업 · 금융사</div>
+      <div class="lp-ex">한국벤처투자, 국민연금,<br>산업은행 등</div>
+    </div>
+    <div class="lp-arrow">
+      <div class="arrow-label">출자금<br>투입</div>
+      <div class="arrow-icon">→</div>
+    </div>
+    <div class="lp-node gp-node">
+      <div class="lp-title">GP</div>
+      <div class="lp-role">벤처캐피탈 (운용사)</div>
+      <div class="lp-sub">펀드 결성 · 운용<br>투자 집행 · 수익 회수</div>
+      <div class="lp-ex">관리 보수 + Carried Interest</div>
+    </div>
+    <div class="lp-arrow">
+      <div class="arrow-label">지분<br>투자</div>
+      <div class="arrow-icon">→</div>
+    </div>
+    <div class="lp-node">
+      <div class="lp-title">PF</div>
+      <div class="lp-role">포트폴리오 스타트업</div>
+      <div class="lp-sub">자본을 받아 성장하는<br>스타트업들</div>
+      <div class="lp-ex">Exit → 수익을 LP·GP에게 배분</div>
+    </div>
+  </div>
+  <p style="margin-top:28px; font-size:0.82rem; color:#555;">Exit 시 → 원금 + 수익의 ~80%는 LP 몫 / 수익의 ~20%는 GP 몫 (Carried Interest)</p>
+  <div class="slide-number">07</div>
+</section>
+
+<!-- ═══════════════════ PART 2: 투자 업계 동향 ════════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 2</div>
+  <h2>투자 업계 동향</h2>
+  <div class="divider-chapters">
+    <span class="divider-chapter">글로벌 VC 트렌드</span>
+    <span class="divider-chapter">한국 투자 현황</span>
+    <span class="divider-chapter">2025 반등 시그널</span>
+    <span class="divider-chapter">매크로 영향</span>
+  </div>
+  <div class="slide-number">08</div>
+</section>
+
+<!-- 09. 글로벌 VC 트렌드 -->
+<section class="slide">
+  <div class="slide-label">업계 동향 — 01</div>
+  <h2>글로벌 VC<br>투자 트렌드</h2>
+  <p>2021년 버블 → 2022–23년 냉각 → 2024년 반등. AI가 다음 사이클을 이끌고 있다.</p>
+
+  <div class="bar-chart-wrap">
+    <div class="chart-title">미국 VC 연간 투자 금액 (단위: $B)</div>
+    <div class="bar-chart-inner">
+      <!-- 2014: 74.5/354.6=21% → 42px -->
+      <div class="bar-col">
+        <div class="bar-val">$74.5B</div>
+        <div class="bar" style="height:42px;"></div>
+        <div class="bar-year">'14</div>
+      </div>
+      <!-- 2015: 87.0/354.6=24.5% → 49px -->
+      <div class="bar-col">
+        <div class="bar-val">$87B</div>
+        <div class="bar" style="height:49px;"></div>
+        <div class="bar-year">'15</div>
+      </div>
+      <!-- 2016: 83.6/354.6=23.6% → 47px -->
+      <div class="bar-col">
+        <div class="bar-val">$83.6B</div>
+        <div class="bar" style="height:47px;"></div>
+        <div class="bar-year">'16</div>
+      </div>
+      <!-- 2017: 90.9/354.6=25.6% → 51px -->
+      <div class="bar-col">
+        <div class="bar-val">$90.9B</div>
+        <div class="bar" style="height:51px;"></div>
+        <div class="bar-year">'17</div>
+      </div>
+      <!-- 2018: 146.7/354.6=41.4% → 83px -->
+      <div class="bar-col">
+        <div class="bar-val">$146.7B</div>
+        <div class="bar" style="height:83px;"></div>
+        <div class="bar-year">'18</div>
+      </div>
+      <!-- 2019: 153.9/354.6=43.4% → 87px -->
+      <div class="bar-col">
+        <div class="bar-val">$153.9B</div>
+        <div class="bar" style="height:87px;"></div>
+        <div class="bar-year">'19</div>
+      </div>
+      <!-- 2020: 174.7/354.6=49.3% → 99px -->
+      <div class="bar-col">
+        <div class="bar-val">$174.7B</div>
+        <div class="bar" style="height:99px;"></div>
+        <div class="bar-year">'20</div>
+      </div>
+      <!-- 2021: 354.6/354.6=100% → 200px (peak) -->
+      <div class="bar-col">
+        <div class="bar-val" style="color:#60a5fa; font-weight:700;">$354.6B ↑</div>
+        <div class="bar peak" style="height:200px;"></div>
+        <div class="bar-year" style="color:#60a5fa;">'21 Peak</div>
+      </div>
+      <!-- 2022: 238.2/354.6=67.2% → 134px -->
+      <div class="bar-col">
+        <div class="bar-val">$238.2B</div>
+        <div class="bar" style="height:134px;"></div>
+        <div class="bar-year">'22</div>
+      </div>
+      <!-- 2023: 162.2/354.6=45.7% → 91px -->
+      <div class="bar-col">
+        <div class="bar-val">$162.2B</div>
+        <div class="bar" style="height:91px;"></div>
+        <div class="bar-year">'23</div>
+      </div>
+      <!-- 2024: 209.0/354.6=58.9% → 118px (latest, recovery) -->
+      <div class="bar-col">
+        <div class="bar-val" style="color:#60a5fa; font-weight:700;">$209.0B ↑</div>
+        <div class="bar latest" style="height:118px;"></div>
+        <div class="bar-year latest">'24 반등</div>
+      </div>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div>일반 연도</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#60a5fa;"></div>피크 / 반등</div>
+    </div>
+    <div class="chart-source">Source: PitchBook–NVCA Venture Monitor, As of December 31, 2024</div>
+  </div>
+  <div class="slide-number">09</div>
+</section>
+
+<!-- 10. 한국 투자 현황 -->
+<section class="slide">
+  <div class="slide-label">업계 동향 — 02</div>
+  <h2>한국 스타트업<br>투자 현황</h2>
+  <p>글로벌 하락과 맞물려 한국도 2022년 하반기부터 급격히 위축. 2024년에도 조정 지속.</p>
+
+  <div class="bar-chart-wrap">
+    <div class="chart-title">반기별 투자 금액 (단위: 억원) / 건수</div>
+    <div class="korea-chart-inner">
+      <!-- 2022 H1: 102,001.5억 → 100% → 180px -->
+      <div class="k-col">
+        <div class="kval">10.2조</div>
+        <div class="kbar" style="height:180px; background:#3b82f6;"></div>
+        <div class="kyr">'22 H1</div>
+      </div>
+      <!-- 2022 H2: 49,895억 → 48.9% → 88px -->
+      <div class="k-col">
+        <div class="kval">5.0조</div>
+        <div class="kbar" style="height:88px; background:#2563eb;"></div>
+        <div class="kyr">'22 H2</div>
+      </div>
+      <!-- 2023 H1: 32,888억 → 32.2% → 58px -->
+      <div class="k-col">
+        <div class="kval">3.3조</div>
+        <div class="kbar" style="height:58px; background:#1d4ed8;"></div>
+        <div class="kyr">'23 H1</div>
+      </div>
+      <!-- 2023 H2: 39,162억 → 38.4% → 69px -->
+      <div class="k-col">
+        <div class="kval">3.9조</div>
+        <div class="kbar" style="height:69px; background:#1d4ed8;"></div>
+        <div class="kyr">'23 H2</div>
+      </div>
+      <!-- 2024 H1: 26,461억 → 25.9% → 47px -->
+      <div class="k-col">
+        <div class="kval" style="color:#93c5fd;">2.6조</div>
+        <div class="kbar" style="height:47px; background:#60a5fa;"></div>
+        <div class="kyr" style="color:#93c5fd;">'24 H1</div>
+      </div>
+    </div>
+
+    <!-- 건수 차트 -->
+    <div class="chart-title" style="margin-top:28px;">반기별 투자 건수 (건)</div>
+    <div class="korea-chart-inner" style="height:120px;">
+      <!-- 2022 H1: 1,247건 → 100% → 120px -->
+      <div class="k-col">
+        <div class="kval">1,247건</div>
+        <div class="kbar" style="height:120px; background:#3b82f6;"></div>
+        <div class="kyr">'22 H1</div>
+      </div>
+      <!-- 2022 H2: 1,033건 → 82.8% → 99px -->
+      <div class="k-col">
+        <div class="kval">1,033건</div>
+        <div class="kbar" style="height:99px; background:#2563eb;"></div>
+        <div class="kyr">'22 H2</div>
+      </div>
+      <!-- 2023 H1: 731건 → 58.6% → 70px -->
+      <div class="k-col">
+        <div class="kval">731건</div>
+        <div class="kbar" style="height:70px; background:#1d4ed8;"></div>
+        <div class="kyr">'23 H1</div>
+      </div>
+      <!-- 2023 H2: 807건 → 64.7% → 78px -->
+      <div class="k-col">
+        <div class="kval">807건</div>
+        <div class="kbar" style="height:78px; background:#1d4ed8;"></div>
+        <div class="kyr">'23 H2</div>
+      </div>
+      <!-- 2024 H1: 497건 → 39.8% → 48px -->
+      <div class="k-col">
+        <div class="kval" style="color:#93c5fd;">497건</div>
+        <div class="kbar" style="height:48px; background:#60a5fa;"></div>
+        <div class="kyr" style="color:#93c5fd;">'24 H1</div>
+      </div>
+    </div>
+    <div class="chart-source">Source: THEVC · 중소벤처기업부</div>
+  </div>
+  <div class="slide-number">10</div>
+</section>
+
+<!-- 11. 2025 반등 시그널 -->
+<section class="slide">
+  <div class="slide-label">업계 동향 — 03</div>
+  <h2>그래서,<br>2025년은?</h2>
+  <p>글로벌은 반등했다. 한국은 아직 조심스럽다. 하지만 회복 시그널은 이미 오고 있다.</p>
+
+  <div class="macro-grid">
+    <div class="macro-card ok">
+      <div class="macro-head">글로벌 — 회복 중</div>
+      <div class="macro-body">
+        <h3>AI가 다음 사이클을 이끈다</h3>
+        <ul>
+          <li>2024 미국 VC $209B — 2023 대비 +29% 반등</li>
+          <li>OpenAI, Anthropic 등 AI 메가딜 급증</li>
+          <li>Fed 2024년 9월부터 금리 인하 사이클 시작</li>
+          <li>드라이파우더 소진 압박으로 투자 재개</li>
+          <li>2025 AI 인프라 투자 계속 확대 전망</li>
+        </ul>
+      </div>
+    </div>
+    <div class="macro-card warn">
+      <div class="macro-head">한국 — 신중 유지</div>
+      <div class="macro-body">
+        <h3>아직 조심스러운 분위기</h3>
+        <ul>
+          <li>2024 H1 투자 건수 497건 — 역대급 최저</li>
+          <li>글로벌 대비 회복 속도 느림</li>
+          <li>정책 펀드 확대로 하반기 소폭 개선 기대</li>
+          <li>AI·바이오 분야에서 선별적 투자 재개</li>
+          <li>옥석 가리기 본격화 — 검증된 팀에 집중</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">11</div>
+</section>
+
+<!-- 12. 매크로 영향 -->
+<section class="slide">
+  <div class="slide-label">업계 동향 — 04</div>
+  <h2>매크로 경제가<br>VC에 미치는 영향</h2>
+  <p>2022년은 교과서 같은 사례다. 금리 하나가 시장 전체를 바꿨다.</p>
+  <div class="step-list">
+    <div class="step-item">
+      <span class="step-n">1</span>
       <div>
-        <img src="image 1903.png" alt="Claude Code - 페이지 디자인">
-        <p class="demo-caption">디자인 지시 → 완성 + GitHub 자동 배포</p>
+        <div class="step-text">금리 인상 (2022)</div>
+        <div class="step-sub">Fed 급격한 기준금리 인상 → 무위험 수익률 상승 → VC 매력도 하락</div>
       </div>
     </div>
-    <div class="slide-number">00</div>
-  </section>
-
-  <!-- Cover -->
-  <section class="slide slide-cover">
-    <div class="slide-label">YVA 2026 · Bosung Baik</div>
-    <h1>VC란<br>무엇인가</h1>
-    <p class="subtitle">벤처캐피탈의 기초부터 대졸 신입 VC의 삶까지</p>
-    <div class="scroll-hint">↓ Scroll</div>
-  </section>
-
-  <!-- Part 1 Divider -->
-  <section class="slide slide-divider">
-    <div class="slide-label">Part 1</div>
-    <h2>VC 기본</h2>
-    <div class="slide-number">01</div>
-  </section>
-
-  <!-- VC 기본 01: VC란 무엇인가 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 01</div>
-    <h2>VC는 <span class="dim">자산군</span>이다</h2>
-    <p>주식·채권 같은 전통자산이 있다면, VC는 <span class="hl">대체자산(Alternative Asset)</span>의 한 종류다.<br>부동산, 헤지펀드, PEF — 그리고 벤처캐피탈.</p>
-    <div class="tag-list">
-      <span class="tag">고위험</span>
-      <span class="tag">고수익</span>
-      <span class="tag">장기투자 (7–10년)</span>
-      <span class="tag">비유동성</span>
-      <span class="tag">소수 홈런이 전체 수익을 결정</span>
-    </div>
-    <div class="quote-block">
-      <p>"불확실한 미래에 베팅하는 자본."</p>
-    </div>
-    <div class="slide-number">02</div>
-  </section>
-
-  <!-- VC 기본 02: 구조 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 02</div>
-    <h2>돈은 어디서 오고<br>어디로 가는가</h2>
-    <div class="step-list">
-      <div class="step-item">
-        <span class="step-n">LP</span>
-        <div>
-          <div class="step-text hl">출자자 (Limited Partner)</div>
-          <div class="step-sub">연기금, 정책기관, 대기업, 금융사 — 돈을 맡기는 사람들</div>
-        </div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">↓</span>
-        <div><div class="step-text dim">펀드 결성 / 운용 책임</div></div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">GP</span>
-        <div>
-          <div class="step-text hl">운용사 (General Partner) = VC</div>
-          <div class="step-sub">투자 집행, 포트폴리오 관리, 수익 회수 — 실제로 뛰는 사람들</div>
-        </div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">↓</span>
-        <div><div class="step-text dim">지분 투자</div></div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">PF</span>
-        <div>
-          <div class="step-text hl">스타트업 (Portfolio Company)</div>
-          <div class="step-sub">자본을 받아 성장하는 회사들</div>
-        </div>
+    <div class="step-item">
+      <span class="step-n">2</span>
+      <div>
+        <div class="step-text">밸류에이션 조정</div>
+        <div class="step-sub">2021년 고점 대비 스타트업 기업가치 30–70% 하락. 다운라운드 속출.</div>
       </div>
     </div>
-    <p style="margin-top:32px; font-size:0.85rem; color:#444;">Exit 발생 시 → 수익의 약 20%는 GP 몫 (Carried Interest)</p>
-    <div class="slide-number">03</div>
-  </section>
-
-  <!-- VC 기본 03: 투자 단계 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 03</div>
-    <h2>스타트업 투자는<br>단계가 있다</h2>
-    <div class="step-list">
-      <div class="step-item"><span class="step-n">0</span><div><div class="step-text">Angel / Pre-seed</div><div class="step-sub">아이디어 단계. 창업자 자체를 보는 베팅</div></div></div>
-      <div class="step-item"><span class="step-n">1</span><div><div class="step-text hl">Seed ← Mashup이 여기</div><div class="step-sub">초기 제품, 초기 고객. 첫 번째 기관 투자자</div></div></div>
-      <div class="step-item"><span class="step-n">2</span><div><div class="step-text">Series A</div><div class="step-sub">PMF 검증. 본격 스케일업</div></div></div>
-      <div class="step-item"><span class="step-n">3</span><div><div class="step-text dim">Series B → C → Pre-IPO</div><div class="step-sub">성장 자본 확충. PE 영역으로 이동</div></div></div>
-    </div>
-    <p style="margin-top:28px; font-size:0.85rem; color:#555;">초기일수록 → 리스크 ↑ / 지분율 ↑ / 정보 비대칭 ↑</p>
-    <div class="slide-number">04</div>
-  </section>
-
-  <!-- VC 기본 04: 하루 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 04</div>
-    <h2>심사역은<br>어떻게 일하는가</h2>
-    <div class="step-list">
-      <div class="step-item"><span class="step-n">01</span><div><div class="step-text hl">Deal Sourcing</div><div class="step-sub">커피챗, 콜드메일, 데모데이, 네트워킹 — 팀을 발굴한다</div></div></div>
-      <div class="step-item"><span class="step-n">02</span><div><div class="step-text hl">심사 (Due Diligence)</div><div class="step-sub">IR 검토, 시장 리서치, 투자심의위원회 보고서 작성</div></div></div>
-      <div class="step-item"><span class="step-n">03</span><div><div class="step-text hl">투자 집행</div><div class="step-sub">계약, 납입, 주주로 합류</div></div></div>
-      <div class="step-item"><span class="step-n">04</span><div><div class="step-text hl">Value-up</div><div class="step-sub">채용, 파트너십, 후속 투자 연결 — 진짜 일은 여기서 시작</div></div></div>
-      <div class="step-item"><span class="step-n">05</span><div><div class="step-text hl">Exit</div><div class="step-sub">IPO, M&A — 펀드 수익 실현</div></div></div>
-    </div>
-    <div class="slide-number">05</div>
-  </section>
-
-  <!-- VC 기본 05: 철학 전환 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 05</div>
-    <h2>그런데.<br>VC는 왜 존재하는가?</h2>
-    <p>세상에는 돈을 버는 방법이 많다.<br>그 중에서 굳이 VC를 하는 이유는 뭘까.</p>
-    <div class="quote-block">
-      <p>"세상이 바뀌는 방향을 먼저 알아보고,<br>그 변화를 만드는 사람 옆에 서는 일."</p>
-    </div>
-    <p style="margin-top: 32px; color: #555;">투자 기준이 달라진 것처럼 보여도 — <span class="hl">본질은 바뀐 적이 없다.</span><br>문제가 무엇인가. 팀이 그 문제를 풀 수 있는가.</p>
-    <div class="slide-number">06</div>
-  </section>
-
-  <!-- VC 기본 06: 문제 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 06</div>
-    <h2>문제가<br>먼저다</h2>
-    <p>좋은 투자는 좋은 문제를 알아보는 것에서 시작한다.</p>
-    <div class="step-list" style="margin-top:32px;">
-      <div class="step-item"><span class="step-n">1</span><div><div class="step-text hl">문제 (Problem)</div><div class="step-sub">왜 이 문제가 지금 풀려야 하는가</div></div></div>
-      <div class="step-item"><span class="step-n">2</span><div><div class="step-text hl">솔루션 (Solution)</div><div class="step-sub">이 팀만이 가진 접근법인가</div></div></div>
-      <div class="step-item"><span class="step-n">3</span><div><div class="step-text hl">현황 (Traction)</div><div class="step-sub">시장이 반응하고 있는가</div></div></div>
-    </div>
-    <div class="quote-block">
-      <p>"First Principle Thinking. 당연하게 여겨지던 것을 다시 의심하는 힘."</p>
-    </div>
-    <div class="slide-number">07</div>
-  </section>
-
-  <!-- VC 기본 07: Mashup -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 07</div>
-    <h2>For Founders,<br>By Founders</h2>
-    <p>Mashup Ventures는 창업자 출신들이 모인 VC다.<br>"Founder Friendly"를 넘어 — <span class="hl">창업자처럼 사고하고, 스타트업처럼 움직인다.</span></p>
-    <div class="stat-grid">
-      <div class="stat-item">
-        <div class="stat-num">219</div>
-        <div class="stat-label">포트폴리오</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">84%</div>
-        <div class="stat-label">첫 번째 투자자</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">2.4조</div>
-        <div class="stat-label">누적 후속 투자유치</div>
+    <div class="step-item">
+      <span class="step-n">3</span>
+      <div>
+        <div class="step-text">투자 심리 위축</div>
+        <div class="step-sub">LP들의 리스크 회피 → 신규 펀드 결성 어려움 → VC들의 투자 속도 급감</div>
       </div>
     </div>
-    <div class="tag-list" style="margin-top:32px;">
-      <span class="tag">초기 스타트업 전문</span>
-      <span class="tag">IT 전 분야</span>
-      <span class="tag">대학생 투자</span>
-      <span class="tag">첫 발굴</span>
-    </div>
-    <div class="slide-number">08</div>
-  </section>
-
-  <!-- VC 기본 08: 좋은 팀 -->
-  <section class="slide">
-    <div class="slide-label">VC 기본 — 08</div>
-    <h2>좋은 팀을<br>어떻게 알아보는가</h2>
-    <div class="step-list">
-      <div class="step-item">
-        <span class="step-n">01</span>
-        <div>
-          <div class="step-text hl">일원칙 사고 (First Principle Thinking)</div>
-          <div class="step-sub">남들이 당연하게 여기는 것을 처음부터 다시 묻는다</div>
-        </div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">02</span>
-        <div>
-          <div class="step-text hl">장기적 사고 (Discipline)</div>
-          <div class="step-sub">단기 노이즈에 흔들리지 않고, 올라야 할 산을 정하고 오른다</div>
-        </div>
-      </div>
-      <div class="step-item">
-        <span class="step-n">03</span>
-        <div>
-          <div class="step-text hl">자기객관화 (메타인지)</div>
-          <div class="step-sub">내가 무엇을 모르는지 아는 사람 — 가장 빠르게 성장한다</div>
-        </div>
+    <div class="step-item">
+      <span class="step-n">4</span>
+      <div>
+        <div class="step-text">생존 게임 시작</div>
+        <div class="step-sub">스타트업들: 런웨이 연장 최우선. 구조조정, 피봇, 부트스트래핑.</div>
       </div>
     </div>
-    <div class="quote-block">
-      <p>"The future will be better than the present, and I know what it will look like."</p>
-      <p class="quote-attr">Peter Thiel — Definite Optimism</p>
+    <div class="step-item">
+      <span class="step-n">5</span>
+      <div>
+        <div class="step-text">반등의 조건 (2024→2025)</div>
+        <div class="step-sub">금리 인하 + AI 투자 수요 + 드라이파우더 소진 압박 → 회복 사이클 시작</div>
+      </div>
     </div>
-    <div class="slide-number">09</div>
-  </section>
+  </div>
+  <div class="slide-number">12</div>
+</section>
 
-  <!-- Part 2 Divider -->
-  <section class="slide slide-divider">
-    <div class="slide-label">Part 2</div>
-    <h2>나에 대해서</h2>
-    <div class="slide-number">10</div>
-  </section>
+<!-- ═══════════════════ PART 3: 심사역의 역할 ════════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 3</div>
+  <h2>심사역의 역할</h2>
+  <div class="divider-chapters">
+    <span class="divider-chapter">딜 소싱</span>
+    <span class="divider-chapter">IR 십계명</span>
+    <span class="divider-chapter">투심 보고서</span>
+    <span class="divider-chapter">역할 변화</span>
+  </div>
+  <div class="slide-number">13</div>
+</section>
 
-  <!-- 나 1 -->
-  <section class="slide">
-    <div class="slide-label">나에 대해서 — 01</div>
-    <h2>어떻게 VC에 오게 됐나</h2>
-    <p class="placeholder">[ placeholder — 배경, 관심사, VC를 선택한 이유 ]</p>
-    <div class="slide-number">11</div>
-  </section>
+<!-- 14. 딜 소싱 -->
+<section class="slide">
+  <div class="slide-label">심사역의 역할 — 01</div>
+  <h2>Deal Sourcing<br>딜은 어떻게 찾는가</h2>
+  <p>좋은 투자는 좋은 발굴에서 시작한다. 심사역은 항상 안테나를 열어두고 있어야 한다.</p>
+  <div class="sourcing-grid">
+    <div class="sourcing-card">
+      <div class="src-emoji">☕</div>
+      <h3>커피챗 & 네트워킹</h3>
+      <p>창업자, 동료 VC, 액셀러레이터, 교수, 현업 전문가와의 만남. 시장 정보와 딜 동시에 수집.</p>
+    </div>
+    <div class="sourcing-card">
+      <div class="src-emoji">📨</div>
+      <h3>콜드메일 수신 & 발신</h3>
+      <p>창업자의 콜드메일 검토 + 심사역이 직접 잠재 팀에 먼저 연락하는 아웃바운드 소싱.</p>
+    </div>
+    <div class="sourcing-card">
+      <div class="src-emoji">🎤</div>
+      <h3>데모데이 & 행사</h3>
+      <p>YC, 스파크랩, 대학 창업경진대회 등. 동시에 많은 팀을 효율적으로 스크리닝.</p>
+    </div>
+    <div class="sourcing-card">
+      <div class="src-emoji">🔗</div>
+      <h3>레퍼럴 (Referral)</h3>
+      <p>포트폴리오 창업자, 공동 투자사, 멘토 추천. 신뢰도가 가장 높은 소싱 채널.</p>
+    </div>
+  </div>
+  <div class="slide-number">14</div>
+</section>
 
-  <!-- 나 2 -->
-  <section class="slide">
-    <div class="slide-label">나에 대해서 — 02</div>
-    <h2>지금 하는 일</h2>
-    <p class="placeholder">[ placeholder — Mashup Ventures, 담당 섹터, 일상 ]</p>
-    <div class="slide-number">12</div>
-  </section>
+<!-- 15. IR 십계명 -->
+<section class="slide">
+  <div class="slide-label">심사역의 역할 — 02</div>
+  <h2>IR 자료 '십계명'</h2>
+  <p>좋은 IR은 이 10가지를 명확하게 답해야 한다. 심사역은 이 기준으로 본다.</p>
+  <div class="ir-grid">
+    <div class="ir-item">
+      <div class="ir-num">Ⅰ</div>
+      <div>
+        <div class="ir-title">기업의 목적</div>
+        <div class="ir-en">Company Purpose</div>
+        <div class="ir-desc">기업과 사업을 하나의 선언형 문장으로 정의. 왜 이 회사가 존재하는가.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅱ</div>
+      <div>
+        <div class="ir-title">문제</div>
+        <div class="ir-en">Problem</div>
+        <div class="ir-desc">현재 고객이 느끼는 고통(Pain Point)을 구체적으로 설명. 얼마나 크고 절실한 문제인가.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅲ</div>
+      <div>
+        <div class="ir-title">해결책</div>
+        <div class="ir-en">Solution</div>
+        <div class="ir-desc">우리 해결책이 고객에게 주는 핵심 가치. 왜 이 방식인가. 대체 불가한 이유.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅳ</div>
+      <div>
+        <div class="ir-title">왜 지금인가</div>
+        <div class="ir-en">Why Now</div>
+        <div class="ir-desc">해당 분야의 역사적 진화. 지금이 이 문제를 풀기에 최적인 시점인 이유.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅴ</div>
+      <div>
+        <div class="ir-title">잠재 시장 규모</div>
+        <div class="ir-en">Market Potential</div>
+        <div class="ir-desc">목표 고객과 관련 시장의 잠재적 크기. TAM / SAM / SOM 명시.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅵ</div>
+      <div>
+        <div class="ir-title">경쟁과 대체제</div>
+        <div class="ir-en">Competition & Alternatives</div>
+        <div class="ir-desc">직·간접적 경쟁자 서술. 경쟁에서 이길 수 있는 전략과 차별화 포인트.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅶ</div>
+      <div>
+        <div class="ir-title">비즈니스 모델</div>
+        <div class="ir-en">Business Model</div>
+        <div class="ir-desc">어떻게 성장하고 수익을 낼 것인지. 수익 구조, 단위 경제성(Unit Economics).</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅷ</div>
+      <div>
+        <div class="ir-title">팀</div>
+        <div class="ir-en">Team</div>
+        <div class="ir-desc">공동창업자와 핵심 멤버 소개. 왜 이 팀이 이 문제를 풀 수 있는가.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅸ</div>
+      <div>
+        <div class="ir-title">재무</div>
+        <div class="ir-en">Financial</div>
+        <div class="ir-desc">3년 이내 매출 계획과 예상 비용. 현재 런웨이, 이번 투자금 사용 계획.</div>
+      </div>
+    </div>
+    <div class="ir-item">
+      <div class="ir-num">Ⅹ</div>
+      <div>
+        <div class="ir-title">비전</div>
+        <div class="ir-en">Vision</div>
+        <div class="ir-desc">계획대로 된다면 5년 후 무엇을 성취할 것인가. 큰 그림.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">15</div>
+</section>
 
-  <!-- Part 3 Divider -->
-  <section class="slide slide-divider">
-    <div class="slide-label">Part 3</div>
-    <h2>대졸 신입 VC의 삶</h2>
-    <div class="slide-number">13</div>
-  </section>
+<!-- 16. 투심 보고서 -->
+<section class="slide">
+  <div class="slide-label">심사역의 역할 — 03</div>
+  <h2>투심 보고서</h2>
+  <p>딜 소싱 → IR → 그 다음은? 투자심의위원회에 제출하는 보고서를 작성해야 한다.</p>
 
-  <!-- 신입 VC 1 -->
-  <section class="slide">
-    <div class="slide-label">신입 VC — 01</div>
-    <h2>하루가 어떻게 생겼나</h2>
-    <p class="placeholder">[ placeholder — 실제 하루 루틴, 딜 미팅, 리서치 ]</p>
-    <div class="slide-number">14</div>
-  </section>
+  <div class="tusim-box">
+    <h3>투심 보고서란</h3>
+    <p>담당 심사역이 "이 기업에 투자하겠다"는 의지와 근거를 담은 첫 공식 문서.</p>
+    <p>투자 본심위에서 예상되는 질문과 챌린지를 미리 파악하고 답을 준비해야 한다.</p>
+    <div class="tusim-step-list">
+      <div class="tusim-step">
+        <span class="t-n">01</span>
+        <span class="t-text">IR 미팅 + 리서치</span>
+        <span class="t-arrow">→</span>
+        <span class="t-text">투심 보고서 초안 작성</span>
+      </div>
+      <div class="tusim-step">
+        <span class="t-n">02</span>
+        <span class="t-text">예비 투심위</span>
+        <span class="t-arrow">→</span>
+        <span class="t-text">팀 내 피드백 반영</span>
+      </div>
+      <div class="tusim-step">
+        <span class="t-n">03</span>
+        <span class="t-text">투자 본심위</span>
+        <span class="t-arrow">→</span>
+        <span class="t-text">투자 승인 or 보류</span>
+      </div>
+      <div class="tusim-step">
+        <span class="t-n">04</span>
+        <span class="t-text">계약 체결</span>
+        <span class="t-arrow">→</span>
+        <span class="t-text">투자 집행 (납입)</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">16</div>
+</section>
 
-  <!-- 신입 VC 2 -->
-  <section class="slide">
-    <div class="slide-label">신입 VC — 02</div>
-    <h2>좋은 점과 어려운 점</h2>
-    <p class="placeholder">[ placeholder — 솔직한 이야기 ]</p>
-    <div class="slide-number">15</div>
-  </section>
+<!-- 17. 역할 변화 -->
+<section class="slide">
+  <div class="slide-label">심사역의 역할 — 04</div>
+  <h2>심사역의 역할은<br>어떻게 변하고 있나</h2>
+  <div class="role-grid">
+    <div class="role-col">
+      <div class="role-head">10년 전</div>
+      <div class="role-body">
+        <span class="role-tag">재원 중개</span>
+        <span class="role-tag">경영 감시</span>
+        <span class="role-tag">지배구조 개선</span>
+        <span class="role-tag dim">수동적 주주 역할</span>
+      </div>
+    </div>
+    <div class="role-col">
+      <div class="role-head">AS-IS (현재)</div>
+      <div class="role-body">
+        <span class="role-tag">경영 참여</span>
+        <span class="role-tag">멘토링</span>
+        <span class="role-tag">네트워킹 연결</span>
+        <span class="role-tag">재원 추가 조달 지원</span>
+        <span class="role-tag">이익 확대</span>
+        <span class="role-tag">컴퍼니 빌더</span>
+      </div>
+    </div>
+    <div class="role-col tobe">
+      <div class="role-head">TO-BE (앞으로)</div>
+      <div class="role-body">
+        <span class="role-tag blue">AI 기반 딜 스크리닝</span>
+        <span class="role-tag blue">데이터 드리븐 의사결정</span>
+        <span class="role-tag blue">섹터 전문성 심화</span>
+        <span class="role-tag blue">글로벌 네트워크</span>
+        <span class="role-tag dim">단순 심사역 역할은 점점 줄어든다</span>
+      </div>
+    </div>
+  </div>
+  <div class="quote-block" style="margin-top:28px;">
+    <p>"앞으로 심사역은 단순히 돈을 주는 사람이 아니라,<br>창업자가 가장 먼저 전화하는 사람이어야 한다."</p>
+  </div>
+  <div class="slide-number">17</div>
+</section>
 
-  <!-- 신입 VC 3 -->
-  <section class="slide">
-    <div class="slide-label">신입 VC — 03</div>
-    <h2>VC를 꿈꾼다면</h2>
-    <p class="placeholder">[ placeholder — 준비 방법, 현실적인 조언 ]</p>
-    <div class="slide-number">16</div>
-  </section>
+<!-- ══════════════════ PART 4: Mashup 철학 ═══════════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 1 계속</div>
+  <h2>Mashup 철학</h2>
+  <div class="divider-chapters">
+    <span class="divider-chapter">VC는 왜 존재하는가</span>
+    <span class="divider-chapter">문제가 먼저다</span>
+    <span class="divider-chapter">For Founders By Founders</span>
+    <span class="divider-chapter">좋은 팀의 조건</span>
+  </div>
+  <div class="slide-number">18</div>
+</section>
 
-  <!-- Closing -->
-  <section class="slide slide-cover">
-    <h1>Q&A</h1>
-    <p class="subtitle">bosung@mashupventures.co</p>
-    <div class="slide-number">17</div>
-  </section>
+<!-- 19. VC는 왜 존재하는가 -->
+<section class="slide">
+  <div class="slide-label">Mashup 철학 — 01</div>
+  <h2>그런데.<br>VC는 왜 존재하는가</h2>
+  <p>돈을 버는 방법은 많다. 그 중에 굳이 VC를 선택하는 이유는 뭘까.</p>
+  <div class="quote-block">
+    <p>"세상이 바뀌는 방향을 먼저 알아보고,<br>그 변화를 만드는 사람 옆에 서는 일."</p>
+  </div>
+  <div class="step-list" style="margin-top:36px;">
+    <div class="step-item">
+      <span class="step-n">01</span>
+      <div>
+        <div class="step-text">투자 기준이 바뀐 것처럼 보여도</div>
+        <div class="step-sub">AI든, 바이오든, 기후테크든 — 트렌드는 바뀐다.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">02</span>
+      <div>
+        <div class="step-text">본질은 바뀐 적이 없다</div>
+        <div class="step-sub">문제가 무엇인가. 팀이 그 문제를 풀 수 있는가. 이 두 질문.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">03</span>
+      <div>
+        <div class="step-text">Definite Optimism</div>
+        <div class="step-sub">미래는 더 나아질 것이다 — 그리고 나는 그 모습이 어떤지 안다. (Peter Thiel)</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">19</div>
+</section>
 
-  <footer>
-    <p>&copy; 2026 Bobo's Home</p>
-  </footer>
+<!-- 20. 문제가 먼저다 -->
+<section class="slide">
+  <div class="slide-label">Mashup 철학 — 02</div>
+  <h2>문제가<br>먼저다</h2>
+  <p>좋은 투자는 좋은 문제를 알아보는 것에서 시작한다.<br>솔루션이 아니라, 문제부터 본다.</p>
+  <div class="step-list" style="margin-top:32px;">
+    <div class="step-item">
+      <span class="step-n">❌</span>
+      <div>
+        <div class="step-text">나쁜 접근</div>
+        <div class="step-sub">"AI 챗봇으로 뭔가 만들면 잘 팔릴 것 같다" → 솔루션 먼저, 문제를 역으로 끼워 맞춤</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">✓</span>
+      <div>
+        <div class="step-text">좋은 접근</div>
+        <div class="step-sub">"소비자 B2B 계약서 검토에 평균 3일이 걸린다 — 왜?" → 문제 먼저, 솔루션은 그 다음</div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-block">
+    <p>"First Principle Thinking.<br>당연하게 여겨지던 것을 처음부터 다시 묻는 힘."</p>
+  </div>
+  <div class="tag-list">
+    <span class="tag">Why Now?</span>
+    <span class="tag">Pain Point</span>
+    <span class="tag">이 팀만이 가진 인사이트</span>
+    <span class="tag">시장의 반응</span>
+  </div>
+  <div class="slide-number">20</div>
+</section>
+
+<!-- 21. For Founders By Founders -->
+<section class="slide">
+  <div class="slide-label">Mashup 철학 — 03</div>
+  <h2>For Founders,<br>By Founders</h2>
+  <p>Mashup Ventures는 창업자 출신들이 모인 VC다.<br>"Founder Friendly"를 넘어 — <strong>창업자처럼 사고하고, 스타트업처럼 움직인다.</strong></p>
+  <div class="stat-grid">
+    <div>
+      <div class="stat-num">219</div>
+      <div class="stat-label">누적 포트폴리오</div>
+    </div>
+    <div>
+      <div class="stat-num">84%</div>
+      <div class="stat-label">첫 번째 기관 투자자</div>
+    </div>
+    <div>
+      <div class="stat-num">2.4조</div>
+      <div class="stat-label">누적 후속 투자유치</div>
+    </div>
+  </div>
+  <div class="tag-list" style="margin-top:32px;">
+    <span class="tag">초기 스타트업 전문</span>
+    <span class="tag">IT 전 분야</span>
+    <span class="tag">대학생 창업 투자</span>
+    <span class="tag">첫 발굴자 역할</span>
+  </div>
+  <div class="slide-number">21</div>
+</section>
+
+<!-- 22. 좋은 팀의 조건 -->
+<section class="slide">
+  <div class="slide-label">Mashup 철학 — 04</div>
+  <h2>좋은 팀을<br>어떻게 알아보는가</h2>
+  <div class="step-list">
+    <div class="step-item">
+      <span class="step-n">01</span>
+      <div>
+        <div class="step-text">일원칙 사고 (First Principle Thinking)</div>
+        <div class="step-sub">남들이 당연하게 여기는 것을 처음부터 다시 묻는다. 업계의 통념을 깨는 사람.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">02</span>
+      <div>
+        <div class="step-text">장기적 사고 (Discipline)</div>
+        <div class="step-sub">단기 노이즈에 흔들리지 않는다. 올라야 할 산을 정하고, 묵묵히 오른다.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <span class="step-n">03</span>
+      <div>
+        <div class="step-text">자기객관화 (메타인지)</div>
+        <div class="step-sub">내가 무엇을 모르는지 아는 사람. 가장 빠르게 성장한다. 피드백을 두려워하지 않는다.</div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-block">
+    <p>"The future will be better than the present,<br>and I know what it will look like."</p>
+    <div class="quote-attr">Peter Thiel — Definite Optimism</div>
+  </div>
+  <div class="slide-number">22</div>
+</section>
+
+<!-- ═══════════════════ PART 5: 나에 대해서 ════════════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 2</div>
+  <h2>나에 대해서</h2>
+  <div class="slide-number">23</div>
+</section>
+
+<section class="slide">
+  <div class="slide-label">나에 대해서 — 01</div>
+  <h2>어떻게 VC에<br>오게 됐나</h2>
+  <p class="placeholder-text">[ placeholder — 배경, 관심사, VC를 선택한 이유 ]</p>
+  <div class="slide-number">24</div>
+</section>
+
+<section class="slide">
+  <div class="slide-label">나에 대해서 — 02</div>
+  <h2>지금 하는 일</h2>
+  <p class="placeholder-text">[ placeholder — Mashup Ventures, 담당 섹터, 일상 ]</p>
+  <div class="slide-number">25</div>
+</section>
+
+<!-- ════════════════ PART 6: 대졸 신입 VC의 삶 ═══════════════ -->
+<section class="slide slide-divider">
+  <div class="slide-label">Part 3</div>
+  <h2>대졸 신입 VC의 삶</h2>
+  <div class="slide-number">26</div>
+</section>
+
+<section class="slide">
+  <div class="slide-label">신입 VC — 01</div>
+  <h2>하루가 어떻게<br>생겼나</h2>
+  <p class="placeholder-text">[ placeholder — 실제 하루 루틴, 딜 미팅, 리서치 ]</p>
+  <div class="slide-number">27</div>
+</section>
+
+<section class="slide">
+  <div class="slide-label">신입 VC — 02</div>
+  <h2>좋은 점과<br>어려운 점</h2>
+  <p class="placeholder-text">[ placeholder — 솔직한 이야기 ]</p>
+  <div class="slide-number">28</div>
+</section>
+
+<section class="slide">
+  <div class="slide-label">신입 VC — 03</div>
+  <h2>VC를 꿈꾼다면</h2>
+  <p class="placeholder-text">[ placeholder — 준비 방법, 현실적인 조언 ]</p>
+  <div class="slide-number">29</div>
+</section>
+
+<!-- ───────────────────────── Q&A Closing ─────────────────────── -->
+<section class="slide slide-cover">
+  <h1>Q&A</h1>
+  <div class="cover-sub">bosung@mashupventures.co</div>
+  <div class="slide-number">30</div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Bobo's Home</p>
+</footer>
 
 </body>
 </html>
