@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM - Bosung Baik</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress"></div>
+
+  <nav>
+    <div class="container">
+      <div class="nav-name"><a href="/">Bobo's Home</a></div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/quarterly-reports">Reports</a></li>
+        <li><a href="/writings">Writings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <a href="/" class="back-link">Home</a>
+
+      <h1>People I want to stay close to</h1>
+
+      <section>
+        <p>VC는 결국 사람 장사다. 좋은 창업자를 먼저 만나는 것, 좋은 동료 VC와 신뢰를 쌓는 것, 그리고 언젠가 다시 연락이 닿을 수 있도록 관계를 잘 유지하는 것. 이 세 가지가 심사역의 핵심 역량이라고 생각한다.</p>
+
+        <p>그런데 솔직히, 잘 못하고 있다. 만나는 사람은 점점 많아지는데 깊이 있게 이어가는 관계는 그만큼 늘지 않는다. 명함 앱보다 낫고, 스프레드시트보다는 살아있는 무언가가 필요해서 이 페이지를 만들었다.</p>
+
+        <p>여기는 나의 개인 CRM이다. 내가 계속 연락하고 싶은 사람들, 언젠가 꼭 다시 만나고 싶은 사람들, 그리고 그들과의 이야기를 기록하는 공간이다. 공개적으로 쓰는 이유는 — 혹시 이 페이지를 보고 있는 당신이 그중 한 명일 수도 있으니까.</p>
+      </section>
+
+      <div class="separator"></div>
+
+      <section>
+        <h2>Founders</h2>
+        <ul class="link-list">
+          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Fellow VCs</h2>
+        <ul class="link-list">
+          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Builders & Operators</h2>
+        <ul class="link-list">
+          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="inverted">
+    <div class="container">
+      <h2>Connect</h2>
+      <ul class="link-list">
+        <li><a href="mailto:bbs@mashupventures.co">bbs@mashupventures.co</a></li>
+        <li><a href="https://www.linkedin.com/in/bosungbaik/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/bobo_sung_00/" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Bobo's Home</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      scrollProgress.style.width = progress + '%';
+    });
+
+    // Section vertical line on scroll
+    const sections = document.querySelectorAll('main section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
