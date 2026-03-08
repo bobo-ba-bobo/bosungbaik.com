@@ -2,9 +2,52 @@
 
 ## 에세이 목록
 
-1. VC vs. PE
-2. Infrastructure
-3. Value-driven Investing
+1. NASDAQ vs. KOSPI
+2. VC vs. PE
+3. Infrastructure
+4. Value-driven Investing
+
+## NASDAQ vs. KOSPI
+
+```
+A few months ago, I was doing routine research at the office when I found myself staring at two lists side by side: the largest companies by market capitalization on the NASDAQ in 2010, and the same list today. Then I pulled up the KOSPI equivalent. Something clicked that I hadn't been able to articulate before, a feeling I'd had about Korean economic growth, about why I ended up in venture capital, about what the next twenty years might look like.
+```
+
+```
+The most fundamental economic argument I can make is this: when a new company builds an entirely new industry, it doesn't merely redistribute existing wealth; it creates new wealth. When Amazon built cloud computing at scale, it monetized infrastructure in a way that had never existed before. When Google built the search and advertising layer of the internet, it turned attention into a commodity. These weren't just big companies getting bigger. They were new economic activities that hadn't contributed to GDP before, and suddenly did: hundreds of thousands of new jobs, new tax receipts, new adjacent industries. The simplest way I know to understand why some countries get richer faster than others is to ask: are new companies building new industries within their borders?
+```
+
+```
+The NASDAQ's top five companies in 2010 were Apple, Microsoft, Google, Oracle, and Intel. Good companies, all of them. Apple was riding the early iPhone wave. Microsoft was still the operating system of the world. Google had already become an essential utility. Oracle and Intel had defined the infrastructure of the enterprise internet era.
+```
+
+```
+Look at 2025, though. Apple and Microsoft are still there. But Nvidia, a company worth roughly $8 to $10 billion in 2010, is now worth over $4 trillion, making it one of the most valuable companies in the history of public markets. Meta didn't even exist as a public company in 2010; it went public in 2012 and has since grown past $1.5 trillion. Amazon climbed from around $80 billion to nearly $2 trillion. Oracle and Intel, once pillars of the era, have largely receded from the top tier. The NASDAQ doesn't just grow. It replaces. The companies at the top in 2025 represent industries (AI infrastructure, social media, cloud computing) that either barely existed or didn't exist at all in 2010.
+```
+
+```
+This isn't a coincidence. US GDP per capita was around $48,000 in 2010. By 2024, it had grown to over $85,000, nearly doubling in fifteen years. That's not just productivity gains from existing industries squeezing out more efficiency. A meaningful portion of that growth is entirely new economic activity: AI chips, cloud services, digital advertising ecosystems, streaming platforms. Whole new pools of GDP that didn't exist before. I'm not claiming the NASDAQ alone explains American prosperity. But I think the conditions that allow a company like Nvidia to go from gaming graphics cards to the backbone of global AI infrastructure, in one company's lifetime, are the same conditions that allow economies to grow faster.
+```
+
+```
+South Korea's GDP per capita in 2010 was around $22,000. By 2024, it had grown to around $36,000, about a 63% increase over a period when the US grew nearly 80%. Korea has grown, meaningfully. But the growth is becoming harder. The industries driving Korea's wealth (semiconductors, automotive, petrochemicals, heavy manufacturing) are industries the country has already spent fifty years optimizing. The chaebols do these things exceptionally well. But optimizing mature industries incrementally is not the same as creating entirely new ones, and the two translate very differently into per capita growth over time.
+```
+
+```
+I think the pattern is clear enough to be worth saying plainly: economies where new companies can rise to the very top tend to grow faster. Not because stock rankings directly equal GDP, but because the conditions that make it possible for a GPU startup to become the world's most valuable company (accessible capital, tolerance for failure, market openness) are the same conditions that allow entirely new industries to form. The NASDAQ's dynamism is both evidence of and a contributor to America's continued economic growth. Korea's KOSPI looks the way it does because the structural conditions (concentrated capital in established conglomerates, cultural attitudes toward failure, limited access to early-stage funding) make it harder for new companies to reach the top.
+```
+
+```
+I'm 25, and I work in Korean venture capital. When I think about what Korea's economy looks like in twenty years, I keep coming back to this question: can new companies eventually challenge the chaebol dominance? I don't mean that Samsung and Hyundai are somehow the villains here. They've built real, important things for this country. But an economy where the same families occupy the same positions at the top for fifty consecutive years is an economy that is structuring itself around the past. The next surge in Korean GDP won't come from Samsung becoming marginally more profitable. It'll come from companies we haven't heard of yet building industries that don't yet exist.
+```
+
+```
+That's ultimately why I'm in venture investing. When I back an early-stage Korean startup, I'm placing a small bet on the possibility that the KOSPI's top ten can look genuinely different in twenty years. Maybe that's a naive framing for what is, at the end of the day, a portfolio management job. But I don't think it's wrong. If the lesson from the NASDAQ is that new companies from new industries are how nations build new wealth, then the people who fund those companies at the earliest stages are doing something that matters beyond the fund's IRR. Korea needs its version of Nvidia, a company that seems niche today and becomes structurally indispensable to the global economy in ways we can barely articulate yet. I'd like to be the kind of investor who recognizes it early enough to matter.
+```
+
+```
+The KOSPI and the NASDAQ are both just lists of public companies ranked by market value. But the way those lists do or don't change over time tells you something about an economy's relationship with the future. Right now, the NASDAQ changes dramatically; the KOSPI mostly doesn't. I hope that changes. And I think venture capital, done well, early, and with conviction, is part of how it does.
+```
 
 ---
 
