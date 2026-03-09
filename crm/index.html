@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,654 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* CRM-specific overrides */
+    body { background: #f9f9f9; }
+
+    main {
+      padding: clamp(32px, 5vw, 56px) 0 clamp(60px, 8vw, 80px);
+    }
+
+    .crm-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+    }
+
+    /* Page header */
+    .crm-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .crm-header h1 {
+      margin-bottom: 4px;
+      font-size: clamp(22px, 2.5vw, 28px);
+    }
+
+    .crm-header-sub {
+      font-size: 13px;
+      color: #888;
+      font-weight: 300;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 400;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary {
+      background: #000;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #222;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #000;
+      border: 1px solid #e0e0e0;
+    }
+
+    .btn-ghost:hover {
+      border-color: #000;
+      background: #000;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: #c00;
+      border: 1px solid #ecc;
+    }
+
+    .btn-danger:hover {
+      background: #c00;
+      color: #fff;
+      border-color: #c00;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      border-color: #000;
+    }
+
+    .stat-card.active {
+      background: #000;
+      border-color: #000;
+    }
+
+    .stat-card.active .stat-label,
+    .stat-card.active .stat-num {
+      color: #fff;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+      color: #000;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 300;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      color: #000;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #000;
+    }
+
+    .sort-select {
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 300;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      color: #000;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 32px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    /* Contact table */
+    .contacts-table-wrap {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    thead th {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e8e8e8;
+      background: #fafafa;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: #f9f9f9;
+    }
+
+    tbody tr.selected {
+      background: #f5f5f5;
+    }
+
+    td {
+      padding: 13px 16px;
+      font-size: 14px;
+      font-weight: 300;
+      vertical-align: middle;
+    }
+
+    .td-name {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .td-company {
+      color: #444;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid;
+    }
+
+    .badge-founder { color: #000; border-color: #000; }
+    .badge-vc { color: #444; border-color: #888; background: #f5f5f5; }
+    .badge-builder { color: #555; border-color: #bbb; }
+    .badge-friend { color: #666; border-color: #ccc; }
+    .badge-other { color: #888; border-color: #ddd; }
+
+    .td-notes {
+      color: #777;
+      max-width: 240px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .td-date {
+      color: #aaa;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    tbody tr:hover .row-actions {
+      opacity: 1;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #aaa;
+      transition: color 0.15s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-btn:hover { color: #000; }
+    .icon-btn.delete:hover { color: #c00; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: #aaa;
+    }
+
+    .empty-state-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .empty-state h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      color: #bbb;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: #fff;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(16px);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .modal-header h2 {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      color: #000;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #aaa;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+
+    .close-btn:hover { color: #000; }
+
+    .modal-body {
+      padding: 24px 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 9px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 300;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      color: #000;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #000;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 20px 28px 24px;
+      border-top: 1px solid #eee;
+    }
+
+    /* Detail panel */
+    .detail-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 100vh;
+      background: #fff;
+      border-left: 1px solid #e8e8e8;
+      z-index: 500;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.06);
+    }
+
+    .detail-panel.open {
+      transform: translateX(0);
+    }
+
+    .detail-panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .detail-name {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .detail-role-company {
+      font-size: 13px;
+      color: #888;
+      font-weight: 300;
+    }
+
+    .detail-panel-body {
+      padding: 20px 24px;
+    }
+
+    .detail-section {
+      margin-bottom: 24px;
+    }
+
+    .detail-section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 8px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 300;
+      color: #000;
+      line-height: 1.5;
+    }
+
+    .detail-value a {
+      text-decoration: underline;
+      text-decoration-color: #ccc;
+      text-decoration-thickness: 1px;
+    }
+
+    .detail-value a:hover {
+      text-decoration-color: #000;
+    }
+
+    .detail-notes {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #333;
+      white-space: pre-wrap;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 8px;
+      padding: 16px 24px;
+      border-top: 1px solid #f0f0f0;
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+    }
+
+    /* Tags input */
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+      min-height: 40px;
+      cursor: text;
+      transition: border-color 0.2s;
+    }
+
+    .tags-wrap:focus-within {
+      border-color: #000;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f0f0f0;
+      padding: 2px 8px;
+      font-size: 12px;
+    }
+
+    .tag-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #888;
+      padding: 0;
+      line-height: 1;
+      margin-top: -1px;
+    }
+
+    .tag-remove:hover { color: #000; }
+
+    .tag-input-field {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 300;
+      min-width: 80px;
+      flex: 1;
+      background: transparent;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: #000; }
+
+    /* Count label */
+    .count-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-left: auto;
+      align-self: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .detail-panel { width: 100%; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .crm-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Scroll progress bar -->
-  <div class="scroll-progress"></div>
 
   <nav>
     <div class="container">
@@ -27,85 +671,586 @@
   </nav>
 
   <main>
-    <div class="container">
-      <a href="/" class="back-link">Home</a>
+    <div class="crm-container">
 
-      <h1>People I want to stay close to</h1>
+      <a href="/" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Home
+      </a>
 
-      <section>
-        <p>VC는 결국 사람 장사다. 좋은 창업자를 먼저 만나는 것, 좋은 동료 VC와 신뢰를 쌓는 것, 그리고 언젠가 다시 연락이 닿을 수 있도록 관계를 잘 유지하는 것. 이 세 가지가 심사역의 핵심 역량이라고 생각한다.</p>
+      <div class="crm-header">
+        <div>
+          <h1>People</h1>
+          <p class="crm-header-sub">내가 기억하고 싶은 사람들</p>
+        </div>
+        <button class="btn btn-primary" onclick="openAddModal()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          Add Contact
+        </button>
+      </div>
 
-        <p>그런데 솔직히, 잘 못하고 있다. 만나는 사람은 점점 많아지는데 깊이 있게 이어가는 관계는 그만큼 늘지 않는다. 명함 앱보다 낫고, 스프레드시트보다는 살아있는 무언가가 필요해서 이 페이지를 만들었다.</p>
+      <!-- Stats -->
+      <div class="stats-row" id="statsRow"></div>
 
-        <p>여기는 나의 개인 CRM이다. 내가 계속 연락하고 싶은 사람들, 언젠가 꼭 다시 만나고 싶은 사람들, 그리고 그들과의 이야기를 기록하는 공간이다. 공개적으로 쓰는 이유는 — 혹시 이 페이지를 보고 있는 당신이 그중 한 명일 수도 있으니까.</p>
-      </section>
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <input class="search-input" type="text" id="searchInput" placeholder="이름, 회사, 노트로 검색..." oninput="renderTable()">
+        </div>
+        <select class="sort-select" id="sortSelect" onchange="renderTable()">
+          <option value="name_asc">이름 A→Z</option>
+          <option value="name_desc">이름 Z→A</option>
+          <option value="recent">최근 추가순</option>
+          <option value="last_contact">최근 연락순</option>
+        </select>
+        <button class="btn btn-ghost" onclick="exportData()" title="JSON으로 내보내기">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1v8M4 6l3 3 3-3M2 10v2a1 1 0 001 1h8a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Export
+        </button>
+      </div>
 
-      <div class="separator"></div>
-
-      <section>
-        <h2>Founders</h2>
-        <ul class="link-list">
-          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Fellow VCs</h2>
-        <ul class="link-list">
-          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Builders & Operators</h2>
-        <ul class="link-list">
-          <li><a href="mailto:bbs@mashupventures.co" class="internal">커피챗 요청하기</a></li>
-        </ul>
-      </section>
+      <!-- Table -->
+      <div class="contacts-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>회사 / 직함</th>
+              <th>분류</th>
+              <th>만난 곳</th>
+              <th>메모</th>
+              <th>최근 연락</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="contactsBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state" style="display:none;">
+          <div class="empty-state-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="18" r="8" stroke="#ccc" stroke-width="2"/>
+              <path d="M8 40c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 id="emptyTitle">아직 아무도 없네요</h3>
+          <p id="emptyDesc">Add Contact 버튼으로 첫 번째 사람을 추가해보세요.</p>
+        </div>
+      </div>
 
     </div>
   </main>
 
-  <div class="inverted">
-    <div class="container">
-      <h2>Connect</h2>
-      <ul class="link-list">
-        <li><a href="mailto:bbs@mashupventures.co">bbs@mashupventures.co</a></li>
-        <li><a href="https://www.linkedin.com/in/bosungbaik/" target="_blank">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/bobo_sung_00/" target="_blank">Instagram</a></li>
-      </ul>
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Contact</h2>
+        <button class="close-btn" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>이름 *</label>
+            <input type="text" id="fName" placeholder="홍길동" required>
+          </div>
+
+          <div class="form-group">
+            <label>분류</label>
+            <select id="fCategory">
+              <option value="founder">Founder</option>
+              <option value="vc">Fellow VC</option>
+              <option value="builder">Builder / Operator</option>
+              <option value="friend">Friend</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>회사</label>
+            <input type="text" id="fCompany" placeholder="회사명">
+          </div>
+
+          <div class="form-group">
+            <label>직함 / 역할</label>
+            <input type="text" id="fRole" placeholder="CEO, 심사역, ...">
+          </div>
+
+          <div class="form-group">
+            <label>어디서 만났나</label>
+            <input type="text" id="fWhereMet" placeholder="BEA 네트워킹, 오픈AI 밋업...">
+          </div>
+
+          <div class="form-group">
+            <label>언제 만났나</label>
+            <input type="date" id="fWhenMet">
+          </div>
+
+          <div class="form-group">
+            <label>이메일</label>
+            <input type="email" id="fEmail" placeholder="email@example.com">
+          </div>
+
+          <div class="form-group">
+            <label>LinkedIn</label>
+            <input type="url" id="fLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+
+          <div class="form-group">
+            <label>최근 연락 날짜</label>
+            <input type="date" id="fLastContact">
+          </div>
+
+          <div class="form-group">
+            <label>태그</label>
+            <div class="tags-wrap" id="tagsWrap" onclick="document.getElementById('tagInput').focus()">
+              <input class="tag-input-field" id="tagInput" type="text" placeholder="태그 입력 후 Enter" onkeydown="handleTagInput(event)">
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label>메모</label>
+            <textarea id="fNotes" placeholder="기억하고 싶은 것, 공통 관심사, 다음에 할 이야기..."></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+        <button class="btn btn-primary" onclick="saveContact()">저장</button>
+      </div>
     </div>
   </div>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 Bobo's Home</p>
+  <!-- Detail Panel -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-panel-header">
+      <div>
+        <div class="detail-name" id="dpName"></div>
+        <div class="detail-role-company" id="dpRoleCompany"></div>
+      </div>
+      <button class="close-btn" onclick="closeDetail()">×</button>
     </div>
-  </footer>
+    <div class="detail-panel-body" id="dpBody"></div>
+    <div class="detail-actions" id="dpActions"></div>
+  </div>
 
   <script>
-    // Scroll progress bar
-    const scrollProgress = document.querySelector('.scroll-progress');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = progress + '%';
-    });
+    /* ============================================================
+       DATA LAYER — localStorage
+    ============================================================ */
+    const STORAGE_KEY = 'bobo_crm_contacts';
 
-    // Section vertical line on scroll
-    const sections = document.querySelectorAll('main section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
+    function loadContacts() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch { return []; }
+    }
+
+    function saveContacts(contacts) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
+    }
+
+    function genId() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    }
+
+    /* ============================================================
+       STATE
+    ============================================================ */
+    let contacts = loadContacts();
+    let activeFilter = 'all'; // 'all' | category
+    let currentTags = [];
+    let selectedId = null;
+
+    /* ============================================================
+       CATEGORIES
+    ============================================================ */
+    const CATEGORIES = {
+      founder:  { label: 'Founder',           badge: 'badge-founder' },
+      vc:       { label: 'Fellow VC',          badge: 'badge-vc' },
+      builder:  { label: 'Builder / Operator', badge: 'badge-builder' },
+      friend:   { label: 'Friend',             badge: 'badge-friend' },
+      other:    { label: 'Other',              badge: 'badge-other' },
+    };
+
+    /* ============================================================
+       STATS
+    ============================================================ */
+    function renderStats() {
+      const row = document.getElementById('statsRow');
+      const total = contacts.length;
+
+      const counts = { founder: 0, vc: 0, builder: 0, friend: 0, other: 0 };
+      contacts.forEach(c => { if (counts[c.category] !== undefined) counts[c.category]++; });
+
+      const items = [
+        { key: 'all', num: total, label: 'Total' },
+        { key: 'founder', num: counts.founder, label: 'Founders' },
+        { key: 'vc', num: counts.vc, label: 'Fellow VCs' },
+        { key: 'builder', num: counts.builder, label: 'Builders' },
+        { key: 'friend', num: counts.friend, label: 'Friends' },
+        { key: 'other', num: counts.other, label: 'Other' },
+      ];
+
+      row.innerHTML = items.map(item => `
+        <div class="stat-card ${activeFilter === item.key ? 'active' : ''}" onclick="setFilter('${item.key}')">
+          <div class="stat-num">${item.num}</div>
+          <div class="stat-label">${item.label}</div>
+        </div>
+      `).join('');
+    }
+
+    function setFilter(key) {
+      activeFilter = key;
+      renderStats();
+      renderTable();
+    }
+
+    /* ============================================================
+       TABLE
+    ============================================================ */
+    function getFilteredSorted() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const sort = document.getElementById('sortSelect').value;
+
+      let list = contacts.filter(c => {
+        if (activeFilter !== 'all' && c.category !== activeFilter) return false;
+        if (!q) return true;
+        return (c.name || '').toLowerCase().includes(q)
+          || (c.company || '').toLowerCase().includes(q)
+          || (c.role || '').toLowerCase().includes(q)
+          || (c.notes || '').toLowerCase().includes(q)
+          || (c.tags || []).some(t => t.toLowerCase().includes(q))
+          || (c.where_met || '').toLowerCase().includes(q);
       });
-    }, { threshold: 0.1 });
 
-    sections.forEach(section => {
-      observer.observe(section);
+      list.sort((a, b) => {
+        if (sort === 'name_asc') return (a.name || '').localeCompare(b.name || '', 'ko');
+        if (sort === 'name_desc') return (b.name || '').localeCompare(a.name || '', 'ko');
+        if (sort === 'recent') return (b.created_at || 0) - (a.created_at || 0);
+        if (sort === 'last_contact') {
+          const da = a.last_contact ? new Date(a.last_contact) : new Date(0);
+          const db = b.last_contact ? new Date(b.last_contact) : new Date(0);
+          return db - da;
+        }
+        return 0;
+      });
+
+      return list;
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      const d = new Date(dateStr);
+      if (isNaN(d)) return '—';
+      const now = new Date();
+      const diff = Math.floor((now - d) / 86400000);
+      if (diff === 0) return '오늘';
+      if (diff === 1) return '어제';
+      if (diff < 7) return `${diff}일 전`;
+      if (diff < 30) return `${Math.floor(diff/7)}주 전`;
+      if (diff < 365) return `${Math.floor(diff/30)}개월 전`;
+      return `${Math.floor(diff/365)}년 전`;
+    }
+
+    function renderTable() {
+      const list = getFilteredSorted();
+      const tbody = document.getElementById('contactsBody');
+      const empty = document.getElementById('emptyState');
+      const q = document.getElementById('searchInput').value.trim();
+
+      if (list.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = '';
+        document.getElementById('emptyTitle').textContent = contacts.length === 0
+          ? '아직 아무도 없네요'
+          : '검색 결과가 없습니다';
+        document.getElementById('emptyDesc').textContent = contacts.length === 0
+          ? 'Add Contact 버튼으로 첫 번째 사람을 추가해보세요.'
+          : `"${q || activeFilter}"에 해당하는 연락처가 없어요.`;
+      } else {
+        empty.style.display = 'none';
+        tbody.innerHTML = list.map(c => {
+          const cat = CATEGORIES[c.category] || CATEGORIES.other;
+          const roleCompany = [c.role, c.company].filter(Boolean).join(' · ');
+          return `
+            <tr onclick="openDetail('${c.id}')" class="${selectedId === c.id ? 'selected' : ''}">
+              <td class="td-name">${esc(c.name)}</td>
+              <td class="td-company">${esc(roleCompany)}</td>
+              <td><span class="badge ${cat.badge}">${cat.label}</span></td>
+              <td>${esc(c.where_met || '—')}</td>
+              <td class="td-notes">${esc(c.notes || '—')}</td>
+              <td class="td-date">${formatDate(c.last_contact)}</td>
+              <td>
+                <div class="row-actions">
+                  <button class="icon-btn" onclick="event.stopPropagation(); openEditModal('${c.id}')" title="편집">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 10.5L9 3.5l2 2-7 7H2v-2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                      <path d="M8 4.5l1.5-1.5 2 2L10 6.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="icon-btn delete" onclick="event.stopPropagation(); deleteContact('${c.id}')" title="삭제">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 4h10M5 4V2.5h4V4M5.5 6.5v4M8.5 6.5v4M3 4l.8 7.5h6.4L11 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function esc(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ============================================================
+       DETAIL PANEL
+    ============================================================ */
+    function openDetail(id) {
+      const c = contacts.find(x => x.id === id);
+      if (!c) return;
+      selectedId = id;
+      renderTable();
+
+      const cat = CATEGORIES[c.category] || CATEGORIES.other;
+      const roleCompany = [c.role, c.company].filter(Boolean).join(' · ');
+
+      document.getElementById('dpName').textContent = c.name;
+      document.getElementById('dpRoleCompany').textContent = roleCompany || cat.label;
+
+      const body = document.getElementById('dpBody');
+      const rows = [
+        { label: '분류', value: `<span class="badge ${cat.badge}">${cat.label}</span>` },
+        c.where_met ? { label: '어디서 만났나', value: esc(c.where_met) } : null,
+        c.when_met  ? { label: '처음 만난 날', value: fmtDateKo(c.when_met) } : null,
+        c.last_contact ? { label: '최근 연락', value: fmtDateKo(c.last_contact) + ` (${formatDate(c.last_contact)})` } : null,
+        c.email     ? { label: '이메일', value: `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` } : null,
+        c.linkedin  ? { label: 'LinkedIn', value: `<a href="${esc(c.linkedin)}" target="_blank" rel="noopener">프로필 보기 ↗</a>` } : null,
+        (c.tags && c.tags.length) ? { label: '태그', value: c.tags.map(t => `<span class="badge badge-other" style="margin-right:4px">${esc(t)}</span>`).join('') } : null,
+        c.notes     ? { label: '메모', value: `<div class="detail-notes">${esc(c.notes)}</div>`, full: true } : null,
+      ].filter(Boolean);
+
+      body.innerHTML = rows.map(r => `
+        <div class="detail-section">
+          <div class="detail-section-label">${r.label}</div>
+          <div class="detail-value">${r.value}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('dpActions').innerHTML = `
+        <button class="btn btn-ghost" style="flex:1" onclick="openEditModal('${c.id}')">편집</button>
+        <button class="btn btn-danger" onclick="deleteContact('${c.id}')">삭제</button>
+      `;
+
+      document.getElementById('detailPanel').classList.add('open');
+    }
+
+    function closeDetail() {
+      selectedId = null;
+      renderTable();
+      document.getElementById('detailPanel').classList.remove('open');
+    }
+
+    function fmtDateKo(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr);
+      if (isNaN(d)) return dateStr;
+      return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
+    }
+
+    /* ============================================================
+       MODAL — ADD / EDIT
+    ============================================================ */
+    function openAddModal() {
+      document.getElementById('editId').value = '';
+      document.getElementById('modalTitle').textContent = 'Add Contact';
+      document.getElementById('fName').value = '';
+      document.getElementById('fCategory').value = 'founder';
+      document.getElementById('fCompany').value = '';
+      document.getElementById('fRole').value = '';
+      document.getElementById('fWhereMet').value = '';
+      document.getElementById('fWhenMet').value = '';
+      document.getElementById('fEmail').value = '';
+      document.getElementById('fLinkedin').value = '';
+      document.getElementById('fLastContact').value = '';
+      document.getElementById('fNotes').value = '';
+      currentTags = [];
+      renderTags();
+      document.getElementById('modalOverlay').classList.add('open');
+      setTimeout(() => document.getElementById('fName').focus(), 100);
+    }
+
+    function openEditModal(id) {
+      const c = contacts.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById('editId').value = id;
+      document.getElementById('modalTitle').textContent = '편집';
+      document.getElementById('fName').value = c.name || '';
+      document.getElementById('fCategory').value = c.category || 'other';
+      document.getElementById('fCompany').value = c.company || '';
+      document.getElementById('fRole').value = c.role || '';
+      document.getElementById('fWhereMet').value = c.where_met || '';
+      document.getElementById('fWhenMet').value = c.when_met || '';
+      document.getElementById('fEmail').value = c.email || '';
+      document.getElementById('fLinkedin').value = c.linkedin || '';
+      document.getElementById('fLastContact').value = c.last_contact || '';
+      document.getElementById('fNotes').value = c.notes || '';
+      currentTags = [...(c.tags || [])];
+      renderTags();
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    function saveContact() {
+      const name = document.getElementById('fName').value.trim();
+      if (!name) {
+        document.getElementById('fName').focus();
+        document.getElementById('fName').style.borderColor = '#c00';
+        setTimeout(() => document.getElementById('fName').style.borderColor = '', 1500);
+        return;
+      }
+
+      const id = document.getElementById('editId').value;
+      const now = Date.now();
+
+      const data = {
+        name,
+        category: document.getElementById('fCategory').value,
+        company: document.getElementById('fCompany').value.trim(),
+        role: document.getElementById('fRole').value.trim(),
+        where_met: document.getElementById('fWhereMet').value.trim(),
+        when_met: document.getElementById('fWhenMet').value,
+        email: document.getElementById('fEmail').value.trim(),
+        linkedin: document.getElementById('fLinkedin').value.trim(),
+        last_contact: document.getElementById('fLastContact').value,
+        notes: document.getElementById('fNotes').value.trim(),
+        tags: [...currentTags],
+        updated_at: now,
+      };
+
+      if (id) {
+        const idx = contacts.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          contacts[idx] = { ...contacts[idx], ...data };
+        }
+      } else {
+        contacts.unshift({ id: genId(), created_at: now, ...data });
+      }
+
+      saveContacts(contacts);
+      closeModal();
+      renderStats();
+      renderTable();
+
+      if (id && selectedId === id) {
+        openDetail(id);
+      }
+    }
+
+    /* ============================================================
+       DELETE
+    ============================================================ */
+    function deleteContact(id) {
+      const c = contacts.find(x => x.id === id);
+      if (!c) return;
+      if (!confirm(`"${c.name}"를 삭제할까요?`)) return;
+      contacts = contacts.filter(x => x.id !== id);
+      saveContacts(contacts);
+      if (selectedId === id) closeDetail();
+      renderStats();
+      renderTable();
+    }
+
+    /* ============================================================
+       TAGS
+    ============================================================ */
+    function renderTags() {
+      const wrap = document.getElementById('tagsWrap');
+      const input = document.getElementById('tagInput');
+      const chips = currentTags.map(t => `
+        <span class="tag-chip">
+          ${esc(t)}
+          <button class="tag-remove" onclick="removeTag('${esc(t)}')" type="button">×</button>
+        </span>
+      `).join('');
+      wrap.innerHTML = chips + input.outerHTML;
+      document.getElementById('tagInput').value = '';
+      document.getElementById('tagInput').addEventListener('keydown', handleTagInput);
+    }
+
+    function handleTagInput(e) {
+      const input = document.getElementById('tagInput');
+      const val = input.value.trim();
+      if ((e.key === 'Enter' || e.key === ',') && val) {
+        e.preventDefault();
+        if (!currentTags.includes(val)) currentTags.push(val);
+        renderTags();
+      }
+      if (e.key === 'Backspace' && !val && currentTags.length) {
+        currentTags.pop();
+        renderTags();
+      }
+    }
+
+    function removeTag(tag) {
+      currentTags = currentTags.filter(t => t !== tag);
+      renderTags();
+    }
+
+    /* ============================================================
+       EXPORT
+    ============================================================ */
+    function exportData() {
+      const json = JSON.stringify(contacts, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `crm-export-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    /* ============================================================
+       KEYBOARD
+    ============================================================ */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('modalOverlay').classList.contains('open')) {
+          closeModal();
+        } else if (document.getElementById('detailPanel').classList.contains('open')) {
+          closeDetail();
+        }
+      }
     });
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    renderStats();
+    renderTable();
   </script>
 
 </body>
