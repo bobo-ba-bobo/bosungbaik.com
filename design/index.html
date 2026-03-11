@@ -7,9 +7,118 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    .design-principle {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .design-principle:last-child {
+      margin-bottom: 0;
+    }
+
+    .principle-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #000;
+    }
+
+    .principle-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: #616161;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .color-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .swatch-box {
+      width: 64px;
+      height: 64px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .swatch-box.black  { background: #000; }
+    .swatch-box.gray   { background: #616161; }
+    .swatch-box.white  { background: #fff; }
+    .swatch-box.light  { background: #e0e0e0; }
+
+    .swatch-label {
+      font-size: 10px;
+      font-weight: 300;
+      color: #616161;
+      letter-spacing: 0.05em;
+    }
+
+    .type-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .type-sample {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+
+    .type-meta {
+      font-size: 10px;
+      font-weight: 300;
+      color: #bbb;
+      letter-spacing: 0.06em;
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+
+    .type-text-h1 { font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+    .type-text-h2 { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #616161; }
+    .type-text-body { font-size: 15px; font-weight: 300; color: #000; }
+    .type-text-caption { font-size: 12px; font-weight: 200; color: #616161; }
+
+    .rule-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rule-list li {
+      font-size: 14px;
+      font-weight: 300;
+      color: #000;
+      line-height: 1.5;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .rule-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 4px;
+      height: 1px;
+      background: #bbb;
+    }
+  </style>
 </head>
 <body>
-  <!-- Scroll progress bar -->
   <div class="scroll-progress"></div>
 
   <nav>
@@ -33,7 +142,66 @@
       <h1>Design</h1>
 
       <section>
-        <p>tba</p>
+        <h2>Philosophy</h2>
+        <div class="design-principle">
+          <span class="principle-label">절제된 깔끔함</span>
+          <p class="principle-desc">콘텐츠가 주인공이고, 디자인은 콘텐츠를 방해하지 않는다. 군더더기 없는 미니멀, 과한 인터랙션보다 정돈된 정적 레이아웃.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Color</h2>
+        <div class="color-row">
+          <div class="color-swatch">
+            <div class="swatch-box black"></div>
+            <span class="swatch-label">#000000<br>Text / BG</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-box gray"></div>
+            <span class="swatch-label">#616161<br>Secondary</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-box light"></div>
+            <span class="swatch-label">#E0E0E0<br>Borders</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-box white"></div>
+            <span class="swatch-label">#FFFFFF<br>Background</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Typography</h2>
+        <div class="type-row">
+          <div class="type-sample">
+            <span class="type-meta">H1 / 500</span>
+            <span class="type-text-h1">Heading</span>
+          </div>
+          <div class="type-sample">
+            <span class="type-meta">H2 / 500</span>
+            <span class="type-text-h2">Section Label</span>
+          </div>
+          <div class="type-sample">
+            <span class="type-meta">Body / 300</span>
+            <span class="type-text-body">본문 텍스트 — Inter &amp; Pretendard</span>
+          </div>
+          <div class="type-sample">
+            <span class="type-meta">Caption / 200</span>
+            <span class="type-text-caption">보조 정보, 날짜, 레이블</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Principles</h2>
+        <ul class="rule-list">
+          <li>흑 / 백 / 회색만 쓴다 — 색상에서 오는 깔끔함이 핵심</li>
+          <li>여백을 아끼지 않는다 — 빈 공간이 고급스러움을 만든다</li>
+          <li>텍스트가 디자인이다 — 폰트와 크기 대비로 계층을 만든다</li>
+          <li>인터랙션은 절제한다 — 호버 정도가 적정선</li>
+          <li>흑백 반전은 의도적으로 — 섹션 구분과 시각적 리듬을 위해</li>
+        </ul>
       </section>
 
     </div>
@@ -46,7 +214,6 @@
   </footer>
 
   <script>
-    // Scroll progress bar
     const scrollProgress = document.querySelector('.scroll-progress');
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -55,7 +222,6 @@
       scrollProgress.style.width = progress + '%';
     });
 
-    // Section vertical line on scroll
     const sections = document.querySelectorAll('main section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

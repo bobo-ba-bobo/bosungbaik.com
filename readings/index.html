@@ -7,9 +7,79 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    .book-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .book-card {
+      width: 116px;
+      height: 166px;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px 12px 12px;
+      cursor: default;
+      flex-shrink: 0;
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .book-card:hover {
+      transform: translateY(-12px);
+    }
+
+    .book-card-title {
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.45;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .book-card-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .book-card-author {
+      font-size: 9px;
+      font-weight: 200;
+      color: #888;
+      line-height: 1.35;
+    }
+
+    .book-card-date {
+      font-size: 8px;
+      font-weight: 200;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      .book-grid {
+        gap: 8px;
+      }
+
+      .book-card {
+        width: 96px;
+        height: 140px;
+        padding: 11px 10px 10px;
+      }
+
+      .book-card-title {
+        font-size: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Scroll progress bar -->
   <div class="scroll-progress"></div>
 
   <nav>
@@ -33,7 +103,91 @@
       <h1>Readings</h1>
 
       <section>
-        <p>tba</p>
+        <h2>2026</h2>
+        <div class="book-grid">
+          <div class="book-card">
+            <div class="book-card-title">The Cold Start Problem</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">Andrew Chen</div>
+              <div class="book-card-date">Feb 2026</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2025</h2>
+        <div class="book-grid">
+          <div class="book-card">
+            <div class="book-card-title">Zero to One</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">Peter Thiel</div>
+              <div class="book-card-date">May 2025</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">스타트업 투자유치</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">이택경</div>
+              <div class="book-card-date">Oct 2025</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">벤처 마인드셋</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">일리야 스트레불라예프, 알렉스 당</div>
+              <div class="book-card-date">Nov 2025</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">크래프톤 웨이</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">정희선</div>
+              <div class="book-card-date">Dec 2025</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2024</h2>
+        <div class="book-grid">
+          <div class="book-card">
+            <div class="book-card-title">Outliers</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">Malcolm Gladwell</div>
+              <div class="book-card-date">Jan 2024</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">Idea Man</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">Paul Allen</div>
+              <div class="book-card-date">Feb 2024</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">Made to Stick</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">Chip Heath &amp; Dan Heath</div>
+              <div class="book-card-date">Mar 2024</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">심플한 정리법</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">도미니크 로로</div>
+              <div class="book-card-date">Jun 2024</div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-card-title">경재적 해자</div>
+            <div class="book-card-footer">
+              <div class="book-card-author">팻 도시</div>
+              <div class="book-card-date">Aug 2024</div>
+            </div>
+          </div>
+        </div>
       </section>
 
     </div>
@@ -46,7 +200,6 @@
   </footer>
 
   <script>
-    // Scroll progress bar
     const scrollProgress = document.querySelector('.scroll-progress');
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -55,7 +208,6 @@
       scrollProgress.style.width = progress + '%';
     });
 
-    // Section vertical line on scroll
     const sections = document.querySelectorAll('main section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
