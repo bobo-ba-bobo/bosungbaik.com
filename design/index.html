@@ -8,113 +8,177 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css">
   <style>
-    .design-principle {
+    .design-intro {
+      max-width: 480px;
+      margin-bottom: 64px;
+    }
+
+    .design-intro p {
+      font-size: 15px;
+      font-weight: 300;
+      color: #616161;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    /* ── Section header with right-side link ── */
+    .section-header {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 28px;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
 
-    .design-principle:last-child {
-      margin-bottom: 0;
-    }
-
-    .principle-label {
+    .section-header a {
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #bbb;
       text-transform: uppercase;
+    }
+
+    .section-header a:hover {
       color: #000;
     }
 
-    .principle-desc {
-      font-size: 14px;
-      font-weight: 300;
-      color: #616161;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .color-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .color-swatch {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .swatch-box {
-      width: 64px;
-      height: 64px;
+    /* ── Work grid ── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: #e0e0e0;
       border: 1px solid #e0e0e0;
+      margin-bottom: 64px;
     }
 
-    .swatch-box.black  { background: #000; }
-    .swatch-box.gray   { background: #616161; }
-    .swatch-box.white  { background: #fff; }
-    .swatch-box.light  { background: #e0e0e0; }
-
-    .swatch-label {
-      font-size: 10px;
-      font-weight: 300;
-      color: #616161;
-      letter-spacing: 0.05em;
-    }
-
-    .type-row {
+    .work-card {
+      background: #fff;
+      padding: 24px 22px 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 0;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s ease;
+      min-height: 160px;
     }
 
-    .type-sample {
+    .work-card:hover {
+      background: #f5f5f5;
+      color: inherit;
+    }
+
+    .work-card.placeholder {
+      cursor: default;
+      opacity: 0.45;
+    }
+
+    .work-card.placeholder:hover {
+      background: #fff;
+    }
+
+    .work-type {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 10px;
+    }
+
+    .work-title {
+      font-size: 14px;
+      font-weight: 400;
+      color: #000;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .work-card.placeholder .work-title {
+      color: #aaa;
+    }
+
+    .work-meta {
       display: flex;
-      align-items: baseline;
-      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
     }
 
-    .type-meta {
+    .work-year {
       font-size: 10px;
       font-weight: 300;
       color: #bbb;
-      letter-spacing: 0.06em;
-      min-width: 80px;
-      flex-shrink: 0;
+      letter-spacing: 0.05em;
     }
 
-    .type-text-h1 { font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
-    .type-text-h2 { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #616161; }
-    .type-text-body { font-size: 15px; font-weight: 300; color: #000; }
-    .type-text-caption { font-size: 12px; font-weight: 200; color: #616161; }
-
-    .rule-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .work-arrow {
+      font-size: 12px;
+      color: #bbb;
+      transition: transform 0.2s ease, color 0.2s ease;
     }
 
-    .rule-list li {
-      font-size: 14px;
-      font-weight: 300;
+    .work-card:not(.placeholder):hover .work-arrow {
+      transform: translateX(4px);
       color: #000;
-      line-height: 1.5;
-      padding-left: 16px;
-      position: relative;
     }
 
-    .rule-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 10px;
-      width: 4px;
-      height: 1px;
-      background: #bbb;
+    /* ── Philosophy teaser ── */
+    .philosophy-teaser {
+      border: 1px solid #e0e0e0;
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .philosophy-teaser:hover {
+      border-color: #000;
+      background: #fafafa;
+      color: inherit;
+    }
+
+    .philosophy-teaser-text h3 {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin-bottom: 4px;
+    }
+
+    .philosophy-teaser-text p {
+      font-size: 12px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 360px;
+    }
+
+    .philosophy-arrow {
+      font-size: 18px;
+      color: #bbb;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .philosophy-teaser:hover .philosophy-arrow {
+      transform: translateX(4px);
+      color: #000;
+    }
+
+    @media (max-width: 640px) {
+      .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .work-card {
+        min-height: 140px;
+        padding: 18px 16px 16px;
+      }
     }
   </style>
 </head>
@@ -141,67 +205,81 @@
 
       <h1>Design</h1>
 
+      <div class="design-intro">
+        <p>흑백과 여백으로 만드는 것들 — 개인 프로젝트, Figma 작업, 실험적인 사이트들을 모아뒀습니다.</p>
+      </div>
+
+      <!-- Work -->
       <section>
-        <h2>Philosophy</h2>
-        <div class="design-principle">
-          <span class="principle-label">절제된 깔끔함</span>
-          <p class="principle-desc">콘텐츠가 주인공이고, 디자인은 콘텐츠를 방해하지 않는다. 군더더기 없는 미니멀, 과한 인터랙션보다 정돈된 정적 레이아웃.</p>
+        <div class="section-header">
+          <h2>Work</h2>
+        </div>
+
+        <div class="work-grid">
+
+          <!-- Real entry: this site -->
+          <a href="/" class="work-card" target="_blank">
+            <div class="work-type">Web</div>
+            <div class="work-title">bosungbaik.com</div>
+            <div class="work-meta">
+              <span class="work-year">2024–</span>
+              <span class="work-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Placeholders -->
+          <div class="work-card placeholder">
+            <div class="work-type">Figma</div>
+            <div class="work-title">—</div>
+            <div class="work-meta">
+              <span class="work-year">–</span>
+            </div>
+          </div>
+
+          <div class="work-card placeholder">
+            <div class="work-type">Figma</div>
+            <div class="work-title">—</div>
+            <div class="work-meta">
+              <span class="work-year">–</span>
+            </div>
+          </div>
+
+          <div class="work-card placeholder">
+            <div class="work-type">Web</div>
+            <div class="work-title">—</div>
+            <div class="work-meta">
+              <span class="work-year">–</span>
+            </div>
+          </div>
+
+          <div class="work-card placeholder">
+            <div class="work-type">Web</div>
+            <div class="work-title">—</div>
+            <div class="work-meta">
+              <span class="work-year">–</span>
+            </div>
+          </div>
+
+          <div class="work-card placeholder">
+            <div class="work-type">Concept</div>
+            <div class="work-title">—</div>
+            <div class="work-meta">
+              <span class="work-year">–</span>
+            </div>
+          </div>
+
         </div>
       </section>
 
+      <!-- Philosophy teaser -->
       <section>
-        <h2>Color</h2>
-        <div class="color-row">
-          <div class="color-swatch">
-            <div class="swatch-box black"></div>
-            <span class="swatch-label">#000000<br>Text / BG</span>
+        <a href="/design/philosophy" class="philosophy-teaser">
+          <div class="philosophy-teaser-text">
+            <h3>Design Philosophy</h3>
+            <p>절제된 깔끔함, 흑백의 미학, 텍스트가 디자인이 되는 방법에 대하여.</p>
           </div>
-          <div class="color-swatch">
-            <div class="swatch-box gray"></div>
-            <span class="swatch-label">#616161<br>Secondary</span>
-          </div>
-          <div class="color-swatch">
-            <div class="swatch-box light"></div>
-            <span class="swatch-label">#E0E0E0<br>Borders</span>
-          </div>
-          <div class="color-swatch">
-            <div class="swatch-box white"></div>
-            <span class="swatch-label">#FFFFFF<br>Background</span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Typography</h2>
-        <div class="type-row">
-          <div class="type-sample">
-            <span class="type-meta">H1 / 500</span>
-            <span class="type-text-h1">Heading</span>
-          </div>
-          <div class="type-sample">
-            <span class="type-meta">H2 / 500</span>
-            <span class="type-text-h2">Section Label</span>
-          </div>
-          <div class="type-sample">
-            <span class="type-meta">Body / 300</span>
-            <span class="type-text-body">본문 텍스트 — Inter &amp; Pretendard</span>
-          </div>
-          <div class="type-sample">
-            <span class="type-meta">Caption / 200</span>
-            <span class="type-text-caption">보조 정보, 날짜, 레이블</span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Principles</h2>
-        <ul class="rule-list">
-          <li>흑 / 백 / 회색만 쓴다 — 색상에서 오는 깔끔함이 핵심</li>
-          <li>여백을 아끼지 않는다 — 빈 공간이 고급스러움을 만든다</li>
-          <li>텍스트가 디자인이다 — 폰트와 크기 대비로 계층을 만든다</li>
-          <li>인터랙션은 절제한다 — 호버 정도가 적정선</li>
-          <li>흑백 반전은 의도적으로 — 섹션 구분과 시각적 리듬을 위해</li>
-        </ul>
+          <span class="philosophy-arrow">→</span>
+        </a>
       </section>
 
     </div>
