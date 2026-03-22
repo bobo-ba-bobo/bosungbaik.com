@@ -35,6 +35,25 @@
       margin: 0;
     }
 
+    .color-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .color-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .color-group-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #858585;
+    }
+
     .color-row {
       display: flex;
       gap: 12px;
@@ -48,21 +67,25 @@
     }
 
     .swatch-box {
-      width: 64px;
-      height: 64px;
+      width: 56px;
+      height: 56px;
       border: 1px solid #e0e0e0;
     }
 
-    .swatch-box.black  { background: #000; }
-    .swatch-box.gray   { background: #616161; }
-    .swatch-box.white  { background: #fff; }
-    .swatch-box.light  { background: #e0e0e0; }
+    .swatch-box.c-000    { background: #000000; }
+    .swatch-box.c-616    { background: #616161; }
+    .swatch-box.c-7a7    { background: #7a7a7a; }
+    .swatch-box.c-858    { background: #858585; }
+    .swatch-box.c-fff    { background: #ffffff; }
+    .swatch-box.c-e6e    { background: #e6e6e6; border-color: #ccc; }
+    .swatch-box.c-bfb    { background: #bfbfbf; border-color: #ccc; }
+    .swatch-box.c-9e9    { background: #9e9e9e; }
 
     .swatch-label {
       font-size: 10px;
       font-weight: 300;
       color: #616161;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
     }
 
     .type-row {
@@ -80,7 +103,7 @@
     .type-meta {
       font-size: 10px;
       font-weight: 300;
-      color: #bbb;
+      color: #858585;
       letter-spacing: 0.06em;
       min-width: 80px;
       flex-shrink: 0;
@@ -151,22 +174,54 @@
 
       <section>
         <h2>Color</h2>
-        <div class="color-row">
-          <div class="color-swatch">
-            <div class="swatch-box black"></div>
-            <span class="swatch-label">#000000<br>Text / BG</span>
+        <div class="color-group">
+          <span class="color-group-label">On White</span>
+          <div class="color-row">
+            <div class="color-swatch">
+              <div class="swatch-box c-000"></div>
+              <span class="swatch-label">#000000<br>Primary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-616"></div>
+              <span class="swatch-label">#616161<br>Secondary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-7a7"></div>
+              <span class="swatch-label">#7A7A7A<br>Tertiary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-858"></div>
+              <span class="swatch-label">#858585<br>Muted</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-fff"></div>
+              <span class="swatch-label">#FFFFFF<br>Background</span>
+            </div>
           </div>
-          <div class="color-swatch">
-            <div class="swatch-box gray"></div>
-            <span class="swatch-label">#616161<br>Secondary</span>
-          </div>
-          <div class="color-swatch">
-            <div class="swatch-box light"></div>
-            <span class="swatch-label">#E0E0E0<br>Borders</span>
-          </div>
-          <div class="color-swatch">
-            <div class="swatch-box white"></div>
-            <span class="swatch-label">#FFFFFF<br>Background</span>
+        </div>
+        <div class="color-group">
+          <span class="color-group-label">On Black</span>
+          <div class="color-row">
+            <div class="color-swatch">
+              <div class="swatch-box c-000"></div>
+              <span class="swatch-label">#000000<br>Background</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-fff"></div>
+              <span class="swatch-label">#FFFFFF<br>Primary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-e6e"></div>
+              <span class="swatch-label">#E6E6E6<br>Secondary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-bfb"></div>
+              <span class="swatch-label">#BFBFBF<br>Tertiary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="swatch-box c-9e9"></div>
+              <span class="swatch-label">#9E9E9E<br>Muted</span>
+            </div>
           </div>
         </div>
       </section>
