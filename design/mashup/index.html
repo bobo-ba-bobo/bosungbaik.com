@@ -11,6 +11,75 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
+/* ── Password Gate ────────────────────────────────── */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+#pw-gate.hidden { display: none; }
+.pw-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.pw-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; letter-spacing: -0.025em;
+  color: var(--light); margin-bottom: 8px;
+}
+.pw-title {
+  font-size: 13px; color: rgba(237,236,234,0.35);
+  letter-spacing: 0.04em; font-weight: 400;
+}
+.pw-form {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.pw-input {
+  width: 260px; padding: 12px 18px;
+  background: rgba(237,236,234,0.06);
+  border: 1px solid rgba(237,236,234,0.12);
+  border-radius: 4px; outline: none;
+  font-family: var(--font); font-size: 14px;
+  color: var(--light); text-align: center; letter-spacing: 0.1em;
+  transition: border-color 0.18s;
+}
+.pw-input::placeholder { color: rgba(237,236,234,0.2); letter-spacing: 0.04em; }
+.pw-input:focus { border-color: rgba(237,236,234,0.3); }
+.pw-input.error { border-color: var(--orange); animation: shake 0.35s ease; }
+.pw-btn {
+  width: 260px; padding: 12px;
+  background: var(--orange); border: none; border-radius: 4px;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  color: #fff; cursor: pointer; letter-spacing: 0.02em;
+  transition: opacity 0.18s;
+}
+.pw-btn:hover { opacity: 0.88; }
+.pw-err {
+  font-size: 12px; color: var(--orange);
+  opacity: 0; transition: opacity 0.2s; height: 16px;
+}
+.pw-err.show { opacity: 1; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%      { transform: translateX(-6px); }
+  75%      { transform: translateX(6px); }
+}
+
+/* ── Session timer bar ────────────────────────────── */
+#timer-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  height: 36px;
+  background: rgba(26,22,22,0.92);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; font-size: 11px; font-weight: 400;
+  color: rgba(237,236,234,0.35); letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(237,236,234,0.06);
+}
+#timer-bar.hidden { display: none; }
+#timer-bar span { color: rgba(237,236,234,0.7); font-variant-numeric: tabular-nums; }
+
 :root {
   --bg:      #F5F5EE;
   --ink:     #292525;
@@ -37,7 +106,7 @@ body {
 /* ── Back link ────────────────────────────────────── */
 .back {
   position: fixed;
-  top: 70px; left: var(--h);
+  top: 106px; left: var(--h);
   z-index: 200;
   font-size: 12px;
   font-weight: 400;
@@ -54,7 +123,7 @@ body {
 /* ── Concept badge ────────────────────────────────── */
 .badge {
   position: fixed;
-  top: 70px; right: var(--h);
+  top: 106px; right: var(--h);
   z-index: 200;
   font-size: 10px;
   font-weight: 500;
@@ -74,7 +143,7 @@ body {
 
 /* ── NAV ──────────────────────────────────────────── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0;
+  position: fixed; top: 36px; left: 0; right: 0;
   z-index: 100;
   height: 58px;
   display: flex;
@@ -359,6 +428,34 @@ footer {
 </head>
 <body>
 
+<!-- Timer bar -->
+<div id="timer-bar" class="hidden">
+  세션 만료까지 <span id="timer-val">--:--</span> 남음
+</div>
+
+<!-- Password gate -->
+<div id="pw-gate">
+  <div class="pw-inner">
+    <div class="pw-logo">
+      <span class="nav-logo-dot"></span>
+      Mashup Ventures
+    </div>
+    <div class="pw-title">비밀번호를 입력하세요</div>
+    <form class="pw-form" id="pw-form">
+      <input
+        id="pw-input"
+        class="pw-input"
+        type="password"
+        placeholder="password"
+        autocomplete="current-password"
+        autofocus
+      >
+      <div class="pw-err" id="pw-err">비밀번호가 올바르지 않습니다</div>
+      <button type="submit" class="pw-btn">입장하기</button>
+    </form>
+  </div>
+</div>
+
 <a href="/design" class="back" id="back-link">← Design</a>
 <div class="badge" id="badge">Design Concept</div>
 
@@ -548,6 +645,76 @@ footer {
 </footer>
 
 <script>
+  /* ── Password + session ─────────────────────────── */
+  const PW        = 'mashupmashup';
+  const SESSION   = 10 * 60 * 1000; // 10 minutes in ms
+  const STORE_KEY = 'mashup_auth_until';
+
+  const gate      = document.getElementById('pw-gate');
+  const pwForm    = document.getElementById('pw-form');
+  const pwInput   = document.getElementById('pw-input');
+  const pwErr     = document.getElementById('pw-err');
+  const timerBar  = document.getElementById('timer-bar');
+  const timerVal  = document.getElementById('timer-val');
+
+  let timerInterval = null;
+
+  function grantAccess() {
+    const until = Date.now() + SESSION;
+    localStorage.setItem(STORE_KEY, until.toString());
+    gate.classList.add('hidden');
+    startTimer(until);
+  }
+
+  function startTimer(until) {
+    timerBar.classList.remove('hidden');
+
+    function tick() {
+      const remaining = until - Date.now();
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        timerBar.classList.add('hidden');
+        localStorage.removeItem(STORE_KEY);
+        gate.classList.remove('hidden');
+        pwInput.value = '';
+        return;
+      }
+      const m = String(Math.floor(remaining / 60000)).padStart(2, '0');
+      const s = String(Math.floor((remaining % 60000) / 1000)).padStart(2, '0');
+      timerVal.textContent = m + ':' + s;
+    }
+
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  // Check existing session on load
+  const stored = localStorage.getItem(STORE_KEY);
+  if (stored) {
+    const until = parseInt(stored, 10);
+    if (Date.now() < until) {
+      gate.classList.add('hidden');
+      startTimer(until);
+    } else {
+      localStorage.removeItem(STORE_KEY);
+    }
+  }
+
+  pwForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (pwInput.value === PW) {
+      grantAccess();
+    } else {
+      pwInput.classList.add('error');
+      pwErr.classList.add('show');
+      pwInput.value = '';
+      setTimeout(() => pwInput.classList.remove('error'), 400);
+    }
+  });
+
+  pwInput.addEventListener('input', () => pwErr.classList.remove('show'));
+
+  /* ── Nav scroll ─────────────────────────────────── */
   const nav    = document.getElementById('nav');
   const back   = document.getElementById('back-link');
   const badge  = document.getElementById('badge');
@@ -559,6 +726,7 @@ footer {
     badge.classList.toggle('dark', past);
   });
 
+  /* ── Reveal on scroll ───────────────────────────── */
   const obs = new IntersectionObserver(
     entries => entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
