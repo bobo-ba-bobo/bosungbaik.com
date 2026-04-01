@@ -56,11 +56,10 @@
       left: 0;
       right: 0;
       z-index: 100;
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      padding: 24px 40px;
-      mix-blend-mode: difference;
+      padding: 20px 40px;
     }
 
     nav .logo {
@@ -79,10 +78,40 @@
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.2s;
+      justify-self: end;
     }
 
     nav .home-link:hover {
       color: var(--white);
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 100px;
+      padding: 5px;
+    }
+
+    .nav-pill a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-pill a:hover,
+    .nav-pill a.active {
+      background: var(--white);
+      color: var(--black);
     }
 
     /* ─── TICKER ──────────────────────────────────── */
@@ -714,6 +743,11 @@
   <!-- Nav -->
   <nav>
     <a href="/alterego" class="logo">BOBO</a>
+    <div class="nav-pill">
+      <a href="#dance">dance</a>
+      <a href="#music">music</a>
+      <a href="#random">random</a>
+    </div>
     <a href="/" class="home-link">← Real Life</a>
   </nav>
 
@@ -825,7 +859,7 @@
   </div>
 
   <!-- Playlists -->
-  <section class="playlists reveal">
+  <section id="music" class="playlists reveal">
     <div class="section-label">My Playlists</div>
     <div class="playlist-grid">
       <a href="https://www.youtube.com/playlist?list=PLkp2mFTiPoetqh40-tLPDQcANpW-JKBdM" target="_blank" rel="noopener" class="playlist-card featured">
@@ -870,7 +904,7 @@
   </div>
 
   <!-- Identity -->
-  <section class="identity reveal">
+  <section id="dance" class="identity reveal">
     <div class="section-label">Who I Am</div>
     <div class="identity-grid">
       <div>
@@ -906,7 +940,7 @@
   </section>
 
   <!-- Big Quote -->
-  <section class="big-quote reveal">
+  <section id="random" class="big-quote reveal">
     <blockquote>
       "Architecture is<br>
       <span class="accent">frozen music."</span>
