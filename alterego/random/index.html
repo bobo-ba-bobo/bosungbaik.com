@@ -64,18 +64,24 @@
       margin-bottom: 80px;
     }
 
-    .empty-state {
-      border: 1px dashed var(--border);
-      padding: 80px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      min-height: 300px;
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
     }
-    .empty-state p { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-    .empty-state .big { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--border); letter-spacing: 0.05em; }
+    .project-card {
+      background: var(--dim); padding: 40px 32px;
+      text-decoration: none; display: block;
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+    }
+    .project-card:hover { background: #1f1f1f; }
+    .project-card:hover .p-arrow { transform: translate(3px, -3px); }
+    .p-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--border); line-height: 1; display: block; margin-bottom: 20px; }
+    .p-title { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+    .p-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.55; }
+    .p-arrow { position: absolute; top: 32px; right: 32px; font-size: 18px; color: var(--gold); transition: transform 0.2s; }
+    .p-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 4px 10px; margin-bottom: 16px; }
 
     footer { padding: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 80px; }
     footer p { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
@@ -103,9 +109,14 @@
 
   <main>
     <h1 class="page-title">RANDOM</h1>
-    <div class="empty-state">
-      <span class="big">COMING SOON</span>
-      <p>Work in progress — check back later</p>
+    <div class="project-grid">
+      <a href="/alterego/random/moon" class="project-card">
+        <span class="p-tag">Interactive 3D</span>
+        <span class="p-num">01</span>
+        <span class="p-arrow">↗</span>
+        <p class="p-title">Moon</p>
+        <p class="p-desc">Tonight's moon — real phase, real data. 5 constellations. Drag to rotate.</p>
+      </a>
     </div>
   </main>
 

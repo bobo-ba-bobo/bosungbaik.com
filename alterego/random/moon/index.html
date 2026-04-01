@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moon — BOBO</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #040408; }
+    body { cursor: grab; user-select: none; -webkit-user-select: none; }
+    body.dragging { cursor: grabbing; }
+
+    #c { position: fixed; inset: 0; display: block; touch-action: none; }
+
+    /* ── NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; padding: 20px 40px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 0.15em; color: #F2F0EC; text-decoration: none;
+    }
+    .nav-home {
+      font-family: 'Space Mono', monospace; font-size: 11px;
+      letter-spacing: 0.1em; color: #555; text-decoration: none;
+      text-transform: uppercase; transition: color 0.2s; justify-self: end;
+    }
+    .nav-home:hover { color: #F2F0EC; }
+    .nav-pill {
+      display: flex; align-items: center; gap: 2px;
+      background: rgba(14, 14, 20, 0.9);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.055);
+      border-radius: 100px; padding: 5px;
+    }
+    .nav-pill a {
+      font-family: 'Space Mono', monospace; font-size: 11px;
+      letter-spacing: 0.08em; text-transform: lowercase; color: #555;
+      text-decoration: none; padding: 7px 16px; border-radius: 100px;
+      transition: background 0.2s, color 0.2s; white-space: nowrap;
+    }
+    .nav-pill a:hover { background: rgba(255,255,255,0.07); color: #F2F0EC; }
+    .nav-pill a.active { background: #F2F0EC; color: #080808; }
+
+    /* ── PHASE UI — bottom left */
+    .phase-ui {
+      position: fixed; bottom: 50px; left: 40px; z-index: 50;
+    }
+    .phase-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(34px, 4vw, 58px);
+      letter-spacing: 0.04em; color: #F2F0EC;
+      line-height: 1; margin-bottom: 2px;
+    }
+    .phase-kor {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      letter-spacing: 0.14em; color: #38384a;
+      margin-bottom: 14px; text-transform: uppercase;
+    }
+    .phase-sep { width: 22px; height: 1px; background: #1e1e28; margin-bottom: 11px; }
+    .phase-row {
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: #333; margin-bottom: 4px;
+    }
+    .phase-row b { color: #666; font-weight: 400; }
+
+    /* ── PHASE ARC — bottom right */
+    .arc-wrap {
+      position: fixed; bottom: 50px; right: 40px; z-index: 50;
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+    }
+    .arc-cap {
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.13em; text-transform: uppercase; color: #2c2c38;
+    }
+
+    /* ── CONSTELLATION LABEL */
+    #clabel {
+      position: fixed; z-index: 60; pointer-events: none;
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: #8899bb; transform: translateX(-50%);
+      opacity: 0; transition: opacity 0.22s; white-space: nowrap;
+    }
+
+    /* ── DRAG HINT */
+    #hint {
+      position: fixed; bottom: 80px; left: 50%;
+      transform: translateX(-50%); z-index: 50;
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2e2e3a; pointer-events: none;
+      opacity: 1; transition: opacity 1.6s;
+    }
+    #hint.gone { opacity: 0; }
+
+    /* ── TICKER */
+    .ticker {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      background: #040408; overflow: hidden; padding: 7px 0;
+      border-top: 1px solid #111116;
+    }
+    .ticker-inner {
+      display: flex; white-space: nowrap;
+      animation: tick 38s linear infinite;
+    }
+    .ticker-inner span {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.24em; color: #222228; padding: 0 40px;
+    }
+    @keyframes tick { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .phase-ui { left: 20px; bottom: 44px; }
+      .arc-wrap  { right: 20px; bottom: 44px; }
+      #hint { bottom: 68px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/alterego" class="nav-logo">BOBO</a>
+    <div class="nav-pill">
+      <a href="/alterego/dance">dance</a>
+      <a href="/alterego/music">music</a>
+      <a href="/alterego/random" class="active">random</a>
+    </div>
+    <a href="/" class="nav-home">← Real Life</a>
+  </nav>
+
+  <canvas id="c"></canvas>
+
+  <!-- Phase info -->
+  <div class="phase-ui">
+    <div class="phase-name" id="pname"></div>
+    <div class="phase-kor"  id="pkor"></div>
+    <div class="phase-sep"></div>
+    <div class="phase-row">Illumination &nbsp;<b id="pillum"></b></div>
+    <div class="phase-row">Next full &nbsp;&nbsp;&nbsp;<b id="pfull"></b></div>
+    <div class="phase-row">Today &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b id="pdate"></b></div>
+  </div>
+
+  <!-- Lunar cycle arc -->
+  <!-- r=24 → circumference = 2π×24 ≈ 150.80 -->
+  <div class="arc-wrap">
+    <svg width="60" height="60" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="24" fill="none" stroke="#14141c" stroke-width="1.5"/>
+      <circle id="arcP" cx="30" cy="30" r="24"
+              fill="none" stroke="#C9A84C" stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="150.80"
+              stroke-dashoffset="150.80"
+              transform="rotate(-90 30 30)"/>
+      <circle id="arcD" cx="30" cy="6" r="2" fill="#F2F0EC"/>
+    </svg>
+    <div class="arc-cap">29.53 day cycle</div>
+  </div>
+
+  <div id="clabel"></div>
+  <div id="hint">drag to rotate</div>
+
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>MOON</span><span>LUNAR CYCLE</span><span>ORBIT</span><span>CONSTELLATIONS</span>
+      <span>29.53 DAYS</span><span>SELENOLOGY</span><span>NIGHT SKY</span>
+      <span>WAXING</span><span>WANING</span><span>SELENOGRAPHY</span>
+      <span>MOON</span><span>LUNAR CYCLE</span><span>ORBIT</span><span>CONSTELLATIONS</span>
+      <span>29.53 DAYS</span><span>SELENOLOGY</span><span>NIGHT SKY</span>
+      <span>WAXING</span><span>WANING</span><span>SELENOGRAPHY</span>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    // ─────────────────────────────────────────────────────────
+    // 1. MOON PHASE
+    // ─────────────────────────────────────────────────────────
+    function getMoonPhase(d) {
+      const base  = new Date(Date.UTC(2000, 0, 6, 18, 14));
+      const cycle = 29.530589;
+      const days  = (d - base) / 86400000;
+      return ((days % cycle) + cycle) % cycle;
+    }
+
+    function phaseInfo(p) {
+      const c    = 29.530589;
+      const illum = Math.round((1 - Math.cos(p / c * Math.PI * 2)) / 2 * 100);
+      const map  = [
+        [1.85,  'New Moon',        '삭 (朔)'],
+        [7.38,  'Waxing Crescent', '초승달'],
+        [9.22,  'First Quarter',   '상현달'],
+        [14.77, 'Waxing Gibbous',  '차오르는 달'],
+        [16.61, 'Full Moon',       '보름달'],
+        [22.15, 'Waning Gibbous',  '기우는 달'],
+        [23.99, 'Last Quarter',    '하현달'],
+        [c,     'Waning Crescent', '그믐달'],
+      ];
+      const [, name, kor] = map.find(([t]) => p < t);
+      const toFull = p < 14.765 ? 14.765 - p : c - p + 14.765;
+      return { name, kor, illum, toFull: Math.ceil(toFull) };
+    }
+
+    const now   = new Date();
+    const phase = getMoonPhase(now);
+    const info  = phaseInfo(phase);
+
+    document.getElementById('pname').textContent  = info.name.toUpperCase();
+    document.getElementById('pkor').textContent   = info.kor;
+    document.getElementById('pillum').textContent = info.illum + '%';
+    document.getElementById('pfull').textContent  = info.toFull <= 0 ? 'Tonight' : info.toFull + 'd';
+    document.getElementById('pdate').textContent  = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    // Lunar arc
+    const CIRC = 150.80;
+    document.getElementById('arcP').setAttribute('stroke-dashoffset',
+      (CIRC * (1 - phase / 29.530589)).toFixed(2));
+    const a = (phase / 29.530589) * Math.PI * 2 - Math.PI / 2;
+    document.getElementById('arcD').setAttribute('cx', (30 + 24 * Math.cos(a)).toFixed(2));
+    document.getElementById('arcD').setAttribute('cy', (30 + 24 * Math.sin(a)).toFixed(2));
+
+    // ─────────────────────────────────────────────────────────
+    // 2. SCENE
+    // ─────────────────────────────────────────────────────────
+    const canvas   = document.getElementById('c');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x040408);
+
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+    camera.position.z = 5;
+
+    // ─────────────────────────────────────────────────────────
+    // 3. LIGHTING  (sun angle driven by phase)
+    //    phase=0  → new moon   → sun at z=-10  (dark face toward viewer)
+    //    phase=14.77 → full moon → sun at z=+10  (lit face toward viewer)
+    // ─────────────────────────────────────────────────────────
+    const sunAngle = Math.PI * (1 - 2 * phase / 29.530589);
+    const sun      = new THREE.DirectionalLight(0xfbf6ec, 2.8);
+    sun.position.set(Math.sin(sunAngle) * 10, 0.2, Math.cos(sunAngle) * 10);
+    scene.add(sun);
+    scene.add(new THREE.AmbientLight(0x0c1020, 0.65));
+
+    // ─────────────────────────────────────────────────────────
+    // 4. MOON SPHERE
+    // ─────────────────────────────────────────────────────────
+    const moonMat = new THREE.MeshStandardMaterial({ color: 0x999999, roughness: 0.96, metalness: 0 });
+    const moon    = new THREE.Mesh(new THREE.SphereGeometry(1.8, 72, 72), moonMat);
+    scene.add(moon);
+
+    const tl = new THREE.TextureLoader();
+    tl.crossOrigin = 'anonymous';
+    tl.load(
+      'https://threejs.org/examples/textures/planets/moon_1024.jpg',
+      tex => { moonMat.map = tex; moonMat.color.set(0xffffff); moonMat.needsUpdate = true; }
+    );
+
+    // ─────────────────────────────────────────────────────────
+    // 5. GLOW HALO
+    //    Fades from transparent at center → faint blue ring at moon edge → transparent
+    // ─────────────────────────────────────────────────────────
+    const gc  = Object.assign(document.createElement('canvas'), { width: 256, height: 256 });
+    const gx  = gc.getContext('2d');
+    const gr  = gx.createRadialGradient(128, 128, 56, 128, 128, 128);
+    gr.addColorStop(0,    'rgba(0,0,0,0)');
+    gr.addColorStop(0.55, 'rgba(0,0,0,0)');
+    gr.addColorStop(0.67, 'rgba(130,160,240,0.13)');
+    gr.addColorStop(0.83, 'rgba(55,80,180,0.05)');
+    gr.addColorStop(1,    'rgba(0,0,0,0)');
+    gx.fillStyle = gr; gx.fillRect(0, 0, 256, 256);
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: new THREE.CanvasTexture(gc),
+      transparent: true, blending: THREE.AdditiveBlending,
+      depthTest: false, depthWrite: false
+    }));
+    glow.scale.set(6, 6, 1);
+    scene.add(glow);
+
+    // ─────────────────────────────────────────────────────────
+    // 6. STARS  (3 layers: tiny / medium / bright)
+    // ─────────────────────────────────────────────────────────
+    function makeStars(n, r, size, opacity) {
+      const pos = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) {
+        const th = Math.random() * Math.PI * 2;
+        const ph = Math.acos(2 * Math.random() - 1);
+        const rd = r + Math.random() * 3;
+        pos[i*3]   = rd * Math.sin(ph) * Math.cos(th);
+        pos[i*3+1] = rd * Math.sin(ph) * Math.sin(th);
+        pos[i*3+2] = rd * Math.cos(ph);
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      return new THREE.Points(geo, new THREE.PointsMaterial({
+        color: 0xffffff, size, transparent: true, opacity, sizeAttenuation: true
+      }));
+    }
+    const starsS = makeStars(3200, 44, 0.055, 0.60);
+    const starsM = makeStars(400,  44, 0.090, 0.70);
+    const starsL = makeStars(55,   44, 0.150, 0.85);
+    scene.add(starsS, starsM, starsL);
+
+    // ─────────────────────────────────────────────────────────
+    // 7. CONSTELLATIONS
+    //    Positions are raw vectors; each is normalized to r=46 sphere.
+    //    All placed within ~20° of the camera's forward axis so they
+    //    stay within the 50° FOV.
+    // ─────────────────────────────────────────────────────────
+    const CONSTS = [
+      {
+        name: 'ORION',
+        stars: [
+          [ 8,  4,-44],  // 0 Betelgeuse
+          [12,  4,-43],  // 1 Bellatrix
+          [ 6,  0,-45],  // 2 Mintaka
+          [ 9,  0,-44],  // 3 Alnilam
+          [12, -1,-44],  // 4 Alnitak
+          [13, -9,-43],  // 5 Rigel
+          [ 5, -9,-45],  // 6 Saiph
+          [10,  9,-43],  // 7 Meissa (head)
+        ],
+        edges: [[7,0],[7,1],[0,2],[1,4],[2,3],[3,4],[2,6],[4,5]]
+      },
+      {
+        name: 'CASSIOPEIA',
+        stars: [
+          [-14, 10,-42],
+          [-10, 14,-43],
+          [ -6,  9,-44],
+          [ -2, 13,-44],
+          [  2,  8,-44],
+        ],
+        edges: [[0,1],[1,2],[2,3],[3,4]]
+      },
+      {
+        name: 'URSA MAJOR',
+        stars: [
+          [ 2, 12,-45],
+          [ 5, 13,-44],
+          [ 8, 12,-44],
+          [ 9, 10,-44],
+          [11,  7,-43],
+          [ 9,  5,-43],
+          [ 7,  4,-44],
+        ],
+        edges: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+      },
+      {
+        name: 'LEO',
+        stars: [
+          [ -4, -2,-45],
+          [ -7,  1,-44],
+          [-10,  3,-44],
+          [-12, -1,-44],
+          [ -5, -9,-44],
+          [-13, -6,-43],
+        ],
+        edges: [[0,1],[1,2],[2,3],[3,0],[0,4],[3,5]]
+      },
+      {
+        name: 'SCORPIUS',
+        stars: [
+          [ 1, -4,-45],
+          [-2, -2,-45],
+          [-5, -5,-44],
+          [-7, -9,-44],
+          [-6,-13,-44],
+          [-4,-15,-44],
+          [-2,-17,-43],
+        ],
+        edges: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+      }
+    ];
+
+    const cons = CONSTS.map(c => {
+      const verts = c.stars.map(s => new THREE.Vector3(...s).normalize().multiplyScalar(46));
+
+      const pts = [];
+      c.edges.forEach(([a, b]) => pts.push(verts[a], verts[b]));
+
+      const lm = new THREE.LineBasicMaterial({ color: 0x283550, transparent: true, opacity: 0.28 });
+      const ls = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), lm);
+      scene.add(ls);
+
+      const pm = new THREE.PointsMaterial({ color: 0x556688, size: 0.12, transparent: true, opacity: 0.5, sizeAttenuation: true });
+      const ps = new THREE.Points(new THREE.BufferGeometry().setFromPoints(verts), pm);
+      scene.add(ps);
+
+      const ctr = verts.reduce((acc, v) => acc.add(v.clone()), new THREE.Vector3()).divideScalar(verts.length);
+      return { name: c.name, ls, ps, lm, pm, ctr };
+    });
+
+    // ─────────────────────────────────────────────────────────
+    // 8. INTERACTION — drag rotates moon mesh (not camera)
+    // ─────────────────────────────────────────────────────────
+    let drag = false, autoRot = true, rotTimer = null;
+    let prev  = { x: 0, y: 0 };
+    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    canvas.addEventListener('mousedown', e => {
+      drag = true; autoRot = false; document.body.classList.add('dragging');
+      prev = { x: e.clientX, y: e.clientY }; clearTimeout(rotTimer);
+    });
+    window.addEventListener('mousemove', e => {
+      mouse = { x: e.clientX, y: e.clientY };
+      if (drag) {
+        moon.rotation.y += (e.clientX - prev.x) * 0.007;
+        moon.rotation.x += (e.clientY - prev.y) * 0.007;
+        prev = { x: e.clientX, y: e.clientY };
+      }
+      hoverCheck(e.clientX, e.clientY);
+    });
+    window.addEventListener('mouseup', () => {
+      drag = false; document.body.classList.remove('dragging');
+      rotTimer = setTimeout(() => autoRot = true, 2500);
+    });
+    canvas.addEventListener('touchstart', e => {
+      drag = true; autoRot = false;
+      prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      clearTimeout(rotTimer);
+    }, { passive: true });
+    canvas.addEventListener('touchmove', e => {
+      if (!drag) return;
+      moon.rotation.y += (e.touches[0].clientX - prev.x) * 0.007;
+      moon.rotation.x += (e.touches[0].clientY - prev.y) * 0.007;
+      prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+    canvas.addEventListener('touchend', () => {
+      drag = false; rotTimer = setTimeout(() => autoRot = true, 2500);
+    });
+
+    setTimeout(() => document.getElementById('hint').classList.add('gone'), 2800);
+
+    // ─────────────────────────────────────────────────────────
+    // 9. CONSTELLATION HOVER
+    // ─────────────────────────────────────────────────────────
+    const clabel = document.getElementById('clabel');
+
+    function hoverCheck(mx, my) {
+      let best = -1, bestD = Infinity;
+      cons.forEach((c, i) => {
+        const v = c.ctr.clone().project(camera);
+        if (v.z >= 1) return; // behind camera
+        const sx = (v.x + 1) / 2 * window.innerWidth;
+        const sy = (1 - v.y) / 2 * window.innerHeight;
+        const d  = Math.hypot(mx - sx, my - sy);
+        if (d < 82 && d < bestD) { bestD = d; best = i; }
+      });
+
+      cons.forEach((c, i) => {
+        const on = i === best;
+        c.lm.color.setHex(on ? 0x8899cc : 0x283550);
+        c.lm.opacity = on ? 0.72 : 0.28;
+        c.pm.color.setHex(on ? 0xffffff : 0x556688);
+        c.pm.opacity = on ? 0.95 : 0.50;
+      });
+
+      if (best >= 0) {
+        const v  = cons[best].ctr.clone().project(camera);
+        clabel.style.left    = ((v.x + 1) / 2 * window.innerWidth) + 'px';
+        clabel.style.top     = ((1 - v.y) / 2 * window.innerHeight - 16) + 'px';
+        clabel.textContent   = cons[best].name;
+        clabel.style.opacity = '1';
+      } else {
+        clabel.style.opacity = '0';
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // 10. ANIMATION LOOP
+    // ─────────────────────────────────────────────────────────
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (autoRot) moon.rotation.y += 0.0008;
+
+      // Subtle star parallax following mouse
+      const nx =  (mouse.x / window.innerWidth)  * 2 - 1;
+      const ny = -(mouse.y / window.innerHeight) * 2 + 1;
+      [starsS, starsM, starsL].forEach(s => {
+        s.rotation.y += (nx * 0.010 - s.rotation.y) * 0.022;
+        s.rotation.x += (ny * 0.010 - s.rotation.x) * 0.022;
+      });
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ─────────────────────────────────────────────────────────
+    // 11. RESIZE
+    // ─────────────────────────────────────────────────────────
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
