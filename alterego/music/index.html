@@ -15,7 +15,7 @@
       --white: #F2F0EC;
       --gold: #C9A84C;
       --red: #E63329;
-      --dim: #1A1A1A;
+      --dim: #111;
       --muted: #555;
       --border: #222;
     }
@@ -64,13 +64,12 @@
       margin-bottom: 80px;
     }
 
-    /* Section */
     .section { margin-bottom: 80px; }
     .section-header {
       display: flex;
       align-items: baseline;
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
@@ -88,72 +87,87 @@
       color: var(--muted);
     }
 
-    /* Occasion playlist grid — 2x2 */
+    /* Grids */
+    .yearly-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
     .playlist-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 2px;
     }
 
-    /* Yearly grid — 3 cols */
-    .yearly-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-
-    /* Playlist card */
-    .playlist-card {
-      background: var(--dim);
+    /* Card */
+    a.playlist-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       position: relative;
+      background: var(--dim);
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
       overflow: hidden;
     }
-    .playlist-card:hover .card-overlay { opacity: 1; }
+    a.playlist-card:hover { border-color: #383838; }
 
-    .embed-wrap {
-      position: relative;
+    .card-art {
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      background: #0f0f0f;
+      aspect-ratio: 1;
+      overflow: hidden;
     }
-    .embed-wrap iframe {
-      position: absolute;
-      inset: 0;
+    .card-art svg {
       width: 100%;
       height: 100%;
-      border: 0;
+      display: block;
+      transition: transform 0.5s ease;
     }
+    a.playlist-card:hover .card-art svg { transform: scale(1.03); }
 
     .card-info {
-      padding: 20px 24px 24px;
+      padding: 18px 22px 22px;
       border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .card-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
     }
     .card-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 0.05em;
+      font-size: 26px;
+      letter-spacing: 0.04em;
       color: var(--white);
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
+    .yearly-grid .card-title { font-size: 22px; }
     .card-desc {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
+      font-weight: 300;
       color: var(--muted);
       line-height: 1.5;
-      font-weight: 300;
     }
-
-    /* Yearly cards — smaller text, no desc */
-    .yearly-grid .card-title { font-size: 22px; }
-    .yearly-grid .card-info { padding: 14px 18px 18px; }
-    .yearly-grid .card-tag {
+    .card-arrow {
+      position: absolute;
+      top: 18px;
+      right: 18px;
       font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      font-size: 11px;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s;
+      opacity: 0;
+    }
+    a.playlist-card:hover .card-arrow {
+      opacity: 1;
       color: var(--gold);
-      margin-bottom: 4px;
+      transform: translate(2px, -2px);
     }
 
     @media (max-width: 768px) {
@@ -190,62 +204,7 @@
   <main>
     <h1 class="page-title">MUSIC</h1>
 
-    <!-- Occasion Playlists -->
-    <section class="section">
-      <div class="section-header">
-        <span class="section-label">Playlists</span>
-        <span class="section-count">04 tracks</span>
-      </div>
-      <div class="playlist-grid">
-
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace NIGHT_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=NIGHT_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="card-info">
-            <div class="card-title">BOBO'S NIGHT</div>
-            <div class="card-desc">i listen to it at night with all the lights off in my room</div>
-          </div>
-        </div>
-
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace DRIVE_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=DRIVE_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="card-info">
-            <div class="card-title">BOBO'S DRIVE</div>
-            <div class="card-desc">when i drive obviously</div>
-          </div>
-        </div>
-
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace BOUNCE_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=BOUNCE_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="card-info">
-            <div class="card-title">BOBO'S BOUNCE</div>
-            <div class="card-desc">when im strolling down the street</div>
-          </div>
-        </div>
-
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace LOFI_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=LOFI_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="card-info">
-            <div class="card-title">BOBO'S LOFI</div>
-            <div class="card-desc">when im studying or reading usually</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Yearly Archive -->
+    <!-- ─── YEARLY ─── -->
     <section class="section">
       <div class="section-header">
         <span class="section-label">Yearly</span>
@@ -253,38 +212,248 @@
       </div>
       <div class="yearly-grid">
 
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace Y2023_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=Y2023_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgvRdc2SJXJd6Q9XwJ2E1lPt" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- frame lines -->
+              <line x1="32" y1="32" x2="368" y2="32" stroke="#222" stroke-width="1"/>
+              <line x1="32" y1="368" x2="368" y2="368" stroke="#222" stroke-width="1"/>
+              <line x1="32" y1="32" x2="32" y2="368" stroke="#222" stroke-width="1"/>
+              <line x1="368" y1="32" x2="368" y2="368" stroke="#222" stroke-width="1"/>
+              <!-- corner ticks -->
+              <line x1="32" y1="32" x2="60" y2="32" stroke="#444" stroke-width="1"/>
+              <line x1="32" y1="32" x2="32" y2="60" stroke="#444" stroke-width="1"/>
+              <line x1="368" y1="32" x2="340" y2="32" stroke="#444" stroke-width="1"/>
+              <line x1="368" y1="32" x2="368" y2="60" stroke="#444" stroke-width="1"/>
+              <line x1="32" y1="368" x2="60" y2="368" stroke="#444" stroke-width="1"/>
+              <line x1="32" y1="368" x2="32" y2="340" stroke="#444" stroke-width="1"/>
+              <line x1="368" y1="368" x2="340" y2="368" stroke="#444" stroke-width="1"/>
+              <line x1="368" y1="368" x2="368" y2="340" stroke="#444" stroke-width="1"/>
+              <!-- year number -->
+              <text x="200" y="278" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="230" fill="#F2F0EC" opacity="0.92">23</text>
+              <!-- thin horizontal rule through number -->
+              <line x1="32" y1="200" x2="368" y2="200" stroke="#F2F0EC" stroke-width="0.4" opacity="0.12"/>
+            </svg>
           </div>
           <div class="card-info">
             <div class="card-tag">Yearly</div>
             <div class="card-title">BOBO'S 2023</div>
+            <span class="card-arrow">↗</span>
           </div>
-        </div>
+        </a>
 
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace Y2024_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=Y2024_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtguSA7zZNQyeDgjXnpGFI7FC" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- concentric rings -->
+              <circle cx="200" cy="200" r="160" stroke="#1e1e1e" stroke-width="1"/>
+              <circle cx="200" cy="200" r="130" stroke="#1e1e1e" stroke-width="1"/>
+              <circle cx="200" cy="200" r="100" stroke="#1e1e1e" stroke-width="1"/>
+              <!-- year number -->
+              <text x="200" y="278" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="230" fill="#F2F0EC" opacity="0.92">24</text>
+              <!-- thin cross hairs at center -->
+              <line x1="200" y1="30" x2="200" y2="80" stroke="#F2F0EC" stroke-width="0.5" opacity="0.2"/>
+              <line x1="200" y1="320" x2="200" y2="370" stroke="#F2F0EC" stroke-width="0.5" opacity="0.2"/>
+              <line x1="30" y1="200" x2="80" y2="200" stroke="#F2F0EC" stroke-width="0.5" opacity="0.2"/>
+              <line x1="320" y1="200" x2="370" y2="200" stroke="#F2F0EC" stroke-width="0.5" opacity="0.2"/>
+              <circle cx="200" cy="200" r="2" fill="#F2F0EC" opacity="0.2"/>
+            </svg>
           </div>
           <div class="card-info">
             <div class="card-tag">Yearly</div>
             <div class="card-title">BOBO'S 2024</div>
+            <span class="card-arrow">↗</span>
           </div>
-        </div>
+        </a>
 
-        <div class="playlist-card">
-          <div class="embed-wrap">
-            <!-- Replace Y2025_PLAYLIST_ID with actual YouTube playlist ID -->
-            <iframe src="https://www.youtube.com/embed/videoseries?list=Y2025_PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgvdkR6FKDsXpySl8oZflCtd" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- diagonal grid lines -->
+              <line x1="-50" y1="50" x2="450" y2="550" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="-50" y1="0" x2="450" y2="500" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="-50" y1="-50" x2="450" y2="450" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="0" y1="-50" x2="500" y2="450" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="50" y1="-50" x2="550" y2="450" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="-50" y1="100" x2="450" y2="600" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="-50" y1="150" x2="350" y2="550" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="100" y1="-50" x2="600" y2="450" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="150" y1="-50" x2="650" y2="450" stroke="#1a1a1a" stroke-width="1"/>
+              <!-- year number on top -->
+              <text x="200" y="278" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="230" fill="#F2F0EC" opacity="0.92">25</text>
+              <!-- bottom stamp -->
+              <line x1="40" y1="360" x2="360" y2="360" stroke="#F2F0EC" stroke-width="0.4" opacity="0.15"/>
+            </svg>
           </div>
           <div class="card-info">
             <div class="card-tag">Yearly</div>
             <div class="card-title">BOBO'S 2025</div>
+            <span class="card-arrow">↗</span>
           </div>
-        </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ─── PLAYLISTS ─── -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-label">Playlists</span>
+        <span class="section-count">04</span>
+      </div>
+      <div class="playlist-grid">
+
+        <!-- NIGHT -->
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgsHkJLVZwv9g4eO60pJuFqI" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#050508"/>
+              <!-- moon — large circle, upper half -->
+              <circle cx="200" cy="158" r="112" stroke="#F2F0EC" stroke-width="0.8" opacity="0.85"/>
+              <!-- faint inner rings -->
+              <circle cx="200" cy="158" r="90" stroke="#F2F0EC" stroke-width="0.3" opacity="0.1"/>
+              <circle cx="200" cy="158" r="65" stroke="#F2F0EC" stroke-width="0.3" opacity="0.06"/>
+              <!-- stars -->
+              <circle cx="48" cy="42" r="1.2" fill="#F2F0EC" opacity="0.75"/>
+              <circle cx="82" cy="22" r="0.8" fill="#F2F0EC" opacity="0.55"/>
+              <circle cx="22" cy="88" r="0.7" fill="#F2F0EC" opacity="0.45"/>
+              <circle cx="335" cy="35" r="1.1" fill="#F2F0EC" opacity="0.7"/>
+              <circle cx="372" cy="62" r="0.8" fill="#F2F0EC" opacity="0.5"/>
+              <circle cx="358" cy="18" r="0.7" fill="#F2F0EC" opacity="0.4"/>
+              <circle cx="18" cy="155" r="1" fill="#F2F0EC" opacity="0.6"/>
+              <circle cx="380" cy="140" r="0.9" fill="#F2F0EC" opacity="0.5"/>
+              <circle cx="14" cy="290" r="1.1" fill="#F2F0EC" opacity="0.65"/>
+              <circle cx="55" cy="338" r="0.8" fill="#F2F0EC" opacity="0.4"/>
+              <circle cx="30" cy="365" r="0.7" fill="#F2F0EC" opacity="0.35"/>
+              <circle cx="365" cy="295" r="1" fill="#F2F0EC" opacity="0.6"/>
+              <circle cx="385" cy="340" r="0.8" fill="#F2F0EC" opacity="0.45"/>
+              <circle cx="345" cy="375" r="0.7" fill="#F2F0EC" opacity="0.35"/>
+              <circle cx="140" cy="388" r="0.8" fill="#F2F0EC" opacity="0.3"/>
+              <circle cx="260" cy="382" r="0.7" fill="#F2F0EC" opacity="0.25"/>
+              <!-- ground horizon -->
+              <line x1="0" y1="315" x2="400" y2="315" stroke="#F2F0EC" stroke-width="0.3" opacity="0.1"/>
+              <line x1="0" y1="335" x2="400" y2="335" stroke="#F2F0EC" stroke-width="0.2" opacity="0.06"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-tag">Playlist</div>
+            <div class="card-title">BOBO'S NIGHT</div>
+            <div class="card-desc">i listen to it at night with all the lights off in my room</div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </a>
+
+        <!-- DRIVE -->
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgvOXZdAWRbNV6hjZKKUgHj6" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- VP at (200, 172) -->
+              <!-- road edge lines -->
+              <line x1="200" y1="172" x2="0" y2="400" stroke="#F2F0EC" stroke-width="0.8" opacity="0.65"/>
+              <line x1="200" y1="172" x2="400" y2="400" stroke="#F2F0EC" stroke-width="0.8" opacity="0.65"/>
+              <!-- additional fan lines — below horizon -->
+              <line x1="200" y1="172" x2="0" y2="320" stroke="#F2F0EC" stroke-width="0.5" opacity="0.35"/>
+              <line x1="200" y1="172" x2="400" y2="320" stroke="#F2F0EC" stroke-width="0.5" opacity="0.35"/>
+              <line x1="200" y1="172" x2="0" y2="260" stroke="#F2F0EC" stroke-width="0.35" opacity="0.18"/>
+              <line x1="200" y1="172" x2="400" y2="260" stroke="#F2F0EC" stroke-width="0.35" opacity="0.18"/>
+              <line x1="200" y1="172" x2="80" y2="400" stroke="#F2F0EC" stroke-width="0.4" opacity="0.22"/>
+              <line x1="200" y1="172" x2="320" y2="400" stroke="#F2F0EC" stroke-width="0.4" opacity="0.22"/>
+              <!-- horizon line -->
+              <line x1="0" y1="172" x2="400" y2="172" stroke="#F2F0EC" stroke-width="0.5" opacity="0.35"/>
+              <!-- sky fan lines — above horizon -->
+              <line x1="200" y1="172" x2="0" y2="0" stroke="#F2F0EC" stroke-width="0.4" opacity="0.18"/>
+              <line x1="200" y1="172" x2="400" y2="0" stroke="#F2F0EC" stroke-width="0.4" opacity="0.18"/>
+              <line x1="200" y1="172" x2="0" y2="80" stroke="#F2F0EC" stroke-width="0.3" opacity="0.1"/>
+              <line x1="200" y1="172" x2="400" y2="80" stroke="#F2F0EC" stroke-width="0.3" opacity="0.1"/>
+              <!-- VP dot -->
+              <circle cx="200" cy="172" r="1.8" fill="#F2F0EC" opacity="0.55"/>
+              <!-- road center dashes — perspective scaled -->
+              <rect x="198" y="188" width="4" height="10" rx="1" fill="#F2F0EC" opacity="0.45"/>
+              <rect x="195.5" y="210" width="9" height="14" rx="1" fill="#F2F0EC" opacity="0.38"/>
+              <rect x="192" y="238" width="16" height="18" rx="1" fill="#F2F0EC" opacity="0.3"/>
+              <rect x="187" y="275" width="26" height="24" rx="1" fill="#F2F0EC" opacity="0.22"/>
+              <rect x="178" y="324" width="44" height="32" rx="1" fill="#F2F0EC" opacity="0.15"/>
+              <rect x="162" y="384" width="76" height="40" rx="1" fill="#F2F0EC" opacity="0.08"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-tag">Playlist</div>
+            <div class="card-title">BOBO'S DRIVE</div>
+            <div class="card-desc">when i drive obviously</div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </a>
+
+        <!-- BOUNCE -->
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgsMtPM39LRzjdYQ_PT2kbao" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- large bg ring -->
+              <circle cx="280" cy="115" r="95" stroke="#F2F0EC" stroke-width="0.6" opacity="0.15"/>
+              <!-- mid rings -->
+              <circle cx="88" cy="195" r="65" stroke="#F2F0EC" stroke-width="0.7" opacity="0.35"/>
+              <circle cx="305" cy="295" r="80" stroke="#F2F0EC" stroke-width="0.6" opacity="0.2"/>
+              <circle cx="170" cy="310" r="38" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
+              <!-- filled dots - various sizes -->
+              <circle cx="355" cy="72" r="14" fill="#F2F0EC" opacity="0.7"/>
+              <circle cx="55" cy="335" r="20" fill="#F2F0EC" opacity="0.55"/>
+              <circle cx="228" cy="55" r="7" fill="#C9A84C" opacity="0.85"/>
+              <circle cx="372" cy="215" r="10" fill="#F2F0EC" opacity="0.5"/>
+              <circle cx="135" cy="125" r="5" fill="#C9A84C" opacity="0.9"/>
+              <circle cx="325" cy="168" r="4" fill="#F2F0EC" opacity="0.65"/>
+              <circle cx="42" cy="258" r="3" fill="#F2F0EC" opacity="0.5"/>
+              <circle cx="195" cy="382" r="8" fill="#F2F0EC" opacity="0.45"/>
+              <circle cx="82" cy="68" r="4" fill="#F2F0EC" opacity="0.6"/>
+              <circle cx="358" cy="355" r="6" fill="#C9A84C" opacity="0.6"/>
+              <circle cx="238" cy="168" r="3" fill="#F2F0EC" opacity="0.5"/>
+              <!-- inner small ring -->
+              <circle cx="200" cy="200" r="28" stroke="#F2F0EC" stroke-width="0.4" opacity="0.12"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-tag">Playlist</div>
+            <div class="card-title">BOBO'S BOUNCE</div>
+            <div class="card-desc">when im strolling down the street</div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </a>
+
+        <!-- LOFI -->
+        <a href="https://youtube.com/playlist?list=PLDsKczWvZtgumrT9XOB81KEXm3jF1txEE" target="_blank" rel="noopener" class="playlist-card">
+          <div class="card-art">
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="lofi-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="12" cy="12" r="1.3" fill="#F2F0EC" opacity="0.32"/>
+                </pattern>
+                <radialGradient id="lofi-fade" cx="50%" cy="50%" r="52%">
+                  <stop offset="0%" stop-color="#F2F0EC" stop-opacity="0.06"/>
+                  <stop offset="100%" stop-color="#080808" stop-opacity="0.6"/>
+                </radialGradient>
+              </defs>
+              <rect width="400" height="400" fill="#080808"/>
+              <!-- dot grid -->
+              <rect width="400" height="400" fill="url(#lofi-dots)"/>
+              <!-- vignette-like overlay to fade edges -->
+              <rect width="400" height="400" fill="url(#lofi-fade)"/>
+              <!-- horizontal rule lines through center, very faint -->
+              <line x1="40" y1="180" x2="360" y2="180" stroke="#F2F0EC" stroke-width="0.4" opacity="0.1"/>
+              <line x1="40" y1="200" x2="360" y2="200" stroke="#F2F0EC" stroke-width="0.4" opacity="0.07"/>
+              <line x1="40" y1="220" x2="360" y2="220" stroke="#F2F0EC" stroke-width="0.4" opacity="0.1"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-tag">Playlist</div>
+            <div class="card-title">BOBO'S LOFI</div>
+            <div class="card-desc">when im studying or reading usually</div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </a>
 
       </div>
     </section>
