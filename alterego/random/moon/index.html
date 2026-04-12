@@ -384,23 +384,31 @@
     let prev  = { x: 0, y: 0 };
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     let lastPinch = 0;
+    let velX = 0, velY = 0;
+    const DAMP = 0.95;
 
     canvas.addEventListener('mousedown', e => {
       drag = true; autoRot = false; document.body.classList.add('dragging');
-      prev = { x: e.clientX, y: e.clientY }; clearTimeout(rotTimer);
+      prev = { x: e.clientX, y: e.clientY };
+      velX = 0; velY = 0;
+      clearTimeout(rotTimer);
     });
     window.addEventListener('mousemove', e => {
       mouse = { x: e.clientX, y: e.clientY };
       if (drag) {
-        moon.rotation.y += (e.clientX - prev.x) * 0.007;
-        moon.rotation.x += (e.clientY - prev.y) * 0.007;
+        const dx = (e.clientX - prev.x) * 0.007;
+        const dy = (e.clientY - prev.y) * 0.007;
+        moon.rotation.y += dx;
+        moon.rotation.x += dy;
+        velX = dx;
+        velY = dy;
         prev = { x: e.clientX, y: e.clientY };
       }
       hoverCheck(e.clientX, e.clientY);
     });
     window.addEventListener('mouseup', () => {
       drag = false; document.body.classList.remove('dragging');
-      rotTimer = setTimeout(() => autoRot = true, 2500);
+      rotTimer = setTimeout(() => { autoRot = true; }, 2500);
     });
 
     // Scroll to zoom
@@ -419,6 +427,7 @@
       } else {
         drag = true; autoRot = false;
         prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        velX = 0; velY = 0;
         clearTimeout(rotTimer);
       }
     }, { passive: true });
@@ -432,14 +441,18 @@
         camera.position.z = Math.max(Z_MIN, Math.min(Z_MAX, camera.position.z - (d - lastPinch) * 0.025));
         lastPinch = d;
       } else if (drag) {
-        moon.rotation.y += (e.touches[0].clientX - prev.x) * 0.007;
-        moon.rotation.x += (e.touches[0].clientY - prev.y) * 0.007;
+        const dx = (e.touches[0].clientX - prev.x) * 0.007;
+        const dy = (e.touches[0].clientY - prev.y) * 0.007;
+        moon.rotation.y += dx;
+        moon.rotation.x += dy;
+        velX = dx;
+        velY = dy;
         prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     }, { passive: true });
 
     canvas.addEventListener('touchend', () => {
-      drag = false; rotTimer = setTimeout(() => autoRot = true, 2500);
+      drag = false; rotTimer = setTimeout(() => { autoRot = true; }, 2500);
     });
 
     setTimeout(() => document.getElementById('hint').classList.add('gone'), 3200);
@@ -478,7 +491,15 @@
     // ─── 11. ANIMATION ──────────────────────────────────────────
     function animate() {
       requestAnimationFrame(animate);
-      if (autoRot) moon.rotation.y += 0.0008;
+      if (autoRot) {
+        moon.rotation.y += 0.0008;
+        velX = 0; velY = 0;
+      } else if (!drag) {
+        moon.rotation.y += velX;
+        moon.rotation.x += velY;
+        velX *= DAMP;
+        velY *= DAMP;
+      }
       const nx =  (mouse.x / window.innerWidth)  * 2 - 1;
       const ny = -(mouse.y / window.innerHeight) * 2 + 1;
       [starsS, starsM, starsL].forEach(s => {
