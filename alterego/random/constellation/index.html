@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constellation — BOBO</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--black:#080808;--white:#F2F0EC;--gold:#C9A84C;--dim:#1A1A1A;--muted:#555;--border:#222}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{background:var(--black);color:var(--white);font-family:'Space Grotesk',sans-serif;height:100%;overflow:hidden}
+
+    /* canvas */
+    #c{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+
+    /* nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 40px}
+    .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.15em;color:var(--white);text-decoration:none}
+    .nav-home{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-decoration:none;text-transform:uppercase;justify-self:end;transition:color .2s}
+    .nav-home:hover{color:var(--white)}
+    .nav-pill{display:flex;align-items:center;gap:2px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:100px;padding:5px}
+    .nav-pill a{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:lowercase;color:var(--muted);text-decoration:none;padding:7px 16px;border-radius:100px;transition:background .2s,color .2s}
+    .nav-pill a:hover{background:var(--white);color:var(--black)}
+    .nav-pill a.active{background:var(--white);color:var(--black)}
+
+    /* overlay */
+    #overlay{
+      position:fixed;inset:0;z-index:50;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:52px;
+      background:rgba(8,8,8,.88);
+      backdrop-filter:blur(6px);
+      transition:opacity .9s ease,backdrop-filter .9s ease;
+    }
+    #overlay.gone{opacity:0;pointer-events:none;backdrop-filter:blur(0px)}
+    .ov-title{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(64px,11vw,128px);
+      letter-spacing:.03em;
+      color:var(--white);
+      text-align:center;
+      line-height:.88;
+    }
+    .ov-sub{
+      font-family:'Space Mono',monospace;
+      font-size:10px;
+      letter-spacing:.3em;
+      color:var(--muted);
+      text-align:center;
+      text-transform:uppercase;
+    }
+    .input-group{display:flex;flex-direction:column;align-items:center;gap:20px}
+    #birthdate{
+      background:transparent;
+      border:none;
+      border-bottom:1px solid #2a2a2a;
+      color:var(--white);
+      font-family:'Space Mono',monospace;
+      font-size:14px;
+      letter-spacing:.18em;
+      padding:14px 8px;
+      text-align:center;
+      outline:none;
+      width:210px;
+      cursor:pointer;
+      appearance:none;
+      -webkit-appearance:none;
+      color-scheme:dark;
+      transition:border-color .25s;
+    }
+    #birthdate:focus{border-bottom-color:var(--gold)}
+    #birthdate.shake{animation:shake .35s ease}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    #discover{
+      font-family:'Space Mono',monospace;
+      font-size:11px;
+      letter-spacing:.3em;
+      color:var(--black);
+      background:var(--gold);
+      border:none;
+      padding:14px 32px;
+      cursor:pointer;
+      text-transform:uppercase;
+      transition:opacity .2s;
+    }
+    #discover:hover{opacity:.82}
+    #discover:active{opacity:.6}
+
+    /* info panel */
+    #info{
+      position:fixed;bottom:52px;left:40px;z-index:50;
+      opacity:0;transform:translateY(14px);
+      transition:opacity .7s ease .3s,transform .7s ease .3s;
+      pointer-events:none;
+    }
+    #info.show{opacity:1;transform:none}
+    .i-sign{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+    .i-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,7vw,96px);letter-spacing:.03em;color:var(--white);line-height:.87}
+    .i-kor{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--muted);margin-top:5px}
+    .i-dates{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;color:#4a4a4a;margin-top:14px;text-transform:uppercase}
+
+    /* star label */
+    #slabel{
+      position:fixed;z-index:60;pointer-events:none;
+      font-family:'Space Mono',monospace;font-size:9px;
+      letter-spacing:.22em;color:#8aabcc;text-transform:uppercase;
+      opacity:0;transition:opacity .18s;white-space:nowrap;
+    }
+    #slabel.show{opacity:1}
+
+    /* hint */
+    #hint{
+      position:fixed;bottom:82px;left:50%;transform:translateX(-50%);
+      font-family:'Space Mono',monospace;font-size:9px;
+      letter-spacing:.24em;color:var(--muted);text-transform:uppercase;
+      z-index:50;opacity:0;transition:opacity .5s;pointer-events:none;
+    }
+    #hint.show{opacity:1}
+    #hint.gone{opacity:0!important}
+
+    /* ticker */
+    .ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#040408;padding:7px 0;border-top:1px solid #181820;overflow:hidden}
+    .ticker-track{display:flex;white-space:nowrap;animation:tick 52s linear infinite}
+    .ticker-track span{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.24em;color:var(--muted);padding:0 36px}
+    @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    @media(max-width:640px){
+      nav{padding:14px 20px}
+      #info{left:20px;bottom:46px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/alterego" class="nav-logo">BOBO</a>
+  <div class="nav-pill">
+    <a href="/alterego/dance">dance</a>
+    <a href="/alterego/music">music</a>
+    <a href="/alterego/random" class="active">random</a>
+  </div>
+  <a href="/" class="nav-home">← Real Life</a>
+</nav>
+
+<div id="overlay">
+  <div>
+    <div class="ov-title">CONSTEL-<br>LATION</div>
+    <div class="ov-sub" style="margin-top:16px">당신의 별자리를 찾아드립니다</div>
+  </div>
+  <div class="input-group">
+    <div class="ov-sub">생년월일을 입력하세요</div>
+    <input type="date" id="birthdate">
+    <button id="discover">DISCOVER ↗</button>
+  </div>
+</div>
+
+<canvas id="c"></canvas>
+
+<div id="info">
+  <div class="i-sign" id="i-sign">♈ ZODIAC</div>
+  <div class="i-name" id="i-name">ARIES</div>
+  <div class="i-kor" id="i-kor">양자리</div>
+  <div class="i-dates" id="i-dates">MAR 21 – APR 19</div>
+</div>
+
+<div id="slabel"></div>
+<div id="hint">DRAG TO ROTATE</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>ARIES</span><span>♈</span><span>TAURUS</span><span>♉</span>
+    <span>GEMINI</span><span>♊</span><span>CANCER</span><span>♋</span>
+    <span>LEO</span><span>♌</span><span>VIRGO</span><span>♍</span>
+    <span>LIBRA</span><span>♎</span><span>SCORPIUS</span><span>♏</span>
+    <span>SAGITTARIUS</span><span>♐</span><span>CAPRICORN</span><span>♑</span>
+    <span>AQUARIUS</span><span>♒</span><span>PISCES</span><span>♓</span>
+    <span>ARIES</span><span>♈</span><span>TAURUS</span><span>♉</span>
+    <span>GEMINI</span><span>♊</span><span>CANCER</span><span>♋</span>
+    <span>LEO</span><span>♌</span><span>VIRGO</span><span>♍</span>
+    <span>LIBRA</span><span>♎</span><span>SCORPIUS</span><span>♏</span>
+    <span>SAGITTARIUS</span><span>♐</span><span>CAPRICORN</span><span>♑</span>
+    <span>AQUARIUS</span><span>♒</span><span>PISCES</span><span>♓</span>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
+
+/* ═══════════════════════════════════════════
+   ZODIAC DATA
+   Stars: ra = decimal hours, dc = degrees Dec
+   edges: index pairs connecting stars
+   ═══════════════════════════════════════════ */
+const Z = {
+  aries:{name:'ARIES',kor:'양자리',sym:'♈',dates:'MAR 21 – APR 19',
+    s:[{n:'HAMAL',ra:2.128,dc:23.46},{n:'SHERATAN',ra:1.910,dc:20.80},
+       {n:'MESARTHIM',ra:1.892,dc:19.29},{n:'BOTEIN',ra:3.193,dc:19.73},
+       {n:'41 ARI',ra:2.833,dc:27.26}],
+    e:[[2,1],[1,0],[0,4],[0,3]]},
+
+  taurus:{name:'TAURUS',kor:'황소자리',sym:'♉',dates:'APR 20 – MAY 20',
+    s:[{n:'ALCYONE',ra:3.792,dc:24.10},{n:'HYADUM I',ra:4.330,dc:15.63},
+       {n:'DELTA TAU',ra:4.382,dc:17.53},{n:'AIN',ra:4.477,dc:19.18},
+       {n:'ALDEBARAN',ra:4.598,dc:16.52},{n:'ELNATH',ra:5.438,dc:28.60},
+       {n:'ZETA TAU',ra:5.627,dc:21.13}],
+    e:[[0,2],[1,2],[2,3],[3,4],[2,4],[4,5],[5,6]]},
+
+  gemini:{name:'GEMINI',kor:'쌍둥이자리',sym:'♊',dates:'MAY 21 – JUN 20',
+    s:[{n:'CASTOR',ra:7.577,dc:31.89},{n:'POLLUX',ra:7.755,dc:28.03},
+       {n:'ALHENA',ra:6.628,dc:16.40},{n:'WASAT',ra:7.335,dc:21.98},
+       {n:'MEBSUDA',ra:6.732,dc:25.13},{n:'MEKBUDA',ra:7.068,dc:20.57},
+       {n:'PROPUS',ra:6.248,dc:22.52},{n:'MU GEM',ra:6.382,dc:22.52}],
+    e:[[0,4],[4,6],[6,7],[7,2],[5,3],[3,1],[0,3],[1,5],[4,5],[2,5]]},
+
+  cancer:{name:'CANCER',kor:'게자리',sym:'♋',dates:'JUN 21 – JUL 22',
+    s:[{n:'TARF',ra:8.275,dc:9.18},{n:'ASELLUS AUS.',ra:8.745,dc:18.15},
+       {n:'ASELLUS BOR.',ra:8.722,dc:21.48},{n:'ACUBENS',ra:8.975,dc:11.85},
+       {n:'IOTA CNC',ra:8.778,dc:28.77}],
+    e:[[0,1],[1,2],[1,3],[2,4]]},
+
+  leo:{name:'LEO',kor:'사자자리',sym:'♌',dates:'JUL 23 – AUG 22',
+    s:[{n:'REGULUS',ra:10.140,dc:11.97},{n:'DENEBOLA',ra:11.818,dc:14.57},
+       {n:'ALGIEBA',ra:10.333,dc:19.83},{n:'ZOSMA',ra:11.235,dc:20.52},
+       {n:'ALGENUBI',ra:9.758,dc:23.77},{n:'ADHAFERA',ra:10.278,dc:23.42},
+       {n:'ETA LEO',ra:10.122,dc:16.77},{n:'CHORT',ra:11.237,dc:15.43}],
+    e:[[4,5],[5,2],[2,6],[6,0],[0,3],[3,1],[1,7],[7,3],[2,3]]},
+
+  virgo:{name:'VIRGO',kor:'처녀자리',sym:'♍',dates:'AUG 23 – SEP 22',
+    s:[{n:'SPICA',ra:13.420,dc:-11.17},{n:'ZAVIJAVA',ra:11.843,dc:1.77},
+       {n:'PORRIMA',ra:12.695,dc:-1.45},{n:'AUVA',ra:12.927,dc:3.40},
+       {n:'VINDEMIATRIX',ra:13.037,dc:10.97},{n:'HEZE',ra:13.578,dc:-0.60},
+       {n:'ZANIAH',ra:12.335,dc:-0.67},{n:'SYRMA',ra:14.262,dc:-6.00}],
+    e:[[1,6],[6,2],[2,3],[3,4],[2,5],[5,0],[0,7]]},
+
+  libra:{name:'LIBRA',kor:'천칭자리',sym:'♎',dates:'SEP 23 – OCT 22',
+    s:[{n:'ZUBENELGENUBI',ra:14.848,dc:-16.03},{n:'ZUBENESCHAMALI',ra:15.283,dc:-9.38},
+       {n:'ZUBENELAKRAB',ra:15.592,dc:-14.78},{n:'BRACHIUM',ra:15.068,dc:-25.28},
+       {n:'DELTA LIB',ra:15.017,dc:-8.52}],
+    e:[[0,1],[1,2],[0,3],[4,1]]},
+
+  scorpius:{name:'SCORPIUS',kor:'전갈자리',sym:'♏',dates:'OCT 23 – NOV 21',
+    s:[{n:'PI SCO',ra:15.982,dc:-26.12},{n:'DSCHUBBA',ra:16.005,dc:-22.62},
+       {n:'GRAFFIAS',ra:16.090,dc:-19.82},{n:'ALNIYAT',ra:16.353,dc:-25.60},
+       {n:'ANTARES',ra:16.490,dc:-26.43},{n:'LARAWAG',ra:16.837,dc:-34.30},
+       {n:'XAMIDIMURA',ra:16.867,dc:-38.05},{n:'ZETA SCO',ra:16.907,dc:-42.37},
+       {n:'ETA SCO',ra:17.202,dc:-43.23},{n:'SARGAS',ra:17.622,dc:-43.00},
+       {n:'SHAULA',ra:17.560,dc:-37.10}],
+    e:[[0,1],[1,2],[1,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,6]]},
+
+  sagittarius:{name:'SAGITTARIUS',kor:'궁수자리',sym:'♐',dates:'NOV 22 – DEC 21',
+    s:[{n:'ALNASL',ra:18.097,dc:-30.42},{n:'KAUS MEDIA',ra:18.350,dc:-29.83},
+       {n:'KAUS AUS.',ra:18.403,dc:-34.38},{n:'ETA SGR',ra:18.293,dc:-36.77},
+       {n:'KAUS BOR.',ra:18.465,dc:-25.42},{n:'NUNKI',ra:18.922,dc:-26.30},
+       {n:'PHI SGR',ra:18.758,dc:-26.98},{n:'ASCELLA',ra:19.043,dc:-29.88}],
+    e:[[0,1],[1,2],[2,3],[1,4],[4,5],[5,6],[6,7],[7,5],[1,6]]},
+
+  capricorn:{name:'CAPRICORN',kor:'염소자리',sym:'♑',dates:'DEC 22 – JAN 19',
+    s:[{n:'ALGEDI',ra:20.302,dc:-12.55},{n:'DABIH',ra:20.350,dc:-14.78},
+       {n:'ETA CAP',ra:21.072,dc:-19.87},{n:'THETA CAP',ra:21.092,dc:-17.23},
+       {n:'IOTA CAP',ra:21.372,dc:-16.77},{n:'KAPPA CAP',ra:21.592,dc:-18.87},
+       {n:'ZETA CAP',ra:21.445,dc:-22.42},{n:'EPSILON CAP',ra:21.618,dc:-19.47},
+       {n:'NASHIRA',ra:21.668,dc:-16.67},{n:'DENEB ALGEDI',ra:21.783,dc:-16.13}],
+    e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,7],[2,6]]},
+
+  aquarius:{name:'AQUARIUS',kor:'물병자리',sym:'♒',dates:'JAN 20 – FEB 18',
+    s:[{n:'SADALSUUD',ra:22.097,dc:-0.32},{n:'SADALMELIK',ra:21.527,dc:-5.57},
+       {n:'SADACHBIA',ra:22.360,dc:-1.38},{n:'SKAT',ra:22.912,dc:-15.82},
+       {n:'ALBALI',ra:20.795,dc:-9.50},{n:'ZETA AQR',ra:22.480,dc:-0.02},
+       {n:'ETA AQR',ra:22.587,dc:-0.12},{n:'TAU AQR',ra:22.827,dc:-13.58}],
+    e:[[4,1],[1,0],[0,2],[2,5],[5,6],[6,3],[3,7]]},
+
+  pisces:{name:'PISCES',kor:'물고기자리',sym:'♓',dates:'FEB 19 – MAR 20',
+    s:[{n:'ALRESCHA',ra:2.033,dc:2.77},{n:'BETA PSC',ra:23.058,dc:3.82},
+       {n:'GAMMA PSC',ra:23.285,dc:3.28},{n:'THETA PSC',ra:23.465,dc:6.38},
+       {n:'IOTA PSC',ra:23.665,dc:5.63},{n:'OMEGA PSC',ra:23.990,dc:6.87},
+       {n:'DELTA PSC',ra:0.812,dc:7.90},{n:'EPSILON PSC',ra:1.043,dc:7.90},
+       {n:'ZETA PSC',ra:1.228,dc:7.58},{n:'ETA PSC',ra:1.525,dc:15.35}],
+    e:[[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,0],[7,9],[9,8]]}
+};
+
+/* ═══════════════════════════════════════════
+   ZODIAC SIGN FROM DATE
+   ═══════════════════════════════════════════ */
+function getSign(m, d) {
+  if ((m===3&&d>=21)||(m===4&&d<=19)) return 'aries';
+  if ((m===4&&d>=20)||(m===5&&d<=20)) return 'taurus';
+  if ((m===5&&d>=21)||(m===6&&d<=20)) return 'gemini';
+  if ((m===6&&d>=21)||(m===7&&d<=22)) return 'cancer';
+  if ((m===7&&d>=23)||(m===8&&d<=22)) return 'leo';
+  if ((m===8&&d>=23)||(m===9&&d<=22)) return 'virgo';
+  if ((m===9&&d>=23)||(m===10&&d<=22)) return 'libra';
+  if ((m===10&&d>=23)||(m===11&&d<=21)) return 'scorpius';
+  if ((m===11&&d>=22)||(m===12&&d<=21)) return 'sagittarius';
+  if ((m===12&&d>=22)||(m===1&&d<=19)) return 'capricorn';
+  if ((m===1&&d>=20)||(m===2&&d<=18)) return 'aquarius';
+  return 'pisces';
+}
+
+/* ═══════════════════════════════════════════
+   GNOMONIC PROJECTION (tangent-plane)
+   Centers constellation at (ra0, dec0)
+   ═══════════════════════════════════════════ */
+function gnomonicProject(ra_h, dc_d, ra0_h, dc0_d) {
+  const H = Math.PI / 12;   // 1 hour → radians
+  const R = Math.PI / 180;
+  const dec = dc_d * R, dec0 = dc0_d * R;
+  let dra = (ra_h - ra0_h) * H;
+  // Normalize to [-π, π]
+  while (dra >  Math.PI) dra -= 2 * Math.PI;
+  while (dra < -Math.PI) dra += 2 * Math.PI;
+  const cosc = Math.sin(dec0)*Math.sin(dec) + Math.cos(dec0)*Math.cos(dec)*Math.cos(dra);
+  if (cosc < 0.001) return {x:0, y:0};
+  return {
+    x:  Math.cos(dec) * Math.sin(dra) / cosc,
+    y: (Math.cos(dec0)*Math.sin(dec) - Math.sin(dec0)*Math.cos(dec)*Math.cos(dra)) / cosc
+  };
+}
+
+/* Iterative mean RA (handles 0h wrap-around) */
+function meanRA(stars) {
+  let ra0 = stars[0].ra;
+  for (let iter = 0; iter < 5; iter++) {
+    let sum = 0;
+    stars.forEach(s => {
+      let d = s.ra - ra0;
+      if (d >  12) d -= 24;
+      if (d < -12) d += 24;
+      sum += ra0 + d;
+    });
+    ra0 = ((sum / stars.length) % 24 + 24) % 24;
+  }
+  return ra0;
+}
+
+/* ═══════════════════════════════════════════
+   TEXTURES
+   ═══════════════════════════════════════════ */
+function makeBgStarTex() {
+  const sz = 64;
+  const c = document.createElement('canvas');
+  c.width = c.height = sz;
+  const ctx = c.getContext('2d');
+  const cx = sz/2;
+  const g = ctx.createRadialGradient(cx,cx,0, cx,cx,cx);
+  g.addColorStop(0,    'rgba(220,235,255,1)');
+  g.addColorStop(0.12, 'rgba(190,215,255,0.85)');
+  g.addColorStop(0.35, 'rgba(150,185,255,0.30)');
+  g.addColorStop(0.7,  'rgba(100,140,230,0.06)');
+  g.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,sz,sz);
+  return new THREE.CanvasTexture(c);
+}
+
+/* Hubble-style diffraction spike glow for constellation stars */
+function makeStarGlowTex() {
+  const sz = 256;
+  const c = document.createElement('canvas');
+  c.width = c.height = sz;
+  const ctx = c.getContext('2d');
+  const cx = sz/2;
+
+  // Core glow
+  const g = ctx.createRadialGradient(cx,cx,0, cx,cx,cx*0.9);
+  g.addColorStop(0,    'rgba(255,252,240,1)');
+  g.addColorStop(0.04, 'rgba(220,238,255,0.98)');
+  g.addColorStop(0.12, 'rgba(170,205,255,0.65)');
+  g.addColorStop(0.28, 'rgba(110,160,255,0.22)');
+  g.addColorStop(0.55, 'rgba(70,120,230,0.07)');
+  g.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,sz,sz);
+
+  // Diffraction spikes (4 axes at 0°, 45°, 90°, 135°)
+  [0, Math.PI/4, Math.PI/2, Math.PI*3/4].forEach(angle => {
+    ctx.save();
+    ctx.translate(cx, cx); ctx.rotate(angle);
+    const len = cx * 0.96, hw = cx * 0.012;
+    const lg = ctx.createLinearGradient(-len,0, len,0);
+    lg.addColorStop(0,    'rgba(200,225,255,0)');
+    lg.addColorStop(0.3,  'rgba(220,240,255,0.06)');
+    lg.addColorStop(0.5,  'rgba(255,255,255,0.28)');
+    lg.addColorStop(0.7,  'rgba(220,240,255,0.06)');
+    lg.addColorStop(1,    'rgba(200,225,255,0)');
+    ctx.fillStyle = lg;
+    ctx.fillRect(-len, -hw, len*2, hw*2);
+    ctx.restore();
+  });
+
+  return new THREE.CanvasTexture(c);
+}
+
+const BGS_TEX  = makeBgStarTex();
+const GLOW_TEX = makeStarGlowTex();
+
+/* ═══════════════════════════════════════════
+   THREE.JS SETUP
+   ═══════════════════════════════════════════ */
+const canvas = document.getElementById('c');
+let W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setSize(W, H);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x05050e, 1);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 300);
+camera.position.z = 8;
+
+/* Groups */
+const rootGroup = new THREE.Group();
+scene.add(rootGroup);
+
+const bgGroup    = new THREE.Group();  // background starfield
+const constGroup = new THREE.Group();  // active constellation
+rootGroup.add(bgGroup);
+rootGroup.add(constGroup);
+
+/* ═══════════════════════════════════════════
+   BACKGROUND STARFIELD
+   ═══════════════════════════════════════════ */
+function makeStarLayer(count, size, opacity, rMin, rMax) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const phi   = Math.acos(2 * Math.random() - 1);
+    const r     = rMin + Math.random() * (rMax - rMin);
+    pos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    pos[i*3+2] = r * Math.cos(phi);
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({
+    size, map: BGS_TEX,
+    transparent: true, opacity,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false, sizeAttenuation: true
+  });
+  return new THREE.Points(geo, mat);
+}
+
+bgGroup.add(makeStarLayer(3800, 0.055, 0.48, 58, 70));
+bgGroup.add(makeStarLayer(520,  0.095, 0.68, 54, 66));
+bgGroup.add(makeStarLayer(85,   0.155, 0.88, 50, 62));
+
+/* ═══════════════════════════════════════════
+   CONSTELLATION BUILDER
+   ═══════════════════════════════════════════ */
+let constObjs   = [];   // cleanup list
+let constSprites = [];  // for twinkle + hover
+
+function clearConst() {
+  constObjs.forEach(o => {
+    constGroup.remove(o);
+    if (o.geometry) o.geometry.dispose();
+    if (o.material) o.material.dispose();
+  });
+  constObjs.length    = 0;
+  constSprites.length = 0;
+}
+
+function buildConst(signKey) {
+  clearConst();
+  const data = Z[signKey];
+  const stars = data.s;
+
+  // Compute centroid
+  const ra0  = meanRA(stars);
+  const dec0 = stars.reduce((a,s) => a + s.dc, 0) / stars.length;
+
+  // Project all stars to 2D tangent plane
+  const pts2d = stars.map(s => gnomonicProject(s.ra, s.dc, ra0, dec0));
+
+  // Scale so max radius ≈ 3.5 world units
+  let maxR = 0;
+  pts2d.forEach(p => { const r = Math.sqrt(p.x*p.x+p.y*p.y); if (r>maxR) maxR=r; });
+  const sc = maxR > 0.002 ? 3.5 / maxR : 1;
+
+  // 3D positions (tiny z-depth variation for realism)
+  const pos3 = pts2d.map(p => new THREE.Vector3(
+    p.x * sc,
+    p.y * sc,
+    (Math.random() - 0.5) * 0.6
+  ));
+
+  /* ─ Lines ─ */
+  const lineVerts = [];
+  data.e.forEach(([a,b]) => {
+    lineVerts.push(pos3[a].x, pos3[a].y, pos3[a].z);
+    lineVerts.push(pos3[b].x, pos3[b].y, pos3[b].z);
+  });
+  const lineGeo = new THREE.BufferGeometry();
+  lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lineVerts), 3));
+  const lineMat = new THREE.LineBasicMaterial({
+    color: 0x2244bb, transparent: true, opacity: 0,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  });
+  const lines = new THREE.LineSegments(lineGeo, lineMat);
+  constGroup.add(lines); constObjs.push(lines);
+
+  /* ─ Star points (batched) ─ */
+  const sPos = new Float32Array(pos3.length * 3);
+  pos3.forEach((p,i) => { sPos[i*3]=p.x; sPos[i*3+1]=p.y; sPos[i*3+2]=p.z; });
+  const sGeo = new THREE.BufferGeometry();
+  sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  const sMat = new THREE.PointsMaterial({
+    size: 0.10, map: BGS_TEX,
+    transparent: true, opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false, sizeAttenuation: true
+  });
+  const sPoints = new THREE.Points(sGeo, sMat);
+  constGroup.add(sPoints); constObjs.push(sPoints);
+
+  /* ─ Glow sprites per star ─ */
+  pos3.forEach((p, i) => {
+    const mat = new THREE.SpriteMaterial({
+      map: GLOW_TEX, transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const sp  = new THREE.Sprite(mat);
+    sp.position.copy(p);
+    sp.scale.setScalar(0.80);
+    sp.userData = {
+      base:      0.80,
+      phase:     Math.random() * Math.PI * 2,
+      starName:  stars[i].n
+    };
+    constGroup.add(sp); constObjs.push(sp); constSprites.push(sp);
+  });
+
+  /* ─ Fade-in ─ */
+  const allMats    = [lineMat, sMat, ...constSprites.map(s => s.material)];
+  const allTargets = [0.30,    0.95, ...constSprites.map(s => s.userData.base)];
+  let prog = 0;
+  (function fade() {
+    prog = Math.min(prog + 0.016, 1);
+    const e = 1 - Math.pow(1 - prog, 2);  // ease-out quad
+    allMats.forEach((m, i) => { m.opacity = e * allTargets[i]; });
+    if (prog < 1) requestAnimationFrame(fade);
+  })();
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATION LOOP
+   ═══════════════════════════════════════════ */
+let tick = 0;
+let vel  = {x: 0, y: 0};
+const DAMP = 0.94;
+let isDragging = false;
+let prevMx = 0, prevMy = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  tick++;
+
+  // Slow auto-drift of background
+  bgGroup.rotation.y += 0.00013;
+  bgGroup.rotation.x += 0.000038;
+
+  // Momentum decay
+  if (!isDragging && (Math.abs(vel.x) > 0.0001 || Math.abs(vel.y) > 0.0001)) {
+    rootGroup.rotation.y += vel.x;
+    rootGroup.rotation.x += vel.y;
+    vel.x *= DAMP;
+    vel.y *= DAMP;
+  }
+
+  // Twinkle constellation stars
+  constSprites.forEach(sp => {
+    const t = tick * 0.022 + sp.userData.phase;
+    const tw = 0.86 + 0.14 * Math.sin(t);
+    sp.material.opacity = sp.userData.base * tw;
+    sp.scale.setScalar(0.74 + 0.10 * Math.sin(t * 0.71));
+  });
+
+  renderer.render(scene, camera);
+}
+animate();
+
+/* ═══════════════════════════════════════════
+   DRAG INTERACTION
+   ═══════════════════════════════════════════ */
+function onDragStart(mx, my) { isDragging=true; prevMx=mx; prevMy=my; }
+function onDragMove(mx, my) {
+  if (!isDragging) return;
+  const dx = (mx - prevMx) / window.innerWidth;
+  const dy = (my - prevMy) / window.innerHeight;
+  vel.x = dx * 3.2;
+  vel.y = dy * 3.2;
+  rootGroup.rotation.y += vel.x;
+  rootGroup.rotation.x += vel.y;
+  // Clamp X tilt so scene doesn't flip
+  rootGroup.rotation.x = Math.max(-1.2, Math.min(1.2, rootGroup.rotation.x));
+  prevMx=mx; prevMy=my;
+}
+function onDragEnd() { isDragging=false; }
+
+canvas.addEventListener('mousedown',  e => onDragStart(e.clientX, e.clientY));
+window.addEventListener('mousemove',  e => onDragMove(e.clientX, e.clientY));
+window.addEventListener('mouseup',    onDragEnd);
+canvas.addEventListener('touchstart', e => { onDragStart(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
+canvas.addEventListener('touchmove',  e => { onDragMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
+canvas.addEventListener('touchend',   onDragEnd);
+
+/* ═══════════════════════════════════════════
+   STAR NAME HOVER
+   ═══════════════════════════════════════════ */
+const slabel = document.getElementById('slabel');
+window.addEventListener('mousemove', e => {
+  if (!constSprites.length) return;
+  constGroup.updateWorldMatrix(true, true);
+
+  let closest = null, minDist = Infinity;
+  constSprites.forEach(sp => {
+    const wp = new THREE.Vector3();
+    sp.getWorldPosition(wp);
+    wp.project(camera);
+    const sx = (wp.x + 1) / 2 * window.innerWidth;
+    const sy = (-wp.y + 1) / 2 * window.innerHeight;
+    const d  = Math.hypot(e.clientX - sx, e.clientY - sy);
+    if (d < 56 && d < minDist) { minDist=d; closest=sp; }
+  });
+
+  if (closest) {
+    const wp = new THREE.Vector3();
+    closest.getWorldPosition(wp); wp.project(camera);
+    const sx = (wp.x + 1) / 2 * window.innerWidth;
+    const sy = (-wp.y + 1) / 2 * window.innerHeight;
+    slabel.style.left = (sx + 14) + 'px';
+    slabel.style.top  = (sy - 6)  + 'px';
+    slabel.textContent = closest.userData.starName;
+    slabel.classList.add('show');
+  } else {
+    slabel.classList.remove('show');
+  }
+});
+
+/* ═══════════════════════════════════════════
+   RESIZE
+   ═══════════════════════════════════════════ */
+window.addEventListener('resize', () => {
+  W = window.innerWidth; H = window.innerHeight;
+  camera.aspect = W / H;
+  camera.updateProjectionMatrix();
+  renderer.setSize(W, H);
+});
+
+/* ═══════════════════════════════════════════
+   OVERLAY LOGIC
+   ═══════════════════════════════════════════ */
+const overlay     = document.getElementById('overlay');
+const bdInput     = document.getElementById('birthdate');
+const discoverBtn = document.getElementById('discover');
+const infoEl      = document.getElementById('info');
+const hintEl      = document.getElementById('hint');
+
+discoverBtn.addEventListener('click', () => {
+  const val = bdInput.value;
+  if (!val) {
+    bdInput.classList.add('shake');
+    bdInput.addEventListener('animationend', () => bdInput.classList.remove('shake'), {once:true});
+    bdInput.focus();
+    return;
+  }
+
+  // Parse date (YYYY-MM-DD from native input)
+  const parts = val.split('-');
+  const month = parseInt(parts[1], 10);
+  const day   = parseInt(parts[2], 10);
+
+  const signKey = getSign(month, day);
+  const data    = Z[signKey];
+
+  // Update info panel
+  document.getElementById('i-sign').textContent  = `${data.sym} ZODIAC`;
+  document.getElementById('i-name').textContent  = data.name;
+  document.getElementById('i-kor').textContent   = data.kor;
+  document.getElementById('i-dates').textContent = data.dates;
+
+  // Build & show constellation
+  buildConst(signKey);
+  overlay.classList.add('gone');
+
+  setTimeout(() => infoEl.classList.add('show'), 450);
+  setTimeout(() => {
+    hintEl.classList.add('show');
+    setTimeout(() => hintEl.classList.add('gone'), 4200);
+  }, 1300);
+});
+
+bdInput.addEventListener('keydown', e => { if (e.key === 'Enter') discoverBtn.click(); });
+</script>
+
+</body>
+</html>
