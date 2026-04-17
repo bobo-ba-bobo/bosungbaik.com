@@ -9,14 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--black:#080808;--white:#F2F0EC;--gold:#C9A84C;--dim:#1A1A1A;--muted:#555;--border:#222}
+    :root{--black:#080808;--white:#F2F0EC;--gold:#C9A84C;--muted:#555;--border:#222}
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{background:var(--black);color:var(--white);font-family:'Space Grotesk',sans-serif;height:100%;overflow:hidden}
 
-    /* canvas */
     #c{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 
-    /* nav */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 40px}
     .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.15em;color:var(--white);text-decoration:none}
     .nav-home{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-decoration:none;text-transform:uppercase;justify-self:end;transition:color .2s}
@@ -26,74 +24,38 @@
     .nav-pill a:hover{background:var(--white);color:var(--black)}
     .nav-pill a.active{background:var(--white);color:var(--black)}
 
-    /* overlay */
     #overlay{
       position:fixed;inset:0;z-index:50;
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:52px;
-      background:rgba(8,8,8,.88);
-      backdrop-filter:blur(6px);
+      background:rgba(8,8,8,.88);backdrop-filter:blur(6px);
       transition:opacity .9s ease,backdrop-filter .9s ease;
     }
     #overlay.gone{opacity:0;pointer-events:none;backdrop-filter:blur(0px)}
-    .ov-title{
-      font-family:'Bebas Neue',sans-serif;
-      font-size:clamp(64px,11vw,128px);
-      letter-spacing:.03em;
-      color:var(--white);
-      text-align:center;
-      line-height:.88;
-    }
-    .ov-sub{
-      font-family:'Space Mono',monospace;
-      font-size:10px;
-      letter-spacing:.3em;
-      color:var(--muted);
-      text-align:center;
-      text-transform:uppercase;
-    }
+    .ov-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,11vw,128px);letter-spacing:.03em;color:var(--white);text-align:center;line-height:.88}
+    .ov-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--muted);text-align:center;text-transform:uppercase}
     .input-group{display:flex;flex-direction:column;align-items:center;gap:20px}
     #birthdate{
-      background:transparent;
-      border:none;
-      border-bottom:1px solid #2a2a2a;
-      color:var(--white);
-      font-family:'Space Mono',monospace;
-      font-size:14px;
-      letter-spacing:.18em;
-      padding:14px 8px;
-      text-align:center;
-      outline:none;
-      width:210px;
-      cursor:pointer;
-      appearance:none;
-      -webkit-appearance:none;
-      color-scheme:dark;
-      transition:border-color .25s;
+      background:transparent;border:none;border-bottom:1px solid #2a2a2a;
+      color:var(--white);font-family:'Space Mono',monospace;font-size:14px;
+      letter-spacing:.18em;padding:14px 8px;text-align:center;outline:none;
+      width:210px;cursor:pointer;appearance:none;-webkit-appearance:none;
+      color-scheme:dark;transition:border-color .25s;
     }
     #birthdate:focus{border-bottom-color:var(--gold)}
     #birthdate.shake{animation:shake .35s ease}
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
     #discover{
-      font-family:'Space Mono',monospace;
-      font-size:11px;
-      letter-spacing:.3em;
-      color:var(--black);
-      background:var(--gold);
-      border:none;
-      padding:14px 32px;
-      cursor:pointer;
-      text-transform:uppercase;
-      transition:opacity .2s;
+      font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3em;
+      color:var(--black);background:var(--gold);border:none;padding:14px 32px;
+      cursor:pointer;text-transform:uppercase;transition:opacity .2s;
     }
     #discover:hover{opacity:.82}
     #discover:active{opacity:.6}
 
-    /* info panel */
     #info{
       position:fixed;bottom:52px;left:40px;z-index:50;
       opacity:0;transform:translateY(14px);
-      transition:opacity .7s ease .3s,transform .7s ease .3s;
-      pointer-events:none;
+      transition:opacity .7s ease .3s,transform .7s ease .3s;pointer-events:none;
     }
     #info.show{opacity:1;transform:none}
     .i-sign{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
@@ -101,26 +63,37 @@
     .i-kor{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--muted);margin-top:5px}
     .i-dates{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;color:#4a4a4a;margin-top:14px;text-transform:uppercase}
 
-    /* star label */
-    #slabel{
+    /* Star info panel */
+    #starinfo{
       position:fixed;z-index:60;pointer-events:none;
-      font-family:'Space Mono',monospace;font-size:9px;
-      letter-spacing:.22em;color:#8aabcc;text-transform:uppercase;
-      opacity:0;transition:opacity .18s;white-space:nowrap;
+      opacity:0;transition:opacity .22s;
+      background:rgba(4,4,14,.93);border:1px solid #1c2038;
+      padding:15px 18px;min-width:210px;max-width:264px;
     }
-    #slabel.show{opacity:1}
+    #starinfo.show{opacity:1}
+    .si-name{
+      font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.22em;
+      color:#9dbdd8;text-transform:uppercase;margin-bottom:7px;
+    }
+    .si-meta{
+      font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.10em;
+      color:#383850;text-transform:uppercase;margin-bottom:9px;line-height:1.9;
+    }
+    .si-meta em{color:var(--gold);font-style:normal}
+    .si-desc{
+      font-family:'Space Grotesk',sans-serif;font-size:11.5px;color:#5d5d72;
+      line-height:1.7;border-top:1px solid #141428;padding-top:9px;
+    }
 
-    /* hint */
     #hint{
       position:fixed;bottom:82px;left:50%;transform:translateX(-50%);
-      font-family:'Space Mono',monospace;font-size:9px;
-      letter-spacing:.24em;color:var(--muted);text-transform:uppercase;
-      z-index:50;opacity:0;transition:opacity .5s;pointer-events:none;
+      font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.24em;
+      color:var(--muted);text-transform:uppercase;z-index:50;
+      opacity:0;transition:opacity .5s;pointer-events:none;
     }
     #hint.show{opacity:1}
     #hint.gone{opacity:0!important}
 
-    /* ticker */
     .ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#040408;padding:7px 0;border-top:1px solid #181820;overflow:hidden}
     .ticker-track{display:flex;white-space:nowrap;animation:tick 52s linear infinite}
     .ticker-track span{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.24em;color:var(--muted);padding:0 36px}
@@ -129,6 +102,7 @@
     @media(max-width:640px){
       nav{padding:14px 20px}
       #info{left:20px;bottom:46px}
+      #starinfo{max-width:220px}
     }
   </style>
 </head>
@@ -161,12 +135,17 @@
 <div id="info">
   <div class="i-sign" id="i-sign">♈ ZODIAC</div>
   <div class="i-name" id="i-name">ARIES</div>
-  <div class="i-kor" id="i-kor">양자리</div>
+  <div class="i-kor"  id="i-kor">양자리</div>
   <div class="i-dates" id="i-dates">MAR 21 – APR 19</div>
 </div>
 
-<div id="slabel"></div>
-<div id="hint">DRAG TO ROTATE</div>
+<div id="starinfo">
+  <div class="si-name" id="si-name"></div>
+  <div class="si-meta" id="si-meta"></div>
+  <div class="si-desc" id="si-desc"></div>
+</div>
+
+<div id="hint">DRAG TO EXPLORE</div>
 
 <div class="ticker-wrap">
   <div class="ticker-track">
@@ -189,99 +168,184 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
 
 /* ═══════════════════════════════════════════
+   CONSTANTS
+   ═══════════════════════════════════════════ */
+const R   = 80;
+const H2R = Math.PI / 12;   // hours → radians
+const D2R = Math.PI / 180;
+
+// RA/Dec → 3D on sky sphere (camera at origin looks at −Z)
+function skyVec(ra_h, dc_d, r = R) {
+  const ra = ra_h * H2R, dc = dc_d * D2R;
+  return new THREE.Vector3(
+     r * Math.cos(dc) * Math.cos(ra),
+     r * Math.sin(dc),
+    -r * Math.cos(dc) * Math.sin(ra)
+  );
+}
+
+/* ═══════════════════════════════════════════
    ZODIAC DATA
-   Stars: ra = decimal hours, dc = degrees Dec
-   edges: index pairs connecting stars
+   Each star: n=name, ra=RA (hours), dc=Dec (deg),
+   t=spectral label, ly=distance (ly), mag=magnitude, desc=description
    ═══════════════════════════════════════════ */
 const Z = {
   aries:{name:'ARIES',kor:'양자리',sym:'♈',dates:'MAR 21 – APR 19',
-    s:[{n:'HAMAL',ra:2.128,dc:23.46},{n:'SHERATAN',ra:1.910,dc:20.80},
-       {n:'MESARTHIM',ra:1.892,dc:19.29},{n:'BOTEIN',ra:3.193,dc:19.73},
-       {n:'41 ARI',ra:2.833,dc:27.26}],
+    s:[
+      {n:'HAMAL',    ra:2.128,dc:23.46,t:'K2 GIANT',    ly:'66',  mag:'2.0',desc:"Brightest in Aries - an orange giant 44 times the sun's diameter."},
+      {n:'SHERATAN', ra:1.910,dc:20.80,t:'A BINARY',    ly:'60',  mag:'2.6',desc:"Spectroscopic binary. Two stars orbit each other every 107 days."},
+      {n:'MESARTHIM',ra:1.892,dc:19.29,t:'B9 BINARY',   ly:'164', mag:'3.9',desc:"First binary star ever observed through a telescope, in 1664."},
+      {n:'BOTEIN',   ra:3.193,dc:19.73,t:'K2 GIANT',    ly:'170', mag:'4.3',desc:"Cool orange giant at the eastern tip of Aries."},
+      {n:'41 ARI',   ra:2.833,dc:27.26,t:'B8 DWARF',    ly:'160', mag:'3.6',desc:"Hot blue-white star, northernmost bright member of Aries."},
+    ],
     e:[[2,1],[1,0],[0,4],[0,3]]},
 
   taurus:{name:'TAURUS',kor:'황소자리',sym:'♉',dates:'APR 20 – MAY 20',
-    s:[{n:'ALCYONE',ra:3.792,dc:24.10},{n:'HYADUM I',ra:4.330,dc:15.63},
-       {n:'DELTA TAU',ra:4.382,dc:17.53},{n:'AIN',ra:4.477,dc:19.18},
-       {n:'ALDEBARAN',ra:4.598,dc:16.52},{n:'ELNATH',ra:5.438,dc:28.60},
-       {n:'ZETA TAU',ra:5.627,dc:21.13}],
+    s:[
+      {n:'ALCYONE',  ra:3.792,dc:24.10,t:'B7 GIANT',    ly:'440', mag:'2.9',desc:"Brightest of the Pleiades - a blue giant 440 light-years away."},
+      {n:'HYADUM I', ra:4.330,dc:15.63,t:'G8 GIANT',    ly:'154', mag:'3.6',desc:"Orange giant in the Hyades - the closest open star cluster to Earth."},
+      {n:'DELTA TAU',ra:4.382,dc:17.53,t:'K0 GIANT',    ly:'153', mag:'3.8',desc:"Orange giant, part of the Hyades stars forming the bull's face."},
+      {n:'AIN',      ra:4.477,dc:19.18,t:'K0 GIANT',    ly:'147', mag:'3.5',desc:"First star outside our solar system confirmed to host a planet (2006)."},
+      {n:'ALDEBARAN',ra:4.598,dc:16.52,t:'K5 GIANT',    ly:'65',  mag:'0.9',desc:"Red giant eye of the bull. If placed at the sun, it would engulf Mercury's orbit."},
+      {n:'ELNATH',   ra:5.438,dc:28.60,t:'B7 GIANT',    ly:'134', mag:'1.7',desc:"Blue-white giant on the boundary between Taurus and Auriga."},
+      {n:'ZETA TAU', ra:5.627,dc:21.13,t:'B2 Be STAR',  ly:'417', mag:'3.0',desc:"Rapidly spinning star with a disk of expelled gas around its equator."},
+    ],
     e:[[0,2],[1,2],[2,3],[3,4],[2,4],[4,5],[5,6]]},
 
   gemini:{name:'GEMINI',kor:'쌍둥이자리',sym:'♊',dates:'MAY 21 – JUN 20',
-    s:[{n:'CASTOR',ra:7.577,dc:31.89},{n:'POLLUX',ra:7.755,dc:28.03},
-       {n:'ALHENA',ra:6.628,dc:16.40},{n:'WASAT',ra:7.335,dc:21.98},
-       {n:'MEBSUDA',ra:6.732,dc:25.13},{n:'MEKBUDA',ra:7.068,dc:20.57},
-       {n:'PROPUS',ra:6.248,dc:22.52},{n:'MU GEM',ra:6.382,dc:22.52}],
+    s:[
+      {n:'CASTOR',  ra:7.577,dc:31.89,t:'6-STAR SYSTEM',ly:'52',  mag:'1.6',desc:"Appears as one star but is actually a gravitationally bound system of six stars."},
+      {n:'POLLUX',  ra:7.755,dc:28.03,t:'K0 GIANT',     ly:'34',  mag:'1.1',desc:"Closest giant star to Earth. Has a confirmed planet orbiting it."},
+      {n:'ALHENA',  ra:6.628,dc:16.40,t:'A0 SUBGIANT',  ly:'109', mag:'1.9',desc:"Third brightest in Gemini - a white subgiant 109 light-years away."},
+      {n:'WASAT',   ra:7.335,dc:21.98,t:'F2 DWARF',     ly:'59',  mag:'3.5',desc:"Yellow-white star sitting close to the ecliptic, similar in type to our sun."},
+      {n:'MEBSUDA', ra:6.732,dc:25.13,t:'G8 SUPERGIANT',ly:'900', mag:'3.1',desc:"Yellow supergiant, one of the most luminous stars visible in Gemini."},
+      {n:'MEKBUDA', ra:7.068,dc:20.57,t:'CEPHEID VAR.', ly:'1200',mag:'4.0',desc:"Pulsating variable supergiant whose brightness cycles over 10 days."},
+      {n:'PROPUS',  ra:6.248,dc:22.52,t:'M3 GIANT VAR.',ly:'350', mag:'3.3',desc:"Semi-regular variable red giant. Its brightness changes unpredictably."},
+      {n:'MU GEM',  ra:6.382,dc:22.52,t:'M3 GIANT',     ly:'232', mag:'2.9',desc:"Red giant variable, slightly brighter than nearby Propus."},
+    ],
     e:[[0,4],[4,6],[6,7],[7,2],[5,3],[3,1],[0,3],[1,5],[4,5],[2,5]]},
 
   cancer:{name:'CANCER',kor:'게자리',sym:'♋',dates:'JUN 21 – JUL 22',
-    s:[{n:'TARF',ra:8.275,dc:9.18},{n:'ASELLUS AUS.',ra:8.745,dc:18.15},
-       {n:'ASELLUS BOR.',ra:8.722,dc:21.48},{n:'ACUBENS',ra:8.975,dc:11.85},
-       {n:'IOTA CNC',ra:8.778,dc:28.77}],
+    s:[
+      {n:'TARF',        ra:8.275,dc:9.18, t:'K4 GIANT', ly:'290', mag:'3.5',desc:"Brightest in Cancer, despite the constellation's overall faintness."},
+      {n:'ASELLUS AUS.',ra:8.745,dc:18.15,t:'K0 GIANT', ly:'136', mag:'3.9',desc:"The Southern Donkey. Sits at the edge of the famous Beehive star cluster."},
+      {n:'ASELLUS BOR.',ra:8.722,dc:21.48,t:'A1 DWARF', ly:'158', mag:'4.7',desc:"The Northern Donkey. White star flanking the Beehive cluster."},
+      {n:'ACUBENS',     ra:8.975,dc:11.85,t:'F0 BINARY',ly:'174', mag:'4.3',desc:"White binary system. Name means \"the claws\" in Arabic."},
+      {n:'IOTA CNC',    ra:8.778,dc:28.77,t:'K2 GIANT', ly:'329', mag:'4.0',desc:"Optical double showing orange and pale yellow through a small telescope."},
+    ],
     e:[[0,1],[1,2],[1,3],[2,4]]},
 
   leo:{name:'LEO',kor:'사자자리',sym:'♌',dates:'JUL 23 – AUG 22',
-    s:[{n:'REGULUS',ra:10.140,dc:11.97},{n:'DENEBOLA',ra:11.818,dc:14.57},
-       {n:'ALGIEBA',ra:10.333,dc:19.83},{n:'ZOSMA',ra:11.235,dc:20.52},
-       {n:'ALGENUBI',ra:9.758,dc:23.77},{n:'ADHAFERA',ra:10.278,dc:23.42},
-       {n:'ETA LEO',ra:10.122,dc:16.77},{n:'CHORT',ra:11.237,dc:15.43}],
+    s:[
+      {n:'REGULUS',  ra:10.140,dc:11.97,t:'B7 DWARF',     ly:'79',  mag:'1.4',desc:"Spins at 317 km/s - so fast its equatorial radius is 32% wider than its poles."},
+      {n:'DENEBOLA', ra:11.818,dc:14.57,t:'A3 DWARF',     ly:'36',  mag:'2.1',desc:"Tail of the Lion. One of the younger nearby stars, about 40 million years old."},
+      {n:'ALGIEBA',  ra:10.333,dc:19.83,t:'K0+G7 GIANTS', ly:'130', mag:'2.0',desc:"Beautiful double - a gold giant and an orange giant in a slow orbit."},
+      {n:'ZOSMA',    ra:11.235,dc:20.52,t:'A4 DWARF',     ly:'58',  mag:'2.6',desc:"White star at the lion's hip. Will eventually collapse into a neutron star."},
+      {n:'ALGENUBI', ra:9.758, dc:23.77,t:'G1 GIANT',     ly:'247', mag:'3.0',desc:"Yellow giant at the tip of the lion's nose, 247 light-years from Earth."},
+      {n:'ADHAFERA', ra:10.278,dc:23.42,t:'F0 GIANT',     ly:'260', mag:'3.4',desc:"Yellow-white giant in the lion's mane, part of the Sickle asterism."},
+      {n:'ETA LEO',  ra:10.122,dc:16.77,t:'A0 SUPERGIANT',ly:'2000',mag:'3.5',desc:"White supergiant - one of the most luminous stars visible in Leo."},
+      {n:'CHORT',    ra:11.237,dc:15.43,t:'A2 DWARF',     ly:'178', mag:'3.3',desc:"White star at the lion's flank. Also known as Chertan."},
+    ],
     e:[[4,5],[5,2],[2,6],[6,0],[0,3],[3,1],[1,7],[7,3],[2,3]]},
 
   virgo:{name:'VIRGO',kor:'처녀자리',sym:'♍',dates:'AUG 23 – SEP 22',
-    s:[{n:'SPICA',ra:13.420,dc:-11.17},{n:'ZAVIJAVA',ra:11.843,dc:1.77},
-       {n:'PORRIMA',ra:12.695,dc:-1.45},{n:'AUVA',ra:12.927,dc:3.40},
-       {n:'VINDEMIATRIX',ra:13.037,dc:10.97},{n:'HEZE',ra:13.578,dc:-0.60},
-       {n:'ZANIAH',ra:12.335,dc:-0.67},{n:'SYRMA',ra:14.262,dc:-6.00}],
+    s:[
+      {n:'SPICA',       ra:13.420,dc:-11.17,t:'B1 BINARY',  ly:'250', mag:'1.0',desc:"Brilliant blue binary. Two stars orbit so close their tidal forces distort each other."},
+      {n:'ZAVIJAVA',    ra:11.843,dc:1.77,  t:'F9 DWARF',   ly:'36',  mag:'3.6',desc:"A near-twin of our sun, just 36 light-years from Earth."},
+      {n:'PORRIMA',     ra:12.695,dc:-1.45, t:'F0 BINARY',  ly:'38',  mag:'2.7',desc:"Two nearly identical yellow-white stars in a 169-year orbit."},
+      {n:'AUVA',        ra:12.927,dc:3.40,  t:'M3 GIANT',   ly:'198', mag:'3.4',desc:"Red giant variable. Name means \"the barking dog\" in Arabic."},
+      {n:'VINDEMIATRIX',ra:13.037,dc:10.97, t:'G8 GIANT',   ly:'102', mag:'2.8',desc:"Yellow giant. Anciently called the grape-harvester for its seasonal rising."},
+      {n:'HEZE',        ra:13.578,dc:-0.60, t:'A3 DWARF',   ly:'74',  mag:'3.4',desc:"White star near the ecliptic. Name means \"thigh\" in Arabic."},
+      {n:'ZANIAH',      ra:12.335,dc:-0.67, t:'A2 TRIPLE',  ly:'265', mag:'3.9',desc:"Triple star system 265 light-years away."},
+      {n:'SYRMA',       ra:14.262,dc:-6.00, t:'F6 DWARF',   ly:'69',  mag:'4.1',desc:"Yellow-white star near Virgo's hem. Name means \"trailing garment\"."},
+    ],
     e:[[1,6],[6,2],[2,3],[3,4],[2,5],[5,0],[0,7]]},
 
   libra:{name:'LIBRA',kor:'천칭자리',sym:'♎',dates:'SEP 23 – OCT 22',
-    s:[{n:'ZUBENELGENUBI',ra:14.848,dc:-16.03},{n:'ZUBENESCHAMALI',ra:15.283,dc:-9.38},
-       {n:'ZUBENELAKRAB',ra:15.592,dc:-14.78},{n:'BRACHIUM',ra:15.068,dc:-25.28},
-       {n:'DELTA LIB',ra:15.017,dc:-8.52}],
+    s:[
+      {n:'ZUBENELGENUBI', ra:14.848,dc:-16.03,t:'A3+F4 WIDE PAIR',ly:'77', mag:'2.8',desc:"Wide binary visible to sharp eyes. Once classified as Scorpius's southern claw."},
+      {n:'ZUBENESCHAMALI',ra:15.283,dc:-9.38, t:'B8 DWARF',       ly:'160',mag:'2.6',desc:"The only star some observers perceive as faintly green - an extremely rare quality."},
+      {n:'ZUBENELAKRAB',  ra:15.592,dc:-14.78,t:'K0 GIANT',       ly:'152',mag:'3.9',desc:"Orange giant. Name means \"scorpion's claw\" - this region was once part of Scorpius."},
+      {n:'BRACHIUM',      ra:15.068,dc:-25.28,t:'M4 GIANT',       ly:'288',mag:'3.3',desc:"Red giant. Reassigned to Libra in the 1930 IAU boundary redesign."},
+      {n:'DELTA LIB',     ra:15.017,dc:-8.52, t:'ECLIPSING BIN.', ly:'304',mag:'4.9',desc:"Eclipsing binary - a larger star periodically blocks a smaller companion."},
+    ],
     e:[[0,1],[1,2],[0,3],[4,1]]},
 
   scorpius:{name:'SCORPIUS',kor:'전갈자리',sym:'♏',dates:'OCT 23 – NOV 21',
-    s:[{n:'PI SCO',ra:15.982,dc:-26.12},{n:'DSCHUBBA',ra:16.005,dc:-22.62},
-       {n:'GRAFFIAS',ra:16.090,dc:-19.82},{n:'ALNIYAT',ra:16.353,dc:-25.60},
-       {n:'ANTARES',ra:16.490,dc:-26.43},{n:'LARAWAG',ra:16.837,dc:-34.30},
-       {n:'XAMIDIMURA',ra:16.867,dc:-38.05},{n:'ZETA SCO',ra:16.907,dc:-42.37},
-       {n:'ETA SCO',ra:17.202,dc:-43.23},{n:'SARGAS',ra:17.622,dc:-43.00},
-       {n:'SHAULA',ra:17.560,dc:-37.10}],
+    s:[
+      {n:'PI SCO',    ra:15.982,dc:-26.12,t:'B1 BINARY',     ly:'459', mag:'2.9',desc:"Hot blue-white binary near the scorpion's head."},
+      {n:'DSCHUBBA',  ra:16.005,dc:-22.62,t:'B0 GIANT',      ly:'401', mag:'2.3',desc:"Blue giant that unexpectedly brightened by a full magnitude in 2000."},
+      {n:'GRAFFIAS',  ra:16.090,dc:-19.82,t:'B0 DOUBLE',     ly:'404', mag:'2.6',desc:"Blue double star at the scorpion's head. Name may mean \"the claws\"."},
+      {n:'ALNIYAT',   ra:16.353,dc:-25.60,t:'B1 GIANT',      ly:'696', mag:'2.9',desc:"Blue giant close to Antares. The name means \"the pericardium\"."},
+      {n:'ANTARES',   ra:16.490,dc:-26.43,t:'M1 SUPERGIANT', ly:'550', mag:'1.0',desc:"Red supergiant. If placed at the sun, its surface would reach Jupiter's orbit."},
+      {n:'LARAWAG',   ra:16.837,dc:-34.30,t:'K2 GIANT',      ly:'65',  mag:'2.3',desc:"Brightest orange giant in the tail - the closest Scorpius star to Earth."},
+      {n:'XAMIDIMURA',ra:16.867,dc:-38.05,t:'B1 BINARY',     ly:'822', mag:'3.0',desc:"Blue giant binary in the curved tail of Scorpius."},
+      {n:'ZETA SCO',  ra:16.907,dc:-42.37,t:'B1 HYPERGIANT', ly:'5700',mag:'3.6',desc:"Blue hypergiant - among the most luminous stars in the entire Milky Way."},
+      {n:'ETA SCO',   ra:17.202,dc:-43.23,t:'F2 GIANT',      ly:'83',  mag:'3.3',desc:"Yellow-white giant, one of the nearer Scorpius stars at 83 light-years."},
+      {n:'SARGAS',    ra:17.622,dc:-43.00,t:'F0 SUPERGIANT',  ly:'300', mag:'1.9',desc:"Bright yellow-white supergiant forming the tip of the scorpion's tail."},
+      {n:'SHAULA',    ra:17.560,dc:-37.10,t:'B1 PULSATING',  ly:'700', mag:'1.6',desc:"Sting of the Scorpion. A pulsating beta Cephei variable 700 light-years away."},
+    ],
     e:[[0,1],[1,2],[1,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,6]]},
 
   sagittarius:{name:'SAGITTARIUS',kor:'궁수자리',sym:'♐',dates:'NOV 22 – DEC 21',
-    s:[{n:'ALNASL',ra:18.097,dc:-30.42},{n:'KAUS MEDIA',ra:18.350,dc:-29.83},
-       {n:'KAUS AUS.',ra:18.403,dc:-34.38},{n:'ETA SGR',ra:18.293,dc:-36.77},
-       {n:'KAUS BOR.',ra:18.465,dc:-25.42},{n:'NUNKI',ra:18.922,dc:-26.30},
-       {n:'PHI SGR',ra:18.758,dc:-26.98},{n:'ASCELLA',ra:19.043,dc:-29.88}],
+    s:[
+      {n:'ALNASL',    ra:18.097,dc:-30.42,t:'K0 GIANT',   ly:'96',  mag:'3.0',desc:"Orange giant marking the arrowhead. Points toward the galactic center."},
+      {n:'KAUS MEDIA',ra:18.350,dc:-29.83,t:'K3 GIANT',   ly:'305', mag:'2.7',desc:"Orange giant in the middle of the archer's bow. Nearest to the galactic center."},
+      {n:'KAUS AUS.', ra:18.403,dc:-34.38,t:'B9 GIANT',   ly:'143', mag:'1.8',desc:"Blue-white giant, brightest in Sagittarius. Name means \"southern bow\"."},
+      {n:'ETA SGR',   ra:18.293,dc:-36.77,t:'M2 GIANT',   ly:'149', mag:'3.1',desc:"Red giant binary located near the plane of our Milky Way galaxy."},
+      {n:'KAUS BOR.', ra:18.465,dc:-25.42,t:'K1 GIANT',   ly:'77',  mag:'2.8',desc:"Orange giant, northern part of the bow. One of the nearer Sagittarius stars."},
+      {n:'NUNKI',     ra:18.922,dc:-26.30,t:'B2 DWARF',   ly:'228', mag:'2.1',desc:"Hot blue-white star. One of the oldest recorded star names, from ancient Babylon."},
+      {n:'PHI SGR',   ra:18.758,dc:-26.98,t:'B8 GIANT',   ly:'231', mag:'3.2',desc:"Blue-white giant forming the base of the famous Teapot asterism."},
+      {n:'ASCELLA',   ra:19.043,dc:-29.88,t:'A2 BINARY',  ly:'89',  mag:'2.6',desc:"White binary near the teapot's handle, relatively nearby at 89 light-years."},
+    ],
     e:[[0,1],[1,2],[2,3],[1,4],[4,5],[5,6],[6,7],[7,5],[1,6]]},
 
   capricorn:{name:'CAPRICORN',kor:'염소자리',sym:'♑',dates:'DEC 22 – JAN 19',
-    s:[{n:'ALGEDI',ra:20.302,dc:-12.55},{n:'DABIH',ra:20.350,dc:-14.78},
-       {n:'ETA CAP',ra:21.072,dc:-19.87},{n:'THETA CAP',ra:21.092,dc:-17.23},
-       {n:'IOTA CAP',ra:21.372,dc:-16.77},{n:'KAPPA CAP',ra:21.592,dc:-18.87},
-       {n:'ZETA CAP',ra:21.445,dc:-22.42},{n:'EPSILON CAP',ra:21.618,dc:-19.47},
-       {n:'NASHIRA',ra:21.668,dc:-16.67},{n:'DENEB ALGEDI',ra:21.783,dc:-16.13}],
+    s:[
+      {n:'ALGEDI',      ra:20.302,dc:-12.55,t:'G SUPERGIANT',  ly:'690', mag:'3.6',desc:"Optical double - two unrelated stars aligned in the same line of sight."},
+      {n:'DABIH',       ra:20.350,dc:-14.78,t:'MULTIPLE (6+)', ly:'328', mag:'3.1',desc:"Complex system of at least 6 stars appearing as one to the naked eye."},
+      {n:'ETA CAP',     ra:21.072,dc:-19.87,t:'A5 DWARF',      ly:'153', mag:'4.8',desc:"White star in the sea-goat's body, 153 light-years from Earth."},
+      {n:'THETA CAP',   ra:21.092,dc:-17.23,t:'A1 DWARF',      ly:'162', mag:'4.1',desc:"White star forming part of the faint outline of Capricorn."},
+      {n:'IOTA CAP',    ra:21.372,dc:-16.77,t:'G6 GIANT',      ly:'220', mag:'4.3',desc:"Yellow giant in the sea-goat's mid-body."},
+      {n:'KAPPA CAP',   ra:21.592,dc:-18.87,t:'B9 SUBGIANT',   ly:'311', mag:'4.7',desc:"Blue-white subgiant, 311 light-years from Earth."},
+      {n:'ZETA CAP',    ra:21.445,dc:-22.42,t:'G4 SUPERGIANT', ly:'398', mag:'3.7',desc:"Yellow supergiant near the sea-goat's lower body."},
+      {n:'EPSILON CAP', ra:21.618,dc:-19.47,t:'B3 DWARF',      ly:'810', mag:'4.7',desc:"Hot blue-white star in the lower part of Capricorn."},
+      {n:'NASHIRA',     ra:21.668,dc:-16.67,t:'F0 GIANT',      ly:'139', mag:'3.7',desc:"White giant. Name means \"the lucky stars of the slaughterer\" in Arabic."},
+      {n:'DENEB ALGEDI',ra:21.783,dc:-16.13,t:'A5 ECLIPSING',  ly:'39',  mag:'2.9',desc:"Brightest in Capricorn. An eclipsing binary completing one orbit every 24 hours."},
+    ],
     e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,7],[2,6]]},
 
   aquarius:{name:'AQUARIUS',kor:'물병자리',sym:'♒',dates:'JAN 20 – FEB 18',
-    s:[{n:'SADALSUUD',ra:22.097,dc:-0.32},{n:'SADALMELIK',ra:21.527,dc:-5.57},
-       {n:'SADACHBIA',ra:22.360,dc:-1.38},{n:'SKAT',ra:22.912,dc:-15.82},
-       {n:'ALBALI',ra:20.795,dc:-9.50},{n:'ZETA AQR',ra:22.480,dc:-0.02},
-       {n:'ETA AQR',ra:22.587,dc:-0.12},{n:'TAU AQR',ra:22.827,dc:-13.58}],
+    s:[
+      {n:'SADALSUUD',  ra:22.097,dc:-0.32, t:'G0 SUPERGIANT',ly:'610', mag:'2.9',desc:"Yellow supergiant. Name means \"luckiest of the lucky\" in ancient Arabic."},
+      {n:'SADALMELIK', ra:21.527,dc:-5.57, t:'G2 SUPERGIANT',ly:'520', mag:'3.0',desc:"Yellow supergiant. Name means \"lucky stars of the king\"."},
+      {n:'SADACHBIA',  ra:22.360,dc:-1.38, t:'A0 DWARF',     ly:'163', mag:'3.8',desc:"White star. Name means \"lucky stars of the tents of the invisible ones\"."},
+      {n:'SKAT',       ra:22.912,dc:-15.82,t:'A3 DWARF',     ly:'160', mag:'3.3',desc:"White star near the lower body of the water-bearer."},
+      {n:'ALBALI',     ra:20.795,dc:-9.50, t:'A1 DWARF',     ly:'208', mag:'3.8',desc:"White star in the water-bearer's arm. Name means \"the swallower\"."},
+      {n:'ZETA AQR',   ra:22.480,dc:-0.02, t:'F3 BINARY',    ly:'103', mag:'3.7',desc:"Close binary in the water-bearer's torso, taking centuries to complete one orbit."},
+      {n:'ETA AQR',    ra:22.587,dc:-0.12, t:'B9 DWARF',     ly:'540', mag:'4.0',desc:"Hot blue-white star near the water-bearer's jar."},
+      {n:'TAU AQR',    ra:22.827,dc:-13.58,t:'G8 GIANT',     ly:'390', mag:'4.0',desc:"Orange giant in the lower body of Aquarius."},
+    ],
     e:[[4,1],[1,0],[0,2],[2,5],[5,6],[6,3],[3,7]]},
 
   pisces:{name:'PISCES',kor:'물고기자리',sym:'♓',dates:'FEB 19 – MAR 20',
-    s:[{n:'ALRESCHA',ra:2.033,dc:2.77},{n:'BETA PSC',ra:23.058,dc:3.82},
-       {n:'GAMMA PSC',ra:23.285,dc:3.28},{n:'THETA PSC',ra:23.465,dc:6.38},
-       {n:'IOTA PSC',ra:23.665,dc:5.63},{n:'OMEGA PSC',ra:23.990,dc:6.87},
-       {n:'DELTA PSC',ra:0.812,dc:7.90},{n:'EPSILON PSC',ra:1.043,dc:7.90},
-       {n:'ZETA PSC',ra:1.228,dc:7.58},{n:'ETA PSC',ra:1.525,dc:15.35}],
+    s:[
+      {n:'ALRESCHA',   ra:2.033, dc:2.77, t:'A2 BINARY',    ly:'139', mag:'3.8',desc:"Knot tying the two fish. A binary pair orbiting each other over 900 years."},
+      {n:'BETA PSC',   ra:23.058,dc:3.82, t:'B6 DWARF',     ly:'412', mag:'4.5',desc:"Hot blue-white star in the body of the western fish."},
+      {n:'GAMMA PSC',  ra:23.285,dc:3.28, t:'G9 GIANT',     ly:'130', mag:'3.7',desc:"Yellow giant, one of the brighter stars in this faint constellation."},
+      {n:'THETA PSC',  ra:23.465,dc:6.38, t:'F6 SUBGIANT',  ly:'174', mag:'4.3',desc:"Yellow-white subgiant in the ribbon connecting the two fish."},
+      {n:'IOTA PSC',   ra:23.665,dc:5.63, t:'F7 DWARF',     ly:'45',  mag:'4.1',desc:"Solar-type star, close enough at 45 light-years to study in detail."},
+      {n:'OMEGA PSC',  ra:23.990,dc:6.87, t:'F4 GIANT',     ly:'106', mag:'4.0',desc:"Yellow-white giant at the tail of the western fish."},
+      {n:'DELTA PSC',  ra:0.812, dc:7.90, t:'M2 GIANT',     ly:'305', mag:'4.4',desc:"Red giant in the body of the western fish."},
+      {n:'EPSILON PSC',ra:1.043, dc:7.90, t:'K0 GIANT',     ly:'182', mag:'4.3',desc:"Orange giant, part of the ribbon connecting the two fish."},
+      {n:'ZETA PSC',   ra:1.228, dc:7.58, t:'A7+F7 DOUBLE', ly:'148', mag:'5.2',desc:"Wide double star - white and yellow components visible in a small telescope."},
+      {n:'ETA PSC',    ra:1.525, dc:15.35,t:'G7 GIANT',     ly:'294', mag:'3.6',desc:"Yellow giant, brightest in Pisces despite the constellation's faintness."},
+    ],
     e:[[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,0],[7,9],[9,8]]}
 };
 
 /* ═══════════════════════════════════════════
-   ZODIAC SIGN FROM DATE
+   SIGN LOOKUP
    ═══════════════════════════════════════════ */
 function getSign(m, d) {
   if ((m===3&&d>=21)||(m===4&&d<=19)) return 'aries';
@@ -298,27 +362,6 @@ function getSign(m, d) {
   return 'pisces';
 }
 
-/* ═══════════════════════════════════════════
-   GNOMONIC PROJECTION (tangent-plane)
-   Centers constellation at (ra0, dec0)
-   ═══════════════════════════════════════════ */
-function gnomonicProject(ra_h, dc_d, ra0_h, dc0_d) {
-  const H = Math.PI / 12;   // 1 hour → radians
-  const R = Math.PI / 180;
-  const dec = dc_d * R, dec0 = dc0_d * R;
-  let dra = (ra_h - ra0_h) * H;
-  // Normalize to [-π, π]
-  while (dra >  Math.PI) dra -= 2 * Math.PI;
-  while (dra < -Math.PI) dra += 2 * Math.PI;
-  const cosc = Math.sin(dec0)*Math.sin(dec) + Math.cos(dec0)*Math.cos(dec)*Math.cos(dra);
-  if (cosc < 0.001) return {x:0, y:0};
-  return {
-    x:  Math.cos(dec) * Math.sin(dra) / cosc,
-    y: (Math.cos(dec0)*Math.sin(dec) - Math.sin(dec0)*Math.cos(dec)*Math.cos(dra)) / cosc
-  };
-}
-
-/* Iterative mean RA (handles 0h wrap-around) */
 function meanRA(stars) {
   let ra0 = stars[0].ra;
   for (let iter = 0; iter < 5; iter++) {
@@ -338,30 +381,23 @@ function meanRA(stars) {
    TEXTURES
    ═══════════════════════════════════════════ */
 function makeBgStarTex() {
-  const sz = 64;
-  const c = document.createElement('canvas');
+  const sz = 64, c = document.createElement('canvas');
   c.width = c.height = sz;
-  const ctx = c.getContext('2d');
-  const cx = sz/2;
+  const ctx = c.getContext('2d'), cx = sz/2;
   const g = ctx.createRadialGradient(cx,cx,0, cx,cx,cx);
-  g.addColorStop(0,    'rgba(220,235,255,1)');
-  g.addColorStop(0.12, 'rgba(190,215,255,0.85)');
-  g.addColorStop(0.35, 'rgba(150,185,255,0.30)');
-  g.addColorStop(0.7,  'rgba(100,140,230,0.06)');
+  g.addColorStop(0,    'rgba(255,255,255,1)');
+  g.addColorStop(0.10, 'rgba(220,230,255,0.88)');
+  g.addColorStop(0.30, 'rgba(170,190,255,0.35)');
+  g.addColorStop(0.65, 'rgba(120,150,240,0.08)');
   g.addColorStop(1,    'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.fillRect(0,0,sz,sz);
   return new THREE.CanvasTexture(c);
 }
 
-/* Hubble-style diffraction spike glow for constellation stars */
 function makeStarGlowTex() {
-  const sz = 256;
-  const c = document.createElement('canvas');
+  const sz = 256, c = document.createElement('canvas');
   c.width = c.height = sz;
-  const ctx = c.getContext('2d');
-  const cx = sz/2;
-
-  // Core glow
+  const ctx = c.getContext('2d'), cx = sz/2;
   const g = ctx.createRadialGradient(cx,cx,0, cx,cx,cx*0.9);
   g.addColorStop(0,    'rgba(255,252,240,1)');
   g.addColorStop(0.04, 'rgba(220,238,255,0.98)');
@@ -370,23 +406,19 @@ function makeStarGlowTex() {
   g.addColorStop(0.55, 'rgba(70,120,230,0.07)');
   g.addColorStop(1,    'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.fillRect(0,0,sz,sz);
-
-  // Diffraction spikes (4 axes at 0°, 45°, 90°, 135°)
   [0, Math.PI/4, Math.PI/2, Math.PI*3/4].forEach(angle => {
     ctx.save();
-    ctx.translate(cx, cx); ctx.rotate(angle);
-    const len = cx * 0.96, hw = cx * 0.012;
+    ctx.translate(cx,cx); ctx.rotate(angle);
+    const len = cx*0.96, hw = cx*0.012;
     const lg = ctx.createLinearGradient(-len,0, len,0);
-    lg.addColorStop(0,    'rgba(200,225,255,0)');
-    lg.addColorStop(0.3,  'rgba(220,240,255,0.06)');
-    lg.addColorStop(0.5,  'rgba(255,255,255,0.28)');
-    lg.addColorStop(0.7,  'rgba(220,240,255,0.06)');
-    lg.addColorStop(1,    'rgba(200,225,255,0)');
-    ctx.fillStyle = lg;
-    ctx.fillRect(-len, -hw, len*2, hw*2);
+    lg.addColorStop(0,   'rgba(200,225,255,0)');
+    lg.addColorStop(0.3, 'rgba(220,240,255,0.06)');
+    lg.addColorStop(0.5, 'rgba(255,255,255,0.28)');
+    lg.addColorStop(0.7, 'rgba(220,240,255,0.06)');
+    lg.addColorStop(1,   'rgba(200,225,255,0)');
+    ctx.fillStyle = lg; ctx.fillRect(-len,-hw, len*2, hw*2);
     ctx.restore();
   });
-
   return new THREE.CanvasTexture(c);
 }
 
@@ -394,62 +426,121 @@ const BGS_TEX  = makeBgStarTex();
 const GLOW_TEX = makeStarGlowTex();
 
 /* ═══════════════════════════════════════════
-   THREE.JS SETUP
+   THREE.JS  —  camera at origin inside sky sphere
    ═══════════════════════════════════════════ */
 const canvas = document.getElementById('c');
 let W = window.innerWidth, H = window.innerHeight;
 
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setSize(W, H);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setClearColor(0x05050e, 1);
+renderer.setClearColor(0x04040c, 1);
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 300);
-camera.position.z = 8;
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(52, W/H, 0.5, 200);
+// camera sits at origin; default forward is -Z
 
-/* Groups */
-const rootGroup = new THREE.Group();
-scene.add(rootGroup);
-
-const bgGroup    = new THREE.Group();  // background starfield
-const constGroup = new THREE.Group();  // active constellation
+const rootGroup  = new THREE.Group();
+const bgGroup    = new THREE.Group();
+const constGroup = new THREE.Group();
 rootGroup.add(bgGroup);
 rootGroup.add(constGroup);
+scene.add(rootGroup);
 
 /* ═══════════════════════════════════════════
    BACKGROUND STARFIELD
+   All stars in the same RA/Dec coordinate system as skyVec.
+   Vertex colors give realistic spectral variety.
    ═══════════════════════════════════════════ */
-function makeStarLayer(count, size, opacity, rMin, rMax) {
-  const geo = new THREE.BufferGeometry();
-  const pos = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    const theta = Math.random() * Math.PI * 2;
-    const phi   = Math.acos(2 * Math.random() - 1);
-    const r     = rMin + Math.random() * (rMax - rMin);
-    pos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-    pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-    pos[i*3+2] = r * Math.cos(phi);
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const mat = new THREE.PointsMaterial({
-    size, map: BGS_TEX,
-    transparent: true, opacity,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false, sizeAttenuation: true
-  });
-  return new THREE.Points(geo, mat);
+
+// Assign a realistic star color based on random spectral type
+function starColor(rnd) {
+  if      (rnd < 0.04) return [0.60, 0.72, 1.00];  // O/B blue-white
+  else if (rnd < 0.10) return [1.00, 0.50, 0.18];  // K/M orange-red
+  else if (rnd < 0.21) return [1.00, 0.90, 0.52];  // G yellow
+  else                 return [0.88, 0.91, 1.00];  // A/F white (majority)
 }
 
-bgGroup.add(makeStarLayer(3800, 0.055, 0.48, 58, 70));
-bgGroup.add(makeStarLayer(520,  0.095, 0.68, 54, 66));
-bgGroup.add(makeStarLayer(85,   0.155, 0.88, 50, 62));
+// Uniform sky sphere layer
+function makeSkySphereLayer(count, size, opacity, tex = BGS_TEX) {
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const ra    = Math.random() * 2 * Math.PI;
+    const sinDc = Math.random() * 2 - 1;
+    const cosDc = Math.sqrt(Math.max(0, 1 - sinDc * sinDc));
+    const r     = R * (0.97 + Math.random() * 0.06);
+    pos[i*3]   = r * cosDc * Math.cos(ra);
+    pos[i*3+1] = r * sinDc;
+    pos[i*3+2] = -r * cosDc * Math.sin(ra);
+    const [cr, cg, cb] = starColor(Math.random());
+    col[i*3] = cr; col[i*3+1] = cg; col[i*3+2] = cb;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size, map: tex, transparent: true, opacity,
+    vertexColors: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  }));
+}
+
+/* ─ Milky Way band  —  stars concentrated along galactic plane ─
+   North Galactic Pole: RA = 12.857h, Dec = 27.128°
+   Stars generated with probability = exp(−b²/2σ²) where b = galactic latitude
+   ─────────────────────────────────────────────────────────────── */
+function makeMilkyWayLayer(targetCount, size, opacity) {
+  const NGP_RA  = 12.857 * H2R;
+  const SIN_NGP = Math.sin(27.128 * D2R);
+  const COS_NGP = Math.cos(27.128 * D2R);
+  const INV2S2  = 1 / (2 * 0.19 * 0.19);  // σ ≈ 10.9°
+
+  const pos = [], col = [];
+  const maxTries = targetCount * 22;
+  for (let i = 0; i < maxTries && pos.length / 3 < targetCount; i++) {
+    const ra    = Math.random() * 2 * Math.PI;
+    const sinDc = Math.random() * 2 - 1;
+    const cosDc = Math.sqrt(Math.max(0, 1 - sinDc * sinDc));
+    const r     = R * (0.97 + Math.random() * 0.05);
+
+    // galactic latitude
+    const sinB = sinDc * SIN_NGP + cosDc * COS_NGP * Math.cos(ra - NGP_RA);
+    const b    = Math.asin(Math.max(-1, Math.min(1, sinB)));
+    if (Math.random() > Math.exp(-b * b * INV2S2)) continue;
+
+    pos.push(r * cosDc * Math.cos(ra), r * sinDc, -r * cosDc * Math.sin(ra));
+    // MW stars skew slightly bluer/whiter
+    const rnd = Math.random();
+    if      (rnd < 0.07) col.push(0.55, 0.70, 1.00);
+    else if (rnd < 0.14) col.push(1.00, 0.88, 0.48);
+    else                 col.push(0.92, 0.94, 1.00);
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(new Float32Array(col), 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size, map: BGS_TEX, transparent: true, opacity,
+    vertexColors: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  }));
+}
+
+// Uniform base field
+bgGroup.add(makeSkySphereLayer(4200, 0.28, 0.40));
+bgGroup.add(makeSkySphereLayer(580,  0.50, 0.62));
+bgGroup.add(makeSkySphereLayer(90,   0.88, 0.82, GLOW_TEX));  // bright stars get glow spike
+
+// Milky Way band on top
+bgGroup.add(makeMilkyWayLayer(2600, 0.24, 0.38));
+bgGroup.add(makeMilkyWayLayer(620,  0.42, 0.55));
 
 /* ═══════════════════════════════════════════
    CONSTELLATION BUILDER
    ═══════════════════════════════════════════ */
-let constObjs   = [];   // cleanup list
-let constSprites = [];  // for twinkle + hover
+let constObjs   = [];
+let constSprites = [];
 
 function clearConst() {
   constObjs.forEach(o => {
@@ -457,89 +548,92 @@ function clearConst() {
     if (o.geometry) o.geometry.dispose();
     if (o.material) o.material.dispose();
   });
-  constObjs.length    = 0;
-  constSprites.length = 0;
+  constObjs.length = constSprites.length = 0;
 }
 
 function buildConst(signKey) {
   clearConst();
-  const data = Z[signKey];
+  const data  = Z[signKey];
   const stars = data.s;
+  const ra0   = meanRA(stars);
+  const dec0  = stars.reduce((a,s) => a + s.dc, 0) / stars.length;
 
-  // Compute centroid
-  const ra0  = meanRA(stars);
-  const dec0 = stars.reduce((a,s) => a + s.dc, 0) / stars.length;
-
-  // Project all stars to 2D tangent plane
-  const pts2d = stars.map(s => gnomonicProject(s.ra, s.dc, ra0, dec0));
-
-  // Scale so max radius ≈ 3.5 world units
-  let maxR = 0;
-  pts2d.forEach(p => { const r = Math.sqrt(p.x*p.x+p.y*p.y); if (r>maxR) maxR=r; });
-  const sc = maxR > 0.002 ? 3.5 / maxR : 1;
-
-  // 3D positions (tiny z-depth variation for realism)
-  const pos3 = pts2d.map(p => new THREE.Vector3(
-    p.x * sc,
-    p.y * sc,
-    (Math.random() - 0.5) * 0.6
-  ));
+  // Place each star at its true sky position
+  const pos3 = stars.map(s => skyVec(s.ra, s.dc, R * 0.985));
 
   /* ─ Lines ─ */
-  const lineVerts = [];
-  data.e.forEach(([a,b]) => {
-    lineVerts.push(pos3[a].x, pos3[a].y, pos3[a].z);
-    lineVerts.push(pos3[b].x, pos3[b].y, pos3[b].z);
-  });
-  const lineGeo = new THREE.BufferGeometry();
-  lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lineVerts), 3));
-  const lineMat = new THREE.LineBasicMaterial({
-    color: 0x2244bb, transparent: true, opacity: 0,
+  const lv = [];
+  data.e.forEach(([a,b]) => { lv.push(...pos3[a].toArray(), ...pos3[b].toArray()); });
+  const lgeo = new THREE.BufferGeometry();
+  lgeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lv), 3));
+  const lmat = new THREE.LineBasicMaterial({
+    color: 0x3366dd, transparent: true, opacity: 0,
     blending: THREE.AdditiveBlending, depthWrite: false
   });
-  const lines = new THREE.LineSegments(lineGeo, lineMat);
+  const lines = new THREE.LineSegments(lgeo, lmat);
   constGroup.add(lines); constObjs.push(lines);
 
-  /* ─ Star points (batched) ─ */
-  const sPos = new Float32Array(pos3.length * 3);
-  pos3.forEach((p,i) => { sPos[i*3]=p.x; sPos[i*3+1]=p.y; sPos[i*3+2]=p.z; });
-  const sGeo = new THREE.BufferGeometry();
-  sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
-  const sMat = new THREE.PointsMaterial({
-    size: 0.10, map: BGS_TEX,
-    transparent: true, opacity: 0,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false, sizeAttenuation: true
-  });
-  const sPoints = new THREE.Points(sGeo, sMat);
-  constGroup.add(sPoints); constObjs.push(sPoints);
-
-  /* ─ Glow sprites per star ─ */
+  /* ─ Glow sprite per constellation star ─ */
   pos3.forEach((p, i) => {
     const mat = new THREE.SpriteMaterial({
       map: GLOW_TEX, transparent: true, opacity: 0,
       blending: THREE.AdditiveBlending, depthWrite: false
     });
-    const sp  = new THREE.Sprite(mat);
+    const sp = new THREE.Sprite(mat);
     sp.position.copy(p);
-    sp.scale.setScalar(0.80);
+    sp.scale.setScalar(3.2);
     sp.userData = {
-      base:      0.80,
-      phase:     Math.random() * Math.PI * 2,
-      starName:  stars[i].n
+      base:     1.0,
+      phase:    Math.random() * Math.PI * 2,
+      starName: stars[i].n,
+      starType: stars[i].t,
+      starDist: stars[i].ly,
+      starMag:  stars[i].mag,
+      starDesc: stars[i].desc
     };
     constGroup.add(sp); constObjs.push(sp); constSprites.push(sp);
   });
 
-  /* ─ Fade-in ─ */
-  const allMats    = [lineMat, sMat, ...constSprites.map(s => s.material)];
-  const allTargets = [0.30,    0.95, ...constSprites.map(s => s.userData.base)];
+  /* ─ Fade in ─ */
+  const mats    = [lmat, ...constSprites.map(s => s.material)];
+  const targets = [0.30, ...constSprites.map(() => 1.0)];
   let prog = 0;
   (function fade() {
     prog = Math.min(prog + 0.016, 1);
-    const e = 1 - Math.pow(1 - prog, 2);  // ease-out quad
-    allMats.forEach((m, i) => { m.opacity = e * allTargets[i]; });
+    const e = 1 - (1 - prog) ** 2;
+    mats.forEach((m, i) => { m.opacity = e * targets[i]; });
     if (prog < 1) requestAnimationFrame(fade);
+  })();
+
+  centerOn(ra0, dec0);
+}
+
+/* ═══════════════════════════════════════════
+   CENTER VIEW  —  slerp sky to face constellation
+   ═══════════════════════════════════════════ */
+let curQuat     = new THREE.Quaternion();
+let isCentering = false;
+
+function centerOn(ra0, dec0) {
+  const dir    = skyVec(ra0, dec0, 1).normalize();
+  const camFwd = new THREE.Vector3(0, 0, -1);
+
+  let toQuat;
+  if (Math.abs(dir.dot(camFwd) + 1) < 0.001) {
+    toQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), Math.PI);
+  } else {
+    toQuat = new THREE.Quaternion().setFromUnitVectors(dir, camFwd);
+  }
+
+  const fromQuat = new THREE.Quaternion().copy(curQuat);
+  isCentering = true;
+  let t = 0;
+  (function anim() {
+    t = Math.min(t + 0.022, 1);
+    curQuat.slerpQuaternions(fromQuat, toQuat, 1 - (1-t)**3);
+    rootGroup.quaternion.copy(curQuat);
+    if (t < 1) requestAnimationFrame(anim);
+    else isCentering = false;
   })();
 }
 
@@ -547,25 +641,30 @@ function buildConst(signKey) {
    ANIMATION LOOP
    ═══════════════════════════════════════════ */
 let tick = 0;
-let vel  = {x: 0, y: 0};
-const DAMP = 0.94;
-let isDragging = false;
-let prevMx = 0, prevMy = 0;
+let vel  = { x: 0, y: 0 };
+const DAMP = 0.92;
+let isDragging = false, prevMx = 0, prevMy = 0;
 
 function animate() {
   requestAnimationFrame(animate);
   tick++;
 
-  // Slow auto-drift of background
-  bgGroup.rotation.y += 0.00013;
-  bgGroup.rotation.x += 0.000038;
+  if (!isDragging && !isCentering) {
+    // Subtle sky drift
+    const dq = new THREE.Quaternion()
+      .setFromAxisAngle(new THREE.Vector3(0.08, 1, 0).normalize(), 0.000055);
+    curQuat.premultiply(dq);
 
-  // Momentum decay
-  if (!isDragging && (Math.abs(vel.x) > 0.0001 || Math.abs(vel.y) > 0.0001)) {
-    rootGroup.rotation.y += vel.x;
-    rootGroup.rotation.x += vel.y;
-    vel.x *= DAMP;
-    vel.y *= DAMP;
+    // Momentum decay
+    if (Math.abs(vel.x) > 0.00004 || Math.abs(vel.y) > 0.00004) {
+      const qY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), vel.x);
+      const qX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), vel.y);
+      curQuat.premultiply(qY.multiply(qX));
+      vel.x *= DAMP;
+      vel.y *= DAMP;
+    }
+
+    rootGroup.quaternion.copy(curQuat);
   }
 
   // Twinkle constellation stars
@@ -573,7 +672,7 @@ function animate() {
     const t = tick * 0.022 + sp.userData.phase;
     const tw = 0.86 + 0.14 * Math.sin(t);
     sp.material.opacity = sp.userData.base * tw;
-    sp.scale.setScalar(0.74 + 0.10 * Math.sin(t * 0.71));
+    sp.scale.setScalar(2.9 + 0.44 * Math.sin(t * 0.71));
   });
 
   renderer.render(scene, camera);
@@ -581,22 +680,24 @@ function animate() {
 animate();
 
 /* ═══════════════════════════════════════════
-   DRAG INTERACTION
+   DRAG  —  quaternion rotation
    ═══════════════════════════════════════════ */
-function onDragStart(mx, my) { isDragging=true; prevMx=mx; prevMy=my; }
+function onDragStart(mx, my) {
+  isDragging = true;
+  isCentering = false;
+  prevMx = mx; prevMy = my;
+}
 function onDragMove(mx, my) {
   if (!isDragging) return;
-  const dx = (mx - prevMx) / window.innerWidth;
-  const dy = (my - prevMy) / window.innerHeight;
-  vel.x = dx * 3.2;
-  vel.y = dy * 3.2;
-  rootGroup.rotation.y += vel.x;
-  rootGroup.rotation.x += vel.y;
-  // Clamp X tilt so scene doesn't flip
-  rootGroup.rotation.x = Math.max(-1.2, Math.min(1.2, rootGroup.rotation.x));
-  prevMx=mx; prevMy=my;
+  const dx = (mx - prevMx) / W, dy = (my - prevMy) / H;
+  vel.x = dx * 3.2; vel.y = dy * 3.2;
+  const qY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), vel.x);
+  const qX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), vel.y);
+  curQuat.premultiply(qY.multiply(qX));
+  rootGroup.quaternion.copy(curQuat);
+  prevMx = mx; prevMy = my;
 }
-function onDragEnd() { isDragging=false; }
+function onDragEnd() { isDragging = false; }
 
 canvas.addEventListener('mousedown',  e => onDragStart(e.clientX, e.clientY));
 window.addEventListener('mousemove',  e => onDragMove(e.clientX, e.clientY));
@@ -606,9 +707,13 @@ canvas.addEventListener('touchmove',  e => { onDragMove(e.touches[0].clientX, e.
 canvas.addEventListener('touchend',   onDragEnd);
 
 /* ═══════════════════════════════════════════
-   STAR NAME HOVER
+   STAR INFO PANEL  —  rich hover tooltip
    ═══════════════════════════════════════════ */
-const slabel = document.getElementById('slabel');
+const starInfoEl = document.getElementById('starinfo');
+const siName     = document.getElementById('si-name');
+const siMeta     = document.getElementById('si-meta');
+const siDesc     = document.getElementById('si-desc');
+
 window.addEventListener('mousemove', e => {
   if (!constSprites.length) return;
   constGroup.updateWorldMatrix(true, true);
@@ -616,25 +721,37 @@ window.addEventListener('mousemove', e => {
   let closest = null, minDist = Infinity;
   constSprites.forEach(sp => {
     const wp = new THREE.Vector3();
-    sp.getWorldPosition(wp);
-    wp.project(camera);
-    const sx = (wp.x + 1) / 2 * window.innerWidth;
-    const sy = (-wp.y + 1) / 2 * window.innerHeight;
+    sp.getWorldPosition(wp); wp.project(camera);
+    const sx = (wp.x + 1) / 2 * W;
+    const sy = (-wp.y + 1) / 2 * H;
     const d  = Math.hypot(e.clientX - sx, e.clientY - sy);
-    if (d < 56 && d < minDist) { minDist=d; closest=sp; }
+    if (d < 58 && d < minDist) { minDist = d; closest = sp; }
   });
 
   if (closest) {
+    const ud = closest.userData;
+    siName.textContent = ud.starName;
+    siMeta.innerHTML   = `<em>${ud.starType}</em>&nbsp;&nbsp;${ud.starDist} LY&nbsp;&nbsp;MAG ${ud.starMag}`;
+    siDesc.textContent = ud.starDesc;
+
+    // Screen position of the star
     const wp = new THREE.Vector3();
     closest.getWorldPosition(wp); wp.project(camera);
-    const sx = (wp.x + 1) / 2 * window.innerWidth;
-    const sy = (-wp.y + 1) / 2 * window.innerHeight;
-    slabel.style.left = (sx + 14) + 'px';
-    slabel.style.top  = (sy - 6)  + 'px';
-    slabel.textContent = closest.userData.starName;
-    slabel.classList.add('show');
+    const sx = (wp.x + 1) / 2 * W;
+    const sy = (-wp.y + 1) / 2 * H;
+
+    // Smart positioning: avoid screen edges
+    const PW = 264, PH = 130;
+    let px = sx + 22, py = sy - PH / 2;
+    if (px + PW > W - 20) px = sx - PW - 22;
+    if (py < 80)           py = sy + 16;
+    if (py + PH > H - 52)  py = H - 52 - PH;
+
+    starInfoEl.style.left = px + 'px';
+    starInfoEl.style.top  = py + 'px';
+    starInfoEl.classList.add('show');
   } else {
-    slabel.classList.remove('show');
+    starInfoEl.classList.remove('show');
   }
 });
 
@@ -665,22 +782,17 @@ discoverBtn.addEventListener('click', () => {
     bdInput.focus();
     return;
   }
-
-  // Parse date (YYYY-MM-DD from native input)
   const parts = val.split('-');
   const month = parseInt(parts[1], 10);
   const day   = parseInt(parts[2], 10);
-
   const signKey = getSign(month, day);
   const data    = Z[signKey];
 
-  // Update info panel
   document.getElementById('i-sign').textContent  = `${data.sym} ZODIAC`;
   document.getElementById('i-name').textContent  = data.name;
   document.getElementById('i-kor').textContent   = data.kor;
   document.getElementById('i-dates').textContent = data.dates;
 
-  // Build & show constellation
   buildConst(signKey);
   overlay.classList.add('gone');
 
