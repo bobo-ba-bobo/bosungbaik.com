@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korean Unicorns - Bosung Baik</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .page-meta {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 48px;
+    }
+
+    .unicorn-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .unicorn-table thead th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #999;
+      padding: 0 16px 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .unicorn-table thead th:last-child {
+      padding-right: 0;
+    }
+
+    .unicorn-table tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s;
+    }
+
+    .unicorn-table tbody tr:hover {
+      background: #fafafa;
+    }
+
+    .unicorn-table tbody td {
+      padding: 14px 16px 14px 0;
+      vertical-align: middle;
+      color: #111;
+      line-height: 1.4;
+    }
+
+    .unicorn-table tbody td:last-child {
+      padding-right: 0;
+    }
+
+    .td-num {
+      color: #bbb;
+      font-size: 12px;
+      width: 32px;
+      min-width: 32px;
+    }
+
+    .td-year {
+      width: 80px;
+      min-width: 80px;
+      font-variant-numeric: tabular-nums;
+      color: #444;
+      font-size: 13px;
+    }
+
+    .td-name {
+      min-width: 160px;
+    }
+
+    .company-kr {
+      font-weight: 500;
+      color: #000;
+    }
+
+    .company-en {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .td-sector {
+      color: #616161;
+      font-size: 13px;
+      min-width: 120px;
+    }
+
+    .td-val {
+      color: #444;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .td-status {
+      width: 100px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid #e0e0e0;
+      color: #616161;
+      white-space: nowrap;
+    }
+
+    .status-badge.ipo {
+      border-color: #000;
+      color: #000;
+    }
+
+    .status-badge.acquired {
+      border-color: #aaa;
+      color: #555;
+      background: #f5f5f5;
+    }
+
+    .status-badge.defunct {
+      border-color: #ddd;
+      color: #bbb;
+    }
+
+    .year-divider td {
+      padding-top: 24px;
+      padding-bottom: 4px;
+      border-bottom: none;
+    }
+
+    .year-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+      padding-top: 24px;
+    }
+
+    .table-note {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.7;
+      padding-top: 24px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    @media (max-width: 640px) {
+      .unicorn-table thead th,
+      .unicorn-table tbody td {
+        padding-right: 10px;
+      }
+
+      .td-val,
+      .company-en {
+        display: none;
+      }
+
+      .unicorn-table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress"></div>
+
+  <nav>
+    <div class="container">
+      <div class="nav-name"><a href="/">Bobo's Home</a></div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/quarterly-reports">Reports</a></li>
+        <li><a href="/writings">Writings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <a href="/" class="back-link">Home</a>
+
+      <h1>Korean Unicorns</h1>
+
+      <div class="page-meta">기업가치 $1B 이상으로 평가받은 국내 스타트업 — 달성 시점 순</div>
+
+      <table class="unicorn-table">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th class="td-year">Year</th>
+            <th class="td-name">Company</th>
+            <th class="td-sector">Sector</th>
+            <th class="td-val">Peak Val.</th>
+            <th class="td-status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 2014 -->
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-year">2014.05</td>
+            <td class="td-name">
+              <div class="company-kr">쿠팡</div>
+              <div class="company-en">Coupang</div>
+            </td>
+            <td class="td-sector">이커머스</td>
+            <td class="td-val">$55B</td>
+            <td class="td-status"><span class="status-badge ipo">IPO</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-year">2014.11</td>
+            <td class="td-name">
+              <div class="company-kr">옐로모바일</div>
+              <div class="company-en">Yello Mobile</div>
+            </td>
+            <td class="td-sector">모바일 마케팅</td>
+            <td class="td-val">$4B</td>
+            <td class="td-status"><span class="status-badge defunct">파산</span></td>
+          </tr>
+
+          <!-- 2015 -->
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-year">2015.08</td>
+            <td class="td-name">
+              <div class="company-kr">위메프</div>
+              <div class="company-en">WeMakePrice</div>
+            </td>
+            <td class="td-sector">이커머스</td>
+            <td class="td-val">$2.3B</td>
+            <td class="td-status"><span class="status-badge defunct">파산</span></td>
+          </tr>
+
+          <!-- 2016 -->
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-year">2016</td>
+            <td class="td-name">
+              <div class="company-kr">티몬</div>
+              <div class="company-en">TMON</div>
+            </td>
+            <td class="td-sector">이커머스</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge defunct">부실</span></td>
+          </tr>
+
+          <!-- 2018 -->
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-year">2018</td>
+            <td class="td-name">
+              <div class="company-kr">크래프톤</div>
+              <div class="company-en">Krafton</div>
+            </td>
+            <td class="td-sector">게임</td>
+            <td class="td-val">$27B</td>
+            <td class="td-status"><span class="status-badge ipo">IPO</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">6</td>
+            <td class="td-year">2018.12</td>
+            <td class="td-name">
+              <div class="company-kr">우아한형제들</div>
+              <div class="company-en">Woowa Brothers</div>
+            </td>
+            <td class="td-sector">푸드테크</td>
+            <td class="td-val">$6.2B</td>
+            <td class="td-status"><span class="status-badge acquired">인수</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">7</td>
+            <td class="td-year">2018.12</td>
+            <td class="td-name">
+              <div class="company-kr">비바리퍼블리카</div>
+              <div class="company-en">Toss</div>
+            </td>
+            <td class="td-sector">핀테크</td>
+            <td class="td-val">$7.4B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2019 -->
+          <tr>
+            <td class="td-num">8</td>
+            <td class="td-year">2019.02</td>
+            <td class="td-name">
+              <div class="company-kr">야놀자</div>
+              <div class="company-en">Yanolja</div>
+            </td>
+            <td class="td-sector">여행/숙박</td>
+            <td class="td-val">$9B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">9</td>
+            <td class="td-year">2019.05</td>
+            <td class="td-name">
+              <div class="company-kr">에이프로젠</div>
+              <div class="company-en">Aprogen</div>
+            </td>
+            <td class="td-sector">바이오시밀러</td>
+            <td class="td-val">$1B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">10</td>
+            <td class="td-year">2019</td>
+            <td class="td-name">
+              <div class="company-kr">지피클럽</div>
+              <div class="company-en">GP Club</div>
+            </td>
+            <td class="td-sector">뷰티</td>
+            <td class="td-val">$1.3B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">11</td>
+            <td class="td-year">2019</td>
+            <td class="td-name">
+              <div class="company-kr">엘앤피코스메틱</div>
+              <div class="company-en">L&amp;P Cosmetic</div>
+            </td>
+            <td class="td-sector">뷰티</td>
+            <td class="td-val">$1.2B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">12</td>
+            <td class="td-year">2019</td>
+            <td class="td-name">
+              <div class="company-kr">무신사</div>
+              <div class="company-en">MUSINSA</div>
+            </td>
+            <td class="td-sector">패션 이커머스</td>
+            <td class="td-val">$3.5B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2020 -->
+          <tr>
+            <td class="td-num">13</td>
+            <td class="td-year">2020</td>
+            <td class="td-name">
+              <div class="company-kr">쏘카</div>
+              <div class="company-en">SOCAR</div>
+            </td>
+            <td class="td-sector">모빌리티</td>
+            <td class="td-val">$1.1B</td>
+            <td class="td-status"><span class="status-badge ipo">IPO</span></td>
+          </tr>
+
+          <!-- 2021 -->
+          <tr>
+            <td class="td-num">14</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">직방</div>
+              <div class="company-en">Zigbang</div>
+            </td>
+            <td class="td-sector">프롭테크</td>
+            <td class="td-val">$2.5B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">15</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">두나무</div>
+              <div class="company-en">Dunamu (Upbit)</div>
+            </td>
+            <td class="td-sector">가상자산 거래소</td>
+            <td class="td-val">$20B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">16</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">컬리</div>
+              <div class="company-en">Kurly</div>
+            </td>
+            <td class="td-sector">신선식품 배송</td>
+            <td class="td-val">$4B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">17</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">카카오모빌리티</div>
+              <div class="company-en">Kakao Mobility</div>
+            </td>
+            <td class="td-sector">모빌리티</td>
+            <td class="td-val">$3.4B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">18</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">라이온하트 스튜디오</div>
+              <div class="company-en">Lionheart Studio</div>
+            </td>
+            <td class="td-sector">게임</td>
+            <td class="td-val">$3B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">19</td>
+            <td class="td-year">2021.08</td>
+            <td class="td-name">
+              <div class="company-kr">당근마켓</div>
+              <div class="company-en">Karrot</div>
+            </td>
+            <td class="td-sector">지역 거래 플랫폼</td>
+            <td class="td-val">$2.7B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">20</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">빗썸코리아</div>
+              <div class="company-en">Bithumb Korea</div>
+            </td>
+            <td class="td-sector">가상자산 거래소</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">21</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">버킷플레이스</div>
+              <div class="company-en">Bucketplace (오늘의집)</div>
+            </td>
+            <td class="td-sector">홈 인테리어</td>
+            <td class="td-val">$1.4B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">22</td>
+            <td class="td-year">2021</td>
+            <td class="td-name">
+              <div class="company-kr">네이버제트</div>
+              <div class="company-en">NAVER Z (ZEPETO)</div>
+            </td>
+            <td class="td-sector">메타버스</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2022 -->
+          <tr>
+            <td class="td-num">23</td>
+            <td class="td-year">2022.02</td>
+            <td class="td-name">
+              <div class="company-kr">리디</div>
+              <div class="company-en">RIDI</div>
+            </td>
+            <td class="td-sector">웹툰/웹소설</td>
+            <td class="td-val">$1.3B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">24</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">메가존클라우드</div>
+              <div class="company-en">MegazoneCloud</div>
+            </td>
+            <td class="td-sector">클라우드 MSP</td>
+            <td class="td-val">$2B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">25</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">시프트업</div>
+              <div class="company-en">SHIFT UP</div>
+            </td>
+            <td class="td-sector">게임</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge ipo">IPO</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">26</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">여기어때컴퍼니</div>
+              <div class="company-en">Good Choice</div>
+            </td>
+            <td class="td-sector">여행/숙박</td>
+            <td class="td-val">$1B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">27</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">트릿지</div>
+              <div class="company-en">Tridge</div>
+            </td>
+            <td class="td-sector">농수산 데이터</td>
+            <td class="td-val">$3B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">28</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">한국신용데이터</div>
+              <div class="company-en">Korea Credit Data</div>
+            </td>
+            <td class="td-sector">경영관리 SaaS</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">29</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">아이지에이웍스</div>
+              <div class="company-en">IGAworks</div>
+            </td>
+            <td class="td-sector">데이터/마케팅</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">30</td>
+            <td class="td-year">2022</td>
+            <td class="td-name">
+              <div class="company-kr">오아시스</div>
+              <div class="company-en">Oasis</div>
+            </td>
+            <td class="td-sector">신선식품 이커머스</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2023 -->
+          <tr>
+            <td class="td-num">31</td>
+            <td class="td-year">2023.01</td>
+            <td class="td-name">
+              <div class="company-kr">NHN클라우드</div>
+              <div class="company-en">NHN Cloud</div>
+            </td>
+            <td class="td-sector">클라우드 인프라</td>
+            <td class="td-val">~$1B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">32</td>
+            <td class="td-year">2023</td>
+            <td class="td-name">
+              <div class="company-kr">파두</div>
+              <div class="company-en">FADU</div>
+            </td>
+            <td class="td-sector">반도체 (SSD)</td>
+            <td class="td-val">$1.1B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">33</td>
+            <td class="td-year">2023</td>
+            <td class="td-name">
+              <div class="company-kr">토스뱅크</div>
+              <div class="company-en">Toss Bank</div>
+            </td>
+            <td class="td-sector">인터넷은행</td>
+            <td class="td-val">$2B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2024 -->
+          <tr>
+            <td class="td-num">34</td>
+            <td class="td-year">2024</td>
+            <td class="td-name">
+              <div class="company-kr">에이블리</div>
+              <div class="company-en">ABLY</div>
+            </td>
+            <td class="td-sector">패션 이커머스</td>
+            <td class="td-val">$2.25B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+          <tr>
+            <td class="td-num">35</td>
+            <td class="td-year">2024.12</td>
+            <td class="td-name">
+              <div class="company-kr">리벨리온</div>
+              <div class="company-en">Rebellions</div>
+            </td>
+            <td class="td-sector">AI 반도체</td>
+            <td class="td-val">$2.3B</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+          <!-- 2025 -->
+          <tr>
+            <td class="td-num">36</td>
+            <td class="td-year">2025</td>
+            <td class="td-name">
+              <div class="company-kr">퓨리오사AI</div>
+              <div class="company-en">FuriosaAI</div>
+            </td>
+            <td class="td-sector">AI 반도체</td>
+            <td class="td-val">$1B+</td>
+            <td class="td-status"><span class="status-badge">운영 중</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="table-note">
+        기준: 기업가치 $1B 이상으로 평가받은 국내 스타트업. 중기부 K-유니콘 및 언론 공시 기준.
+        IPO 이후 상장사 및 인수된 기업 포함. Peak Valuation은 최고 평가 시점 기준 (환율 변동에 따라 달라질 수 있음).
+        Last updated: 2026.04
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Bobo's Home</p>
+    </div>
+  </footer>
+
+  <script>
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      scrollProgress.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+  </script>
+</body>
+</html>
