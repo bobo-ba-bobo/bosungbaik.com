@@ -8,177 +8,32 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/style.css">
   <style>
-    .design-intro {
-      max-width: 480px;
-      margin-bottom: 64px;
+    .alter-ego-wrap {
+      min-height: calc(100vh - 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .design-intro p {
-      font-size: 15px;
-      font-weight: 300;
-      color: #616161;
-      line-height: 1.7;
-      margin-top: 12px;
-    }
-
-    /* ── Section header with right-side link ── */
-    .section-header {
+    .alter-ego-link {
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: #000;
+      text-decoration: none;
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      gap: 16px;
+      transition: opacity 0.2s;
     }
 
-    .section-header a {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: #bbb;
-      text-transform: uppercase;
+    .alter-ego-link:hover {
+      opacity: 0.4;
     }
 
-    .section-header a:hover {
-      color: #000;
-    }
-
-    /* ── Work grid ── */
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1px;
-      background: #e0e0e0;
-      border: 1px solid #e0e0e0;
-      margin-bottom: 64px;
-    }
-
-    .work-card {
-      background: #fff;
-      padding: 24px 22px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s ease;
-      min-height: 160px;
-    }
-
-    .work-card:hover {
-      background: #f5f5f5;
-      color: inherit;
-    }
-
-    .work-card.placeholder {
-      cursor: default;
-      opacity: 0.45;
-    }
-
-    .work-card.placeholder:hover {
-      background: #fff;
-    }
-
-    .work-type {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #bbb;
-      margin-bottom: 10px;
-    }
-
-    .work-title {
-      font-size: 14px;
-      font-weight: 400;
-      color: #000;
-      line-height: 1.4;
-      flex: 1;
-    }
-
-    .work-card.placeholder .work-title {
-      color: #aaa;
-    }
-
-    .work-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .work-year {
-      font-size: 10px;
-      font-weight: 300;
-      color: #bbb;
-      letter-spacing: 0.05em;
-    }
-
-    .work-arrow {
-      font-size: 12px;
-      color: #bbb;
-      transition: transform 0.2s ease, color 0.2s ease;
-    }
-
-    .work-card:not(.placeholder):hover .work-arrow {
-      transform: translateX(4px);
-      color: #000;
-    }
-
-    /* ── Philosophy teaser ── */
-    .philosophy-teaser {
-      border: 1px solid #e0e0e0;
-      padding: 28px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .philosophy-teaser:hover {
-      border-color: #000;
-      background: #fafafa;
-      color: inherit;
-    }
-
-    .philosophy-teaser-text h3 {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      margin-bottom: 4px;
-    }
-
-    .philosophy-teaser-text p {
-      font-size: 12px;
-      font-weight: 300;
-      color: #888;
-      line-height: 1.5;
-      margin: 0;
-      max-width: 360px;
-    }
-
-    .philosophy-arrow {
-      font-size: 18px;
-      color: #bbb;
-      flex-shrink: 0;
-      transition: transform 0.2s ease, color 0.2s ease;
-    }
-
-    .philosophy-teaser:hover .philosophy-arrow {
-      transform: translateX(4px);
-      color: #000;
-    }
-
-    @media (max-width: 640px) {
-      .work-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .work-card {
-        min-height: 140px;
-        padding: 18px 16px 16px;
-      }
+    .alter-ego-arrow {
+      font-size: 0.5em;
+      letter-spacing: 0;
     }
   </style>
 </head>
@@ -202,108 +57,11 @@
   <main>
     <div class="container">
       <a href="/" class="back-link">Home</a>
-
-      <h1>Design</h1>
-
-      <div class="design-intro">
-        <p>흑백과 여백으로 만드는 것들 — 개인 프로젝트, Figma 작업, 실험적인 사이트들을 모아뒀습니다.</p>
+      <div class="alter-ego-wrap">
+        <a href="/alterego" class="alter-ego-link">
+          ALTER EGO <span class="alter-ego-arrow">↗</span>
+        </a>
       </div>
-
-      <!-- Work -->
-      <section>
-        <div class="section-header">
-          <h2>Work</h2>
-          <a href="/design/work">All →</a>
-        </div>
-
-        <div class="work-grid">
-
-          <!-- Real entry: this site -->
-          <a href="/" class="work-card" target="_blank">
-            <div class="work-type">Web</div>
-            <div class="work-title">bosungbaik.com</div>
-            <div class="work-meta">
-              <span class="work-year">2024–</span>
-              <span class="work-arrow">→</span>
-            </div>
-          </a>
-
-          <!-- Mashup Ventures redesign concept -->
-          <a href="/design/mashup" class="work-card">
-            <div class="work-type">Concept</div>
-            <div class="work-title">Mashup Ventures — Site Redesign</div>
-            <div class="work-meta">
-              <span class="work-year">2026</span>
-              <span class="work-arrow">→</span>
-            </div>
-          </a>
-
-          <!-- Placeholders -->
-          <div class="work-card placeholder">
-            <div class="work-type">Figma</div>
-            <div class="work-title">—</div>
-            <div class="work-meta">
-              <span class="work-year">–</span>
-            </div>
-          </div>
-
-          <div class="work-card placeholder">
-            <div class="work-type">Figma</div>
-            <div class="work-title">—</div>
-            <div class="work-meta">
-              <span class="work-year">–</span>
-            </div>
-          </div>
-
-          <div class="work-card placeholder">
-            <div class="work-type">Web</div>
-            <div class="work-title">—</div>
-            <div class="work-meta">
-              <span class="work-year">–</span>
-            </div>
-          </div>
-
-          <div class="work-card placeholder">
-            <div class="work-type">Web</div>
-            <div class="work-title">—</div>
-            <div class="work-meta">
-              <span class="work-year">–</span>
-            </div>
-          </div>
-
-          <div class="work-card placeholder">
-            <div class="work-type">Concept</div>
-            <div class="work-title">—</div>
-            <div class="work-meta">
-              <span class="work-year">–</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Inspiration teaser -->
-      <section>
-        <a href="https://www.are.na/bosung-baik/bobo-go3zzk-48-o" class="philosophy-teaser" target="_blank" rel="noopener">
-          <div class="philosophy-teaser-text">
-            <h3>Inspiration</h3>
-            <p>좋아하는 사이트, 로고, 인터랙션, 레이아웃들을 모아두는 곳 — are.na에서 관리합니다.</p>
-          </div>
-          <span class="philosophy-arrow">↗</span>
-        </a>
-      </section>
-
-      <!-- Philosophy teaser -->
-      <section>
-        <a href="/design/philosophy" class="philosophy-teaser">
-          <div class="philosophy-teaser-text">
-            <h3>Design Philosophy</h3>
-            <p>절제된 깔끔함, 흑백의 미학, 텍스트가 디자인이 되는 방법에 대하여.</p>
-          </div>
-          <span class="philosophy-arrow">→</span>
-        </a>
-      </section>
-
     </div>
   </main>
 
@@ -318,23 +76,8 @@
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = progress + '%';
-    });
-
-    const sections = document.querySelectorAll('main section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => {
-      observer.observe(section);
+      scrollProgress.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
   </script>
-
 </body>
 </html>
