@@ -980,19 +980,68 @@ main section.in-view::before {
   font-weight: 500;
 }
 
-.row-del {
+.row-del, .row-edit, .row-save, .row-cancel {
   background: none;
   border: none;
   color: #bfbfbf;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
-  padding: 2px 6px;
+  padding: 2px 4px;
+  margin-left: 2px;
   transition: color 0.2s ease;
 }
 
-.row-del:hover {
+.row-del:hover, .row-edit:hover, .row-save:hover, .row-cancel:hover {
   color: #000;
+}
+
+.row-save {
+  color: #616161;
+}
+
+.fin-table tr.editing td {
+  background: #fafafa;
+  border-bottom-color: #e0e0e0;
+}
+
+input.inline-edit, select.inline-edit {
+  font: inherit;
+  font-size: 13px;
+  padding: 5px 7px;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  color: #000;
+  outline: none;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+input.inline-edit:focus, select.inline-edit:focus {
+  border-color: #000;
+}
+
+input.inline-edit.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.edit-amount {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.edit-amount select.inline-edit {
+  width: auto;
+  flex: 0 0 56px;
+  padding: 5px 4px;
+}
+
+.edit-amount input.inline-edit {
+  flex: 1 1 auto;
 }
 
 /* Inline form */

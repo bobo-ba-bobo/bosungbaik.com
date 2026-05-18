@@ -609,19 +609,42 @@
     }
 
     async function fetchFx() {
-      try {
-        const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=KRW');
-        if (!res.ok) throw new Error('FX fetch ' + res.status);
-        const json = await res.json();
-        const rate = json && json.rates && json.rates.KRW;
-        if (!rate) throw new Error('No KRW rate');
-        fx = { rate, asOf: new Date().toISOString(), source: 'frankfurter ' + (json.date || '') };
-        saveFx();
-        return true;
-      } catch (err) {
-        console.error('FX fetch failed', err);
+      const tryFetch = async (url, parse) => {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) return null;
+          const json = await res.json();
+          return parse(json);
+        } catch { return null; }
+      };
+
+      let result = await tryFetch('https://api.frankfurter.app/latest?from=USD&to=KRW', (j) => {
+        const r = j && j.rates && j.rates.KRW;
+        return r ? { rate: r, source: 'frankfurter ' + (j.date || '') } : null;
+      });
+
+      if (!result) {
+        result = await tryFetch('https://open.er-api.com/v6/latest/USD', (j) => {
+          const r = j && j.rates && j.rates.KRW;
+          return r ? { rate: r, source: 'er-api' } : null;
+        });
+      }
+
+      if (!result) {
+        result = await tryFetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', (j) => {
+          const r = j && j.usd && j.usd.krw;
+          return r ? { rate: r, source: 'cdn-currency' } : null;
+        });
+      }
+
+      if (!result) {
+        console.error('All FX sources failed');
         return false;
       }
+
+      fx = { rate: result.rate, asOf: new Date().toISOString(), source: result.source };
+      saveFx();
+      return true;
     }
 
     async function ensureFx() {
@@ -691,17 +714,58 @@
       return td;
     }
 
-    function makeDeleteCell(cat, id) {
+    let editingId = null;
+
+    function makeIconBtn(cls, cat, id, title, label) {
+      const b = document.createElement('button');
+      b.className = cls;
+      if (cat) b.dataset.cat = cat;
+      if (id) b.dataset.id = id;
+      b.title = title;
+      b.textContent = label;
+      return b;
+    }
+
+    function makeActionCell(cat, id) {
       const td = document.createElement('td');
       td.className = 'action';
-      const btn = document.createElement('button');
-      btn.className = 'row-del';
-      btn.dataset.cat = cat;
-      btn.dataset.id = id;
-      btn.title = 'Delete';
-      btn.textContent = '×';
-      td.appendChild(btn);
+      td.appendChild(makeIconBtn('row-edit', cat, id, 'Edit', '✎'));
+      td.appendChild(makeIconBtn('row-del', cat, id, 'Delete', '×'));
       return td;
+    }
+
+    function makeEditActionCell(cat, id) {
+      const td = document.createElement('td');
+      td.className = 'action';
+      td.appendChild(makeIconBtn('row-save', cat, id, 'Save', '✓'));
+      td.appendChild(makeIconBtn('row-cancel', cat, id, 'Cancel', '×'));
+      return td;
+    }
+
+    function makeEditInput(name, value, opts) {
+      opts = opts || {};
+      const inp = document.createElement('input');
+      inp.type = opts.type || 'text';
+      inp.name = name;
+      inp.value = value == null ? '' : String(value);
+      inp.className = 'inline-edit' + (opts.numAlign ? ' num' : '');
+      if (opts.step) inp.step = opts.step;
+      if (opts.placeholder) inp.placeholder = opts.placeholder;
+      return inp;
+    }
+
+    function makeEditSelect(name, value, options) {
+      const sel = document.createElement('select');
+      sel.name = name;
+      sel.className = 'inline-edit';
+      for (const o of options) {
+        const opt = document.createElement('option');
+        opt.value = o.value;
+        opt.textContent = o.label;
+        sel.appendChild(opt);
+      }
+      sel.value = value;
+      return sel;
     }
 
     function makeEmptyRow(colspan) {
@@ -722,15 +786,53 @@
         return;
       }
       for (const r of rows) {
-        const c = entryCurr(r);
-        const tr = document.createElement('tr');
-        tr.appendChild(makeCell(r.name));
-        tr.appendChild(makeCell(r.subtype || ''));
-        tr.appendChild(makeCell(fmt(r.amount, c), { cls: 'num' }));
-        tr.appendChild(makeCell(r.note || '', { cls: 'muted' }));
-        tr.appendChild(makeDeleteCell(cat, r.id));
-        tbody.appendChild(tr);
+        if (r.id === editingId) {
+          tbody.appendChild(renderSimpleEditRow(r, cat));
+        } else {
+          tbody.appendChild(renderSimpleViewRow(r, cat));
+        }
       }
+    }
+
+    function renderSimpleViewRow(r, cat) {
+      const c = entryCurr(r);
+      const tr = document.createElement('tr');
+      tr.appendChild(makeCell(r.name));
+      tr.appendChild(makeCell(r.subtype || ''));
+      tr.appendChild(makeCell(fmt(r.amount, c), { cls: 'num' }));
+      tr.appendChild(makeCell(r.note || '', { cls: 'muted' }));
+      tr.appendChild(makeActionCell(cat, r.id));
+      return tr;
+    }
+
+    function renderSimpleEditRow(r, cat) {
+      const tr = document.createElement('tr');
+      tr.className = 'editing';
+      tr.dataset.editId = r.id;
+      tr.dataset.editCat = cat;
+
+      const t1 = document.createElement('td');
+      t1.appendChild(makeEditInput('name', r.name)); tr.appendChild(t1);
+
+      const t2 = document.createElement('td');
+      t2.appendChild(makeEditInput('subtype', r.subtype || '')); tr.appendChild(t2);
+
+      const t3 = document.createElement('td');
+      t3.className = 'num';
+      const wrap = document.createElement('div');
+      wrap.className = 'edit-amount';
+      const sel = makeEditSelect('currency', entryCurr(r), [
+        { value: 'KRW', label: '₩' }, { value: 'USD', label: '$' }
+      ]);
+      const inp = makeEditInput('amount', r.amount, { type: 'number', step: '0.01', numAlign: true });
+      wrap.appendChild(sel); wrap.appendChild(inp);
+      t3.appendChild(wrap); tr.appendChild(t3);
+
+      const t4 = document.createElement('td');
+      t4.appendChild(makeEditInput('note', r.note || '')); tr.appendChild(t4);
+
+      tr.appendChild(makeEditActionCell(cat, r.id));
+      return tr;
     }
 
     function renderStocks(tbody) {
@@ -741,25 +843,63 @@
         return;
       }
       for (const r of rows) {
-        const shares = Number(r.shares) || 0;
-        const cur = Number(r.current) || 0;
-        const cost = Number(r.avgCost) || 0;
-        const value = shares * cur;
-        const pl = (cur - cost) * shares;
-        const plClass = 'num ' + (pl > 0 ? 'pl-pos' : pl < 0 ? 'pl-neg' : '');
-        const c = stockCurr(r);
-        const marketLabel = r.market === 'US' ? '미장' : '국장';
-        const tr = document.createElement('tr');
-        tr.appendChild(makeCell(marketLabel, { cls: 'muted' }));
-        tr.appendChild(makeCell(r.name));
-        tr.appendChild(makeCell(shares.toLocaleString(), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(cost, c), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(cur, c), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(value, c), { cls: 'num' }));
-        tr.appendChild(makeCell(fmtSigned(pl, c), { cls: plClass }));
-        tr.appendChild(makeDeleteCell('stocks', r.id));
-        tbody.appendChild(tr);
+        if (r.id === editingId) {
+          tbody.appendChild(renderStockEditRow(r));
+        } else {
+          tbody.appendChild(renderStockViewRow(r));
+        }
       }
+    }
+
+    function renderStockViewRow(r) {
+      const shares = Number(r.shares) || 0;
+      const cur = Number(r.current) || 0;
+      const cost = Number(r.avgCost) || 0;
+      const value = shares * cur;
+      const pl = (cur - cost) * shares;
+      const plClass = 'num ' + (pl > 0 ? 'pl-pos' : pl < 0 ? 'pl-neg' : '');
+      const c = stockCurr(r);
+      const marketLabel = r.market === 'US' ? '미장' : '국장';
+      const tr = document.createElement('tr');
+      tr.appendChild(makeCell(marketLabel, { cls: 'muted' }));
+      tr.appendChild(makeCell(r.name));
+      tr.appendChild(makeCell(shares.toLocaleString(), { cls: 'num' }));
+      tr.appendChild(makeCell(fmt(cost, c), { cls: 'num' }));
+      tr.appendChild(makeCell(fmt(cur, c), { cls: 'num' }));
+      tr.appendChild(makeCell(fmt(value, c), { cls: 'num' }));
+      tr.appendChild(makeCell(fmtSigned(pl, c), { cls: plClass }));
+      tr.appendChild(makeActionCell('stocks', r.id));
+      return tr;
+    }
+
+    function renderStockEditRow(r) {
+      const tr = document.createElement('tr');
+      tr.className = 'editing';
+      tr.dataset.editId = r.id;
+      tr.dataset.editCat = 'stocks';
+
+      const t1 = document.createElement('td');
+      t1.appendChild(makeEditSelect('market', r.market === 'US' ? 'US' : 'KR', [
+        { value: 'KR', label: '국장 ₩' }, { value: 'US', label: '미장 $' }
+      ])); tr.appendChild(t1);
+
+      const t2 = document.createElement('td');
+      t2.appendChild(makeEditInput('name', r.name)); tr.appendChild(t2);
+
+      const t3 = document.createElement('td'); t3.className = 'num';
+      t3.appendChild(makeEditInput('shares', r.shares, { type: 'number', step: '0.0001', numAlign: true })); tr.appendChild(t3);
+
+      const t4 = document.createElement('td'); t4.className = 'num';
+      t4.appendChild(makeEditInput('avgCost', r.avgCost, { type: 'number', step: '0.01', numAlign: true })); tr.appendChild(t4);
+
+      const t5 = document.createElement('td'); t5.className = 'num';
+      t5.appendChild(makeEditInput('current', r.current, { type: 'number', step: '0.01', numAlign: true })); tr.appendChild(t5);
+
+      tr.appendChild(makeCell('—', { cls: 'num muted' }));
+      tr.appendChild(makeCell('—', { cls: 'num muted' }));
+
+      tr.appendChild(makeEditActionCell('stocks', r.id));
+      return tr;
     }
 
     function renderTotals() {
@@ -820,15 +960,74 @@
       });
     });
 
+    function saveEdit(cat, id) {
+      const tr = document.querySelector('tr[data-edit-id="' + id + '"]');
+      if (!tr) return;
+      const idx = data[cat].findIndex(r => r.id === id);
+      if (idx === -1) return;
+      const update = {};
+      tr.querySelectorAll('input.inline-edit, select.inline-edit').forEach(el => {
+        if (el.type === 'number') {
+          update[el.name] = Number(el.value);
+        } else {
+          update[el.name] = (el.value || '').trim();
+        }
+      });
+      data[cat][idx] = { ...data[cat][idx], ...update };
+      editingId = null;
+      saveData(data);
+      renderAll();
+    }
+
     document.querySelectorAll('tbody').forEach(tb => {
       tb.addEventListener('click', (e) => {
-        const btn = e.target.closest('.row-del');
-        if (!btn) return;
-        const { cat, id } = btn.dataset;
-        if (!confirm('Delete this entry?')) return;
-        data[cat] = data[cat].filter(r => r.id !== id);
-        saveData(data);
-        renderAll();
+        const editBtn = e.target.closest('.row-edit');
+        if (editBtn) {
+          editingId = editBtn.dataset.id;
+          renderAll();
+          const editingTr = document.querySelector('tr.editing');
+          if (editingTr) {
+            const first = editingTr.querySelector('input.inline-edit, select.inline-edit');
+            if (first) first.focus();
+          }
+          return;
+        }
+        const cancelBtn = e.target.closest('.row-cancel');
+        if (cancelBtn) {
+          editingId = null;
+          renderAll();
+          return;
+        }
+        const saveBtn = e.target.closest('.row-save');
+        if (saveBtn) {
+          saveEdit(saveBtn.dataset.cat, saveBtn.dataset.id);
+          return;
+        }
+        const delBtn = e.target.closest('.row-del');
+        if (delBtn) {
+          if (!confirm('Delete this entry?')) return;
+          const { cat, id } = delBtn.dataset;
+          data[cat] = data[cat].filter(r => r.id !== id);
+          if (editingId === id) editingId = null;
+          saveData(data);
+          renderAll();
+        }
+      });
+      tb.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const tr = e.target.closest('tr.editing');
+          if (tr) {
+            e.preventDefault();
+            saveEdit(tr.dataset.editCat, tr.dataset.editId);
+          }
+        } else if (e.key === 'Escape') {
+          const tr = e.target.closest('tr.editing');
+          if (tr) {
+            e.preventDefault();
+            editingId = null;
+            renderAll();
+          }
+        }
       });
     });
 
