@@ -29,7 +29,7 @@ Passionate about debating ideas, accelerating startups, and talking finance.
 
 - Quarterly Reports → `/quarterly-reports`
 - Writings → `/writings`
-- Research → https://bobobabobo.notion.site/research
+- Notes → `/notes`
 
 ## My playlists 섹션
 
