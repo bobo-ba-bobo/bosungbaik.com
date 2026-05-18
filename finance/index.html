@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Finance</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div id="lockScreen" class="lock-screen">
+    <div class="lock-box">
+      <h2 class="lock-title">Restricted</h2>
+      <p class="lock-sub">Enter passcode to view.</p>
+      <form id="lockForm">
+        <input type="password" id="lockInput" autocomplete="current-password" autofocus>
+        <button type="submit">Unlock</button>
+      </form>
+      <p id="lockError" class="lock-error"></p>
+    </div>
+  </div>
+
+  <div id="app" class="app-hidden">
+    <nav>
+      <div class="container">
+        <div class="nav-name"><a href="/">Bobo's Home</a></div>
+        <ul class="nav-links">
+          <li><span id="sessionTimer" class="session-timer"></span></li>
+          <li><a href="#" id="lockNow">Lock</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="container">
+        <a href="/" class="back-link">Home</a>
+
+        <h1>Finance</h1>
+
+        <section class="summary">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span class="summary-label">Net Worth</span>
+              <span class="summary-value" id="sumNetWorth">-</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Total Assets</span>
+              <span class="summary-value" id="sumAssets">-</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Liabilities</span>
+              <span class="summary-value" id="sumLiab">-</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Net Monthly</span>
+              <span class="summary-value" id="sumNetMonthly">-</span>
+            </div>
+          </div>
+          <div class="summary-meta">
+            <span>Currency
+              <select id="currency">
+                <option value="KRW">KRW (₩)</option>
+                <option value="USD">USD ($)</option>
+              </select>
+            </span>
+            <span>Last updated <span id="lastUpdated">-</span></span>
+          </div>
+        </section>
+
+        <section class="finance-section" data-cat="deposits">
+          <div class="fin-head">
+            <h2>Deposits &amp; Cash</h2>
+            <span class="fin-total" id="totalDeposits">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Account</th>
+                <th>Type</th>
+                <th class="num">Balance</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyDeposits"></tbody>
+          </table>
+          <form class="fin-form" data-cat="deposits">
+            <input type="text" name="name" placeholder="Account (e.g. KB Star)" required>
+            <input type="text" name="subtype" placeholder="Type (savings, checking)">
+            <input type="number" name="amount" placeholder="Balance" step="0.01" required>
+            <input type="text" name="note" placeholder="Note">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="finance-section" data-cat="stocks">
+          <div class="fin-head">
+            <h2>Stocks &amp; Portfolio</h2>
+            <span class="fin-total" id="totalStocks">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Ticker / Name</th>
+                <th class="num">Shares</th>
+                <th class="num">Avg Cost</th>
+                <th class="num">Current</th>
+                <th class="num">Value</th>
+                <th class="num">P/L</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyStocks"></tbody>
+          </table>
+          <form class="fin-form" data-cat="stocks">
+            <input type="text" name="name" placeholder="Ticker / Name" required>
+            <input type="number" name="shares" placeholder="Shares" step="0.0001" required>
+            <input type="number" name="avgCost" placeholder="Avg cost" step="0.01" required>
+            <input type="number" name="current" placeholder="Current price" step="0.01" required>
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="finance-section" data-cat="other">
+          <div class="fin-head">
+            <h2>Other Assets</h2>
+            <span class="fin-total" id="totalOther">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th>Category</th>
+                <th class="num">Value</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyOther"></tbody>
+          </table>
+          <form class="fin-form" data-cat="other">
+            <input type="text" name="name" placeholder="Asset (e.g. Crypto, Bond)" required>
+            <input type="text" name="subtype" placeholder="Category (crypto, real estate)">
+            <input type="number" name="amount" placeholder="Value" step="0.01" required>
+            <input type="text" name="note" placeholder="Note">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="finance-section" data-cat="liabilities">
+          <div class="fin-head">
+            <h2>Liabilities</h2>
+            <span class="fin-total" id="totalLiab">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Loan / Debt</th>
+                <th>Type</th>
+                <th class="num">Balance</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyLiab"></tbody>
+          </table>
+          <form class="fin-form" data-cat="liabilities">
+            <input type="text" name="name" placeholder="Loan / Debt" required>
+            <input type="text" name="subtype" placeholder="Type (mortgage, credit)">
+            <input type="number" name="amount" placeholder="Balance" step="0.01" required>
+            <input type="text" name="note" placeholder="Note">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="finance-section" data-cat="income">
+          <div class="fin-head">
+            <h2>Income (Monthly)</h2>
+            <span class="fin-total" id="totalIncome">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Type</th>
+                <th class="num">Amount / mo</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyIncome"></tbody>
+          </table>
+          <form class="fin-form" data-cat="income">
+            <input type="text" name="name" placeholder="Source (e.g. Mashup salary)" required>
+            <input type="text" name="subtype" placeholder="Type (salary, dividend)">
+            <input type="number" name="amount" placeholder="Monthly amount" step="0.01" required>
+            <input type="text" name="note" placeholder="Note">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="finance-section" data-cat="expenses">
+          <div class="fin-head">
+            <h2>Recurring Expenses (Monthly)</h2>
+            <span class="fin-total" id="totalExpenses">-</span>
+          </div>
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th class="num">Amount / mo</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyExpenses"></tbody>
+          </table>
+          <form class="fin-form" data-cat="expenses">
+            <input type="text" name="name" placeholder="Item (e.g. Rent)" required>
+            <input type="text" name="subtype" placeholder="Category">
+            <input type="number" name="amount" placeholder="Monthly amount" step="0.01" required>
+            <input type="text" name="note" placeholder="Note">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section>
+          <h2>Data</h2>
+          <div class="data-actions">
+            <button id="exportBtn" class="btn-secondary">Export JSON</button>
+            <label class="btn-secondary">
+              Import JSON
+              <input type="file" id="importInput" accept="application/json" hidden>
+            </label>
+            <button id="clearBtn" class="btn-danger">Clear all data</button>
+          </div>
+          <p class="data-note">All data is stored locally in this browser only. Export regularly to back up.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2026 Bobo's Home</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const PASS_HASH = 'aa5a7815c3011a260e268b141fbb902df718c676644c2ee5373dad91a97b3fd2';
+    const SESSION_MS = 10 * 60 * 1000;
+    const SESSION_KEY = 'finance_session';
+    const DATA_KEY = 'finance_data';
+    const CURR_KEY = 'finance_currency';
+
+    const lockScreen = document.getElementById('lockScreen');
+    const app = document.getElementById('app');
+    const lockForm = document.getElementById('lockForm');
+    const lockInput = document.getElementById('lockInput');
+    const lockError = document.getElementById('lockError');
+    const sessionTimer = document.getElementById('sessionTimer');
+
+    async function sha256(text) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function getSession() {
+      try {
+        const raw = sessionStorage.getItem(SESSION_KEY);
+        if (!raw) return null;
+        const { exp } = JSON.parse(raw);
+        return exp > Date.now() ? exp : null;
+      } catch { return null; }
+    }
+
+    function setSession() {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ exp: Date.now() + SESSION_MS }));
+    }
+
+    function clearSession() {
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+
+    function unlock() {
+      lockScreen.style.display = 'none';
+      app.classList.remove('app-hidden');
+      renderAll();
+      startTimer();
+    }
+
+    function lock() {
+      clearSession();
+      app.classList.add('app-hidden');
+      lockScreen.style.display = 'flex';
+      lockInput.value = '';
+      lockInput.focus();
+      stopTimer();
+    }
+
+    lockForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const h = await sha256(lockInput.value);
+      if (h === PASS_HASH) {
+        setSession();
+        lockError.textContent = '';
+        unlock();
+      } else {
+        lockError.textContent = 'Wrong passcode.';
+        lockInput.value = '';
+        lockInput.focus();
+      }
+    });
+
+    let timerId = null;
+    function startTimer() {
+      stopTimer();
+      const tick = () => {
+        const exp = getSession();
+        if (!exp) { lock(); return; }
+        const ms = exp - Date.now();
+        const m = Math.floor(ms / 60000);
+        const s = Math.floor((ms % 60000) / 1000);
+        sessionTimer.textContent = 'Session ' + m + ':' + s.toString().padStart(2, '0');
+      };
+      tick();
+      timerId = setInterval(tick, 1000);
+    }
+    function stopTimer() { if (timerId) clearInterval(timerId); timerId = null; }
+
+    document.getElementById('lockNow').addEventListener('click', (e) => { e.preventDefault(); lock(); });
+
+    if (getSession()) unlock();
+
+    const emptyData = { deposits: [], stocks: [], other: [], liabilities: [], income: [], expenses: [], updatedAt: null };
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(DATA_KEY);
+        if (!raw) return structuredClone(emptyData);
+        const d = JSON.parse(raw);
+        for (const k of Object.keys(emptyData)) if (!(k in d)) d[k] = structuredClone(emptyData[k]);
+        return d;
+      } catch { return structuredClone(emptyData); }
+    }
+
+    function saveData(d) {
+      d.updatedAt = new Date().toISOString();
+      localStorage.setItem(DATA_KEY, JSON.stringify(d));
+    }
+
+    let data = loadData();
+
+    const currencySelect = document.getElementById('currency');
+    currencySelect.value = localStorage.getItem(CURR_KEY) || 'KRW';
+    currencySelect.addEventListener('change', () => {
+      localStorage.setItem(CURR_KEY, currencySelect.value);
+      renderAll();
+    });
+
+    function fmt(n) {
+      if (!isFinite(n)) return '-';
+      const c = currencySelect.value;
+      const opts = c === 'KRW' ? { maximumFractionDigits: 0 } : { maximumFractionDigits: 2, minimumFractionDigits: 2 };
+      const symbol = c === 'KRW' ? '₩' : '$';
+      return symbol + Number(n).toLocaleString('en-US', opts);
+    }
+
+    function fmtSigned(n) {
+      if (!isFinite(n)) return '-';
+      const sign = n > 0 ? '+' : '';
+      return sign + fmt(n);
+    }
+
+    function sumSimple(arr) { return arr.reduce((s, r) => s + (Number(r.amount) || 0), 0); }
+    function sumStocks(arr) { return arr.reduce((s, r) => s + (Number(r.shares) || 0) * (Number(r.current) || 0), 0); }
+
+    function makeCell(text, opts) {
+      opts = opts || {};
+      const td = document.createElement('td');
+      if (opts.cls) td.className = opts.cls;
+      td.textContent = text == null ? '' : String(text);
+      return td;
+    }
+
+    function makeDeleteCell(cat, id) {
+      const td = document.createElement('td');
+      td.className = 'action';
+      const btn = document.createElement('button');
+      btn.className = 'row-del';
+      btn.dataset.cat = cat;
+      btn.dataset.id = id;
+      btn.title = 'Delete';
+      btn.textContent = '×';
+      td.appendChild(btn);
+      return td;
+    }
+
+    function makeEmptyRow(colspan) {
+      const tr = document.createElement('tr');
+      tr.className = 'empty';
+      const td = document.createElement('td');
+      td.colSpan = colspan;
+      td.textContent = 'No entries yet.';
+      tr.appendChild(td);
+      return tr;
+    }
+
+    function renderSimple(tbody, cat) {
+      tbody.replaceChildren();
+      const rows = data[cat];
+      if (rows.length === 0) {
+        tbody.appendChild(makeEmptyRow(5));
+        return;
+      }
+      for (const r of rows) {
+        const tr = document.createElement('tr');
+        tr.appendChild(makeCell(r.name));
+        tr.appendChild(makeCell(r.subtype || ''));
+        tr.appendChild(makeCell(fmt(r.amount), { cls: 'num' }));
+        tr.appendChild(makeCell(r.note || '', { cls: 'muted' }));
+        tr.appendChild(makeDeleteCell(cat, r.id));
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderStocks(tbody) {
+      tbody.replaceChildren();
+      const rows = data.stocks;
+      if (rows.length === 0) {
+        tbody.appendChild(makeEmptyRow(7));
+        return;
+      }
+      for (const r of rows) {
+        const shares = Number(r.shares) || 0;
+        const cur = Number(r.current) || 0;
+        const cost = Number(r.avgCost) || 0;
+        const value = shares * cur;
+        const pl = (cur - cost) * shares;
+        const plClass = 'num ' + (pl > 0 ? 'pl-pos' : pl < 0 ? 'pl-neg' : '');
+        const tr = document.createElement('tr');
+        tr.appendChild(makeCell(r.name));
+        tr.appendChild(makeCell(shares.toLocaleString(), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(cost), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(cur), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(value), { cls: 'num' }));
+        tr.appendChild(makeCell(fmtSigned(pl), { cls: plClass }));
+        tr.appendChild(makeDeleteCell('stocks', r.id));
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderTotals() {
+      const dep = sumSimple(data.deposits);
+      const stk = sumStocks(data.stocks);
+      const oth = sumSimple(data.other);
+      const lia = sumSimple(data.liabilities);
+      const inc = sumSimple(data.income);
+      const exp = sumSimple(data.expenses);
+      const assets = dep + stk + oth;
+      document.getElementById('totalDeposits').textContent = fmt(dep);
+      document.getElementById('totalStocks').textContent = fmt(stk);
+      document.getElementById('totalOther').textContent = fmt(oth);
+      document.getElementById('totalLiab').textContent = fmt(lia);
+      document.getElementById('totalIncome').textContent = fmt(inc);
+      document.getElementById('totalExpenses').textContent = fmt(exp);
+      document.getElementById('sumNetWorth').textContent = fmt(assets - lia);
+      document.getElementById('sumAssets').textContent = fmt(assets);
+      document.getElementById('sumLiab').textContent = fmt(lia);
+      document.getElementById('sumNetMonthly').textContent = fmt(inc - exp);
+      const u = data.updatedAt ? new Date(data.updatedAt) : null;
+      document.getElementById('lastUpdated').textContent = u ? u.toLocaleString() : 'never';
+    }
+
+    function renderAll() {
+      renderSimple(document.getElementById('tbodyDeposits'), 'deposits');
+      renderStocks(document.getElementById('tbodyStocks'));
+      renderSimple(document.getElementById('tbodyOther'), 'other');
+      renderSimple(document.getElementById('tbodyLiab'), 'liabilities');
+      renderSimple(document.getElementById('tbodyIncome'), 'income');
+      renderSimple(document.getElementById('tbodyExpenses'), 'expenses');
+      renderTotals();
+    }
+
+    document.querySelectorAll('.fin-form').forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cat = form.dataset.cat;
+        const fd = new FormData(form);
+        const entry = { id: crypto.randomUUID() };
+        if (cat === 'stocks') {
+          entry.name = fd.get('name').trim();
+          entry.shares = Number(fd.get('shares'));
+          entry.avgCost = Number(fd.get('avgCost'));
+          entry.current = Number(fd.get('current'));
+        } else {
+          entry.name = fd.get('name').trim();
+          entry.subtype = (fd.get('subtype') || '').trim();
+          entry.amount = Number(fd.get('amount'));
+          entry.note = (fd.get('note') || '').trim();
+        }
+        data[cat].push(entry);
+        saveData(data);
+        form.reset();
+        renderAll();
+      });
+    });
+
+    document.querySelectorAll('tbody').forEach(tb => {
+      tb.addEventListener('click', (e) => {
+        const btn = e.target.closest('.row-del');
+        if (!btn) return;
+        const { cat, id } = btn.dataset;
+        if (!confirm('Delete this entry?')) return;
+        data[cat] = data[cat].filter(r => r.id !== id);
+        saveData(data);
+        renderAll();
+      });
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const ts = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = 'finance-' + ts + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('importInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        if (typeof parsed !== 'object' || parsed === null) throw new Error('Invalid file');
+        if (!confirm('Replace all current data with imported data?')) return;
+        data = { ...structuredClone(emptyData), ...parsed };
+        saveData(data);
+        renderAll();
+      } catch (err) {
+        alert('Could not import: ' + err.message);
+      } finally {
+        e.target.value = '';
+      }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (!confirm('Erase ALL finance data from this browser? This cannot be undone.')) return;
+      if (!confirm('Really sure? Export first if you want a backup.')) return;
+      data = structuredClone(emptyData);
+      saveData(data);
+      renderAll();
+    });
+  </script>
+</body>
+</html>
