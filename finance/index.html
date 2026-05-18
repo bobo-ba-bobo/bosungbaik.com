@@ -78,11 +78,15 @@
             </div>
           </div>
           <div class="summary-meta">
-            <span>Currency
+            <span>Display
               <select id="currency">
                 <option value="KRW">KRW (₩)</option>
                 <option value="USD">USD ($)</option>
               </select>
+            </span>
+            <span>FX 1 USD = <span id="fxRateLabel">-</span>
+              <button type="button" id="fxRefreshBtn" class="btn-link-sm">refresh</button>
+              <button type="button" id="fxManualBtn" class="btn-link-sm">set manually</button>
             </span>
             <span>Last updated <span id="lastUpdated">-</span></span>
           </div>
@@ -108,6 +112,7 @@
           <form class="fin-form" data-cat="deposits">
             <input type="text" name="name" placeholder="Account (e.g. KB Star)" required>
             <input type="text" name="subtype" placeholder="Type (savings, checking)">
+            <select name="currency"><option value="KRW">₩</option><option value="USD">$</option></select>
             <input type="number" name="amount" placeholder="Balance" step="0.01" required>
             <input type="text" name="note" placeholder="Note">
             <button type="submit">Add</button>
@@ -122,6 +127,7 @@
           <table class="fin-table">
             <thead>
               <tr>
+                <th>Market</th>
                 <th>Ticker / Name</th>
                 <th class="num">Shares</th>
                 <th class="num">Avg Cost</th>
@@ -134,6 +140,10 @@
             <tbody id="tbodyStocks"></tbody>
           </table>
           <form class="fin-form" data-cat="stocks">
+            <select name="market" required>
+              <option value="KR">국장 ₩</option>
+              <option value="US">미장 $</option>
+            </select>
             <input type="text" name="name" placeholder="Ticker / Name" required>
             <input type="number" name="shares" placeholder="Shares" step="0.0001" required>
             <input type="number" name="avgCost" placeholder="Avg cost" step="0.01" required>
@@ -162,6 +172,7 @@
           <form class="fin-form" data-cat="other">
             <input type="text" name="name" placeholder="Asset (e.g. Crypto, Bond)" required>
             <input type="text" name="subtype" placeholder="Category (crypto, real estate)">
+            <select name="currency"><option value="KRW">₩</option><option value="USD">$</option></select>
             <input type="number" name="amount" placeholder="Value" step="0.01" required>
             <input type="text" name="note" placeholder="Note">
             <button type="submit">Add</button>
@@ -188,6 +199,7 @@
           <form class="fin-form" data-cat="liabilities">
             <input type="text" name="name" placeholder="Loan / Debt" required>
             <input type="text" name="subtype" placeholder="Type (mortgage, credit)">
+            <select name="currency"><option value="KRW">₩</option><option value="USD">$</option></select>
             <input type="number" name="amount" placeholder="Balance" step="0.01" required>
             <input type="text" name="note" placeholder="Note">
             <button type="submit">Add</button>
@@ -214,6 +226,7 @@
           <form class="fin-form" data-cat="income">
             <input type="text" name="name" placeholder="Source (e.g. Mashup salary)" required>
             <input type="text" name="subtype" placeholder="Type (salary, dividend)">
+            <select name="currency"><option value="KRW">₩</option><option value="USD">$</option></select>
             <input type="number" name="amount" placeholder="Monthly amount" step="0.01" required>
             <input type="text" name="note" placeholder="Note">
             <button type="submit">Add</button>
@@ -240,6 +253,7 @@
           <form class="fin-form" data-cat="expenses">
             <input type="text" name="name" placeholder="Item (e.g. Rent)" required>
             <input type="text" name="subtype" placeholder="Category">
+            <select name="currency"><option value="KRW">₩</option><option value="USD">$</option></select>
             <input type="number" name="amount" placeholder="Monthly amount" step="0.01" required>
             <input type="text" name="note" placeholder="Note">
             <button type="submit">Add</button>
@@ -279,6 +293,8 @@
     const CURR_KEY = 'finance_currency';
     const CLOUD_KEY = 'finance_cloud_cfg';
     const GIST_FILE = 'finance.json';
+    const FX_KEY = 'finance_fx';
+    const FX_TTL = 4 * 60 * 60 * 1000;
 
     const lockScreen = document.getElementById('lockScreen');
     const setupScreen = document.getElementById('setupScreen');
@@ -398,7 +414,7 @@
       app.classList.remove('app-hidden');
       startTimer();
       updateCloudStatusLine();
-      await pullFromCloud(true);
+      await Promise.all([pullFromCloud(true), ensureFx()]);
       renderAll();
     }
 
@@ -445,6 +461,7 @@
           saveLocal(data);
         }
         updateCloudStatusLine();
+        await ensureFx();
         renderAll();
         if (Object.keys(remote || {}).length === 0) {
           await pushToCloud();
@@ -454,11 +471,30 @@
       }
     });
 
-    document.getElementById('skipSetup').addEventListener('click', () => {
+    document.getElementById('skipSetup').addEventListener('click', async () => {
       setupScreen.style.display = 'none';
       app.classList.remove('app-hidden');
       startTimer();
       updateCloudStatusLine();
+      await ensureFx();
+      renderAll();
+    });
+
+    document.getElementById('fxRefreshBtn').addEventListener('click', async () => {
+      await fetchFx();
+      renderFxLabel();
+      renderAll();
+    });
+
+    document.getElementById('fxManualBtn').addEventListener('click', () => {
+      const cur = fx.rate || 1380;
+      const input = prompt('Enter USD → KRW rate (e.g. 1380.5):', String(cur));
+      if (input == null) return;
+      const r = Number(input);
+      if (!isFinite(r) || r <= 0) { alert('Invalid rate.'); return; }
+      fx = { rate: r, asOf: new Date().toISOString(), source: 'manual' };
+      saveFx();
+      renderFxLabel();
       renderAll();
     });
 
@@ -554,22 +590,98 @@
       renderAll();
     });
 
-    function fmt(n) {
+    let fx = { rate: null, asOf: null, source: null };
+
+    function loadFx() {
+      try {
+        const raw = localStorage.getItem(FX_KEY);
+        if (raw) fx = JSON.parse(raw);
+      } catch {}
+    }
+
+    function saveFx() {
+      localStorage.setItem(FX_KEY, JSON.stringify(fx));
+    }
+
+    function fxAge() {
+      if (!fx.asOf) return Infinity;
+      return Date.now() - new Date(fx.asOf).getTime();
+    }
+
+    async function fetchFx() {
+      try {
+        const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=KRW');
+        if (!res.ok) throw new Error('FX fetch ' + res.status);
+        const json = await res.json();
+        const rate = json && json.rates && json.rates.KRW;
+        if (!rate) throw new Error('No KRW rate');
+        fx = { rate, asOf: new Date().toISOString(), source: 'frankfurter ' + (json.date || '') };
+        saveFx();
+        return true;
+      } catch (err) {
+        console.error('FX fetch failed', err);
+        return false;
+      }
+    }
+
+    async function ensureFx() {
+      loadFx();
+      if (!fx.rate || (fx.source !== 'manual' && fxAge() > FX_TTL)) {
+        await fetchFx();
+      }
+      renderFxLabel();
+    }
+
+    function renderFxLabel() {
+      const el = document.getElementById('fxRateLabel');
+      if (!fx.rate) {
+        el.textContent = 'unavailable';
+        return;
+      }
+      const ageMin = Math.round(fxAge() / 60000);
+      const src = fx.source === 'manual' ? 'manual' : (ageMin < 60 ? ageMin + 'm ago' : Math.round(ageMin / 60) + 'h ago');
+      el.textContent = '₩' + Number(fx.rate).toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' (' + src + ')';
+    }
+
+    function convert(amount, fromCurr, toCurr) {
+      const a = Number(amount) || 0;
+      if (fromCurr === toCurr) return a;
+      if (!fx.rate) return a;
+      if (fromCurr === 'USD' && toCurr === 'KRW') return a * fx.rate;
+      if (fromCurr === 'KRW' && toCurr === 'USD') return a / fx.rate;
+      return a;
+    }
+
+    function displayCurr() { return currencySelect.value; }
+    function stockCurr(r) { return r.market === 'US' ? 'USD' : 'KRW'; }
+    function entryCurr(r) { return r.currency === 'USD' ? 'USD' : 'KRW'; }
+
+    function fmt(n, curr) {
       if (!isFinite(n)) return '-';
-      const c = currencySelect.value;
+      const c = curr || displayCurr();
       const opts = c === 'KRW' ? { maximumFractionDigits: 0 } : { maximumFractionDigits: 2, minimumFractionDigits: 2 };
       const symbol = c === 'KRW' ? '₩' : '$';
       return symbol + Number(n).toLocaleString('en-US', opts);
     }
 
-    function fmtSigned(n) {
+    function fmtSigned(n, curr) {
       if (!isFinite(n)) return '-';
       const sign = n > 0 ? '+' : '';
-      return sign + fmt(n);
+      return sign + fmt(n, curr);
     }
 
-    function sumSimple(arr) { return arr.reduce((s, r) => s + (Number(r.amount) || 0), 0); }
-    function sumStocks(arr) { return arr.reduce((s, r) => s + (Number(r.shares) || 0) * (Number(r.current) || 0), 0); }
+    function sumSimple(arr, toCurr) {
+      const t = toCurr || displayCurr();
+      return arr.reduce((s, r) => s + convert(Number(r.amount) || 0, entryCurr(r), t), 0);
+    }
+
+    function sumStocks(arr, toCurr) {
+      const t = toCurr || displayCurr();
+      return arr.reduce((s, r) => {
+        const value = (Number(r.shares) || 0) * (Number(r.current) || 0);
+        return s + convert(value, stockCurr(r), t);
+      }, 0);
+    }
 
     function makeCell(text, opts) {
       opts = opts || {};
@@ -610,10 +722,11 @@
         return;
       }
       for (const r of rows) {
+        const c = entryCurr(r);
         const tr = document.createElement('tr');
         tr.appendChild(makeCell(r.name));
         tr.appendChild(makeCell(r.subtype || ''));
-        tr.appendChild(makeCell(fmt(r.amount), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(r.amount, c), { cls: 'num' }));
         tr.appendChild(makeCell(r.note || '', { cls: 'muted' }));
         tr.appendChild(makeDeleteCell(cat, r.id));
         tbody.appendChild(tr);
@@ -624,7 +737,7 @@
       tbody.replaceChildren();
       const rows = data.stocks;
       if (rows.length === 0) {
-        tbody.appendChild(makeEmptyRow(7));
+        tbody.appendChild(makeEmptyRow(8));
         return;
       }
       for (const r of rows) {
@@ -634,13 +747,16 @@
         const value = shares * cur;
         const pl = (cur - cost) * shares;
         const plClass = 'num ' + (pl > 0 ? 'pl-pos' : pl < 0 ? 'pl-neg' : '');
+        const c = stockCurr(r);
+        const marketLabel = r.market === 'US' ? '미장' : '국장';
         const tr = document.createElement('tr');
+        tr.appendChild(makeCell(marketLabel, { cls: 'muted' }));
         tr.appendChild(makeCell(r.name));
         tr.appendChild(makeCell(shares.toLocaleString(), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(cost), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(cur), { cls: 'num' }));
-        tr.appendChild(makeCell(fmt(value), { cls: 'num' }));
-        tr.appendChild(makeCell(fmtSigned(pl), { cls: plClass }));
+        tr.appendChild(makeCell(fmt(cost, c), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(cur, c), { cls: 'num' }));
+        tr.appendChild(makeCell(fmt(value, c), { cls: 'num' }));
+        tr.appendChild(makeCell(fmtSigned(pl, c), { cls: plClass }));
         tr.appendChild(makeDeleteCell('stocks', r.id));
         tbody.appendChild(tr);
       }
@@ -685,6 +801,7 @@
         const fd = new FormData(form);
         const entry = { id: crypto.randomUUID() };
         if (cat === 'stocks') {
+          entry.market = fd.get('market') === 'US' ? 'US' : 'KR';
           entry.name = fd.get('name').trim();
           entry.shares = Number(fd.get('shares'));
           entry.avgCost = Number(fd.get('avgCost'));
@@ -692,6 +809,7 @@
         } else {
           entry.name = fd.get('name').trim();
           entry.subtype = (fd.get('subtype') || '').trim();
+          entry.currency = fd.get('currency') === 'USD' ? 'USD' : 'KRW';
           entry.amount = Number(fd.get('amount'));
           entry.note = (fd.get('note') || '').trim();
         }

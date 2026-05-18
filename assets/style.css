@@ -806,6 +806,22 @@ main section.in-view::before {
   color: #000;
 }
 
+.btn-link-sm {
+  background: none;
+  border: none;
+  color: #858585;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0 4px;
+  text-decoration: underline;
+  text-decoration-color: #d0d0d0;
+}
+
+.btn-link-sm:hover {
+  color: #000;
+}
+
 /* Sync status pill */
 .sync-status {
   font-size: 11px;
@@ -982,16 +998,17 @@ main section.in-view::before {
 /* Inline form */
 .fin-form {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 0.9fr 1.4fr auto;
+  grid-template-columns: 1.4fr 1fr 60px 0.9fr 1.4fr auto;
   gap: 8px;
   margin-bottom: 8px;
 }
 
 .finance-section[data-cat="stocks"] .fin-form {
-  grid-template-columns: 1.4fr 0.9fr 0.9fr 0.9fr auto;
+  grid-template-columns: 90px 1.4fr 0.9fr 0.9fr 0.9fr auto;
 }
 
-.fin-form input {
+.fin-form input,
+.fin-form select {
   font: inherit;
   font-size: 13px;
   padding: 9px 10px;
@@ -1002,7 +1019,8 @@ main section.in-view::before {
   transition: border-color 0.2s ease;
 }
 
-.fin-form input:focus {
+.fin-form input:focus,
+.fin-form select:focus {
   border-color: #000;
 }
 
