@@ -22,11 +22,30 @@
     </div>
   </div>
 
+  <div id="setupScreen" class="lock-screen" style="display:none;">
+    <div class="lock-box setup-box">
+      <h2 class="lock-title">Cloud Sync Setup</h2>
+      <p class="lock-sub">One-time setup per browser. Data syncs across all browsers/devices via your private GitHub gist.</p>
+      <ol class="setup-steps">
+        <li>Create a <b>secret gist</b> at <a href="https://gist.github.com" target="_blank" rel="noopener">gist.github.com</a>. Filename: <code>finance.json</code>, content: <code>{}</code>. Copy the gist ID from the URL.</li>
+        <li>Create a token at <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">github.com/settings/tokens/new</a>. Note: "finance". Expiration: 1 year or no expiration. Scope: check only <b>gist</b>. Copy the <code>ghp_...</code> token.</li>
+      </ol>
+      <form id="setupForm">
+        <input type="text" id="gistIdInput" placeholder="Gist ID" autocomplete="off" required>
+        <input type="password" id="gistTokenInput" placeholder="Personal Access Token (ghp_...)" autocomplete="off" required>
+        <button type="submit">Connect</button>
+        <button type="button" id="skipSetup" class="btn-link">Skip (this browser only)</button>
+      </form>
+      <p id="setupError" class="lock-error"></p>
+    </div>
+  </div>
+
   <div id="app" class="app-hidden">
     <nav>
       <div class="container">
         <div class="nav-name"><a href="/">Bobo's Home</a></div>
         <ul class="nav-links">
+          <li><span id="syncStatus" class="sync-status sync-idle">Local</span></li>
           <li><span id="sessionTimer" class="session-timer"></span></li>
           <li><a href="#" id="lockNow">Lock</a></li>
         </ul>
@@ -230,14 +249,17 @@
         <section>
           <h2>Data</h2>
           <div class="data-actions">
+            <button id="syncNowBtn" class="btn-secondary">Pull from cloud</button>
+            <button id="pushNowBtn" class="btn-secondary">Push to cloud</button>
             <button id="exportBtn" class="btn-secondary">Export JSON</button>
             <label class="btn-secondary">
               Import JSON
               <input type="file" id="importInput" accept="application/json" hidden>
             </label>
+            <button id="disconnectBtn" class="btn-secondary">Disconnect cloud</button>
             <button id="clearBtn" class="btn-danger">Clear all data</button>
           </div>
-          <p class="data-note">All data is stored locally in this browser only. Export regularly to back up.</p>
+          <p class="data-note" id="cloudStatus">Cloud sync: not configured.</p>
         </section>
       </div>
     </main>
@@ -255,13 +277,22 @@
     const SESSION_KEY = 'finance_session';
     const DATA_KEY = 'finance_data';
     const CURR_KEY = 'finance_currency';
+    const CLOUD_KEY = 'finance_cloud_cfg';
+    const GIST_FILE = 'finance.json';
 
     const lockScreen = document.getElementById('lockScreen');
+    const setupScreen = document.getElementById('setupScreen');
     const app = document.getElementById('app');
     const lockForm = document.getElementById('lockForm');
     const lockInput = document.getElementById('lockInput');
     const lockError = document.getElementById('lockError');
     const sessionTimer = document.getElementById('sessionTimer');
+    const syncStatusEl = document.getElementById('syncStatus');
+    const cloudStatusEl = document.getElementById('cloudStatus');
+    const setupForm = document.getElementById('setupForm');
+    const setupError = document.getElementById('setupError');
+    const gistIdInput = document.getElementById('gistIdInput');
+    const gistTokenInput = document.getElementById('gistTokenInput');
 
     async function sha256(text) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -285,16 +316,96 @@
       sessionStorage.removeItem(SESSION_KEY);
     }
 
-    function unlock() {
+    function getCloudCfg() {
+      try {
+        const raw = localStorage.getItem(CLOUD_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch { return null; }
+    }
+
+    function setCloudCfg(cfg) {
+      localStorage.setItem(CLOUD_KEY, JSON.stringify(cfg));
+    }
+
+    function clearCloudCfg() {
+      localStorage.removeItem(CLOUD_KEY);
+    }
+
+    function setSyncStatus(state, text) {
+      syncStatusEl.className = 'sync-status sync-' + state;
+      syncStatusEl.textContent = text;
+    }
+
+    function updateCloudStatusLine() {
+      const cfg = getCloudCfg();
+      if (!cfg) {
+        cloudStatusEl.textContent = 'Cloud sync: not configured. Data lives in this browser only.';
+        setSyncStatus('idle', 'Local');
+      } else {
+        cloudStatusEl.textContent = 'Cloud sync: connected to gist ' + cfg.gistId.slice(0, 8) + '…';
+      }
+    }
+
+    async function gistFetch(cfg) {
+      const res = await fetch('https://api.github.com/gists/' + encodeURIComponent(cfg.gistId), {
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'Bearer ' + cfg.token,
+          'X-GitHub-Api-Version': '2022-11-28'
+        },
+        cache: 'no-store'
+      });
+      if (!res.ok) throw new Error('Gist fetch failed: ' + res.status);
+      const json = await res.json();
+      const file = json.files && (json.files[GIST_FILE] || json.files[Object.keys(json.files)[0]]);
+      if (!file) return null;
+      let content = file.content;
+      if (file.truncated && file.raw_url) {
+        const rr = await fetch(file.raw_url, {
+          headers: { 'Authorization': 'Bearer ' + cfg.token },
+          cache: 'no-store'
+        });
+        content = await rr.text();
+      }
+      if (!content || !content.trim()) return null;
+      return JSON.parse(content);
+    }
+
+    async function gistPush(cfg, payload) {
+      const body = {
+        files: { [GIST_FILE]: { content: JSON.stringify(payload, null, 2) } }
+      };
+      const res = await fetch('https://api.github.com/gists/' + encodeURIComponent(cfg.gistId), {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'Bearer ' + cfg.token,
+          'Content-Type': 'application/json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error('Gist push failed: ' + res.status);
+    }
+
+    async function unlock() {
       lockScreen.style.display = 'none';
+      const cfg = getCloudCfg();
+      if (!cfg) {
+        setupScreen.style.display = 'flex';
+        return;
+      }
       app.classList.remove('app-hidden');
-      renderAll();
       startTimer();
+      updateCloudStatusLine();
+      await pullFromCloud(true);
+      renderAll();
     }
 
     function lock() {
       clearSession();
       app.classList.add('app-hidden');
+      setupScreen.style.display = 'none';
       lockScreen.style.display = 'flex';
       lockInput.value = '';
       lockInput.focus();
@@ -307,12 +418,48 @@
       if (h === PASS_HASH) {
         setSession();
         lockError.textContent = '';
-        unlock();
+        await unlock();
       } else {
         lockError.textContent = 'Wrong passcode.';
         lockInput.value = '';
         lockInput.focus();
       }
+    });
+
+    setupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const gistId = gistIdInput.value.trim();
+      const token = gistTokenInput.value.trim();
+      if (!gistId || !token) return;
+      setupError.textContent = 'Testing connection...';
+      try {
+        const cfg = { gistId, token };
+        const remote = await gistFetch(cfg);
+        setCloudCfg(cfg);
+        setupError.textContent = '';
+        setupScreen.style.display = 'none';
+        app.classList.remove('app-hidden');
+        startTimer();
+        if (remote && typeof remote === 'object' && Object.keys(remote).length > 0) {
+          data = { ...structuredClone(emptyData), ...remote };
+          saveLocal(data);
+        }
+        updateCloudStatusLine();
+        renderAll();
+        if (Object.keys(remote || {}).length === 0) {
+          await pushToCloud();
+        }
+      } catch (err) {
+        setupError.textContent = 'Failed: ' + err.message + '. Check gist ID and token.';
+      }
+    });
+
+    document.getElementById('skipSetup').addEventListener('click', () => {
+      setupScreen.style.display = 'none';
+      app.classList.remove('app-hidden');
+      startTimer();
+      updateCloudStatusLine();
+      renderAll();
     });
 
     let timerId = null;
@@ -333,11 +480,9 @@
 
     document.getElementById('lockNow').addEventListener('click', (e) => { e.preventDefault(); lock(); });
 
-    if (getSession()) unlock();
-
     const emptyData = { deposits: [], stocks: [], other: [], liabilities: [], income: [], expenses: [], updatedAt: null };
 
-    function loadData() {
+    function loadLocal() {
       try {
         const raw = localStorage.getItem(DATA_KEY);
         if (!raw) return structuredClone(emptyData);
@@ -347,12 +492,60 @@
       } catch { return structuredClone(emptyData); }
     }
 
-    function saveData(d) {
-      d.updatedAt = new Date().toISOString();
+    function saveLocal(d) {
       localStorage.setItem(DATA_KEY, JSON.stringify(d));
     }
 
-    let data = loadData();
+    let pushTimer = null;
+    function scheduleCloudPush() {
+      const cfg = getCloudCfg();
+      if (!cfg) { setSyncStatus('idle', 'Local'); return; }
+      setSyncStatus('pending', 'Saving…');
+      if (pushTimer) clearTimeout(pushTimer);
+      pushTimer = setTimeout(() => { pushToCloud(); }, 1200);
+    }
+
+    async function pushToCloud() {
+      const cfg = getCloudCfg();
+      if (!cfg) { setSyncStatus('idle', 'Local'); return; }
+      try {
+        setSyncStatus('pending', 'Saving…');
+        await gistPush(cfg, data);
+        setSyncStatus('ok', 'Synced');
+      } catch (err) {
+        setSyncStatus('error', 'Sync error');
+        console.error('Push failed', err);
+      }
+    }
+
+    async function pullFromCloud(silent) {
+      const cfg = getCloudCfg();
+      if (!cfg) { setSyncStatus('idle', 'Local'); return; }
+      try {
+        setSyncStatus('pending', 'Loading…');
+        const remote = await gistFetch(cfg);
+        if (remote && typeof remote === 'object') {
+          const localUpd = data.updatedAt ? Date.parse(data.updatedAt) : 0;
+          const remoteUpd = remote.updatedAt ? Date.parse(remote.updatedAt) : 0;
+          if (!silent || remoteUpd >= localUpd) {
+            data = { ...structuredClone(emptyData), ...remote };
+            saveLocal(data);
+          }
+        }
+        setSyncStatus('ok', 'Synced');
+      } catch (err) {
+        setSyncStatus('error', 'Sync error');
+        console.error('Pull failed', err);
+      }
+    }
+
+    function saveData(d) {
+      d.updatedAt = new Date().toISOString();
+      saveLocal(d);
+      scheduleCloudPush();
+    }
+
+    let data = loadLocal();
 
     const currencySelect = document.getElementById('currency');
     currencySelect.value = localStorage.getItem(CURR_KEY) || 'KRW';
@@ -557,6 +750,28 @@
       saveData(data);
       renderAll();
     });
+
+    document.getElementById('syncNowBtn').addEventListener('click', async () => {
+      if (!getCloudCfg()) { alert('Cloud sync not configured.'); return; }
+      await pullFromCloud(false);
+      renderAll();
+    });
+
+    document.getElementById('pushNowBtn').addEventListener('click', async () => {
+      if (!getCloudCfg()) { alert('Cloud sync not configured.'); return; }
+      data.updatedAt = new Date().toISOString();
+      saveLocal(data);
+      await pushToCloud();
+    });
+
+    document.getElementById('disconnectBtn').addEventListener('click', () => {
+      if (!getCloudCfg()) { alert('Already disconnected.'); return; }
+      if (!confirm('Disconnect cloud sync on this browser? Your local data stays. Token will be removed.')) return;
+      clearCloudCfg();
+      updateCloudStatusLine();
+    });
+
+    if (getSession()) unlock();
   </script>
 </body>
 </html>
