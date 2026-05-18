@@ -22,7 +22,7 @@ Why do I want to be a VC? KOSPI is a market led by a few conglomerates, and I be
 ```
 
 ```
-My dream is to contribute as much as I can to KOSPI while also seeing that much competition in the coming years. It may not be persuasive that just a few hundred thousand dollars in an early stage startup can impact the market to that extent, but I believe my contribution will be larger the more I focus on the longer game. Mashup Ventures has its legacy of finding ambitious founders and backing them with the best of its abilities. Therefore, I wish to be a strong support in the journey as well.
+My goal is to contribute as much as I can to KOSPI becoming more dynamic, by backing as many challengers against the rankers in the public market. It may not be persuasive that just a few hundred thousand dollars in an early stage startup can impact the market to that extent, but I believe my contribution will be larger the more I focus on the longer game. Mashup Ventures has its legacy of finding ambitious founders and backing them with the best of its abilities. Therefore, I wish to be a strong support in the journey as well.
 ```
 
 ### Creating the Yonsei startup ecosystem
@@ -44,11 +44,11 @@ I already graduated. Now I need to take a break from student activities. It mean
 ### I need a hobby
 
 ```
-Maybe this is what it feels like to become an adult. But my gosh I don't have any hobby I do consistently. Sometimes I chat and drink with current and potential. Sometimes I work on my website. Most of the time I'm just listening to podcasts and reading a16z newsletter. None of them are not-work-related hobbies. It's like I don't have any time detached from work.
+Maybe this is what it feels like to become an adult. But my gosh I don't have any hobby I do consistently. Sometimes I chat and drink with current and potential founders. Sometimes I work on my website. Most of the time I'm just listening to podcasts and reading a16z newsletter. None of them are not-work-related hobbies. It's like I don't have any time detached from work.
 ```
 
 ```
-I used to play games and go to karaoke. I also used to jog and go bouldering. At one point in my life I wanted to try out dancing. None of them have stayed with me anymore (maybe going to PC bangs with my friends sometimes). I need to get a life!
+I used to play games and go to karaoke. I also used to jog and go bouldering. At one point in my life I wanted to try out dancing. None of them do I enjoy anymore. I need to get a life!
 ```
 
 ```
