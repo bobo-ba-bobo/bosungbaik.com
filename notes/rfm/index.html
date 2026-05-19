@@ -262,7 +262,7 @@ p.slide-sub{font-size:15px;color:#888;margin-bottom:36px;letter-spacing:0.01em}
     <div class="guide-card">
       <div class="ico">⌨</div>
       <h4>키보드 단축키</h4>
-      <p><span class="kbd">←</span> <span class="kbd">→</span> 이전/다음 슬라이드<br><span class="kbd">G</span> 용어집 토글<br><span class="kbd">Home</span> 처음으로</p>
+      <p><span class="kbd">←</span> <span class="kbd">→</span> 이전/다음 슬라이드<br><span class="kbd">G</span>/<span class="kbd">ㅎ</span> 용어집 토글<br><span class="kbd">Home</span> 처음으로</p>
     </div>
     <div class="guide-card">
       <div class="ico">⊕</div>
@@ -1521,7 +1521,7 @@ document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT') return;
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
   if (e.key === 'ArrowLeft') prevSlide();
-  if (e.key === 'g' || e.key === 'G') toggleGlossary();
+  if (e.key === 'g' || e.key === 'G' || e.key === 'ㅎ') toggleGlossary();
   if (e.key === 'Home') goTo(0);
   if (e.key === 'End') goTo(total - 1);
   if (e.key === 'Escape') document.getElementById('glossary').classList.remove('open');
