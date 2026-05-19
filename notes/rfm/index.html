@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RFM 글로벌 주요 기업 리서치 | Mashup Ventures</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#0a0a0a;color:#fff;font-family:'Pretendard','Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+body{display:flex;flex-direction:column}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 36px;border-bottom:1px solid #1a1a1a;background:#0a0a0a;z-index:10}
+.brand{font-size:13px;font-weight:600;letter-spacing:0.06em;color:#999}
+.brand b{color:#fff}
+.topbar-right{display:flex;gap:24px;align-items:center;font-size:12px;color:#666}
+.counter{font-variant-numeric:tabular-nums;color:#999}
+.glossary-btn{padding:7px 14px;border:1px solid #2a2a2a;background:transparent;color:#ddd;font-size:12px;cursor:pointer;border-radius:4px;transition:all 0.15s}
+.glossary-btn:hover{background:#1a1a1a;border-color:#444}
+
+.progress-bar{height:2px;background:#1a1a1a;position:relative}
+.progress-fill{height:100%;background:linear-gradient(90deg,#c9a449,#e8c875);transition:width 0.4s ease;width:0%}
+
+.stage{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;padding:48px 80px 60px;overflow-y:auto;animation:slideIn 0.4s ease}
+.slide.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.controls{display:flex;justify-content:space-between;align-items:center;padding:14px 36px;border-top:1px solid #1a1a1a;background:#0a0a0a;z-index:10}
+.nav-btn{padding:8px 16px;border:1px solid #2a2a2a;background:transparent;color:#ddd;font-size:13px;cursor:pointer;border-radius:4px;transition:all 0.15s;font-family:inherit}
+.nav-btn:hover:not(:disabled){background:#1a1a1a;border-color:#555}
+.nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:60%}
+.dot{width:6px;height:6px;border-radius:50%;background:#2a2a2a;cursor:pointer;transition:all 0.15s}
+.dot.active{background:#c9a449;width:18px;border-radius:3px}
+.dot:hover{background:#555}
+
+h1.cover-title{font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px}
+h1.cover-title em{font-style:normal;color:#c9a449}
+h2.slide-title{font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+h2.slide-title .num{color:#c9a449;margin-right:14px;font-weight:600}
+p.slide-sub{font-size:15px;color:#888;margin-bottom:36px;letter-spacing:0.01em}
+.section-tag{display:inline-block;padding:5px 12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;font-size:11px;letter-spacing:0.1em;color:#999;margin-bottom:20px;text-transform:uppercase}
+.region-tag-us{color:#7eb8ff;background:rgba(126,184,255,0.06);border-color:rgba(126,184,255,0.2)}
+.region-tag-cn{color:#ff8a8a;background:rgba(255,138,138,0.06);border-color:rgba(255,138,138,0.2)}
+.region-tag-kr{color:#c9a449;background:rgba(201,164,73,0.08);border-color:rgba(201,164,73,0.25)}
+
+.cover{display:flex;flex-direction:column;justify-content:center;height:100%;max-width:1000px;margin:0 auto}
+.cover-meta{display:flex;gap:32px;margin-top:48px;font-size:13px;color:#888;border-top:1px solid #1a1a1a;padding-top:24px}
+.cover-meta span b{color:#fff;font-weight:600;margin-right:8px}
+
+.tldr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+.tldr-card{padding:24px;background:#111;border:1px solid #222;border-radius:8px}
+.tldr-card .icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#1f1a10;color:#c9a449;border-radius:6px;font-size:14px;font-weight:700;margin-bottom:14px}
+.tldr-card h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.tldr-card p{font-size:13px;color:#999;line-height:1.6}
+.tldr-card b{color:#fff}
+
+.dgm{background:#111;border:1px solid #222;border-radius:8px;padding:32px}
+.rfm-flow{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:24px}
+.rfm-box{flex:1;padding:20px;background:#0a0a0a;border:1px solid #222;border-radius:6px;text-align:center}
+.rfm-box .lbl{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+.rfm-box .val{font-size:14px;color:#fff;font-weight:500;line-height:1.5}
+.rfm-arrow{color:#c9a449;font-size:24px;font-weight:300}
+
+.tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.tech-card{padding:22px;background:#111;border:1px solid #222;border-radius:8px;position:relative;overflow:hidden}
+.tech-card .num{position:absolute;top:14px;right:18px;font-size:48px;font-weight:800;color:#181818;letter-spacing:-0.03em}
+.tech-card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.tech-card .sub{font-size:11px;color:#666;margin-bottom:12px;letter-spacing:0.04em}
+.tech-card p{font-size:13px;color:#aaa;line-height:1.55;margin-bottom:10px}
+.tech-card .examples{font-size:11px;color:#888;padding-top:10px;border-top:1px solid #1f1f1f}
+.tech-card .examples b{color:#c9a449;font-weight:500}
+
+.chal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.chal{padding:24px;background:#111;border:1px solid #222;border-radius:8px}
+.chal-num{font-size:11px;color:#c9a449;font-weight:700;letter-spacing:0.15em;margin-bottom:10px}
+.chal h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.chal p{font-size:13px;color:#999;line-height:1.6}
+.chal .ratio{display:inline-block;padding:4px 10px;background:#1a1a1a;border-radius:4px;font-size:11px;color:#c9a449;margin-top:10px;font-variant-numeric:tabular-nums}
+
+.term{border-bottom:1px dotted #c9a449;cursor:help;color:#e8c875;transition:color 0.15s}
+.term:hover{color:#c9a449}
+
+.market-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:20px}
+.region-box{padding:24px;background:#111;border:1px solid #222;border-radius:8px}
+.region-box h3{font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.region-box h3 .flag{font-size:18px}
+.region-box ul{list-style:none}
+.region-box li{font-size:12px;color:#999;padding:6px 0;border-bottom:1px dotted #1a1a1a;display:flex;justify-content:space-between}
+.region-box li b{color:#fff;font-weight:500}
+.region-box li .v{color:#c9a449;font-variant-numeric:tabular-nums;font-size:11px}
+
+.fchart{padding:24px;background:#111;border:1px solid #222;border-radius:8px}
+.fchart h3{font-size:14px;color:#fff;margin-bottom:18px;display:flex;justify-content:space-between;align-items:baseline}
+.fchart h3 small{font-size:10px;color:#666;font-weight:400}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:12px}
+.bar-name{width:140px;color:#ddd;font-size:12px}
+.bar-track{flex:1;height:22px;background:#0a0a0a;border-radius:3px;overflow:hidden;position:relative;border:1px solid #1a1a1a}
+.bar-fill{height:100%;background:linear-gradient(90deg,#5a4520,#c9a449);position:relative}
+.bar-fill.us{background:linear-gradient(90deg,#1f3a5c,#4a8bce)}
+.bar-fill.cn{background:linear-gradient(90deg,#5c1f1f,#ce4a4a)}
+.bar-fill.kr{background:linear-gradient(90deg,#5a4520,#c9a449)}
+.bar-val{width:80px;text-align:right;color:#fff;font-weight:600;font-variant-numeric:tabular-nums;font-size:12px}
+.bar-tag{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:10px;color:#fff;font-weight:600;letter-spacing:0.05em;mix-blend-mode:luminosity}
+
+.co-header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:18px;border-bottom:1px solid #222;margin-bottom:24px}
+.co-name h2{font-size:42px;font-weight:800;letter-spacing:-0.03em}
+.co-name .nick{font-size:14px;color:#888;margin-top:4px}
+.co-region{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.co-valuation{text-align:right}
+.co-valuation .v{font-size:32px;font-weight:700;color:#c9a449;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.co-valuation .l{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.1em}
+
+.co-body{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.co-facts{background:#111;border:1px solid #222;border-radius:8px;padding:22px}
+.co-facts h4{font-size:11px;color:#888;letter-spacing:0.1em;margin-bottom:12px;text-transform:uppercase}
+.fact-row{display:flex;padding:8px 0;border-bottom:1px dotted #1f1f1f;font-size:13px}
+.fact-row:last-child{border-bottom:0}
+.fact-row .k{width:90px;color:#888;flex-shrink:0}
+.fact-row .v{color:#fff;flex:1;line-height:1.5}
+.co-thesis{background:#111;border:1px solid #222;border-radius:8px;padding:22px}
+.co-thesis h4{font-size:11px;color:#888;letter-spacing:0.1em;margin-bottom:12px;text-transform:uppercase}
+.co-thesis ul{list-style:none}
+.co-thesis li{padding:8px 0 8px 16px;font-size:13px;color:#ccc;line-height:1.6;position:relative;border-bottom:1px dotted #1f1f1f}
+.co-thesis li:last-child{border-bottom:0}
+.co-thesis li:before{content:"▸";position:absolute;left:0;color:#c9a449;font-size:10px;top:9px}
+.co-callout{margin-top:20px;background:#15110a;border:1px solid #2a2316;border-left:3px solid #c9a449;padding:16px 20px;border-radius:4px}
+.co-callout .lbl{font-size:10px;color:#c9a449;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.co-callout p{font-size:13px;color:#ddd;line-height:1.65}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{padding:3px 9px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:11px;font-size:11px;color:#bbb}
+.chip.lead{background:#1f1a10;border-color:#3a2f18;color:#e8c875}
+
+.matrix{margin-top:16px;border:1px solid #222;border-radius:8px;overflow:hidden}
+.matrix-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-bottom:1px solid #1a1a1a}
+.matrix-row:last-child{border-bottom:0}
+.matrix-row.header{background:#0f0f0f;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+.matrix-cell{padding:14px 16px;font-size:13px;color:#ddd;border-right:1px solid #1a1a1a;line-height:1.5}
+.matrix-cell:last-child{border-right:0}
+.matrix-cell b{color:#c9a449;font-weight:500}
+.matrix-cell.fit-high{background:rgba(201,164,73,0.05)}
+.matrix-cell.fit-mid{background:rgba(255,255,255,0.02)}
+
+.compact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.compact-card{background:#111;border:1px solid #222;border-radius:8px;padding:18px}
+.compact-card .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #1f1f1f}
+.compact-card .hd h4{font-size:17px;font-weight:700}
+.compact-card .hd .meta{font-size:11px;color:#888;text-align:right}
+.compact-card .hd .meta b{color:#c9a449;font-weight:500}
+.compact-card p{font-size:12px;color:#aaa;line-height:1.55}
+
+.kr-structure{margin-top:20px;background:#111;border:1px solid #222;border-radius:8px;padding:24px}
+.kr-layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kr-layer{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px;padding:16px}
+.kr-layer .layer-lbl{font-size:10px;color:#c9a449;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.kr-layer .layer-co{font-size:13px;color:#ddd;padding:5px 0}
+.kr-layer .layer-co b{color:#fff}
+.kr-layer .layer-co small{color:#777;display:block;font-size:11px;margin-top:1px}
+
+.takeaways{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+.take{background:#111;border:1px solid #222;border-radius:8px;padding:22px}
+.take .lbl{font-size:11px;color:#c9a449;letter-spacing:0.12em;font-weight:600;margin-bottom:8px;text-transform:uppercase}
+.take h3{font-size:16px;font-weight:600;margin-bottom:10px}
+.take p{font-size:13px;color:#aaa;line-height:1.6}
+.take ul{list-style:none;margin-top:8px}
+.take li{font-size:12px;color:#bbb;padding:5px 0 5px 14px;position:relative;line-height:1.5}
+.take li:before{content:"·";color:#c9a449;position:absolute;left:0;font-weight:700;font-size:14px}
+
+.glossary-panel{position:fixed;top:0;right:-540px;width:540px;height:100%;background:#0d0d0d;border-left:1px solid #2a2a2a;z-index:100;overflow-y:auto;transition:right 0.3s ease;box-shadow:-20px 0 60px rgba(0,0,0,0.5)}
+.glossary-panel.open{right:0}
+.glossary-header{padding:24px 28px;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0d0d0d;z-index:2}
+.glossary-header h3{font-size:18px;font-weight:700}
+.glossary-close{background:transparent;border:0;color:#888;font-size:20px;cursor:pointer;padding:4px 8px}
+.glossary-close:hover{color:#fff}
+.glossary-body{padding:24px 28px}
+.gloss-item{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #1a1a1a}
+.gloss-item:last-child{border-bottom:0}
+.gloss-item h4{font-size:15px;font-weight:700;color:#c9a449;margin-bottom:4px}
+.gloss-item .en{font-size:12px;color:#666;margin-bottom:12px;font-family:'Inter',sans-serif}
+.gloss-item p{font-size:13px;color:#ccc;line-height:1.7;margin-bottom:12px}
+.gloss-item .why{background:#15110a;border-left:3px solid #c9a449;padding:10px 14px;font-size:12px;color:#ddd;border-radius:0 4px 4px 0;line-height:1.6}
+.gloss-item .why b{color:#e8c875}
+.gloss-svg{width:100%;height:auto;margin:14px 0;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:6px;padding:14px}
+
+.tooltip{position:fixed;z-index:200;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:14px 16px;max-width:340px;font-size:12px;color:#ddd;line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,0.6);opacity:0;pointer-events:none;transition:opacity 0.15s;font-family:inherit}
+.tooltip.show{opacity:1}
+.tooltip .tt-title{color:#c9a449;display:block;margin-bottom:6px;font-size:13px;font-weight:700}
+.tooltip .tt-hint{margin-top:8px;padding-top:8px;border-top:1px solid #333;font-size:11px;color:#888}
+.tooltip .tt-hint span{color:#c9a449;cursor:pointer}
+
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.guide-card{background:#111;border:1px solid #222;border-radius:8px;padding:22px}
+.guide-card .ico{font-size:24px;color:#c9a449;margin-bottom:12px}
+.guide-card h4{font-size:14px;font-weight:600;margin-bottom:8px}
+.guide-card p{font-size:12px;color:#888;line-height:1.6}
+.kbd{display:inline-block;padding:2px 7px;background:#1a1a1a;border:1px solid #333;border-radius:3px;font-size:11px;color:#ddd;font-family:'Inter',monospace;margin:0 2px}
+
+.sources{margin-top:32px;padding-top:24px;border-top:1px solid #222;font-size:11px;color:#666}
+.sources b{color:#888;display:block;margin-bottom:8px}
+.sources ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.sources li{padding:3px 0;line-height:1.5}
+
+.mashup-matrix{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mm-box{padding:22px;background:#111;border:1px solid #222;border-radius:8px}
+.mm-box.do{border-left:3px solid #c9a449}
+.mm-box.dont{border-left:3px solid #5a3838;opacity:0.85}
+.mm-box h4{font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mm-box.do h4 span{color:#c9a449}
+.mm-box.dont h4 span{color:#aa6363}
+.mm-box ol{list-style:none;counter-reset:n}
+.mm-box li{counter-increment:n;padding:10px 0 10px 28px;position:relative;font-size:13px;color:#ccc;line-height:1.55;border-bottom:1px dotted #1f1f1f}
+.mm-box li:last-child{border-bottom:0}
+.mm-box li:before{content:counter(n);position:absolute;left:0;top:10px;width:20px;height:20px;background:#1a1a1a;border-radius:50%;text-align:center;line-height:20px;font-size:11px;color:#c9a449;font-weight:700}
+.mm-box.dont li:before{color:#aa6363}
+
+@media (max-width:1100px){
+  .slide{padding:32px 40px}
+  h1.cover-title{font-size:42px}
+  h2.slide-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">MASHUP VENTURES · <b>RFM Research</b></div>
+  <div class="topbar-right">
+    <span class="counter"><span id="cur">1</span> / <span id="total">26</span></span>
+    <button class="glossary-btn" onclick="toggleGlossary()">용어집 열기</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+
+<main class="stage" id="stage">
+
+<section class="slide active">
+  <div class="cover">
+    <div class="section-tag">VC Internal Research · 2026 Q2</div>
+    <h1 class="cover-title">로봇 파운데이션 모델<br>글로벌 주요 기업 <em>리서치</em></h1>
+    <p style="font-size:17px;color:#999;max-width:680px;line-height:1.7;margin-top:8px">미국·중국·한국 RFM 스타트업의 기술, 자본, 사업 모델을 비교하고 Mashup Ventures의 deal sourcing 시사점을 정리한다.</p>
+    <div class="cover-meta">
+      <span><b>작성</b>백보성 (Investment Manager)</span>
+      <span><b>날짜</b>2026-05-19</span>
+      <span><b>대상</b>파트너십 내부 공유용</span>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">읽는 방법</div>
+  <h2 class="slide-title"><span class="num">00</span>이 자료 활용 가이드</h2>
+  <p class="slide-sub">기술 용어가 익숙하지 않더라도 용어집과 툴팁으로 따라올 수 있게 구성했다.</p>
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="ico">⌨</div>
+      <h4>키보드 단축키</h4>
+      <p><span class="kbd">←</span> <span class="kbd">→</span> 이전/다음 슬라이드<br><span class="kbd">G</span> 용어집 토글<br><span class="kbd">Home</span> 처음으로</p>
+    </div>
+    <div class="guide-card">
+      <div class="ico">⊕</div>
+      <h4>점선 밑줄 단어</h4>
+      <p><span class="term" data-term="vla">VLA</span>처럼 점선이 있는 단어에 마우스를 올리면 그래픽과 함께 설명이 뜬다. 우측 상단 <b>용어집</b> 버튼에서도 모아볼 수 있다.</p>
+    </div>
+    <div class="guide-card">
+      <div class="ico">◆</div>
+      <h4>회사 카드 구성</h4>
+      <p>각 회사 슬라이드는 좌측 <b>팩트</b>, 우측 <b>차별점</b>, 하단 <b>Mashup 코멘트</b>로 구성된다. 모든 valuation은 USD 기준 ($1.2B 형식).</p>
+    </div>
+  </div>
+  <div class="dgm" style="margin-top:24px">
+    <h4 style="font-size:11px;color:#888;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px">자료 구성</h4>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;font-size:12px;color:#aaa">
+      <div style="padding:12px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:4px"><b style="color:#c9a449;display:block;font-size:11px;margin-bottom:4px">PART 1</b>RFM 정의와 기술 스택</div>
+      <div style="padding:12px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:4px"><b style="color:#c9a449;display:block;font-size:11px;margin-bottom:4px">PART 2</b>미국 RFM 기업 (PI, Skild, Figure, 1X 외)</div>
+      <div style="padding:12px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:4px"><b style="color:#c9a449;display:block;font-size:11px;margin-bottom:4px">PART 3</b>중국 RFM 기업 (Unitree, AgiBot, Galbot)</div>
+      <div style="padding:12px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:4px"><b style="color:#c9a449;display:block;font-size:11px;margin-bottom:4px">PART 4</b>한국 RFM 기업 (5개사 심화)</div>
+      <div style="padding:12px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:4px"><b style="color:#c9a449;display:block;font-size:11px;margin-bottom:4px">PART 5</b>Mashup 시사점과 결론</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">Executive Summary</div>
+  <h2 class="slide-title"><span class="num">01</span>한눈에 보기</h2>
+  <p class="slide-sub">파트너 미팅용 한 페이지 요약. 세부 데이터는 이후 슬라이드에서 다룬다.</p>
+  <div class="tldr-grid">
+    <div class="tldr-card">
+      <div class="icon">$</div>
+      <h3>자본 집중도가 LLM 초기와 닮았다</h3>
+      <p>Figure AI는 18개월 만에 valuation이 <b>$2.6B → $39B</b>로 15배 점프했고, Physical Intelligence는 <b>$11B</b> 라운드 협상 중, Skild AI는 <b>$14B</b>. 2026년 1분기에만 $50M 이상 라운드를 클로징한 Physical AI 스타트업이 27곳에 달한다.</p>
+    </div>
+    <div class="tldr-card">
+      <div class="icon">三</div>
+      <h3>사업 모델은 세 갈래</h3>
+      <p>(1) <b>모델 전용형</b> = Physical Intelligence, Skild, RLWRLD. (2) <b>하드웨어 수직통합형</b> = Figure, 1X, Apptronik, Tesla, 중국 휴머노이드 전체. (3) <b>데이터 인프라형</b> = Config, Carbon Robotics. 한국 진입 가능성은 (3)이 가장 높다.</p>
+    </div>
+    <div class="tldr-card">
+      <div class="icon">한</div>
+      <h3>한국에 RFM 스타트업이 다섯 곳 이상</h3>
+      <p><b>RLWRLD</b>(누적 $42M), <b>Config</b>(누적 $35M, $200M+ valuation), <b>Carbon6</b>(시드 $6M), <b>WIRobotics</b>(시리즈 B $70M), <b>Holiday Robotics</b>. 정부는 2026-05에 504억 원 'K-Humanoid' 사업을 출범했다.</p>
+    </div>
+    <div class="tldr-card">
+      <div class="icon">中</div>
+      <h3>중국은 출하량으로 압도</h3>
+      <p>AgiBot은 2025년 휴머노이드 <b>5,168대 출하</b>로 글로벌 1위. Unitree는 2026년 <b>20,000대 양산</b> 목표. 미국이 모델 R&D를 주도하면, 중국은 하드웨어 양산과 가격으로 글로벌 표준 자리를 노린다.</p>
+    </div>
+    <div class="tldr-card">
+      <div class="icon">M</div>
+      <h3>Mashup 우선순위</h3>
+      <p>범용 RFM 자체 개발은 한국 VC 단독 라운드로 감당 어려운 영역으로 분류. <b>도메인 application 레이어</b>(반도체/배터리/디스플레이 후공정), <b>데이터 수집/시뮬레이션 툴링</b>, <b>안전성·평가 인프라</b>가 자본 효율적이다.</p>
+    </div>
+    <div class="tldr-card">
+      <div class="icon">⚑</div>
+      <h3>2026 하반기 관찰 지표</h3>
+      <p>(1) Figure 03 / 1X NEO 양산 출하, (2) Physical Intelligence π0.7 실사용 검증, (3) RLWRLD RLDX-1 산업 deployment, (4) Config RaaS 출시, (5) K-Humanoid 컨소시엄 deal flow.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 1 · 기술 개념</div>
+  <h2 class="slide-title"><span class="num">02</span>RFM이란 무엇인가</h2>
+  <p class="slide-sub">한 문장 정의 + 입출력 구조 + 학습 데이터.</p>
+
+  <div class="dgm">
+    <p style="font-size:16px;color:#ddd;line-height:1.7;max-width:920px">
+      <b style="color:#c9a449">로봇 파운데이션 모델(Robot Foundation Model)</b>은 대규모 다중 모달 데이터로 사전학습된 단일 정책 모델이다. LLM이 "텍스트 in → 텍스트 out"이라면, RFM은 "<span class="term" data-term="multimodal">영상+언어 in</span> → <span class="term" data-term="action">로봇 행동 out</span>"이다. 2024년 3월 Covariant의 RFM-1 공개를 기점으로 용어가 대중화되었다.
+    </p>
+    <div class="rfm-flow">
+      <div class="rfm-box">
+        <div class="lbl">INPUT</div>
+        <div class="val">RGB-D 카메라 영상<br>자연어 명령<br>관절 상태값 (<span class="term" data-term="proprioception">proprioception</span>)</div>
+      </div>
+      <div class="rfm-arrow">→</div>
+      <div class="rfm-box" style="border-color:#3a2f18;background:#15110a">
+        <div class="lbl" style="color:#c9a449">RFM 모델</div>
+        <div class="val">사전학습된<br>단일 정책<br>(Transformer / Diffusion)</div>
+      </div>
+      <div class="rfm-arrow">→</div>
+      <div class="rfm-box">
+        <div class="lbl">OUTPUT</div>
+        <div class="val">관절 토크/속도<br>엔드이펙터 궤적<br>다음 행동 토큰</div>
+      </div>
+    </div>
+    <p style="margin-top:20px;padding-top:18px;border-top:1px solid #222;font-size:13px;color:#999;line-height:1.6">
+      <b style="color:#fff">학습 데이터의 3대 출처</b><br>
+      ① <span class="term" data-term="teleop">텔레오퍼레이션</span> 시연(사람이 원격조종) ② 시뮬레이션 (Isaac Sim, MuJoCo) ③ 인터넷 영상 (YouTube의 사람 동작)
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 1 · 기술 스택</div>
+  <h2 class="slide-title"><span class="num">03</span>RFM 아키텍처 4분류</h2>
+  <p class="slide-sub">현재 시장에는 크게 네 가지 모델 아키텍처가 경쟁한다.</p>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <span class="num">01</span>
+      <h3><span class="term" data-term="vla">VLA</span> (Vision-Language-Action)</h3>
+      <div class="sub">단일 Transformer · End-to-end</div>
+      <p>영상 + 언어 명령을 토큰화해서 행동 토큰을 출력. ChatGPT의 로봇 버전에 가깝다. 가장 직관적이지만 빠른 추론(예: 30Hz 모터제어)에는 부족할 수 있다.</p>
+      <div class="examples">대표: <b>Google RT-2, Figure Helix, OpenVLA</b></div>
+    </div>
+    <div class="tech-card">
+      <span class="num">02</span>
+      <h3><span class="term" data-term="diffusion">Diffusion Policy</span></h3>
+      <div class="sub">확산 모델 기반 · 다중 모달 분포 표현</div>
+      <p>이미지 생성 AI(Stable Diffusion)와 같은 원리로 "노이즈에서 점차 깎아내는" 방식의 행동을 생성. 한 상황에 가능한 여러 동작을 동시에 표현할 수 있어 정밀 조작에 강하다.</p>
+      <div class="examples">대표: <b>TRI Diffusion Policy, Physical Intelligence π0</b></div>
+    </div>
+    <div class="tech-card">
+      <span class="num">03</span>
+      <h3>계층형 (Hierarchical)</h3>
+      <div class="sub">System 1 + System 2 분리</div>
+      <p>큰 VLM(시각언어모델)이 추론·계획, 작은 모터 정책이 실시간 제어. 인간 두뇌의 빠른 직관과 느린 사고 분리에 비유. Figure가 대표적으로 채택.</p>
+      <div class="examples">대표: <b>Figure Helix, NVIDIA GR00T, π0.5</b></div>
+    </div>
+    <div class="tech-card">
+      <span class="num">04</span>
+      <h3>월드 모델 기반</h3>
+      <div class="sub">환경 시뮬레이션 학습 → 정책 미세조정</div>
+      <p>먼저 "세상이 어떻게 변하는지"를 학습한 후 그 위에서 정책을 학습. 데이터 효율은 좋지만 실세계 적용까지 단계가 많다.</p>
+      <div class="examples">대표: <b>World Labs (Fei-Fei Li), DeepMind Genie, Sakana</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 1 · 시장 진단</div>
+  <h2 class="slide-title"><span class="num">04</span>RFM이 풀어야 할 4대 난제</h2>
+  <p class="slide-sub">아직 GPT 모먼트가 오지 않은 이유.</p>
+
+  <div class="chal-grid">
+    <div class="chal">
+      <div class="chal-num">CHALLENGE 01</div>
+      <h3>데이터 부족</h3>
+      <p>LLM 학습 데이터(수십 TB 텍스트)에 비해 로봇 학습 데이터는 6-7자릿수 부족하다. RT-X 공개 데이터셋이 100만 trajectory, π0 학습량은 약 1만 시간 수준.</p>
+      <div class="ratio">LLM ÷ RFM 데이터량 ≈ 10⁶ ~ 10⁷</div>
+    </div>
+    <div class="chal">
+      <div class="chal-num">CHALLENGE 02</div>
+      <h3><span class="term" data-term="sim2real">Sim2Real Gap</span></h3>
+      <p>시뮬레이터에서 잘 작동하는 정책이 실제 로봇에서는 무너진다. 시뮬레이터가 표현하지 못하는 마찰, 진동, 센서 노이즈가 원인. Domain Randomization으로 부분 해결.</p>
+      <div class="ratio">Sim 성공률 95% → Real 60% 흔함</div>
+    </div>
+    <div class="chal">
+      <div class="chal-num">CHALLENGE 03</div>
+      <h3><span class="term" data-term="embodiment">Embodiment Gap</span></h3>
+      <p>A 로봇에서 학습한 모델이 B 로봇 폼팩터에서 작동하지 않는 문제. 손가락 개수, 팔 길이, 카메라 위치가 달라지면 새로 학습해야 한다. 'One brain for any body'가 업계 성배.</p>
+      <div class="ratio">Skild AI / PI의 핵심 thesis</div>
+    </div>
+    <div class="chal">
+      <div class="chal-num">CHALLENGE 04</div>
+      <h3>장기 자율성 · 자가 보정</h3>
+      <p>1-3분짜리 태스크는 시연 데이터로 가능하지만, 1시간짜리 자율 작업은 어렵다. 중간에 실패해도 스스로 복구하는 능력이 미해결.</p>
+      <div class="ratio">현재 평균 자율 작동 시간 &lt; 10분</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 1 · 시장 개요</div>
+  <h2 class="slide-title"><span class="num">05</span>글로벌 시장 지형도</h2>
+  <p class="slide-sub">2026 Q2 기준 자본 집중도와 주요 플레이어 분포.</p>
+
+  <div class="market-grid">
+    <div class="region-box">
+      <h3><span style="color:#7eb8ff">🇺🇸</span> 미국 · 모델/하드웨어 동시 주도</h3>
+      <ul>
+        <li><b>Physical Intelligence</b><span class="v">$11B</span></li>
+        <li><b>Skild AI</b><span class="v">$14B</span></li>
+        <li><b>Figure AI</b><span class="v">$39B</span></li>
+        <li><b>1X Technologies</b><span class="v">$10B+</span></li>
+        <li><b>Apptronik</b><span class="v">$350M Series A</span></li>
+        <li><b>Covariant</b><span class="v">Amazon 인수 (2024)</span></li>
+        <li><b>Tesla Optimus</b><span class="v">상장사 내부 사업</span></li>
+        <li><b>Carbon Robotics</b><span class="v">농업 특화 RFM</span></li>
+      </ul>
+    </div>
+    <div class="region-box">
+      <h3><span style="color:#ff8a8a">🇨🇳</span> 중국 · 출하량 압도</h3>
+      <ul>
+        <li><b>AgiBot (智元)</b><span class="v">$5.1-6.4B IPO 목표</span></li>
+        <li><b>Unitree</b><span class="v">$3B → $7B IPO</span></li>
+        <li><b>Galbot (银河通用)</b><span class="v">$3B</span></li>
+        <li><b>Fourier Intelligence</b><span class="v">출하 상위권</span></li>
+        <li><b>UBTech</b><span class="v">홍콩 상장</span></li>
+        <li><b>XPENG Iron</b><span class="v">자동차 OEM 휴머노이드</span></li>
+        <li><b>LimX Dynamics</b><span class="v">초기</span></li>
+      </ul>
+      <p style="margin-top:12px;padding-top:12px;border-top:1px solid #1f1f1f;font-size:11px;color:#888;line-height:1.5">2025년 글로벌 휴머노이드 출하 약 13,000대 중 AgiBot 단독 <b style="color:#fff">5,168대 (40%)</b>.</p>
+    </div>
+  </div>
+
+  <div class="market-grid" style="grid-template-columns:1fr 1fr;margin-top:14px">
+    <div class="region-box" style="border-color:#3a2f18;background:#15110a">
+      <h3><span style="color:#c9a449">🇰🇷</span> 한국 · 산업 dexterity와 데이터 인프라 강세</h3>
+      <ul>
+        <li><b>RLWRLD</b><span class="v">누적 $42M · Seed 2 완료</span></li>
+        <li><b>Config (한국계 미국)</b><span class="v">누적 $35M · $200M+</span></li>
+        <li><b>Carbon6 (카본식스)</b><span class="v">시드 $6M</span></li>
+        <li><b>WIRobotics</b><span class="v">시리즈 B ~$70M (950억 원)</span></li>
+        <li><b>Holiday Robotics</b><span class="v">2024 설립, Sua Lab 창업자</span></li>
+        <li><b>네이버랩스 + D2SF 포트폴리오</b><span class="v">Clobot, Chameleon 외</span></li>
+        <li><b>현대차 + Boston Dynamics + RAI Inst.</b><span class="v">그룹사 R&D</span></li>
+      </ul>
+    </div>
+    <div class="fchart">
+      <h3>주요 RFM 기업 Valuation <small>USD, 2026 Q2 기준</small></h3>
+      <div class="bar-row"><div class="bar-name">Figure AI 🇺🇸</div><div class="bar-track"><div class="bar-fill us" style="width:100%"></div><div class="bar-tag">$39B</div></div><div class="bar-val">$39B</div></div>
+      <div class="bar-row"><div class="bar-name">Skild AI 🇺🇸</div><div class="bar-track"><div class="bar-fill us" style="width:36%"></div><div class="bar-tag">$14B</div></div><div class="bar-val">$14B</div></div>
+      <div class="bar-row"><div class="bar-name">Physical Intelligence 🇺🇸</div><div class="bar-track"><div class="bar-fill us" style="width:28%"></div><div class="bar-tag">$11B</div></div><div class="bar-val">$11B</div></div>
+      <div class="bar-row"><div class="bar-name">1X Technologies 🇺🇸</div><div class="bar-track"><div class="bar-fill us" style="width:26%"></div><div class="bar-tag">$10B</div></div><div class="bar-val">$10B</div></div>
+      <div class="bar-row"><div class="bar-name">AgiBot 🇨🇳</div><div class="bar-track"><div class="bar-fill cn" style="width:15%"></div><div class="bar-tag">$5-6B</div></div><div class="bar-val">$6B</div></div>
+      <div class="bar-row"><div class="bar-name">Unitree 🇨🇳</div><div class="bar-track"><div class="bar-fill cn" style="width:8%"></div><div class="bar-tag">$3B</div></div><div class="bar-val">$3B</div></div>
+      <div class="bar-row"><div class="bar-name">Galbot 🇨🇳</div><div class="bar-track"><div class="bar-fill cn" style="width:8%"></div><div class="bar-tag">$3B</div></div><div class="bar-val">$3B</div></div>
+      <div class="bar-row"><div class="bar-name">Config 🇰🇷</div><div class="bar-track"><div class="bar-fill kr" style="width:0.5%"></div><div class="bar-tag">$0.2B</div></div><div class="bar-val">$0.2B</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-us">🇺🇸 PART 2 · 미국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Physical Intelligence</h2>
+      <div class="nick">PI · π · 모델 전용형 본진</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$11B</div>
+        <div class="l">2026-04 라운드 협상가</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2024 · 샌프란시스코</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">Sergey Levine, Chelsea Finn, Karol Hausman 외 (Stanford/UC Berkeley/Google)</span></div>
+      <div class="fact-row"><span class="k">모델</span><span class="v">π0 (2024) → π0.5 (2025-04) → π0.7 (2026-04)</span></div>
+      <div class="fact-row"><span class="k">누적 투자</span><span class="v">$1.5B (현재 $1B 추가 라운드 진행 중)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">Founders Fund</span><span class="chip">Lightspeed</span><span class="chip">Thrive</span><span class="chip">Lux</span><span class="chip">Bezos Expeditions</span><span class="chip">OpenAI Fund</span></div></span></div>
+      <div class="fact-row"><span class="k">사업 모델</span><span class="v">하드웨어 비제조, 다양한 로봇 폼팩터에 정책 transfer</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>모델 전용형 노선의 본진. ARX-5, Trossen, Franka 등 다양한 폼팩터에 동일 정책을 transfer한다. <span class="term" data-term="embodiment">embodiment gap</span> 해결이 핵심 thesis.</li>
+        <li>π0.5는 한 번도 본 적 없는 가정 환경(낯선 부엌)에서 음성 명령 1회로 청소 태스크를 시연했다.</li>
+        <li>π0.7(2026-04)은 학습 데이터에 단 2회 등장한 에어프라이어를 조작하는 <span class="term" data-term="compgen">compositional generalization</span>을 입증.</li>
+        <li>valuation이 4개월 만에 $5.6B → $11B로 2배 점프. LLM 초기 OpenAI valuation 곡선과 흡사.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>한국 LP/CVC가 직접 진입하기 어려운 라운드 사이즈. 다만 π 모델을 한국 산업 로봇에 fine-tuning하는 <b>application 레이어 스타트업</b>이 향후 deal flow의 핵심. PI는 SDK/API 형태의 모델 접근권을 어떻게 풀지가 변수다.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-us">🇺🇸 PART 2 · 미국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Skild AI</h2>
+      <div class="nick">One brain, any body · CMU 스핀오프</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$14B</div>
+        <div class="l">2025년 라운드 기준</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2023 · 피츠버그/팔로알토</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">Deepak Pathak, Abhinav Gupta (CMU 로보틱스 교수)</span></div>
+      <div class="fact-row"><span class="k">모델</span><span class="v">Skild Brain (범용 액션 폴리시)</span></div>
+      <div class="fact-row"><span class="k">누적 투자</span><span class="v">$1.4B (시리즈 A 기준)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">SoftBank</span><span class="chip lead">NVIDIA</span><span class="chip">Lightspeed</span><span class="chip">Coatue</span><span class="chip">Bezos Expeditions</span></div></span></div>
+      <div class="fact-row"><span class="k">사업 모델</span><span class="v">하드웨어 OEM 전반과 파트너십, 직접 제조 없음</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>"One brain, any body" 슬로건. 휴머노이드/4족/매니퓰레이터를 가리지 않는 범용 정책 표방.</li>
+        <li>CMU의 <span class="term" data-term="ssl">self-supervised learning</span> 연구 자산 기반. 인터넷 영상에서 motor skill을 추출하는 접근.</li>
+        <li>SoftBank Pepper, Boston Dynamics 등 OEM 파트너십 가능성. NVIDIA는 GR00T와 Skild 양쪽에 다 베팅.</li>
+        <li>리스크: valuation 대비 검증 가능한 상용 deployment는 아직 제한적. 2026년 하반기 첫 enterprise pilot 공개 여부가 분기점.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>PI 대비 시연 횟수가 적어 기술 검증이 부족하다는 평가가 있다. 다만 SoftBank-NVIDIA 양강 백킹으로 자본 압박은 가장 약하다. 한국 진입 가능성은 SoftBank Korea 채널이 유일.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-us">🇺🇸 PART 2 · 미국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Figure AI</h2>
+      <div class="nick">Helix · 18개월 만에 15배 valuation</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$39B</div>
+        <div class="l">2025-09 시리즈 후속</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2022 · 서니베일</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">Brett Adcock (前 Archer Aviation 창업)</span></div>
+      <div class="fact-row"><span class="k">제품</span><span class="v">Figure 02 휴머노이드 + 자체 RFM <b>Helix</b>(2024) → Helix 02 (2026-01)</span></div>
+      <div class="fact-row"><span class="k">누적 투자</span><span class="v">$675M 시리즈 B + 2025년 후속 라운드</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">Microsoft</span><span class="chip lead">NVIDIA</span><span class="chip">Bezos</span><span class="chip">Intel Capital</span><span class="chip">Parkway Venture</span></div></span></div>
+      <div class="fact-row"><span class="k">상용 사례</span><span class="v">BMW 차체 조립 라인 파일럿</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>2024년 OpenAI 협력 결별 후 자체 RFM Helix로 선회. <span class="term" data-term="hier">계층형 아키텍처</span> (System 1 모터 제어 + System 2 VLM 추론).</li>
+        <li>Helix 02(2026-01)는 상체 한정에서 전신 제어로 확장. 이족 보행 + 정밀 조작 통합.</li>
+        <li>수직통합형 대표. Figure 02 자체 제조 + Helix 자체 학습 + BMW 등 직접 deployment.</li>
+        <li>리스크: valuation이 18개월 만에 15배 상승. 실제 매출 가시화 전까지 valuation 정당화 압력이 누적.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>Brett Adcock의 마케팅 색채가 강해 demo 영상과 실제 deployment 사이 갭이 가장 큰 회사로 평가된다. 다만 자본 화력과 BD 능력은 최강. 한국 자동차 OEM(현대) 라인 진입 시점이 분기점.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-us">🇺🇸 PART 2 · 미국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>1X Technologies</h2>
+      <div class="nick">NEO · 가정용 휴머노이드의 유일 베팅</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$10B+</div>
+        <div class="l">2025-09 라운드 협상</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2014 · 팔로알토 + 노르웨이 모스(제조), 前 Halodi Robotics</span></div>
+      <div class="fact-row"><span class="k">제품</span><span class="v">NEO 가정용 휴머노이드 ($20,000 사전예약)</span></div>
+      <div class="fact-row"><span class="k">RFM</span><span class="v">자체 모델 'Redwood' 개발 중</span></div>
+      <div class="fact-row"><span class="k">누적 투자</span><span class="v">$150M+ ($1B 라운드 협상 중)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">OpenAI Startup Fund</span><span class="chip">Tiger Global</span><span class="chip">Samsung NEXT</span></div></span></div>
+      <div class="fact-row"><span class="k">출하 계획</span><span class="v">2026년 사전예약자 대상 가정 배송 시작</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>가정용 use case에 베팅한 유일한 메이저 휴머노이드. 산업/물류가 아닌 home robot 시장 선점 시도.</li>
+        <li><span class="term" data-term="tendon">텐던 구동(tendon drive)</span> 메커니즘. 모터를 관절에서 분리하여 인간과의 접촉 안전성 확보.</li>
+        <li>2025-12 가정용 휴머노이드를 공장/물류 환경에도 deploy하는 계약 체결. 가정-산업 양면 전략.</li>
+        <li>Samsung NEXT가 투자자에 포함되어 있어 한국 가전 채널 활용 가능성.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>가정용 RFM 시장은 안전성/규제 측면 진입 장벽이 가장 높다. 2026년 첫 가정 배송 결과가 시장 전체 thesis를 흔들 수 있다. NEO 양산 가격이 $20,000인데 BOM/이익률은 미공개라 진실 검증 필요.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-us">🇺🇸 PART 2 · 미국 RFM 기업</div>
+  <h2 class="slide-title"><span class="num">09</span>미국 기타 주요 기업</h2>
+  <p class="slide-sub">상위 4사 외 주목할 미국 기업 4곳.</p>
+
+  <div class="compact-grid">
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Apptronik</h4>
+        <div class="meta"><b>$350M</b> 시리즈 A · 오스틴<br>UT Austin Human Centered Robotics Lab 스핀오프</div>
+      </div>
+      <p>휴머노이드 <b>Apollo</b> 제작. Google DeepMind와 정식 공동개발 계약으로 Gemini 기반 RFM을 Apollo에 통합한다. Mercedes-Benz 생산 라인에서 부품 운반 태스크 실증. NASA Valkyrie 휴머노이드 기술자산을 보유한 점이 다른 신생 휴머노이드와 차별점.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Covariant</h4>
+        <div class="meta"><b>Amazon 인수</b> (2024-08)<br>Pieter Abbeel (UC Berkeley) 창업</div>
+      </div>
+      <p>2024년 3월 <b>RFM-1</b>을 공개하며 "RFM"이라는 용어 자체를 대중화한 회사. 2024년 8월 핵심 인력과 RFM 기술이 Amazon으로 흡수되었고, 잔존 법인은 라이선스 사업만 유지. Amazon FC 무인화에 RFM-1 후속 모델이 적용될 가능성.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Carbon Robotics</h4>
+        <div class="meta">시애틀 · <b>농업 특화 RFM</b><br>제품: LaserWeeder G2</div>
+      </div>
+      <p>휴머노이드가 아닌 농업 특화 도메인 RFM의 대표 사례. <b>Large Plant Model</b>은 100여 농장에서 수집한 1.5억 장 식물 이미지로 학습. 새 잡초 종을 발견하면 iPad에서 24시간 → 수 분으로 재학습이 가능. 농가 인건비 절감으로 ROI 가시화가 가장 빠른 RFM 회사. <i style="color:#888">※ 한국 카본식스(Carbon6)와는 완전히 별개 회사</i></p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Tesla Optimus</h4>
+        <div class="meta">상장사 내부 사업부<br>FSD 자율주행 스택 전용</div>
+      </div>
+      <p>별도 모델 명칭 발표는 없으나 <b>FSD</b> 자율주행 스택을 휴머노이드 모터 제어에 전용. 2025년 사내 시연에서 의류 접기, 보행 안정성 진전. 가장 큰 차별점은 <b>제조 능력</b>으로, Optimus를 2026-2027년 연 1만 대 양산할 경우 학습 데이터 수집 규모에서 우위.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-cn">🇨🇳 PART 3 · 중국 RFM 기업</div>
+  <h2 class="slide-title"><span class="num">10</span>중국 시장 개요 · 출하량으로 표준 자리 노리기</h2>
+  <p class="slide-sub">미국이 모델 R&D를 주도하면, 중국은 하드웨어 양산과 가격으로 글로벌 표준을 노린다.</p>
+
+  <div class="dgm">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;text-align:center">
+      <div style="padding:20px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px">
+        <div style="font-size:32px;color:#ff8a8a;font-weight:800;letter-spacing:-0.03em">13,000</div>
+        <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-top:4px">2025년 글로벌 휴머노이드 출하량</div>
+      </div>
+      <div style="padding:20px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px">
+        <div style="font-size:32px;color:#ff8a8a;font-weight:800;letter-spacing:-0.03em">5,168</div>
+        <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-top:4px">AgiBot 단독 출하량 (40%)</div>
+      </div>
+      <div style="padding:20px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px">
+        <div style="font-size:32px;color:#ff8a8a;font-weight:800;letter-spacing:-0.03em">36×</div>
+        <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-top:4px">Unitree vs US 경쟁사 출하 격차</div>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:13px;color:#aaa;line-height:1.7">
+      중국 시장의 특징은 <b style="color:#fff">하드웨어 BOM 가격</b>이 미국 대비 1/3-1/5 수준이라는 점이다. Unitree G1은 16,000달러대로, 미국 휴머노이드의 1/3 가격에 판매된다. 자체 RFM 개발은 미국 대비 후발이나, 글로벌 연구실의 표준 하드웨어가 되면서 데이터 수집 채널을 장악하는 전략이다.
+      <br><br>
+      <b style="color:#fff">자본 구도</b>: AgiBot은 텐센트/세콰이아 차이나, Unitree는 메이투안/HongShan, Galbot은 베이징대 발 + 정부 자본. 미국 빅테크 자본이 거의 없는 대신 중국 정부와 인터넷 대기업이 패키지로 들어간다.
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-cn">🇨🇳 PART 3 · 중국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>AgiBot · 智元机器人</h2>
+      <div class="nick">2025년 휴머노이드 글로벌 출하 1위</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$5-6B</div>
+        <div class="l">2026 홍콩 IPO 목표</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2023 · 상하이</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">邓泰华 (Deng Taihua), 彭志辉 (Peng Zhihui) - 전 Huawei 엔지니어</span></div>
+      <div class="fact-row"><span class="k">제품 라인</span><span class="v">Yuanzheng A2 / A2-Max / A2-W (산업용) · Lingxi X1 / X2 (서비스)</span></div>
+      <div class="fact-row"><span class="k">누적 투자</span><span class="v">$83.8M (8라운드, 2년)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">Tencent</span><span class="chip lead">Sequoia China</span><span class="chip">상하이 정부</span><span class="chip">화웨이 OB</span></div></span></div>
+      <div class="fact-row"><span class="k">2025 출하</span><span class="v">5,168대 (글로벌 휴머노이드 출하 1위, 점유율 약 40%)</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>2026 하반기 홍콩 IPO를 통해 $5-6B 시가총액 목표. 중국 휴머노이드 최초의 대규모 IPO.</li>
+        <li>Pepsi가 A2를 첫 로봇 브랜드 앰배서더로 임명. B2C 마케팅 자산화 시도.</li>
+        <li>창업자 彭志辉(Peng Zhihui)는 화웨이 출신 천재 엔지니어로 'GenJi科技' 시절부터 알려진 인플루언서. 중국 내 인재 흡인력이 강하다.</li>
+        <li>리스크: 미-중 기술 규제, 미국향 데이터 액세스 제한.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>한국 LP가 직접 진입할 라운드는 아니나, AgiBot이 한국 제조업(현대차/LG/삼성)에 진입을 시도할 경우 한국 SI 파트너 deal flow가 발생할 수 있다. 미-중 갈등 변수로 인해 한국이 의도치 않게 우회 채널이 될 가능성도 모니터링 필요.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-cn">🇨🇳 PART 3 · 중국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Unitree Robotics · 宇树科技</h2>
+      <div class="nick">G1 휴머노이드 $16,000 · 글로벌 연구실 표준</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$3B → $7B</div>
+        <div class="l">시리즈 C → STAR Market IPO 목표</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2016 · 항저우</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">王兴兴 (Wang Xingxing)</span></div>
+      <div class="fact-row"><span class="k">제품</span><span class="v">G1 휴머노이드 ($16,000) · H1 · Go2 4족</span></div>
+      <div class="fact-row"><span class="k">IPO</span><span class="v">2026 상하이 STAR Market 상장 추진, $608M (4,045만 주) 모집</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip">메이투안</span><span class="chip">HongShan</span><span class="chip">상하이 정부</span></div></span></div>
+      <div class="fact-row"><span class="k">2026 양산 목표</span><span class="v">20,000대 (글로벌 휴머노이드 시장 점유율 50%+)</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li><b>가격 경쟁력 압도</b>. G1 16,000달러대는 미국 휴머노이드 1/3 가격. 글로벌 대학 연구실/스타트업의 사실상 표준 하드웨어.</li>
+        <li>자체 RFM 개발은 후발이지만, 하드웨어 보급률로 <b>데이터 수집 채널 장악</b> 전략. Hugging Face LeRobot 등 오픈소스 RFM이 Unitree 기반.</li>
+        <li>2026년 IPO 성공 시 중국 휴머노이드 ETF(KOID 등)와 STAR Market ETF(KSTR)의 핵심 종목.</li>
+        <li>리스크: 단순 하드웨어 회사로 분류되어 RFM 회사 valuation 프리미엄 받기 어려움.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>Unitree는 그 자체가 deal 대상이 아니다. 다만 G1/H1 위에 한국 산업 데이터로 fine-tuning하는 application 회사는 deal sourcing이 된다. 한국 연구실에서 가장 많이 쓰는 휴머노이드가 Unitree라는 사실이 시사하는 바가 크다.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-cn">🇨🇳 PART 3 · 중국 RFM 기업</div>
+  <h2 class="slide-title"><span class="num">13</span>중국 기타 주요 기업</h2>
+  <p class="slide-sub">Galbot, Fourier, UBTech, XPENG Iron 등.</p>
+
+  <div class="compact-grid">
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Galbot · 银河通用</h4>
+        <div class="meta"><b>$3B</b> valuation · <b>$300M+</b> raised<br>베이징 · 베이징대 발</div>
+      </div>
+      <p>왕허(王鹤) 교수(베이징대) 창업. 시뮬레이션 기반 학습을 통한 비용 효율 RFM이 thesis. 중국 휴머노이드 영역에서 가장 큰 단일 라운드 중 하나를 클로징. 모델 전용형 노선.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Fourier Intelligence</h4>
+        <div class="meta">상하이 · 출하 상위권<br>GR-1 / GR-2 휴머노이드</div>
+      </div>
+      <p>의료 재활용 로봇 출발. 휴머노이드 GR 시리즈로 확장. 자체 RFM보다는 하드웨어 + 외부 RFM 결합 모델. 중국 정부 의료 분야 deployment 채널 보유.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>UBTech · 优必选</h4>
+        <div class="meta">홍콩 상장 · 선전<br>Walker S2 휴머노이드</div>
+      </div>
+      <p>중국 휴머노이드 최초 상장사. BYD, NIO, Geely 등 중국 자동차 OEM 라인에서 실증 진행. 자체 RFM은 미공개. 양산 능력은 갖췄으나 RFM thesis 부족이 약점.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>XPENG Iron</h4>
+        <div class="meta">광저우 · 자동차 OEM 발<br>2024 공개</div>
+      </div>
+      <p>전기차 메이커 XPENG의 휴머노이드. Tesla Optimus와 같은 "EV 회사의 휴머노이드" 모델. 자율주행 스택을 휴머노이드에 전용한다는 점에서 Optimus와 매우 유사한 thesis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업</div>
+  <h2 class="slide-title"><span class="num">14</span>한국 RFM 생태계 지형도</h2>
+  <p class="slide-sub">2026년 한국은 모델/인프라/하드웨어 세 층위 모두 플레이어가 존재한다.</p>
+
+  <div class="kr-structure">
+    <div class="kr-layers">
+      <div class="kr-layer">
+        <div class="layer-lbl">LAYER 1 · 모델</div>
+        <div class="layer-co"><b>RLWRLD</b><small>산업 dexterity 특화 RFM (RLDX-1)</small></div>
+        <div class="layer-co"><b>Carbon6 (카본식스)</b><small>제조 특화 imitation learning 툴킷</small></div>
+        <div class="layer-co"><b>네이버랩스</b><small>ARC 플랫폼 + 시뮬레이션</small></div>
+      </div>
+      <div class="kr-layer">
+        <div class="layer-lbl">LAYER 2 · 데이터/인프라</div>
+        <div class="layer-co"><b>Config</b><small>'TSMC of robot data' · 데이터 파운드리</small></div>
+        <div class="layer-co"><b>네이버 D2SF 포트폴리오</b><small>Chameleon, Anywhere Robotics, Clobot</small></div>
+      </div>
+      <div class="kr-layer">
+        <div class="layer-lbl">LAYER 3 · 하드웨어/응용</div>
+        <div class="layer-co"><b>WIRobotics</b><small>웨어러블 → 휴머노이드 ALLEX</small></div>
+        <div class="layer-co"><b>Holiday Robotics</b><small>산업 휴머노이드 Friday</small></div>
+        <div class="layer-co"><b>현대차 + Boston Dynamics + RAI Inst.</b><small>그룹 R&D 자산</small></div>
+        <div class="layer-co"><b>ROBROS, AeiRobot</b><small>초기 단계, 모니터링 대상</small></div>
+      </div>
+    </div>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #222">
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:center">
+        <div>
+          <h4 style="font-size:13px;color:#c9a449;margin-bottom:8px;letter-spacing:0.05em">정부 'K-Humanoid' 504억 원 사업 (2026-05 출범)</h4>
+          <p style="font-size:13px;color:#bbb;line-height:1.65">LG전자, WIRobotics 등이 주관 기업으로 참여. 의료/돌봄 분야 휴머노이드 실증이 1차 목표. 해외 플랫폼(Optimus, Figure, NEO) 의존도를 줄이고 국산 휴머노이드 산업 기반을 마련한다는 정부 thesis. 향후 3-5년간 컨소시엄 deal flow 발생 가능.</p>
+        </div>
+        <div style="text-align:center;padding:20px;background:#15110a;border:1px solid #2a2316;border-radius:6px">
+          <div style="font-size:36px;color:#c9a449;font-weight:800;letter-spacing:-0.03em">₩504억</div>
+          <div style="font-size:11px;color:#888;letter-spacing:0.1em;margin-top:4px">정부 + 민간 매칭, 3-5년 사업</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>RLWRLD · 알엘월드</h2>
+      <div class="nick">한국 1호 RFM 스타트업 · 산업 dexterity 특화</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$42M</div>
+        <div class="l">누적 시드 (Seed 1+2)</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2024 · 서울</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">류중희 (前 Olaworks 창업·Intel Korea CTO, 한국 AI 1세대)</span></div>
+      <div class="fact-row"><span class="k">대표 모델</span><span class="v"><b>RLDX-1</b> - 산업 dexterity 특화 RFM (2026 발표)</span></div>
+      <div class="fact-row"><span class="k">투자 라운드</span><span class="v">Seed 1: <b>$14.8M</b> (2025-04) / Seed 2: <b>$26M</b> (2026-02)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">Hashed</span><span class="chip lead">Headline Asia</span><span class="chip lead">LY Z Venture</span><span class="chip">Mirae Asset</span><span class="chip">Global Brain</span><span class="chip">LG전자</span><span class="chip">SKT</span><span class="chip">미쓰이화학</span><span class="chip">KDDI</span></div></span></div>
+      <div class="fact-row"><span class="k">deployment 시기</span><span class="v">2028년 산업 현장 본격 도입 가이드</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>가정용/휴머노이드가 아닌 <b>산업 환경의 dexterity(미세 조작)</b>를 메인 타깃. 정밀 조립, 와이어 하니스, 후공정 등 한국 제조업이 강한 영역.</li>
+        <li>RLDX-1은 데이터 수집 파이프라인, 학습 아키텍처, 배포 환경까지 통합한 <b>풀스택 솔루션</b>. 모델 단독이 아닌 통합 시스템으로 패키징.</li>
+        <li>류중희 대표 = Olaworks를 Intel에 매각한 한국 AI 1세대. LG/SKT 같은 한국 대기업과 일본 KDDI/미쓰이 같은 산업 파트너를 동시에 확보.</li>
+        <li>Seed 2가 $26M으로 한국 시드 단계 최상위. valuation도 빠르게 상승 중.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>국내 RFM 영역에서 가장 명확한 thesis. 다만 valuation/round size가 빠르게 커지고 있어 follow-on이 어려울 수 있다. 한국 제조업 deployment 진행 속도가 valuation 정당화의 관건. 2026 하반기 첫 산업 deployment 결과 확인 필수.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Config · 컨피그</h2>
+      <div class="nick">TSMC of Robot Data · 데이터 파운드리 모델</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$200M+</div>
+        <div class="l">2026-05 시드 라운드 기준</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2025-01 · 서울 + 산호세</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">서민준 CEO (前 Meta, TwelveLabs 수석연구원) 외 공동창업자 3인 (Waymo, Google, Naver 출신)</span></div>
+      <div class="fact-row"><span class="k">포지션</span><span class="v">'TSMC of Robot Data' - 로봇 학습 데이터의 파운드리</span></div>
+      <div class="fact-row"><span class="k">투자 라운드</span><span class="v">시드 <b>$27M</b> (2026-05, 누적 <b>$35M</b>)</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">삼성벤처투자 (리드)</span><span class="chip">현대 ZER01NE</span><span class="chip">LG테크놀로지벤처스</span><span class="chip">SKT America</span></div></span></div>
+      <div class="fact-row"><span class="k">목표</span><span class="v">2027년 데이터 수집 100만 시간 · 엔터프라이즈 플랫폼 ARR $10M</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>로봇 하드웨어/모델을 직접 만들지 않고 <b>데이터 인프라</b>에 베팅. TSMC가 모든 팹리스 칩을 위탁생산하듯, RFM 학습/추론 데이터를 모든 로봇 회사에 공급.</li>
+        <li>베트남과 서울에서 데이터 수집 운영 스케일링. 인건비와 quality control을 동시에 잡는 구조.</li>
+        <li><b>Robot-as-a-Service (RaaS)</b> - 클라우드에서 Config의 파운데이션 모델을 호스팅, 온보드 GPU 없이 호출 가능한 형태로 출시 예정.</li>
+        <li><b>한국 4대 그룹(삼성·현대·LG·SK)이 한 라운드에 모두 들어온 매우 이례적 케이스</b>. 한국 제조 대기업이 자체 RFM을 만들기보다 Config을 인프라로 활용할 가능성을 시사.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>한국발 글로벌 RFM 인프라 회사로 성장 가능성이 가장 높다. 4대 그룹 동시 백킹은 한국 VC 역사상 이례적. 다만 시드 단계 valuation $200M+은 follow-on 부담이 크다. 데이터 quality와 customer LTV 검증이 시리즈 A의 관건.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업 · NEW</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>Carbon6 · 카본식스</h2>
+      <div class="nick">Sigma Kit · 제조 특화 imitation learning 툴킷</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">$6M</div>
+        <div class="l">시드 라운드 (2025-05, ₩60억)</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2024-07 · 서울</span></div>
+      <div class="fact-row"><span class="k">창업자</span><span class="v">문태연 Co-CEO (前 SUALAB CSO/VP · 2019년 Cognex 인수), 김제혁 박사 Co-CEO (MIT/Yale/SNU/KAIST), 서형주 박사 CTO</span></div>
+      <div class="fact-row"><span class="k">제품</span><span class="v"><b>Sigma Kit (시그마키트)</b> - 업계 최초 모방학습 기반 상용 로봇 AI 솔루션</span></div>
+      <div class="fact-row"><span class="k">투자자</span><span class="v"><div class="chips"><span class="chip lead">Foothill Ventures</span><span class="chip">Storm Ventures</span><span class="chip">Zeitgeist Capital</span><span class="chip">Xquared</span></div></span></div>
+      <div class="fact-row"><span class="k">타깃</span><span class="v">제조 공정 · 비정형 조립 · 3D프린터/로봇 통합 환경</span></div>
+      <div class="fact-row"><span class="k">시연</span><span class="v">Automation World 2026에서 양산 적용 수준 로봇 지능 데모 공개</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>휴머노이드/범용 RFM 아니라 <b>제조 현장에서 즉시 ROI</b>가 나오는 application 레이어. 비정형 조립을 사람처럼 섬세하게 수행하는 데 특화.</li>
+        <li>핵심 기술 = <span class="term" data-term="imitation">모방학습(Imitation Learning)</span>. AI 전문 지식 없이 제조 공정에 직접 적용 가능한 툴킷 형태로 패키징.</li>
+        <li>문태연 Co-CEO는 한국 산업 AI 1세대인 SUALAB 출신. SUALAB은 2019년 Cognex(미국 머신비전 1위)에 인수된 한국 머신비전 AI 회사. 글로벌 산업 AI 커머셜라이제이션 경험 보유.</li>
+        <li>실리콘밸리 Foothill/Storm 리드 + 한국 Xquared 참여. 미국 산업 시장 직접 진입을 염두에 둔 투자자 구성.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>RLWRLD가 "한국 PI"를 지향한다면 Carbon6는 한국 제조 application 레이어의 가장 빠른 진입자. 시드 단계라 valuation 부담 없고, 양산 ROI 검증이 즉시 가능한 thesis. AW 2026에서 실제 고객 도입 문의가 급증한 점이 트랙션 시그널. 시리즈 A 라운드 follow-on 모니터링 가치 높음.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업</div>
+  <div class="co-header">
+    <div class="co-name">
+      <h2>WIRobotics · 위로보틱스</h2>
+      <div class="nick">웨어러블 트랙션 확보 후 휴머노이드 확장</div>
+    </div>
+    <div class="co-region">
+      <div class="co-valuation">
+        <div class="v">~$70M</div>
+        <div class="l">2026-05 시리즈 B (₩950억)</div>
+      </div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="co-facts">
+      <h4>Key Facts</h4>
+      <div class="fact-row"><span class="k">설립</span><span class="v">2021 · 성남</span></div>
+      <div class="fact-row"><span class="k">제품</span><span class="v"><b>WIM</b> 웨어러블 보행 보조 로봇 · <b>ALLEX</b> 휴머노이드 (개발 중)</span></div>
+      <div class="fact-row"><span class="k">매출 추이</span><span class="v">2023년 ₩56억 → 2025년 ₩279억 (5배 성장) · Q1 2026이 이미 2024 연매출 초과</span></div>
+      <div class="fact-row"><span class="k">WIM 판매</span><span class="v">누적 3,000대 + 유럽/중국/터키/일본 진출</span></div>
+      <div class="fact-row"><span class="k">투자 라운드</span><span class="v">시리즈 B ₩950억 (2026-05)</span></div>
+      <div class="fact-row"><span class="k">정부 사업</span><span class="v"><b>K-Humanoid 504억 원</b> 사업 주관 기업 중 하나</span></div>
+    </div>
+    <div class="co-thesis">
+      <h4>핵심 차별점</h4>
+      <ul>
+        <li>웨어러블 로봇 분야에서 실제 매출 트랙션 확보한 한국 유일 회사. 2023-2025년 매출 5배 성장.</li>
+        <li>웨어러블 기술자산 → 휴머노이드 ALLEX로 확장. 인간 신체 동역학(biomechanics) 데이터를 풍부하게 축적한 점이 RFM 학습 데이터로 차별화 가능성.</li>
+        <li>정부 K-Humanoid 504억 원 사업 주관사. 국가 차원의 BD 채널 확보.</li>
+        <li>RFM 자체 개발보다는 휴머노이드 하드웨어 + 외부 RFM 결합 모델이 현실적.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="co-callout">
+    <div class="lbl">Mashup 코멘트</div>
+    <p>WIRobotics는 RFM 회사라기보다 휴머노이드 하드웨어 회사로 분류된다. 다만 매출이 실제로 발생하는 한국 휴머노이드 기업은 거의 유일. ALLEX 휴머노이드 deployment 시점이 RFM 통합 thesis 검증 분기점.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag region-tag-kr">🇰🇷 PART 4 · 한국 RFM 기업</div>
+  <h2 class="slide-title"><span class="num">19</span>Holiday Robotics 외 한국 휴머노이드/RFM</h2>
+  <p class="slide-sub">초기 단계 및 그룹사 R&D.</p>
+
+  <div class="compact-grid">
+    <div class="compact-card">
+      <div class="hd">
+        <h4>Holiday Robotics · 홀리데이로보틱스</h4>
+        <div class="meta">2024 설립 · 서울<br>창업자: 송기영 (Sua Lab 창업자)</div>
+      </div>
+      <p>첫 모델은 산업용 휴머노이드 <b>Friday</b>. 송기영 대표는 SUALAB을 Cognex에 매각한 산업 AI 베테랑. <b>Carbon6의 문태연 Co-CEO와 동일 회사 출신 동문</b>이라는 점이 흥미롭다. 한국 산업 AI 인재 풀이 SUALAB을 매개로 휴머노이드/RFM 영역으로 확산되는 패턴.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>네이버랩스 · Naver D2SF 포트폴리오</h4>
+        <div class="meta">네이버 그룹 R&D + 액셀러레이터<br>ARC + Rookie + Clobot</div>
+      </div>
+      <p>네이버랩스: <b>ARC(Ambient Robot Cloud)</b> 기반 자율주행/실내 로봇 운용. 1784 사옥의 Rookie 배달 로봇 운영. 자체 RFM 발표는 아직 없으나 시뮬레이터(LAREL) 및 데이터 자산 보유.<br><br>D2SF는 2026-03에 Physical AI 스타트업 <b>Chameleon</b>, <b>Anywhere Robotics</b>에 신규 투자. <b>Clobot</b>은 D2SF 포트폴리오 중 국내 로봇 SW 회사 최초 KOSDAQ 상장.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>현대차그룹 + Boston Dynamics + RAI Inst.</h4>
+        <div class="meta">대기업 그룹 R&D 자산<br>Atlas · Spot · 전동 휴머노이드</div>
+      </div>
+      <p>현대차 그룹이 <b>Boston Dynamics</b>(미국)와 <b>RAI Institute</b>(Robotics & AI Institute, 매사추세츠)를 양대 R&D 거점으로 보유. Atlas 휴머노이드 전동 버전을 2024-2025년 공개. CES 2026에서 그룹 차원의 AI Robotics Strategy 발표 예정. <b>한국 최대 규모 휴머노이드/RFM 자산이지만 스타트업 deal 대상은 아니다</b>.</p>
+    </div>
+    <div class="compact-card">
+      <div class="hd">
+        <h4>ROBROS · AeiRobot · 기타</h4>
+        <div class="meta">초기 단계 · 모니터링 대상<br>K-Humanoid 컨소시엄 후보</div>
+      </div>
+      <p>2026 한국 휴머노이드 시장에서 새롭게 등장하는 초기 단계 RFM/휴머노이드 스타트업. 공개 정보가 제한적이며 K-Humanoid 504억 원 사업 컨소시엄 참여 여부가 deal sourcing 시점의 분기점. <b>Mashup 차원의 별도 deal review 권고</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 5 · 비교 분석</div>
+  <h2 class="slide-title"><span class="num">20</span>사업 모델 3분류 · 종합 비교</h2>
+  <p class="slide-sub">자본 효율성과 한국 진입 가능성 매트릭스.</p>
+
+  <div class="matrix">
+    <div class="matrix-row header">
+      <div class="matrix-cell">분류</div>
+      <div class="matrix-cell">자본 요구량</div>
+      <div class="matrix-cell">시장 사이즈</div>
+      <div class="matrix-cell">한국 진입 가능성</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell"><b>모델 전용형</b><br><span style="font-size:11px;color:#888">RFM 자체에 집중, 하드웨어는 파트너십</span><br><small style="color:#777">Physical Intelligence · Skild AI · RLWRLD · Galbot</small></div>
+      <div class="matrix-cell">매우 높음<br><span style="font-size:11px;color:#888">$1B+ compute</span></div>
+      <div class="matrix-cell">매우 큼<br><span style="font-size:11px;color:#888">'로봇계 OpenAI'</span></div>
+      <div class="matrix-cell fit-mid">중<br><span style="font-size:11px;color:#888">RLWRLD가 한국 단독 사례</span></div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell"><b>하드웨어 수직통합형</b><br><span style="font-size:11px;color:#888">하드웨어 + 모델 양쪽 자체 개발</span><br><small style="color:#777">Figure · 1X · Apptronik · Tesla · Neura · AgiBot · Unitree · UBTech</small></div>
+      <div class="matrix-cell">극히 높음<br><span style="font-size:11px;color:#888">CapEx + 제조</span></div>
+      <div class="matrix-cell">매우 큼<br><span style="font-size:11px;color:#888">소비/산업 양면</span></div>
+      <div class="matrix-cell">낮음<br><span style="font-size:11px;color:#888">현대그룹 영역</span></div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell"><b>데이터 인프라형</b><br><span style="font-size:11px;color:#888">데이터 수집/라벨링/플랫폼</span><br><small style="color:#777">Config · Carbon Robotics · Carbon6 · Wandelbots</small></div>
+      <div class="matrix-cell">중<br><span style="font-size:11px;color:#888">운영 사업 가능</span></div>
+      <div class="matrix-cell">중-대<br><span style="font-size:11px;color:#888">B2B SaaS</span></div>
+      <div class="matrix-cell fit-high"><b style="color:#c9a449">매우 높음</b><br><span style="font-size:11px;color:#888">Config + Carbon6 사례</span></div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell"><b>도메인 application</b><br><span style="font-size:11px;color:#888">특정 산업에 fine-tuning</span><br><small style="color:#777">Carbon Robotics (농업) · Carbon6 (제조) · 기타 후보군</small></div>
+      <div class="matrix-cell">낮음<br><span style="font-size:11px;color:#888">초기 $5-10M</span></div>
+      <div class="matrix-cell">도메인별 상이<br><span style="font-size:11px;color:#888">ROI 명확</span></div>
+      <div class="matrix-cell fit-high"><b style="color:#c9a449">매우 높음</b><br><span style="font-size:11px;color:#888">한국 제조 특화 가능</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 5 · 비교 분석</div>
+  <h2 class="slide-title"><span class="num">21</span>한국 RFM 생태계 · 강점과 약점</h2>
+  <p class="slide-sub">실제 deal sourcing 시 한국 위치를 객관적으로 파악한다.</p>
+
+  <div class="mashup-matrix">
+    <div class="mm-box do">
+      <h4><span>▲</span>한국이 강한 포지션</h4>
+      <ol>
+        <li><b>데이터 인프라</b> · Config의 한국 4대 그룹 동시 투자는 한국 제조 대기업이 자체 데이터 운영보다 인프라 외주를 선호한다는 시그널.</li>
+        <li><b>산업 dexterity</b> · RLWRLD가 자리잡은 영역. 한국 제조업의 정밀 후공정/조립 노하우와 결합 시 deployment 우위.</li>
+        <li><b>도메인 application</b> · Carbon6 사례처럼 한국 제조 현장 즉시 ROI 모델은 Mashup 라운드 사이즈에 맞다.</li>
+        <li><b>시뮬레이션 인재</b> · 게임 엔진(Unity/Unreal) 인재 풀이 풍부. Sim2Real 브리지 툴링에 강점.</li>
+        <li><b>전략 LP 자본</b> · 삼성/현대/LG/SK + 일본 KDDI/미쓰이 등 산업 자본이 RFM에 동시 베팅하는 패턴.</li>
+      </ol>
+    </div>
+    <div class="mm-box dont">
+      <h4><span>▼</span>한국이 약한 포지션</h4>
+      <ol>
+        <li><b>휴머노이드 하드웨어 자체 개발</b> · Boston Dynamics(현대)를 제외하면 미국/중국 대비 5-7년 격차.</li>
+        <li><b>VLM 백본</b> · GPT-4V/Gemini/Claude 급 멀티모달 LLM이 RFM System 2를 담당하는데, 한국은 자체 멀티모달 LLM이 약하다.</li>
+        <li><b>GPU 인프라</b> · 학습용 H100/B200 클러스터 확보가 미국 대비 제한적.</li>
+        <li><b>제조 양산</b> · 중국 BOM 가격 경쟁력을 한국이 따라가기 어렵다.</li>
+        <li><b>오픈소스 진영 영향력</b> · Hugging Face LeRobot, OpenVLA 등 오픈 RFM 진영에 한국 기여가 거의 없음.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 5 · Mashup 시사점</div>
+  <h2 class="slide-title"><span class="num">22</span>Deal Sourcing 우선순위</h2>
+  <p class="slide-sub">Mashup Ventures 라운드 사이즈와 한국 LP 자본 구조에 부합하는 영역.</p>
+
+  <div class="mashup-matrix">
+    <div class="mm-box do">
+      <h4><span>◆</span>적극 sourcing 영역</h4>
+      <ol>
+        <li><b>산업/도메인 특화 RFM application</b><br><span style="color:#888;font-size:12px">반도체 후공정, 디스플레이, 배터리, 조선 등 한국 제조 현장에 fine-tuning. 모델은 PI/Skild/RLWRLD를 leverage, 도메인 데이터와 라벨링/배포 노하우로 진입 장벽 구축. Carbon6가 첫 모델 케이스.</span></li>
+        <li><b>시뮬레이션-실데이터 브리지 툴링</b><br><span style="color:#888;font-size:12px">Domain randomization, sim2real adapter, 데이터 합성 툴. 자본 효율 우수. 한국 게임/시뮬레이션 인재 활용 가능.</span></li>
+        <li><b>로봇 텔레오퍼레이션/데이터 수집 인프라</b><br><span style="color:#888;font-size:12px">Config의 한 단계 아래 layer. 한국 로봇 OEM 대상 SaaS 가능.</span></li>
+        <li><b>검증/안전성/평가 레이어</b><br><span style="color:#888;font-size:12px">휴머노이드/협동로봇 안전 인증, 평가 벤치마크. 글로벌 시장 진입에 필요한 신뢰성 레이어.</span></li>
+      </ol>
+    </div>
+    <div class="mm-box dont">
+      <h4><span>✕</span>회피 또는 신중 영역</h4>
+      <ol>
+        <li><b>휴머노이드 하드웨어 자체 개발</b><br><span style="color:#888;font-size:12px">자본 요구량이 한국 VC 라운드 사이즈로 감당 어려움. 현대그룹 영역으로 분류.</span></li>
+        <li><b>범용 RFM 모델 자체 (제2의 RLWRLD)</b><br><span style="color:#888;font-size:12px">RLWRLD 이후 진입자가 동일 thesis로 한국 LP 자본을 확보하기 어려워졌음. 차별화 thesis 없으면 회피.</span></li>
+        <li><b>클라우드 GPU 의존도 높은 추론 인프라</b><br><span style="color:#888;font-size:12px">미국 빅테크 직접 경쟁 영역.</span></li>
+        <li><b>중국 휴머노이드 카피캣</b><br><span style="color:#888;font-size:12px">Unitree/AgiBot 가격 경쟁력을 한국이 따라잡기 어렵다.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="section-tag">PART 5 · 결론</div>
+  <h2 class="slide-title"><span class="num">23</span>결론 · 2026 하반기 관찰 지표</h2>
+  <p class="slide-sub">파트너 미팅 후 점검할 트래킹 지표.</p>
+
+  <div class="takeaways">
+    <div class="take">
+      <div class="lbl">Take 1</div>
+      <h3>시장 구도</h3>
+      <p>RFM 시장은 2024년 Covariant RFM-1 발표 이후 2년 만에 미국 자본 집중형 + 중국 출하량 압도 + 한국 인프라/도메인 진입의 3축으로 재편되었다. 한국은 모델 전용형(RLWRLD), 데이터 인프라(Config), 도메인 application(Carbon6) 세 갈래 모두 플레이어가 존재한다.</p>
+    </div>
+    <div class="take">
+      <div class="lbl">Take 2</div>
+      <h3>Mashup 포지션</h3>
+      <p>(a) 한국 산업 데이터 자산이 곧 진입 장벽이 되는 application 레이어, (b) 자본 효율이 높은 데이터/툴링 인프라, (c) K-Humanoid 사업 연계 컨소시엄에 우선 집중. 범용 RFM 자체 개발은 한국 VC 단독 라운드로 감당 어려운 영역으로 분류한다.</p>
+    </div>
+    <div class="take">
+      <div class="lbl">Watch</div>
+      <h3>2026 하반기 관찰 지표</h3>
+      <ul>
+        <li>Figure 03 / 1X NEO 가정 양산 출하 결과</li>
+        <li>Physical Intelligence π0.7 후속 모델의 실사용 검증</li>
+        <li>RLWRLD RLDX-1 한국 산업 deployment 시기 (2026 하반기 추정)</li>
+        <li>Config Robot-as-a-Service 출시 및 한국 대기업 도입 사례</li>
+        <li>K-Humanoid 504억 원 사업 1차 컨소시엄 deal flow</li>
+        <li>Carbon6 시리즈 A 라운드 형성 시점</li>
+      </ul>
+    </div>
+    <div class="take">
+      <div class="lbl">Risk</div>
+      <h3>주요 리스크 시나리오</h3>
+      <ul>
+        <li>Figure/1X 양산 지연 시 valuation 조정 → 한국 후속 라운드 압박</li>
+        <li>미-중 기술 규제 강화 시 한국이 우회 채널화될 가능성</li>
+        <li>중국 휴머노이드 가격 덤핑이 한국 하드웨어 plays를 잠식</li>
+        <li>K-Humanoid 사업이 정치 변수로 축소될 경우 컨소시엄 deal 위축</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sources">
+    <b>주요 출처</b>
+    <ul>
+      <li>TechCrunch, "Korea's biggest manufacturers back Config" (2026-05-11)</li>
+      <li>GlobeNewswire, "RLWRLD Raises $26M Seed 2" (2026-02-26)</li>
+      <li>TechCrunch, "Physical Intelligence in talks to raise $1B" (2026-03-27)</li>
+      <li>The Robot Report, "AW 2026 features Korea humanoid debuts"</li>
+      <li>플래텀/와우테일, "카본식스, 美 투자사로부터 60억원 시드" (2025-05)</li>
+      <li>한국경제, "위로보틱스, 약 1,000억 원 시리즈B" (2026-05)</li>
+      <li>Seoul Economic Daily, "Korea Launches 50.4 Billion Won Push" (2026-05-18)</li>
+      <li>KraneShares, Unitree IPO Guide / AgiBot HK IPO</li>
+      <li>Reuters/Yahoo Finance, AgiBot HK IPO plans</li>
+      <li>Engineering.com, "CarbonSix launches Sigma Kit"</li>
+      <li>Humanoids Daily, NEURA Automatica 2025 coverage</li>
+      <li>The VC (thevc.kr) - 카본식스/홀리데이로보틱스 기업 정보</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="controls">
+  <button class="nav-btn" id="prev" onclick="prevSlide()">← 이전</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="next" onclick="nextSlide()">다음 →</button>
+</footer>
+
+<aside class="glossary-panel" id="glossary">
+  <div class="glossary-header">
+    <h3>용어집 · Glossary</h3>
+    <button class="glossary-close" onclick="toggleGlossary()">✕</button>
+  </div>
+  <div class="glossary-body">
+
+    <div class="gloss-item">
+      <h4>VLA (Vision-Language-Action)</h4>
+      <div class="en">Vision-Language-Action Model</div>
+      <p>영상과 언어 명령을 입력 받아 로봇 행동을 출력하는 단일 모델 아키텍처. ChatGPT가 텍스트→텍스트라면, VLA는 영상+텍스트→로봇 행동이다.</p>
+      <svg class="gloss-svg" viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vlaGrad" x1="0%" x2="100%"><stop offset="0%" stop-color="#5a4520"/><stop offset="100%" stop-color="#c9a449"/></linearGradient>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#c9a449"/></marker>
+        </defs>
+        <rect x="10" y="20" width="100" height="40" rx="6" fill="#1a1a1a" stroke="#333"/>
+        <text x="60" y="38" text-anchor="middle" fill="#bbb" font-size="11">📷 카메라 영상</text>
+        <text x="60" y="52" text-anchor="middle" fill="#888" font-size="9">"부엌의 컵을 보여줘"</text>
+        <rect x="10" y="70" width="100" height="40" rx="6" fill="#1a1a1a" stroke="#333"/>
+        <text x="60" y="88" text-anchor="middle" fill="#bbb" font-size="11">💬 자연어 명령</text>
+        <text x="60" y="102" text-anchor="middle" fill="#888" font-size="9">"컵을 식기세척기에 넣어"</text>
+        <path d="M115 50 L 170 65" stroke="#c9a449" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <path d="M115 90 L 170 75" stroke="#c9a449" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <rect x="175" y="40" width="130" height="60" rx="8" fill="url(#vlaGrad)" opacity="0.85"/>
+        <text x="240" y="68" text-anchor="middle" fill="#000" font-size="14" font-weight="700">VLA Model</text>
+        <text x="240" y="84" text-anchor="middle" fill="#1a1a1a" font-size="10">Transformer</text>
+        <path d="M310 70 L 365 70" stroke="#c9a449" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <rect x="370" y="50" width="100" height="40" rx="6" fill="#1a1a1a" stroke="#c9a449"/>
+        <text x="420" y="68" text-anchor="middle" fill="#c9a449" font-size="11">🦾 로봇 행동</text>
+        <text x="420" y="82" text-anchor="middle" fill="#888" font-size="9">관절 토크/궤적</text>
+      </svg>
+      <div class="why"><b>왜 중요한가:</b> RFM 시장의 가장 표준적 아키텍처. Figure Helix, Google RT-2, OpenVLA가 모두 VLA. 단점은 모터 제어 속도가 느릴 수 있어 Figure는 System 1/2로 분리한 계층형으로 진화 중.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Diffusion Policy</h4>
+      <div class="en">Diffusion-based Policy</div>
+      <p>Stable Diffusion 같은 이미지 생성 AI와 같은 원리. 노이즈에서 점차 의미 있는 행동으로 깎아낸다. 같은 상황에 가능한 여러 동작을 동시에 표현할 수 있다.</p>
+      <svg class="gloss-svg" viewBox="0 0 480 110" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="20" fill="#888" font-size="10">노이즈에서 → 점차 의미 있는 행동으로</text>
+        <rect x="20" y="30" width="80" height="60" rx="4" fill="#222" stroke="#333"/>
+        <circle cx="35" cy="50" r="3" fill="#444"/><circle cx="55" cy="65" r="3" fill="#555"/><circle cx="80" cy="45" r="3" fill="#444"/><circle cx="65" cy="80" r="3" fill="#333"/><circle cx="40" cy="75" r="3" fill="#444"/><circle cx="85" cy="70" r="3" fill="#555"/>
+        <text x="60" y="105" text-anchor="middle" fill="#888" font-size="9">Step 0 (랜덤)</text>
+        <text x="120" y="60" text-anchor="middle" fill="#c9a449" font-size="14">→</text>
+        <rect x="140" y="30" width="80" height="60" rx="4" fill="#222" stroke="#333"/>
+        <path d="M150 60 Q 180 50 200 70" stroke="#c9a449" stroke-width="1" fill="none" opacity="0.4"/>
+        <path d="M150 70 Q 180 70 200 50" stroke="#c9a449" stroke-width="1" fill="none" opacity="0.4"/>
+        <text x="180" y="105" text-anchor="middle" fill="#888" font-size="9">Step 5</text>
+        <text x="240" y="60" text-anchor="middle" fill="#c9a449" font-size="14">→</text>
+        <rect x="260" y="30" width="80" height="60" rx="4" fill="#222" stroke="#333"/>
+        <path d="M270 65 Q 290 55 320 60" stroke="#c9a449" stroke-width="2" fill="none"/>
+        <path d="M270 65 Q 285 75 320 70" stroke="#7eb8ff" stroke-width="2" fill="none" opacity="0.7"/>
+        <text x="300" y="105" text-anchor="middle" fill="#888" font-size="9">Step 10 (다중 경로)</text>
+        <text x="360" y="60" text-anchor="middle" fill="#c9a449" font-size="14">→</text>
+        <rect x="380" y="30" width="80" height="60" rx="4" fill="#15110a" stroke="#c9a449"/>
+        <path d="M390 65 Q 410 50 450 60" stroke="#c9a449" stroke-width="2.5" fill="none"/>
+        <text x="420" y="105" text-anchor="middle" fill="#c9a449" font-size="9">최종 행동 궤적</text>
+      </svg>
+      <div class="why"><b>왜 중요한가:</b> 정밀 조작(예: 컵 잡기)처럼 "여러 가지 정답이 있는" 태스크에 강하다. Toyota Research Institute가 2023년 논문으로 발표한 이후 Physical Intelligence π0의 핵심 아키텍처가 되었다.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Sim2Real Gap</h4>
+      <div class="en">Simulation-to-Reality Gap</div>
+      <p>시뮬레이터에서 잘 작동하던 정책이 실제 로봇에서 무너지는 현상. 시뮬레이터가 표현하지 못하는 마찰, 진동, 센서 노이즈, 모터 백래시가 원인.</p>
+      <svg class="gloss-svg" viewBox="0 0 480 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="20" width="210" height="100" rx="6" fill="#0a1018" stroke="#1f3a5c"/>
+        <text x="115" y="40" text-anchor="middle" fill="#7eb8ff" font-size="11" font-weight="600">시뮬레이션</text>
+        <rect x="40" y="55" width="80" height="40" rx="3" fill="#1a2a3a"/>
+        <circle cx="80" cy="75" r="12" fill="#4a8bce" opacity="0.7"/>
+        <text x="80" y="78" text-anchor="middle" fill="#fff" font-size="9">로봇</text>
+        <text x="115" y="110" text-anchor="middle" fill="#7eb8ff" font-size="9">완벽한 마찰 · 정확한 센서</text>
+        <text x="115" y="125" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">성공률 95%</text>
+        <text x="245" y="75" text-anchor="middle" fill="#c9a449" font-size="20">≠</text>
+        <rect x="270" y="20" width="210" height="100" rx="6" fill="#180e0e" stroke="#5c1f1f"/>
+        <text x="375" y="40" text-anchor="middle" fill="#ff8a8a" font-size="11" font-weight="600">실제 환경</text>
+        <rect x="300" y="55" width="80" height="40" rx="3" fill="#2a1a1a"/>
+        <circle cx="340" cy="75" r="12" fill="#ce4a4a" opacity="0.7"/>
+        <text x="340" y="78" text-anchor="middle" fill="#fff" font-size="9">로봇</text>
+        <text x="395" y="55" fill="#ff8a8a" font-size="9">⚠ 진동</text>
+        <text x="395" y="68" fill="#ff8a8a" font-size="9">⚠ 마찰</text>
+        <text x="395" y="81" fill="#ff8a8a" font-size="9">⚠ 노이즈</text>
+        <text x="395" y="94" fill="#ff8a8a" font-size="9">⚠ 백래시</text>
+        <text x="375" y="125" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">성공률 60%</text>
+      </svg>
+      <div class="why"><b>왜 중요한가:</b> 시뮬레이션은 무한정 학습 데이터를 생성할 수 있지만 실세계와 차이가 있다. 이 갭을 줄이는 기술(Domain Randomization, 디지털 트윈)이 모든 RFM 회사의 핵심 R&D 영역.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Embodiment Gap</h4>
+      <div class="en">Embodiment Gap · 신체 형상 차이</div>
+      <p>A 로봇에서 학습한 모델이 B 로봇 폼팩터에서 작동하지 않는 문제. 손가락 개수, 팔 길이, 카메라 위치, 관절 자유도가 달라지면 새로 학습해야 한다.</p>
+      <svg class="gloss-svg" viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg">
+        <text x="240" y="20" text-anchor="middle" fill="#888" font-size="10">"One brain, any body"가 업계의 성배</text>
+        <rect x="20" y="35" width="80" height="80" rx="6" fill="#15110a" stroke="#c9a449"/>
+        <text x="60" y="55" text-anchor="middle" fill="#c9a449" font-size="11" font-weight="600">RFM</text>
+        <text x="60" y="85" text-anchor="middle" fill="#fff" font-size="22">🧠</text>
+        <text x="60" y="105" text-anchor="middle" fill="#888" font-size="9">단일 정책</text>
+        <path d="M105 75 L 145 50" stroke="#c9a449" stroke-width="1" opacity="0.5"/>
+        <path d="M105 75 L 145 75" stroke="#c9a449" stroke-width="1" opacity="0.5"/>
+        <path d="M105 75 L 145 100" stroke="#c9a449" stroke-width="1" opacity="0.5"/>
+        <rect x="150" y="35" width="70" height="35" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="185" y="50" text-anchor="middle" fill="#fff" font-size="14">🦾</text>
+        <text x="185" y="64" text-anchor="middle" fill="#bbb" font-size="9">매니퓰레이터</text>
+        <rect x="150" y="80" width="70" height="35" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="185" y="95" text-anchor="middle" fill="#fff" font-size="14">🐕</text>
+        <text x="185" y="108" text-anchor="middle" fill="#bbb" font-size="9">4족 로봇</text>
+        <rect x="240" y="55" width="70" height="60" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="275" y="80" text-anchor="middle" fill="#fff" font-size="20">🤖</text>
+        <text x="275" y="105" text-anchor="middle" fill="#bbb" font-size="9">휴머노이드</text>
+        <text x="335" y="78" text-anchor="middle" fill="#c9a449" font-size="14">∋</text>
+        <rect x="355" y="35" width="115" height="80" rx="6" fill="#180e0e" stroke="#5c1f1f"/>
+        <text x="412" y="55" text-anchor="middle" fill="#ff8a8a" font-size="11" font-weight="600">현재 한계</text>
+        <text x="412" y="75" text-anchor="middle" fill="#fff" font-size="10">손가락 5개 → 3개</text>
+        <text x="412" y="90" text-anchor="middle" fill="#fff" font-size="10">팔 길이 차이</text>
+        <text x="412" y="105" text-anchor="middle" fill="#fff" font-size="10">→ 재학습 필요</text>
+      </svg>
+      <div class="why"><b>왜 중요한가:</b> Physical Intelligence와 Skild AI의 핵심 thesis가 바로 이 갭 극복. 만약 풀린다면 RFM은 진정한 의미의 '범용'이 된다. 아직 부분 해결 단계.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>모방학습 (Imitation Learning)</h4>
+      <div class="en">Imitation Learning · Behavior Cloning</div>
+      <p>사람의 시연을 영상/텔레오퍼레이션으로 보여주면 로봇이 그 동작을 따라하도록 학습. 강화학습(RL)과 달리 보상 함수 설계 없이 작동.</p>
+      <svg class="gloss-svg" viewBox="0 0 480 110" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#c9a449"/></marker>
+        </defs>
+        <rect x="20" y="25" width="120" height="65" rx="6" fill="#1a1a1a" stroke="#333"/>
+        <text x="80" y="44" text-anchor="middle" fill="#bbb" font-size="11">👤 사람 시연</text>
+        <text x="80" y="60" text-anchor="middle" fill="#888" font-size="9">텔레오퍼레이션</text>
+        <text x="80" y="74" text-anchor="middle" fill="#888" font-size="9">또는 영상 캡처</text>
+        <path d="M145 57 L 195 57" stroke="#c9a449" stroke-width="1.5" marker-end="url(#arrow2)"/>
+        <text x="170" y="50" text-anchor="middle" fill="#888" font-size="9">데이터 쌍 (영상, 행동)</text>
+        <rect x="200" y="25" width="120" height="65" rx="6" fill="#15110a" stroke="#c9a449"/>
+        <text x="260" y="44" text-anchor="middle" fill="#c9a449" font-size="11" font-weight="600">학습</text>
+        <text x="260" y="62" text-anchor="middle" fill="#fff" font-size="20">🧠</text>
+        <text x="260" y="80" text-anchor="middle" fill="#888" font-size="9">모방학습 알고리즘</text>
+        <path d="M325 57 L 375 57" stroke="#c9a449" stroke-width="1.5" marker-end="url(#arrow2)"/>
+        <rect x="380" y="25" width="80" height="65" rx="6" fill="#1a1a1a" stroke="#333"/>
+        <text x="420" y="50" text-anchor="middle" fill="#fff" font-size="20">🤖</text>
+        <text x="420" y="75" text-anchor="middle" fill="#bbb" font-size="10">로봇 모사</text>
+      </svg>
+      <div class="why"><b>왜 중요한가:</b> Carbon6의 핵심 기술이자 Physical Intelligence π0의 학습 방식. AI 전문 지식 없는 제조 현장 작업자도 '한 번 보여주면 로봇이 따라 하는' 형태로 패키징 가능해 ROI 가시화가 빠르다.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>텔레오퍼레이션 (Teleoperation)</h4>
+      <div class="en">Teleoperation</div>
+      <p>사람이 원격에서 로봇을 조종하는 행위. VR 헤드셋이나 마스터-슬레이브 컨트롤러로 사람의 손동작을 로봇이 그대로 실행한다. RFM 학습 데이터의 핵심 수집 방법.</p>
+      <div class="why"><b>왜 중요한가:</b> Config은 베트남/서울에서 텔레오퍼레이션 운영을 100만 시간 규모로 스케일링한다. 인건비와 데이터 quality를 동시에 잡는 것이 데이터 인프라형 회사의 사업 모델이다.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Proprioception</h4>
+      <div class="en">Proprioception · 자기수용감각</div>
+      <p>로봇이 자기 자신의 관절 각도, 속도, 토크를 인식하는 능력. 인간이 눈 감고도 자기 팔이 어디 있는지 아는 감각과 같다. RFM의 핵심 입력값.</p>
+      <div class="why"><b>왜 중요한가:</b> 시각 정보만으로는 정밀 조작이 어렵다. 손가락이 물체에 닿는 순간의 토크 변화 같은 proprioception 데이터가 RFM의 dexterity에 결정적.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Compositional Generalization</h4>
+      <div class="en">Compositional Generalization · 조합적 일반화</div>
+      <p>학습한 기본 스킬들을 새로운 방식으로 조합하여 본 적 없는 태스크를 수행하는 능력. Physical Intelligence π0.7의 핵심 시연 포인트.</p>
+      <div class="why"><b>왜 중요한가:</b> 모든 가능한 태스크를 학습할 수 없으므로 '학습한 적 없지만 추론으로 가능한' 영역을 넓히는 것이 RFM의 GPT 모먼트를 가져올 핵심 능력.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>계층형 아키텍처 (Hierarchical)</h4>
+      <div class="en">Hierarchical Architecture · System 1 + System 2</div>
+      <p>큰 VLM(추론용, 느림)과 작은 모터 정책(제어용, 빠름)을 분리한 구조. Daniel Kahneman의 '빠른 사고/느린 사고'에서 비유. Figure Helix가 대표.</p>
+      <div class="why"><b>왜 중요한가:</b> 단일 VLA는 추론과 30Hz 모터 제어를 동시에 하기 어렵다. 계층형은 각 layer에 맞는 모델 크기를 선택할 수 있어 실제 deployment에 유리.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Self-Supervised Learning</h4>
+      <div class="en">Self-Supervised Learning · 자기지도학습</div>
+      <p>레이블 없는 데이터(예: 인터넷 영상)에서 스스로 학습 신호를 만들어 학습하는 방법. CMU 출신 Skild AI 창업자들의 핵심 연구 영역.</p>
+      <div class="why"><b>왜 중요한가:</b> 텔레오퍼레이션 데이터는 비싸지만 YouTube 영상은 무한정 있다. 이걸 RFM 학습에 활용할 수 있느냐가 데이터 부족 문제 해결의 열쇠.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>텐던 구동 (Tendon Drive)</h4>
+      <div class="en">Tendon Drive</div>
+      <p>관절에 직접 모터를 달지 않고 케이블(텐던)로 멀리서 구동력을 전달하는 메커니즘. 인간의 힘줄과 같은 구조.</p>
+      <div class="why"><b>왜 중요한가:</b> 1X NEO의 핵심 차별점. 관절이 가볍고 부드러워 사람과 접촉 시 안전성이 높다. 가정용 휴머노이드에는 필수에 가까운 설계.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>다중 모달 (Multimodal)</h4>
+      <div class="en">Multimodal</div>
+      <p>여러 종류의 데이터(영상, 텍스트, 음성, 깊이 정보 등)를 동시에 입력으로 받는 모델. GPT-4V/Gemini가 대표적인 멀티모달 LLM.</p>
+      <div class="why"><b>왜 중요한가:</b> RFM은 본질적으로 멀티모달 모델이다. 한국이 자체 멀티모달 LLM 백본이 약한 것이 RFM 영역의 약점으로 직결된다.</div>
+    </div>
+
+    <div class="gloss-item">
+      <h4>Action Token / 행동 토큰</h4>
+      <div class="en">Action Token</div>
+      <p>로봇의 연속적인 모터 명령을 LLM처럼 이산화된 토큰 시퀀스로 표현한 것. "팔을 5도 올려"를 하나의 토큰으로 매핑.</p>
+      <div class="why"><b>왜 중요한가:</b> 행동을 토큰화하면 LLM의 모든 학습 기법(autoregressive, transformer)을 그대로 가져올 수 있다. Google RT-2, OpenVLA가 이 접근.</div>
+    </div>
+
+  </div>
+</aside>
+
+<div class="tooltip" id="tooltip">
+  <span class="tt-title" id="ttTitle"></span>
+  <span id="ttBody"></span>
+  <div class="tt-hint">자세히 보기: <span id="ttHint">용어집 열기 (G)</span></div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+document.getElementById('total').textContent = total;
+
+const dotsEl = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(i) {
+  if (i < 0 || i >= total) return;
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = i;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('active');
+  document.getElementById('cur').textContent = i + 1;
+  document.getElementById('prog').style.width = ((i + 1) / total * 100) + '%';
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').disabled = i === total - 1;
+  slides[cur].scrollTop = 0;
+}
+
+function nextSlide() { goTo(cur + 1); }
+function prevSlide() { goTo(cur - 1); }
+function toggleGlossary() {
+  document.getElementById('glossary').classList.toggle('open');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'g' || e.key === 'G') toggleGlossary();
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(total - 1);
+  if (e.key === 'Escape') document.getElementById('glossary').classList.remove('open');
+});
+
+const tooltipDefs = {
+  vla: {title: 'VLA (Vision-Language-Action)', body: '영상+언어를 입력 받아 로봇 행동을 출력하는 단일 모델. ChatGPT의 로봇 버전. 자세한 설명은 우측 용어집 참고.'},
+  diffusion: {title: 'Diffusion Policy', body: 'Stable Diffusion과 같은 원리로 행동을 생성. 한 상황에 여러 가능한 동작을 동시에 표현 가능. Physical Intelligence π0의 핵심.'},
+  sim2real: {title: 'Sim2Real Gap', body: '시뮬레이터에서 95% 성공률이 실제 환경에서 60%로 떨어지는 현상. 모든 RFM 회사의 핵심 R&D 과제.'},
+  embodiment: {title: 'Embodiment Gap', body: '학습된 로봇과 다른 폼팩터에서 작동 안 되는 문제. "One brain, any body"가 PI/Skild AI의 핵심 thesis.'},
+  multimodal: {title: '다중 모달', body: '영상, 텍스트, 음성 등 여러 종류의 데이터를 동시에 처리하는 모델. RFM은 본질적으로 멀티모달이다.'},
+  action: {title: '로봇 행동', body: '관절 토크/속도, 엔드이펙터(말단 도구) 궤적, 또는 이산화된 행동 토큰. LLM의 출력 토큰에 대응.'},
+  proprioception: {title: 'Proprioception (자기수용감각)', body: '로봇이 자기 관절 각도/속도/토크를 인식하는 능력. 시각만으로 부족한 정밀 조작에 필수.'},
+  teleop: {title: '텔레오퍼레이션', body: '사람이 원격으로 로봇을 조종하는 것. RFM 학습 데이터의 가장 중요한 수집 방법. Config의 핵심 사업.'},
+  imitation: {title: '모방학습 (Imitation Learning)', body: '사람의 시연을 보고 로봇이 동작을 따라 학습. 강화학습보다 학습이 빠르고 안정적. Carbon6의 핵심 기술.'},
+  ssl: {title: 'Self-Supervised Learning', body: '레이블 없는 데이터에서 스스로 학습 신호를 만드는 방법. Skild AI 창업자들의 CMU 시절 연구 영역.'},
+  compgen: {title: 'Compositional Generalization', body: '학습한 스킬들을 새로 조합해 본 적 없는 태스크를 수행. PI π0.7의 핵심 시연 능력.'},
+  tendon: {title: '텐던 구동', body: '관절에 직접 모터 대신 케이블로 멀리서 힘 전달. 1X NEO 같은 가정용 휴머노이드의 안전성 핵심.'},
+  hier: {title: '계층형 아키텍처', body: '큰 VLM(추론)과 작은 모터 정책(제어)을 분리. Daniel Kahneman의 빠른/느린 사고에서 비유. Figure Helix 대표.'},
+};
+
+const tooltip = document.getElementById('tooltip');
+const ttTitle = document.getElementById('ttTitle');
+const ttBody = document.getElementById('ttBody');
+const ttHint = document.getElementById('ttHint');
+ttHint.addEventListener('click', toggleGlossary);
+
+document.addEventListener('mouseover', (e) => {
+  if (e.target.classList && e.target.classList.contains('term')) {
+    const term = e.target.dataset.term;
+    const def = tooltipDefs[term];
+    if (def) {
+      ttTitle.textContent = def.title;
+      ttBody.textContent = def.body;
+      tooltip.classList.add('show');
+    }
+  }
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (tooltip.classList.contains('show')) {
+    let x = e.clientX + 14;
+    let y = e.clientY + 14;
+    if (x + 360 > window.innerWidth) x = e.clientX - 360;
+    if (y + 200 > window.innerHeight) y = e.clientY - 200;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+});
+
+document.addEventListener('mouseout', (e) => {
+  if (e.target.classList && e.target.classList.contains('term')) {
+    tooltip.classList.remove('show');
+  }
+});
+
+goTo(0);
+</script>
+
+</body>
+</html>
