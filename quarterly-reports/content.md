@@ -2,10 +2,75 @@
 
 ## 리포트 목록
 
+- 2026 Q1
 - 2025 Q4
 - 2025 Q3
 - 2025 Q2
 - 2025 Q1
+
+---
+
+## 2026 Q1
+
+### First time in the Bay Area
+
+```
+I've been dreaming of becoming a VC since 2022. So how had I never been to the Bay Area before? If you're a soccer player, you want to play in the Premier League. If you want to learn tailoring, Italy is the go-to place. For anyone in the startup and tech world, it's SF (San Francisco) and the Bay Area. Easy as that.
+```
+
+```
+I got the chance to visit the area for about a week, for the "United Korean Founders" event and many others nearby. Although it was a business trip from Mashup, I had a lot of flexibility in my schedule; I could decide who to meet, where to go, and what to do for at least half of the time. I stayed with Korean founders attempting GTM in the US, met at least 20 new local founders and VCs, and struck up conversations with anyone I found interesting, whether Korean or not.
+```
+
+```
+It's such a fascinating city to be in. Walk down almost any street and there are ads for AI companies everywhere. You easily spot people wearing t-shirts with their company logos, or event merch. What did I learn from that? I can't put it in a single sentence. One thing is clear: if I wanted to win as a startup founder, I would pack up and crash in SF right away. The energy, the daily life, and the chance opportunities that might await me are immense.
+```
+
+```
+So as a Korean VC, what should I do? Know where to find the most ambitious people, and keep an eye on the individuals who are clearly at the center of the inner circles!
+```
+
+### Last Dance - Y-Startup
+
+```
+Before my time at Y-VENTURES ended, my last role was leading Y-Startup: a 6-week startup school program. It's similar to the Antler program, where Yonsei students interested in building a product gather, form teams, and work on their project.
+```
+
+```
+It was our third batch. To be honest, the first and second ones weren't all that successful. We met a few great individuals who, after the program, joined Y-VENTURES or other ambitious startup teams. But our goal of producing a team that would carry its project far enough to found a startup never materialized. My take was that the program never really worked on the product itself; it just focused on brainstorming and organizing material for presentations.
+```
+
+```
+What's the motivation to keep working on a project? It's when you actually build a product and find out there are users or customers willing to visit your service, right? So I decided to scrap all the mid-term presentations, give each team AI credits to actually build a product, and run a 12-hour hackathon-style session so we could all get wired in.
+```
+
+```
+The result was so successful that I can't get over how satisfying it feels. Out of the twelve teams that participated, seven are still actively building and serving customers. A few even registered their companies. Oh my gosh, my hunch worked.
+```
+
+### Independence
+
+```
+Yes, quite literally. I left home and live alone now.
+```
+
+```
+It's not my first time living outside my parents' house. I was in a dorm during high school and my first year of college, in the barracks during my military service, and in a small room near Sinchon for my last semester. But those were all temporary; all my stuff was still back home. This time, I'm out for good.
+```
+
+```
+Not many feelings about it, but it does drive home the realization that I'm really on my own now. I actually wanted this. Depending on my family isn't my style. I like doing most things my own way, on my own routine. Of course, if I start my own family, my days will be optimized around my wife and kids (or dogs, idk).
+```
+
+```
+Anyway, I like it. Independent Bobo.
+```
+
+### How to VC
+
+```
+It's been about six months since I started at Mashup, and I still have very little idea of how to VC. All the guru VCs are so different in their own ways. I'll need to try a bunch of things, in the right ways and the wrong ways, to get a grip on how I can grow into a VC with style and worth.
+```
 
 ---
 
