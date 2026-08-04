@@ -8,6 +8,7 @@
 
 ### 2026
 - **Feb** — The Cold Start Problem / Andrew Chen
+- **Aug** — The Power Law / Sebastian Mallaby
 
 ### 2025
 - **May** — Zero to One / Peter Thiel
