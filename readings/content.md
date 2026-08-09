@@ -7,8 +7,9 @@
 ## 책 목록
 
 ### 2026
-- **Feb** — The Cold Start Problem / Andrew Chen
-- **Aug** — The Power Law / Sebastian Mallaby
+- The Cold Start Problem / Andrew Chen
+- The Power Law / Sebastian Mallaby
+- The Right It / Alberto Savoia *(Now Reading 배지)*
 
 ### 2025
 - **May** — Zero to One / Peter Thiel
