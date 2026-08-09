@@ -48,4 +48,4 @@ Passionate about debating ideas, accelerating startups, and talking finance.
 - 이메일: bbs@mashupventures.co
 - LinkedIn: https://www.linkedin.com/in/bosungbaik/
 - X: https://x.com/bobo_ba_bobo
-- Instagram: https://www.instagram.com/bobo_sung_00/
+- Instagram: https://www.instagram.com/boboplaylist/

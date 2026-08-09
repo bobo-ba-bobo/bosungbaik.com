@@ -160,54 +160,6 @@
       opacity: 0.7;
     }
 
-    /* Contact grid — read.cv label + link style */
-    .cv-contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px 32px;
-      list-style: none;
-    }
-
-    .cv-contact-grid li {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .cv-contact-label {
-      font-size: 11px;
-      color: #616161;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 300;
-    }
-
-    .cv-contact-grid a {
-      font-size: 14px;
-      font-weight: 300;
-      color: #fff;
-      transition: color 0.3s ease;
-    }
-
-    .cv-contact-grid a::after {
-      content: ' \2197';
-      font-size: 10px;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-    }
-
-    .cv-contact-grid a:hover {
-      color: #a0a0a0;
-    }
-
-    .cv-contact-grid a:hover::after {
-      opacity: 0.7;
-    }
-
-    .cv-contact-grid a[href^="mailto"]::after {
-      display: none;
-    }
-
     @media (max-width: 640px) {
       .cv-header {
         gap: 14px;
@@ -226,10 +178,6 @@
 
       .cv-year {
         font-size: 12px;
-      }
-
-      .cv-contact-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -412,22 +360,22 @@
   <div class="inverted">
     <div class="container">
       <h2>Contact</h2>
-      <ul class="cv-contact-grid">
+      <ul class="contact-grid">
         <li>
-          <span class="cv-contact-label">Email</span>
+          <span class="contact-label">Email</span>
           <a href="mailto:bbs@mashupventures.co">bbs@mashupventures.co</a>
         </li>
         <li>
-          <span class="cv-contact-label">LinkedIn</span>
+          <span class="contact-label">LinkedIn</span>
           <a href="https://www.linkedin.com/in/bosungbaik/" target="_blank">bosungbaik</a>
         </li>
         <li>
-          <span class="cv-contact-label">X</span>
+          <span class="contact-label">X</span>
           <a href="https://x.com/bobo_ba_bobo" target="_blank">@bobo_ba_bobo</a>
         </li>
         <li>
-          <span class="cv-contact-label">Instagram</span>
-          <a href="https://www.instagram.com/bobo_sung_00/" target="_blank">@bobo_sung_00</a>
+          <span class="contact-label">Instagram</span>
+          <a href="https://www.instagram.com/boboplaylist/" target="_blank">@boboplaylist</a>
         </li>
       </ul>
     </div>

@@ -49,4 +49,4 @@ Investment associate at Mashup Ventures, focused on early-stage Korean startups.
 - Email: bbs@mashupventures.co
 - LinkedIn: https://www.linkedin.com/in/bosungbaik/
 - X: https://x.com/bobo_ba_bobo
-- Instagram: https://www.instagram.com/bobo_sung_00/
+- Instagram: https://www.instagram.com/boboplaylist/
