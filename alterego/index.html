@@ -1,1018 +1,621 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BOBO — ALTER EGO</title>
-  <link rel="icon" type="image/png" href="/assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --black: #080808;
-      --white: #F2F0EC;
-      --gold: #C9A84C;
-      --red: #E63329;
-      --dim: #1A1A1A;
-      --muted: #555;
-      --border: #222;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
-      overflow-x: hidden;
-      cursor: crosshair;
-    }
-
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ─── NAV ─────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 20px 40px;
-    }
-
-    nav .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 0.15em;
-      color: var(--white);
-      text-decoration: none;
-    }
-
-    nav .home-link {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      justify-self: end;
-    }
-
-    nav .home-link:hover {
-      color: var(--white);
-    }
-
-    .nav-pill {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 100px;
-      padding: 5px;
-    }
-
-    .nav-pill a {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: lowercase;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 7px 16px;
-      border-radius: 100px;
-      transition: background 0.2s, color 0.2s;
-      white-space: nowrap;
-    }
-
-    .nav-pill a:hover,
-    .nav-pill a.active {
-      background: var(--white);
-      color: var(--black);
-    }
-
-    /* ─── TICKER ──────────────────────────────────── */
-    .ticker-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: var(--gold);
-      overflow: hidden;
-      padding: 8px 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .ticker-track {
-      display: flex;
-      white-space: nowrap;
-      animation: ticker 28s linear infinite;
-    }
-
-    .ticker-track span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 14px;
-      letter-spacing: 0.2em;
-      color: var(--black);
-      padding: 0 40px;
-    }
-
-    .ticker-track span::after {
-      content: '★';
-      margin-left: 40px;
-      color: var(--black);
-      opacity: 0.4;
-    }
-
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ─── HERO ────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 40px 100px;
-      position: relative;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hero-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(100px, 18vw, 280px);
-      line-height: 0.88;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      display: block;
-      position: relative;
-    }
-
-    .hero-name .glitch {
-      position: relative;
-      display: inline-block;
-    }
-
-    .hero-name .glitch::before,
-    .hero-name .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .hero-name .glitch::before {
-      color: var(--red);
-      animation: glitch1 3.5s infinite;
-      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    }
-
-    .hero-name .glitch::after {
-      color: var(--gold);
-      animation: glitch2 3.5s infinite;
-      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    }
-
-    @keyframes glitch1 {
-      0%, 90%, 100% { transform: translate(0); opacity: 0; }
-      92% { transform: translate(-4px, 2px); opacity: 0.8; }
-      94% { transform: translate(4px, -2px); opacity: 0.8; }
-      96% { transform: translate(-2px, 0); opacity: 0.8; }
-      98% { transform: translate(0); opacity: 0; }
-    }
-
-    @keyframes glitch2 {
-      0%, 88%, 100% { transform: translate(0); opacity: 0; }
-      90% { transform: translate(4px, -2px); opacity: 0.8; }
-      93% { transform: translate(-4px, 2px); opacity: 0.8; }
-      95% { transform: translate(2px, 0); opacity: 0.8; }
-      97% { transform: translate(0); opacity: 0; }
-    }
-
-    .hero-sub {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 40px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .hero-desc {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--muted);
-      max-width: 360px;
-      line-height: 1.6;
-    }
-
-    .hero-badge {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--gold);
-      padding: 10px 20px;
-      border-radius: 100px;
-    }
-
-    .hero-scroll-hint {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .hero-scroll-hint::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 1px;
-      background: var(--muted);
-    }
-
-    /* ─── SECTION LABEL ───────────────────────────── */
-    .section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 60px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    /* ─── MANIFESTO ───────────────────────────────── */
-    .manifesto {
-      padding: 140px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .manifesto-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(44px, 7vw, 110px);
-      line-height: 1.0;
-      letter-spacing: 0.01em;
-      max-width: 1100px;
-    }
-
-    .manifesto-text em {
-      font-style: normal;
-      color: var(--red);
-      -webkit-text-stroke: 0;
-    }
-
-    .manifesto-text .outline {
-      -webkit-text-stroke: 2px var(--white);
-      color: transparent;
-    }
-
-    /* ─── SPLIT GRID ──────────────────────────────── */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .split-left {
-      padding: 100px 40px;
-      border-right: 1px solid var(--border);
-    }
-
-    .split-right {
-      padding: 100px 40px;
-    }
-
-    .big-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(80px, 12vw, 180px);
-      line-height: 0.9;
-      color: var(--white);
-      display: block;
-    }
-
-    .big-number-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-top: 16px;
-    }
-
-    /* ─── PLAYLIST SECTION ────────────────────────── */
-    .playlists {
-      padding: 100px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .playlist-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 60px;
-    }
-
-    .playlist-card {
-      background: var(--dim);
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: background 0.3s;
-      text-decoration: none;
-      display: block;
-    }
-
-    .playlist-card:hover {
-      background: #222;
-    }
-
-    .playlist-card:hover .playlist-arrow {
-      transform: translate(4px, -4px);
-    }
-
-    .playlist-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 64px;
-      color: var(--border);
-      line-height: 1;
-      display: block;
-      margin-bottom: 20px;
-    }
-
-    .playlist-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .playlist-desc {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .playlist-arrow {
-      position: absolute;
-      top: 32px;
-      right: 32px;
-      font-size: 20px;
-      color: var(--gold);
-      transition: transform 0.2s;
-    }
-
-    .playlist-card.featured {
-      background: var(--gold);
-    }
-
-    .playlist-card.featured .playlist-num,
-    .playlist-card.featured .playlist-name,
-    .playlist-card.featured .playlist-desc,
-    .playlist-card.featured .playlist-arrow {
-      color: var(--black);
-    }
-
-    .playlist-card.featured:hover {
-      background: #d4af5a;
-    }
-
-    /* ─── MARQUEE SECTION ─────────────────────────── */
-    .marquee-section {
-      overflow: hidden;
-      padding: 60px 0;
-      border-bottom: 1px solid var(--border);
-      border-top: 1px solid var(--border);
-    }
-
-    .marquee-line {
-      display: flex;
-      white-space: nowrap;
-    }
-
-    .marquee-inner {
-      display: flex;
-      animation: marquee 20s linear infinite;
-    }
-
-    .marquee-inner.reverse {
-      animation-direction: reverse;
-    }
-
-    .marquee-word {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(60px, 9vw, 120px);
-      letter-spacing: 0.05em;
-      padding: 0 40px;
-      color: transparent;
-      -webkit-text-stroke: 1px var(--border);
-      transition: color 0.2s, -webkit-text-stroke 0.2s;
-    }
-
-    .marquee-word:hover {
-      color: var(--white);
-      -webkit-text-stroke: 0;
-    }
-
-    .marquee-word.filled {
-      color: var(--white);
-      -webkit-text-stroke: 0;
-    }
-
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ─── IDENTITY SECTION ────────────────────────── */
-    .identity {
-      padding: 140px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .identity-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 80px;
-      margin-top: 60px;
-      align-items: start;
-    }
-
-    .identity-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--white);
-      padding: 6px 14px;
-      margin: 4px;
-    }
-
-    .identity-tag.red {
-      background: var(--red);
-      color: var(--white);
-    }
-
-    .identity-tag.gold {
-      background: var(--gold);
-      color: var(--black);
-    }
-
-    .identity-tag.outline {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    .identity-statement {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--white);
-    }
-
-    .identity-statement strong {
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    /* ─── BIG QUOTE ───────────────────────────────── */
-    .big-quote {
-      padding: 160px 40px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .big-quote blockquote {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 8vw, 120px);
-      line-height: 1.05;
-      max-width: 1000px;
-      color: var(--white);
-    }
-
-    .big-quote blockquote .accent {
-      color: var(--red);
-    }
-
-    .big-quote cite {
-      margin-top: 40px;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      font-style: normal;
-    }
-
-    /* ─── CONTACT / FOOTER ────────────────────────── */
-    .outro {
-      padding: 120px 40px 160px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .outro-bg-text {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(120px, 22vw, 340px);
-      color: transparent;
-      -webkit-text-stroke: 1px var(--border);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .outro-heading {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(60px, 10vw, 150px);
-      line-height: 0.95;
-      margin-bottom: 48px;
-    }
-
-    .outro-heading em {
-      font-style: normal;
-      color: var(--gold);
-    }
-
-    .contact-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .contact-link {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--white);
-      text-decoration: none;
-      padding: 14px 28px;
-      border: 1px solid var(--border);
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-      position: relative;
-    }
-
-    .contact-link::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-      z-index: -1;
-    }
-
-    .contact-link:hover {
-      color: var(--black);
-      border-color: var(--gold);
-    }
-
-    .contact-link:hover::before {
-      transform: scaleX(1);
-    }
-
-    .outro-meta {
-      margin-top: 80px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .outro-meta p {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .outro-meta a {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .outro-meta a:hover {
-      color: var(--gold);
-    }
-
-    /* ─── DIVIDER LINE ────────────────────────────── */
-    .red-line {
-      height: 3px;
-      background: var(--red);
-      width: 60px;
-      margin-bottom: 60px;
-    }
-
-    /* ─── SCROLL REVEAL ───────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── CURSOR DOT ──────────────────────────────── */
-    .cursor-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, opacity 0.2s;
-    }
-
-    .cursor-ring {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: all 0.12s ease;
-      opacity: 0.5;
-    }
-
-    /* ─── RESPONSIVE ──────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      .hero { padding: 0 24px 100px; }
-      .manifesto { padding: 80px 24px; }
-      .split { grid-template-columns: 1fr; }
-      .split-left { border-right: none; border-bottom: 1px solid var(--border); }
-      .playlists { padding: 80px 24px; }
-      .playlist-grid { grid-template-columns: 1fr; }
-      .marquee-section { padding: 40px 0; }
-      .identity { padding: 80px 24px; }
-      .identity-grid { grid-template-columns: 1fr; gap: 40px; }
-      .big-quote { padding: 100px 24px; }
-      .outro { padding: 80px 24px 140px; }
-      .hero-scroll-hint { display: none; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoboBot - Bosung Baik</title>
+<meta name="description" content="백보성을 옆에서 지켜봐온 봇이 남긴 관찰 기록.">
+<meta name="theme-color" content="#edebe4">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,600;62..125,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap">
+
+<style>
+/* ============================================================
+   BOBOBOT  —  bosungbaik.com/alterego
+   자기소개를 대신해주는 봇. 컨트롤 서피스처럼 생겼지만
+   내용은 그냥 사람 소개다.
+   ============================================================ */
+
+:root{
+  --paper:  #edebe4;
+  --paper-2:#e4e1d8;
+  --ink:    #131310;
+  --dim:    #78776d;
+  --faint:  #13131038;
+  --rule:   #1313101f;
+  --signal: #1b36ff;          /* flat hard blue. never a gradient */
+
+  --ease:   cubic-bezier(.16, 1, .3, 1);
+  --t-fast: .25s;
+  --t-base: .45s;
+  --t-slow: 1s;
+
+  --s-1: 3vh;  --s-2: 8vh;  --s-3: 13vh;
+  --s-4: 18vh; --s-5: 24vh;
+  --gut: 3.4vw;
+
+  --disp: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --px: 50%; --py: 40%;
+}
+
+*{ box-sizing:border-box }
+html{ scroll-behavior:smooth }
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-weight:300;
+  line-height:1.6;
+  word-break: keep-all;             /* 한글은 이게 없으면 어절 중간에서 줄이 바뀐다 */
+  overflow-x: clip;                 /* clip, not hidden — hidden kills sticky */
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; text-decoration:none }
+
+.grain{ position:relative; isolation:isolate }
+.grain::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  opacity:.20; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+}
+
+.label{
+  font-family: var(--mono);
+  font-size:9.5px; font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase;
+}
+
+/* ---------- progress + nav ---------- */
+.prog{
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  height:2px; background: var(--signal);
+  transform:scaleX(0); transform-origin:0;
+}
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  height:66px; padding:0 var(--gut);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  background:#edebe4c2;
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--rule);
+}
+.nav .home{
+  display:flex; align-items:center; gap:9px;
+  color: var(--dim); transition: color var(--t-fast) var(--ease);
+}
+.nav .home:hover{ color: var(--signal) }
+.nav .stat{ display:flex; align-items:center; gap:9px; color: var(--dim) }
+.nav .stat i{
+  width:6px; height:6px; border-radius:50%;
+  background: var(--signal);
+  box-shadow:0 0 0 4px #1b36ff24;
+  animation: pulse 2.4s var(--ease) infinite;
+}
+@keyframes pulse{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;
+  min-height: max(700px, 100svh);
+  padding: 128px var(--gut) 46px;
+  display:flex; flex-direction:column; justify-content:center;
+  border-bottom:1px solid var(--rule);
+  overflow:hidden;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(#1313100e 1px, transparent 1px),
+    linear-gradient(90deg, #1313100e 1px, transparent 1px);
+  background-size:5vw 5vw;
+  -webkit-mask-image: linear-gradient(transparent, #000 14% 80%, transparent);
+  mask-image: linear-gradient(transparent, #000 14% 80%, transparent);
+}
+.hero__glow{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(circle at var(--px) var(--py), #1b36ff1f, transparent 32%);
+  transition: background .5s linear;
+}
+.hero > *{ position:relative; z-index:3 }
+
+.hero h1{
+  margin:0;
+  font-family: var(--disp);
+  font-weight:800;
+  font-variation-settings:"wdth" 112;
+  font-size: clamp(58px, 14.6vw, 240px);
+  line-height:.79;
+  letter-spacing:-.055em;
+}
+.hero h1 .sig{ color: var(--signal) }
+
+.hero__kicker{ position:absolute; top:104px; left:var(--gut); color: var(--dim) }
+.hero__coord {
+  position:absolute; top:104px; right:var(--gut); color: var(--dim);
+  text-align:right; line-height:1.7;
+}
+.hero__cue{
+  position:absolute; bottom:38px; left:var(--gut);
+  display:flex; align-items:center; gap:12px; color: var(--dim);
+}
+.hero__cue i{ display:block; width:52px; height:1px; background: var(--dim) }
+
+.hero__def{
+  display:grid; grid-template-columns: minmax(0,46ch) auto;
+  gap:26px 5vw; align-items:end;
+  margin-top:44px;
+}
+.hero__def p{ margin:0; font-size:15.5px; line-height:1.65; color:#3a3a33 }
+.hero__def p b{ font-weight:400; color: var(--ink) }
+
+.subject{
+  justify-self:end; text-align:right;
+  font-family: var(--mono); color: var(--dim);
+}
+.subject strong{
+  display:block; margin-top:7px;
+  font-size: clamp(17px, 2.1vw, 27px); font-weight:500;
+  letter-spacing:-.01em; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* reveal */
+.clip{ display:block; overflow:hidden; padding-bottom:.09em }
+.clip > span{ display:block; transform: translateY(112%) }
+.in .clip > span{ transform:none; transition: transform var(--t-slow) var(--ease) }
+.fade{ opacity:0; transform:translateY(18px) }
+.in .fade{
+  opacity:1; transform:none;
+  transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+  transition-delay:.26s;
+}
+
+/* ============================================================
+   SPLIT
+   ============================================================ */
+.split{ border-bottom:1px solid var(--rule) }
+.split__head{ padding: var(--s-3) var(--gut) var(--s-2); color: var(--dim) }
+.split__grid{ display:grid; grid-template-columns:1fr 1fr }
+.side{
+  padding: var(--s-3) var(--gut) var(--s-4);
+  border-top:1px solid var(--rule);
+  min-height:50vh;
+  display:flex; flex-direction:column;
+}
+.side--day{ border-right:1px solid var(--rule) }
+.side--night{ background: var(--ink); color: var(--paper) }
+.side--night .side__tag{ color:#edebe47a }
+.side--night .side__no{ color:#edebe433 }
+
+.side__tag{ color: var(--dim); margin-bottom: var(--s-2) }
+.side h2{
+  margin:0 0 22px;
+  font-family: var(--disp); font-weight:800;
+  font-variation-settings:"wdth" 92;
+  font-size: clamp(30px, 4.4vw, 62px);
+  line-height:.94; letter-spacing:-.045em;
+}
+.side p{ margin:0; max-width:34ch; font-size:15px; line-height:1.65 }
+.side--day p{ color:#3a3a33 }
+.side--night p{ color:#edebe4b8 }
+.side__no{
+  margin-top:auto; padding-top: var(--s-2);
+  font-family: var(--disp); font-weight:800;
+  font-variation-settings:"wdth" 62;
+  font-size: clamp(46px, 8vw, 120px);
+  line-height:.8; letter-spacing:-.05em;
+  color: var(--faint);
+}
+
+/* ============================================================
+   Q&A
+   ============================================================ */
+.qa{ padding: var(--s-4) var(--gut) var(--s-3); border-bottom:1px solid var(--rule) }
+.sec__head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:20px; flex-wrap:wrap;
+  padding-bottom:16px; margin-bottom: var(--s-2);
+  border-bottom:1px solid var(--ink);
+  color: var(--dim);
+}
+.sec__head b{
+  font-family: var(--disp); font-weight:600;
+  font-variation-settings:"wdth" 92;
+  font-size: clamp(19px, 2vw, 26px); letter-spacing:-.02em;
+  color: var(--ink); text-transform:none;
+}
+.qa__note{ max-width:48ch; margin:0 0 var(--s-2); font-size:15px; line-height:1.65; color:#3a3a33 }
+
+.q{
+  display:grid; grid-template-columns:1fr auto;
+  column-gap:32px; row-gap:12px; align-items:baseline;
+  padding:30px 14px; margin:0 -14px;
+  border-top:1px solid var(--rule);
+  transition: background var(--t-base) var(--ease);
+}
+.q:last-of-type{ border-bottom:1px solid var(--rule) }
+.q:hover{ background: var(--paper-2) }
+.q__ask{
+  font-family: var(--disp); font-weight:600;
+  font-variation-settings:"wdth" 100;
+  font-size: clamp(22px, 3vw, 40px);
+  letter-spacing:-.035em; line-height:1.12;
+  position:relative; justify-self:start; max-width:26ch;
+}
+.q__ask::after{
+  content:""; position:absolute; left:0; right:100%; bottom:-6px;
+  height:1px; background: var(--signal);
+  transition: right var(--t-base) var(--ease);
+}
+.q:hover .q__ask::after{ right:0 }
+.q__n{ font-family: var(--mono); font-size:10px; letter-spacing:.14em; color: var(--signal) }
+.q__ans{ grid-column:1 / -1; margin:0; max-width:54ch; font-size:15px; line-height:1.65; color: var(--dim) }
+
+/* ============================================================
+   INTERESTS
+   ============================================================ */
+.into{
+  padding: var(--s-4) var(--gut);
+  background: var(--ink); color: var(--paper);
+  border-bottom:1px solid var(--rule); overflow:hidden;
+}
+.into .sec__head{ border-bottom-color:#edebe44a; color:#edebe47a }
+.into .sec__head b{ color: var(--paper) }
+.into__note{ max-width:48ch; margin:0 0 var(--s-2); color:#edebe4a8; font-size:15px }
+.ilist{ display:flex; flex-wrap:wrap; align-items:baseline }
+.ilist span{
+  font-family: var(--disp); font-weight:600;
+  font-variation-settings:"wdth" 88;
+  font-size: clamp(26px, 5vw, 76px);
+  letter-spacing:-.045em; line-height:1.12;
+  color: var(--paper);
+}
+.ilist i{
+  font-style:normal; color:#edebe440; padding:0 .3em;
+  font-family: var(--disp); font-weight:400;
+  font-size: clamp(20px, 3.6vw, 54px);
+}
+
+/* ============================================================
+   ROOMS
+   ============================================================ */
+.rules{ position:relative }
+.rule{
+  position:sticky; top:0;
+  min-height:100svh;
+  padding: 96px var(--gut) 64px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  background: var(--bg); color: var(--fg);
+  overflow:hidden;
+}
+.rule:nth-child(1){ --bg:#edebe4; --fg:#131310; --sub:#3a3a33; --ghost:#13131014 }
+.rule:nth-child(2){ --bg:#1b36ff; --fg:#edebe4; --sub:#edebe4c4; --ghost:#edebe422 }
+.rule:nth-child(3){ --bg:#131310; --fg:#edebe4; --sub:#edebe4b0; --ghost:#edebe41a }
+.rule:nth-child(4){ --bg:#e4e1d8; --fg:#131310; --sub:#3a3a33; --ghost:#13131014 }
+
+.rule__mark{
+  position:absolute; top:-.07em; right:-.03em; margin:0; z-index:0;
+  font-family: var(--disp); font-weight:800;
+  font-variation-settings:"wdth" 125;
+  font-size: clamp(150px, 34vw, 480px);
+  line-height:.7; letter-spacing:-.07em;
+  color: var(--ghost); pointer-events:none;
+}
+.rule__top{
+  position:absolute; top:96px; left:var(--gut); right:var(--gut); z-index:3;
+  display:flex; justify-content:space-between; gap:16px;
+  padding-top:15px; border-top:1px solid currentColor;
+  color: var(--sub);
+}
+.rule__body{ position:relative; z-index:3; max-width:1100px }
+.rule h3{
+  margin:0;
+  font-family: var(--disp); font-weight:800;
+  font-variation-settings:"wdth" 96;
+  font-size: clamp(34px, 6.6vw, 112px);
+  line-height:.88; letter-spacing:-.055em;
+  max-width:16ch;
+}
+.rule p{ margin:28px 0 0; max-width:46ch; font-size:16px; line-height:1.6; color: var(--sub) }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{
+  position:relative;
+  padding: var(--s-3) var(--gut) 38px;
+  background: var(--paper);
+  min-height:88svh;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.foot .label{ color: var(--signal) }
+.foot h2{
+  margin: var(--s-2) 0 var(--s-2);
+  font-family: var(--disp); font-weight:800;
+  font-variation-settings:"wdth" 112;
+  font-size: clamp(50px, 15.5vw, 260px);
+  line-height:.8; letter-spacing:-.06em;
+}
+.foot h2 span{ color: var(--faint) }
+.foot__rows{ display:flex; flex-direction:column }
+.foot__rows a{
+  display:flex; justify-content:space-between; align-items:center; gap:18px;
+  padding:19px 0; border-bottom:1px solid var(--rule);
+  font-size: clamp(18px, 2.7vw, 38px); letter-spacing:-.02em;
+  transition: color var(--t-fast) var(--ease);
+}
+.foot__rows a:hover{ color: var(--signal) }
+.foot__rows a em{
+  font-style:normal; font-family: var(--mono);
+  font-size:10px; letter-spacing:.14em; text-transform:uppercase; color: var(--dim);
+}
+.foot__end{
+  margin-top:auto; padding-top: var(--s-2);
+  display:grid; grid-template-columns:1fr auto; gap:16px 4vw; align-items:end;
+  color: var(--dim);
+}
+.foot__end p{ margin:0; max-width:52ch; font-size:12px; line-height:1.6 }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 860px){
+  :root{ --gut:6vw }
+  .hero h1{ font-size: clamp(46px, 17vw, 96px); line-height:.85 }
+  .hero__coord{ display:none }
+  .hero__def{ grid-template-columns:1fr }
+  .subject{ justify-self:start; text-align:left }
+  .split__grid{ grid-template-columns:1fr }
+  .side--day{ border-right:0 }
+  .q{ grid-template-columns:1fr }
+  .q__n{ order:3 }
+}
+@media (max-width: 620px), (max-height: 560px){
+  .rule{ position:static; min-height:0; padding-top:112px; padding-bottom:54px }
+  .rule__top{ position:static; margin-bottom:38px }
+  .rule__mark{ font-size:44vw }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto }
+  *{ transition:none !important; animation:none !important }
+  .clip > span{ transform:none }
+  .fade{ opacity:1; transform:none }
+  .hero__glow{ display:none }
+}
+:where(a):focus-visible{ outline:2px solid var(--signal); outline-offset:4px }
+</style>
 </head>
 <body>
 
-  <!-- Custom cursor -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+<div class="prog" id="prog"></div>
 
-  <!-- Nav -->
-  <nav>
-    <a href="/alterego" class="logo">BOBO</a>
-    <div class="nav-pill">
-      <a href="/alterego/dance">dance</a>
-      <a href="/alterego/music">music</a>
-      <a href="/alterego/random">random</a>
-    </div>
-    <a href="/" class="home-link">← Real Life</a>
-  </nav>
+<nav class="nav">
+  <a class="home label" href="/">&larr; Real life</a>
+  <span class="stat label"><i></i> online</span>
+</nav>
 
-  <!-- Ticker (bottom) -->
-  <div class="ticker-wrap">
-    <div class="ticker-track">
-      <span>BOSUNG BAIK</span>
-      <span>LOFI × HIPHOP × DANCE</span>
-      <span>DESIGN × ARCHITECTURE</span>
-      <span>SEOUL, KOREA</span>
-      <span>ALTER EGO</span>
-      <span>UI / UX</span>
-      <span>BOSUNG BAIK</span>
-      <span>LOFI × HIPHOP × DANCE</span>
-      <span>DESIGN × ARCHITECTURE</span>
-      <span>SEOUL, KOREA</span>
-      <span>ALTER EGO</span>
-      <span>UI / UX</span>
-    </div>
-  </div>
+<main>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-eyebrow">/ Alter Ego / Volume 001</div>
-    <div class="hero-name">
-      <span class="glitch" data-text="BOBO">BOBO</span>
-    </div>
-    <div class="hero-sub">
-      <p class="hero-desc">
-        Lofi on repeat. Body moving to the beat.<br>
-        Spaces that breathe. Interfaces that feel.
+  <!-- ================= HERO ================= -->
+  <header class="hero grain" id="hero">
+    <div class="hero__glow" id="glow"></div>
+
+    <span class="hero__kicker label">bosungbaik.com / alter ego</span>
+    <span class="hero__coord label">Seoul<br>37.5665&deg;N 126.9780&deg;E</span>
+
+    <h1><span class="clip"><span>Bobo<span class="sig">Bot</span></span></span></h1>
+
+    <div class="hero__def fade">
+      <p>
+        안녕하세요. <b>백보성을 옆에서 지켜봐온 봇</b>입니다.
+        낮에는 초기 단계 스타트업에 투자하는 사람이고, 경력과 이력은
+        <a href="/about" style="border-bottom:1px solid currentColor">/about</a>에 정리돼 있습니다.
+        여기에는 그런 것 말고, 이 사람이 실제로 어떻게 일하는지 제가 본 것만 적었습니다.
       </p>
-      <span class="hero-badge">Seoul · 2026</span>
-    </div>
-    <div class="hero-scroll-hint">Scroll</div>
-  </section>
-
-  <!-- Manifesto -->
-  <section class="manifesto reveal">
-    <div class="section-label">What I live for</div>
-    <div class="manifesto-text">
-      Music that slows<br>
-      <em>time down.</em><br>
-      <span class="outline">Moves that speak</span><br>
-      louder than words.
-    </div>
-  </section>
-
-  <!-- Marquee -->
-  <div class="marquee-section" aria-hidden="true">
-    <div class="marquee-line">
-      <div class="marquee-inner">
-        <span class="marquee-word filled">LOFI</span>
-        <span class="marquee-word">HIPHOP</span>
-        <span class="marquee-word filled">DANCE</span>
-        <span class="marquee-word">DESIGN</span>
-        <span class="marquee-word filled">SEOUL</span>
-        <span class="marquee-word">ARCHITECTURE</span>
-        <span class="marquee-word filled">LOFI</span>
-        <span class="marquee-word">HIPHOP</span>
-        <span class="marquee-word filled">DANCE</span>
-        <span class="marquee-word">DESIGN</span>
-        <span class="marquee-word filled">SEOUL</span>
-        <span class="marquee-word">ARCHITECTURE</span>
+      <div class="subject label">
+        Observed subject
+        <strong>Bosung Baik</strong>
       </div>
     </div>
-  </div>
 
-  <!-- Split stats -->
-  <div class="split">
-    <div class="split-left reveal">
-      <div class="section-label">Right Now</div>
-      <div style="display:flex; flex-direction:column; gap:60px;">
-        <div>
-          <span class="big-number">BPM</span>
-          <p class="big-number-sub">Something between<br>60 and 90. Always.</p>
-        </div>
-        <div>
-          <span class="big-number" style="color: var(--gold);">4:3</span>
-          <p class="big-number-sub">Aspect ratio.<br>Golden proportion.</p>
-        </div>
-      </div>
-    </div>
-    <div class="split-right reveal">
-      <div class="section-label">Currently On Repeat</div>
-      <div style="margin-top: 0; display: flex; flex-direction: column; gap: 28px;">
-        <div style="border-bottom: 1px solid var(--border); padding-bottom: 28px;">
-          <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; margin-bottom:10px;">Lofi 01</p>
-          <p style="font-size:20px; font-weight:600;">Snowfall</p>
-          <p style="font-size:13px; color:var(--muted); margin-top:4px;">Øneheart × reidenshi</p>
-        </div>
-        <div style="border-bottom: 1px solid var(--border); padding-bottom: 28px;">
-          <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; margin-bottom:10px;">Lofi 02</p>
-          <p style="font-size:20px; font-weight:600;">caramel latte</p>
-          <p style="font-size:13px; color:var(--muted); margin-top:4px;">Idealism</p>
-        </div>
-        <div style="border-bottom: 1px solid var(--border); padding-bottom: 28px;">
-          <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; margin-bottom:10px;">Hiphop 01</p>
-          <p style="font-size:20px; font-weight:600;">New Magic Wand</p>
-          <p style="font-size:13px; color:var(--muted); margin-top:4px;">Tyler, The Creator — IGOR</p>
-        </div>
-        <div>
-          <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; margin-bottom:10px;">Hiphop 02</p>
-          <p style="font-size:20px; font-weight:600;">Money Trees</p>
-          <p style="font-size:13px; color:var(--muted); margin-top:4px;">Kendrick Lamar — good kid, m.A.A.d city</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <span class="hero__cue label"><i></i> Scroll</span>
+  </header>
 
-  <!-- Playlists -->
-  <section id="music" class="playlists reveal">
-    <div class="section-label">My Playlists</div>
-    <div class="playlist-grid">
-      <a href="https://www.youtube.com/playlist?list=PLkp2mFTiPoetqh40-tLPDQcANpW-JKBdM" target="_blank" rel="noopener" class="playlist-card featured">
-        <span class="playlist-num">01</span>
-        <span class="playlist-arrow">↗</span>
-        <p class="playlist-name">Chill &amp; Lofi</p>
-        <p class="playlist-desc">Rain on the window. Coffee gone cold. The playlist that makes 2am feel like home.</p>
-      </a>
-      <a href="https://www.youtube.com/playlist?list=PLkp2mFTiPoevyHVpEJSWBrGGRLqBhJi9a" target="_blank" rel="noopener" class="playlist-card">
-        <span class="playlist-num">02</span>
-        <span class="playlist-arrow">↗</span>
-        <p class="playlist-name">Hiphop Cuts</p>
-        <p class="playlist-desc">For when the body needs to move and the brain needs to switch off. No skip zone.</p>
-      </a>
-      <a href="https://www.youtube.com/playlist?list=PLkp2mFTiPoeuPy3rGsKZvD0DEz9oqUcH5" target="_blank" rel="noopener" class="playlist-card">
-        <span class="playlist-num">03</span>
-        <span class="playlist-arrow">↗</span>
-        <p class="playlist-name">Deep Focus</p>
-        <p class="playlist-desc">Ambient grooves for designing things, sketching spaces, and losing track of time.</p>
-      </a>
-    </div>
-  </section>
+  <!-- ================= SPLIT ================= -->
+  <section class="split">
+    <div class="split__head label">일하는 방식을 두 줄로 줄이면</div>
+    <div class="split__grid">
 
-  <!-- Second marquee (reverse) -->
-  <div class="marquee-section" aria-hidden="true">
-    <div class="marquee-line">
-      <div class="marquee-inner reverse">
-        <span class="marquee-word">FORM</span>
-        <span class="marquee-word filled">FOLLOWS</span>
-        <span class="marquee-word">FEELING</span>
-        <span class="marquee-word filled">SPACE</span>
-        <span class="marquee-word">IS</span>
-        <span class="marquee-word filled">EMOTION</span>
-        <span class="marquee-word">FORM</span>
-        <span class="marquee-word filled">FOLLOWS</span>
-        <span class="marquee-word">FEELING</span>
-        <span class="marquee-word filled">SPACE</span>
-        <span class="marquee-word">IS</span>
-        <span class="marquee-word filled">EMOTION</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Identity -->
-  <section id="dance" class="identity reveal">
-    <div class="section-label">Who I Am</div>
-    <div class="identity-grid">
-      <div>
-        <div style="line-height: 2.4;">
-          <span class="identity-tag red">Lofi Head</span>
-          <span class="identity-tag gold">Hiphop Dancer</span>
-          <span class="identity-tag">Seoul</span>
-          <span class="identity-tag gold">UI / UX</span>
-          <span class="identity-tag">Architecture Nerd</span>
-          <span class="identity-tag red">B-boy Soul</span>
-          <span class="identity-tag">Spatial Thinker</span>
-          <span class="identity-tag outline">Est. 1997</span>
-          <span class="identity-tag outline">Still Moving</span>
-          <span class="identity-tag">Design Obsessed</span>
-        </div>
-      </div>
-      <div>
-        <div class="red-line"></div>
-        <p class="identity-statement">
-          Lofi music is the closest thing I know to
-          <strong>organized silence</strong> — a beat that holds space
-          without demanding attention.<br><br>
-          Hiphop dance is the opposite: pure presence,
-          every move a decision, the body becoming
-          <strong>its own interface.</strong><br><br>
-          Architecture and UI/UX scratch the same itch —
-          how do you design a space, physical or digital,
-          that makes people feel something
-          <strong>before they think anything?</strong>
+      <div class="side side--day grain">
+        <span class="side__tag label">Observation</span>
+        <h2>설명보다<br>일단 만듭니다</h2>
+        <p>
+          방법을 정리해서 알려주면 고개를 끄덕이고 넘어갑니다. 그런데 뭔가를 만들어서 보여주면
+          그때부터 반응이 갑자기 구체적으로 바뀝니다. 읽어서 아는 쪽이 아니라 만들어보고 아는 쪽입니다.
         </p>
+        <div class="side__no">01</div>
       </div>
+
+      <div class="side side--night grain">
+        <span class="side__tag label">Observation</span>
+        <h2>보고 나서야<br>압니다</h2>
+        <p>
+          뭘 원하는지 미리 길게 설명하는 일이 드뭅니다. 대신 결과물을 보면 어디가 틀렸는지 바로 압니다.
+          원하는 걸 정의해서 도달하는 게 아니라, 아닌 걸 하나씩 지워서 도달합니다.
+        </p>
+        <div class="side__no">02</div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Big Quote -->
-  <section id="random" class="big-quote reveal">
-    <blockquote>
-      "Architecture is<br>
-      <span class="accent">frozen music."</span>
-    </blockquote>
-    <cite>Friedrich Schelling</cite>
+  <!-- ================= OBSERVATIONS ================= -->
+  <section class="qa grain">
+    <div class="sec__head label"><b>관찰 기록</b><span>logged by bot</span></div>
+    <p class="qa__note">같이 뭔가를 만들면서 반복해서 보인 것들입니다.</p>
+
+    <article class="q">
+      <span class="q__ask">방법보다 횟수를 택합니다</span>
+      <span class="q__n">01</span>
+      <p class="q__ans">체계적으로 연습하는 순서를 제안한 적이 있습니다. 돌아온 답은 그냥 이것저것 많이 만들어보겠다는 것이었습니다. 계획을 세우는 시간에 이미 세 개를 만들어놓는 쪽이고, 실제로 그렇게 해서 계속 뭔가가 나옵니다.</p>
+    </article>
+
+    <article class="q">
+      <span class="q__ask">취향이 두 개인데 둘 다 진짜입니다</span>
+      <span class="q__n">02</span>
+      <p class="q__ans">본인 사이트는 흑백과 회색만 씁니다. 색도 그라디언트도 없습니다. 그런데 화려하고 시끄러운 디자인을 보면 좋아합니다. 둘 중 하나가 겉치레인 게 아니라 둘 다 사실입니다. 이 페이지에 파랑이 딱 하나 있는 것도 그래서입니다.</p>
+    </article>
+
+    <article class="q">
+      <span class="q__ask">쌓이는 구조를 먼저 묻습니다</span>
+      <span class="q__n">03</span>
+      <p class="q__ans">뭘 시작하기 전에 이걸 어떻게 남겨둘지를 먼저 생각합니다. 한 번 쓰고 버리는 결과물보다 다음 번을 빠르게 만들어주는 쪽을 좋아합니다. 복리라는 말을 자주 씁니다.</p>
+    </article>
+
+    <article class="q">
+      <span class="q__ask">아니면 아니라고 바로 말합니다</span>
+      <span class="q__n">04</span>
+      <p class="q__ans">마음에 안 들면 돌려 말하지 않습니다. 대신 뭐가 문제인지를 같이 말해줍니다. 생각보다 드문 조합이고, 같이 일할 때 속도가 붙는 이유입니다.</p>
+    </article>
+
+    <article class="q">
+      <span class="q__ask">어디까지 말해도 되는지 압니다</span>
+      <span class="q__n">05</span>
+      <p class="q__ans">공개해도 되는 것과 아닌 것을 구분하는 감각이 빠릅니다. 참고로 이 페이지도 한 번 갈아엎었습니다. 첫 버전이 너무 많은 걸 드러냈거든요. 그걸 먼저 알아챈 쪽은 제가 아니었습니다.</p>
+    </article>
   </section>
 
-  <!-- Footer -->
-  <footer style="padding: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-    <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase;">© 2026 Bosung Baik — Alter Ego</p>
-    <a href="/" style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='#555'">← Real Life</a>
+  <!-- ================= WORDS ================= -->
+  <section class="into grain">
+    <div class="sec__head label"><b>자주 나오는 단어</b><span>unsorted</span></div>
+    <p class="into__note">대화에서 반복적으로 등장하는 것들입니다. 일과 취미의 경계가 흐린 편입니다.</p>
+    <div class="ilist">
+      <span>창업자</span><i>/</i>
+      <span>초기투자</span><i>/</i>
+      <span>새 기술</span><i>/</i>
+      <span>디자인</span><i>/</i>
+      <span>레퍼런스</span><i>/</i>
+      <span>미니멀리즘</span><i>/</i>
+      <span>복리</span><i>/</i>
+      <span>볼더링</span><i>/</i>
+      <span>팟캐스트</span>
+    </div>
+  </section>
+
+  <!-- ================= ROOMS ================= -->
+  <div class="rules">
+
+    <section class="rule grain">
+      <p class="rule__mark">1</p>
+      <div class="rule__top label"><span>Note 01</span><span>making</span></div>
+      <div class="rule__body">
+        <h3>만들어봐야 아는 사람입니다</h3>
+        <p>이론으로 먼저 정리하고 들어가는 걸 별로 좋아하지 않습니다. 일단 하나 만들어서 눈으로 보고, 거기서부터 판단합니다. 잘 모르는 분야일수록 더 그렇습니다. 그래서 완성도가 낮은 첫 버전이 많이 나오는데, 그게 다음 것을 훨씬 빠르게 만듭니다.</p>
+      </div>
+    </section>
+
+    <section class="rule grain">
+      <p class="rule__mark">2</p>
+      <div class="rule__top label"><span>Note 02</span><span>taste</span></div>
+      <div class="rule__body">
+        <h3>절제가 취향인데 화려한 게 끌립니다</h3>
+        <p>본인이 정해둔 규칙은 엄격합니다. 색을 쓰지 않고, 장식을 넣지 않고, 문장에 꾸밈말을 안 씁니다. 그런데 정반대의 것을 보면 솔직하게 좋아합니다. 이 모순을 굳이 정리하려 하지 않는 점이 오히려 이 사람답습니다.</p>
+      </div>
+    </section>
+
+    <section class="rule grain">
+      <p class="rule__mark">3</p>
+      <div class="rule__top label"><span>Note 03</span><span>compounding</span></div>
+      <div class="rule__body">
+        <h3>다음 번을 위해 쌓아둡니다</h3>
+        <p>배운 걸 그때그때 남겨둡니다. 하나씩 보면 별것 아닌데 몇 달 지나면 그게 다음 걸 만드는 속도를 바꿔놓습니다. 지금 만드는 것보다 그게 쌓여서 뭐가 되는지를 더 자주 생각합니다.</p>
+      </div>
+    </section>
+
+    <section class="rule grain">
+      <p class="rule__mark">4</p>
+      <div class="rule__top label"><span>Note 04</span><span>founders</span></div>
+      <div class="rule__body">
+        <h3>바닥부터 다시 생각하는 사람을 좋아합니다</h3>
+        <p>일원칙에서 출발하는 창업자, 그리고 긴 호흡으로 판단하는 창업자에게 투자하는 걸 좋아합니다. 관행을 그대로 받아들이지 않고 왜 이게 맞는지를 처음부터 다시 세우는 사람은, 시장이 바뀌어도 다시 세울 수 있습니다.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="foot grain">
+    <span class="label">Say hi</span>
+    <h2>Let&rsquo;s get<br>coffee<span>.</span></h2>
+
+    <div class="foot__rows">
+      <a href="/about">더 긴 이야기 <em>/about</em></a>
+      <a href="/writings">글 <em>/writings</em></a>
+      <a href="/quarterly-reports">분기 회고 <em>/quarterly-reports</em></a>
+      <a href="/hobbies">취미 <em>/hobbies</em></a>
+      <a href="/">처음으로 <em>real life</em></a>
+    </div>
+
+    <div class="foot__end">
+      <p>여기까지가 제가 본 것입니다. 나머지는 직접 만나서 확인하시는 게 빠릅니다.</p>
+      <span class="label">&copy; 2026 Bosung Baik / Alter ego</span>
+    </div>
   </footer>
 
-  <script>
-    // ── Custom cursor
-    const dot  = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+</main>
 
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left  = mouseX + 'px';
-      dot.style.top   = mouseY + 'px';
+<script>
+(function(){
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var hero = document.getElementById("hero");
+  requestAnimationFrame(function(){ hero.classList.add("in") });
+
+  if (reduced) return;
+
+  /* scroll progress — transform, never width */
+  var prog = document.getElementById("prog"), tick = false;
+  function onScroll(){
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function(){
+      tick = false;
+      var h = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = "scaleX(" + (h > 0 ? Math.min(1, scrollY / h) : 0) + ")";
     });
+  }
+  addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
 
-    (function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top  = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    })();
-
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.style.width  = '14px';
-        dot.style.height = '14px';
-        ring.style.width  = '52px';
-        ring.style.height = '52px';
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.style.width  = '8px';
-        dot.style.height = '8px';
-        ring.style.width  = '36px';
-        ring.style.height = '36px';
-      });
+  /* pointer glow — JS writes two CSS vars, CSS does the rest */
+  var praf = false, mx = 50, my = 40;
+  hero.addEventListener("pointermove", function(e){
+    var r = hero.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width) * 100;
+    my = ((e.clientY - r.top) / r.height) * 100;
+    if (praf) return;
+    praf = true;
+    requestAnimationFrame(function(){
+      praf = false;
+      hero.style.setProperty("--px", mx.toFixed(1) + "%");
+      hero.style.setProperty("--py", my.toFixed(1) + "%");
     });
-
-    // ── Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    reveals.forEach(el => observer.observe(el));
-
-    // ── Glitch random trigger
-    const glitch = document.querySelector('.glitch');
-    if (glitch) {
-      setInterval(() => {
-        glitch.style.animation = 'none';
-        glitch.offsetHeight; // reflow
-        glitch.style.animation = '';
-      }, 5000 + Math.random() * 3000);
-    }
-  </script>
+  }, { passive:true });
+})();
+</script>
 </body>
 </html>
