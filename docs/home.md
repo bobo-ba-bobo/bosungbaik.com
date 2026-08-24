@@ -7,7 +7,7 @@ Bosung Baik is currently an investment associate at Mashup Ventures, investing i
 ```
 
 ```
-is also CEO of Y-Ventures, a Yonsei-based accelerating group.
+is also CEO of Y-VENTURES, a Yonsei-based accelerating group.
 ```
 
 ```

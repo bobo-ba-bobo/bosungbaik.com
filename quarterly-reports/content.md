@@ -97,13 +97,13 @@ Yonsei University has many alumni who have built unicorn companies. Also, the mo
 ```
 
 ```
-On November 22nd, Y-Ventures hosted the largest startup networking event Yonsei has ever had. (Check out the event sketch here!) 10 unicorn founders, 10 VC CEOs, 30 more founders, 20 more VCs, and tons of students interested in the startup field, all in one place. The venue was full of energy and curiosity. Some may view Y-Ventures as just a party planner. However, I believe this is how all networks start. You need to know who's in and what kind of conversations break out from the connections.
+On November 22nd, Y-VENTURES hosted the largest startup networking event Yonsei has ever had. (Check out the event sketch here!) 10 unicorn founders, 10 VC CEOs, 30 more founders, 20 more VCs, and tons of students interested in the startup field, all in one place. The venue was full of energy and curiosity. Some may view Y-VENTURES as just a party planner. However, I believe this is how all networks start. You need to know who's in and what kind of conversations break out from the connections.
 ```
 
 - 이벤트 스케치 링크: https://www.youtube.com/watch?v=TnTL-SHLfhs&t=4s
 
 ```
-I already graduated. Now I need to take a break from student activities. It means my time in Y-Ventures is coming to an end. However, I do believe that what I do for the community in the last few months here can impact everything for the better. Let me do my best, and see how it turns out 10-20 years later!
+I already graduated. Now I need to take a break from student activities. It means my time in Y-VENTURES is coming to an end. However, I do believe that what I do for the community in the last few months here can impact everything for the better. Let me do my best, and see how it turns out 10-20 years later!
 ```
 
 ### I need a hobby
@@ -123,7 +123,7 @@ Something active, something healthy is what I'm looking for. Sticking to boulder
 ### Bye bye 2025
 
 ```
-I led Y-Ventures to grow 3x (a vague number, I know), passed all CFA exams, graduated, and started working full-time. What a year! It was fruitful but also very exhausting. Since 2025 was the beginning of many things, let me spend the next year grounding what I've started and enjoying life a bit more. I'm coming for you, 2026!
+I led Y-VENTURES to grow 3x (a vague number, I know), passed all CFA exams, graduated, and started working full-time. What a year! It was fruitful but also very exhausting. Since 2025 was the beginning of many things, let me spend the next year grounding what I've started and enjoying life a bit more. I'm coming for you, 2026!
 ```
 
 ---
@@ -192,7 +192,7 @@ By mid 2024, which is when I passed Level II, my passion for startups was gettin
 So anyways, passing Level III has absolutely no impact on my life right now. Maybe I could've been bragging around a bit more if I was working as an analyst. However, what was waiting for me the next day was how to better ZUZU Investor Matching Service to increase its WAU. Maybe I should make it into some impact. What if I studied businesses in my own time, so that my knowledge of finance meets the area of application?
 ```
 
-### Becoming the head of Y-Ventures
+### Becoming the head of Y-VENTURES
 
 ```
 Yonsei has so much potential. There are plenty of brilliant young minds that can make amazing products, service, and change in the way in which people live. There are already so many amazing early-stage teams that will become even more spectacular with just the right support. I believe so deep inside my heart, so I really wish to create an amazing institution that has the knowledge accumulated from inter-generational interactions.
@@ -207,7 +207,7 @@ Everybody knows Korean students are some of the smartest kids in the globe, righ
 ```
 
 ```
-That's the goal I have with Y-Ventures. We don't want to just make a cliche alumni fund. We are going to accelerate the school. Accelerate the bright minds to be able to use new technology like toys.
+That's the goal I have with Y-VENTURES. We don't want to just make a cliche alumni fund. We are going to accelerate the school. Accelerate the bright minds to be able to use new technology like toys.
 ```
 
 ```
@@ -238,18 +238,18 @@ Watch me. I'm going to do it well. "Do it so well that when people see you do it
 
 ## 2025 Q1
 
-### The restructuring of Y-Ventures
+### The restructuring of Y-VENTURES
 
 ```
-I'm a late joiner of Y-Ventures. The student-run accelerator of Yonsei was founded in March 2023 by my dear friend Sunwoo Park. Since then, it has accomplished great things: getting half of the teams from our own accelerating program, Boost, funded from amazing early-stage VCs of South Korea, founding two teams from Yonsei via a startup school program Y-Startup, and creating a network of Yonsei founders. I was granted a chance to be a part of the mission: facilitating Yonsei as a hub for startups, since November 2024.
-```
-
-```
-Going forward, we had so much we wanted to do but had no one running the group full-time. Therefore, we needed a systemized structure and plan to make the best use of our time. So I asked our members if I could restructure the group into three parts: Accelerator, Academia, and Fund. Accelerator continues to do what Y-Ventures has been doing so far. Academia is working as a league of students who want to hop onto the study of venture capital. Fund is a more long-term project, but it will be in the form of an individual investment association.
+I'm a late joiner of Y-VENTURES. The student-run accelerator of Yonsei was founded in March 2023 by my dear friend Sunwoo Park. Since then, it has accomplished great things: getting half of the teams from our own accelerating program, Boost, funded from amazing early-stage VCs of South Korea, founding two teams from Yonsei via a startup school program Y-Startup, and creating a network of Yonsei founders. I was granted a chance to be a part of the mission: facilitating Yonsei as a hub for startups, since November 2024.
 ```
 
 ```
-So far, not much coming up from Accelerator. Academia, on the other hand, has been very busy. We recruited seven members as the first generation of YVA (Y-Ventures Academia in short). We had three sessions a week, diving into defining problems, testing out hypotheses, studying business models, and profound startups' journeys. Every member in our group was smart and unique, which led any discussion we had to be very fruitful and insightful. With Fund, three of the Accelerator members gained GP licenses, which now allows us to open a fund and gather LPs. We're creating a list of Yonsei founders and potential investors.
+Going forward, we had so much we wanted to do but had no one running the group full-time. Therefore, we needed a systemized structure and plan to make the best use of our time. So I asked our members if I could restructure the group into three parts: Accelerator, Academia, and Fund. Accelerator continues to do what Y-VENTURES has been doing so far. Academia is working as a league of students who want to hop onto the study of venture capital. Fund is a more long-term project, but it will be in the form of an individual investment association.
+```
+
+```
+So far, not much coming up from Accelerator. Academia, on the other hand, has been very busy. We recruited seven members as the first generation of YVA (Y-VENTURES Academia in short). We had three sessions a week, diving into defining problems, testing out hypotheses, studying business models, and profound startups' journeys. Every member in our group was smart and unique, which led any discussion we had to be very fruitful and insightful. With Fund, three of the Accelerator members gained GP licenses, which now allows us to open a fund and gather LPs. We're creating a list of Yonsei founders and potential investors.
 ```
 
 ```
@@ -277,7 +277,7 @@ I started working at ZUZU, basically a Korean version of Carta + AngelList,. The
 ```
 
 ```
-Ever since Y-Ventures decided to raise funds, working for a venture capital firm was an option out of my boundaries. The conflict of interest was too present. Hence, I was finding a job that would suit me the best. I consider ZUZU and Y-Ventures a good fit. Not only am I able to observe how startups and investors actually interact with each other, but I also expect to meet the different kinds of startups and study them along the way. It's only been a month since I came here, so let's see how I find this job in the second quarter.
+Ever since Y-VENTURES decided to raise funds, working for a venture capital firm was an option out of my boundaries. The conflict of interest was too present. Hence, I was finding a job that would suit me the best. I consider ZUZU and Y-VENTURES a good fit. Not only am I able to observe how startups and investors actually interact with each other, but I also expect to meet the different kinds of startups and study them along the way. It's only been a month since I came here, so let's see how I find this job in the second quarter.
 ```
 
 ### Going Forward
