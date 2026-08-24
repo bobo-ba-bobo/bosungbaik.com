@@ -157,6 +157,18 @@
     .td-num { color: #bbb; font-size: 12px; width: 34px; min-width: 34px; }
     .td-name { min-width: 170px; }
     .co-name { font-weight: 500; color: #000; }
+    .co-link {
+      border-bottom: 1px solid #d0d0d0;
+      padding-bottom: 1px;
+      transition: border-color 0.25s ease;
+    }
+    .co-link:hover { border-bottom-color: #000; color: #000; }
+    .co-link::after {
+      content: '\2192';
+      margin-left: 6px;
+      color: #bbb;
+      font-size: 12px;
+    }
     .co-hq { font-size: 12px; color: #999; margin-top: 2px; }
     .td-sector { color: #616161; font-size: 13px; min-width: 130px; }
     .co-note { display: none; font-size: 11px; color: #bbb; margin-top: 3px; }
@@ -373,7 +385,8 @@
       els.body.innerHTML = rows.map((s, i) =>
         '<tr>' +
           '<td class="td-num">' + (i + 1) + '</td>' +
-          '<td class="td-name"><div class="co-name">' + esc(s.n) + '</div>' +
+          '<td class="td-name"><div class="co-name">' +
+            (s.url ? '<a class="co-link" href="' + s.url + '">' + esc(s.n) + '</a>' : esc(s.n)) + '</div>' +
             '<div class="co-hq">' + esc(s.c) + '</div>' +
             (s.note ? '<div class="co-note">' + esc(s.note) + '</div>' : '') + '</td>' +
           '<td class="td-sector">' + esc(s.s) + '</td>' +

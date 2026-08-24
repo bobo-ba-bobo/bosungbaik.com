@@ -10,6 +10,7 @@
    st    'private' | 'ipo' | 'acquired' | 'defunct'
    note  ticker + year (ipo) / acquirer + price + year (acquired)
          / what happened (defunct). optional for private.
+   url   optional link to a deep-dive note page for this company.
 
    Region is derived from `c` via REGIONS below.
    ============================================================ */
@@ -32,7 +33,7 @@ const STARTUPS = [
   /* ---------- AI, data & developer tools ---------- */
   { n: 'OpenAI', c: 'US', s: 'AI', vn: 500, st: 'private' },
   { n: 'Anthropic', c: 'US', s: 'AI', vn: 183, st: 'private' },
-  { n: 'Databricks', c: 'US', s: 'Data & AI', vn: 100, st: 'private' },
+  { n: 'Databricks', c: 'US', s: 'Data & AI', vn: 190, st: 'private', url: '/startupdb/databricks' },
   { n: 'xAI', c: 'US', s: 'AI', vn: 80, st: 'private', note: 'Merged with X, 2025' },
   { n: 'Figure AI', c: 'US', s: 'Robotics', vn: 39, st: 'private' },
   { n: 'Safe Superintelligence', c: 'US', s: 'AI', vn: 32, st: 'private' },

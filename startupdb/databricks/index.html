@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Databricks - Bosung Baik</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .co-meta {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 28px;
+    }
+
+    .co-lede {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #333;
+      margin-bottom: 36px;
+    }
+
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 26px 0;
+      border-top: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 56px;
+    }
+
+    .fact-num {
+      font-size: 22px;
+      font-weight: 300;
+      color: #000;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .fact-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    .sec {
+      margin-bottom: 56px;
+    }
+
+    .sec h2 {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .sec h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: #000;
+      margin: 28px 0 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .sec p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 16px;
+    }
+
+    .sec ul {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+
+    .sec ul li {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #444;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .sec ul li::before {
+      content: '-';
+      position: absolute;
+      left: 0;
+      color: #bbb;
+    }
+
+    .sec strong {
+      font-weight: 500;
+      color: #000;
+    }
+
+    /* Timeline */
+    .tl {
+      border-left: 1px solid #e0e0e0;
+      padding-left: 24px;
+    }
+
+    .tl-item {
+      position: relative;
+      padding-bottom: 24px;
+    }
+
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 8px;
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border: 1px solid #bbb;
+      border-radius: 50%;
+    }
+
+    .tl-item.key::before {
+      background: #000;
+      border-color: #000;
+    }
+
+    .tl-year {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: #000;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 4px;
+    }
+
+    .tl-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #616161;
+    }
+
+    /* Tables */
+    .tbl-wrap { overflow-x: auto; }
+
+    .tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .tbl thead th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      padding: 0 16px 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+      white-space: nowrap;
+    }
+
+    .tbl thead th:last-child { padding-right: 0; }
+
+    .tbl tbody tr { border-bottom: 1px solid #f5f5f5; }
+    .tbl tbody tr:hover { background: #fafafa; }
+
+    .tbl tbody td {
+      padding: 12px 16px 12px 0;
+      color: #444;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .tbl tbody td:last-child { padding-right: 0; }
+
+    .t-year {
+      color: #999;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      width: 74px;
+    }
+
+    .t-key { color: #000; font-weight: 500; white-space: nowrap; }
+    .t-num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .t-dim { color: #999; font-size: 13px; }
+
+    .sources {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid #f0f0f0;
+      font-size: 12px;
+      line-height: 1.9;
+      color: #bbb;
+    }
+
+    .sources a { color: #999; }
+    .sources a:hover { color: #000; }
+
+    @media (max-width: 640px) {
+      .facts { gap: 24px; }
+      .tbl { font-size: 13px; }
+      .tbl thead th, .tbl tbody td { padding-right: 10px; }
+      .t-dim { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress"></div>
+
+  <nav>
+    <div class="container">
+      <div class="nav-name"><a href="/">Bobo's Home</a></div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/quarterly-reports">Reports</a></li>
+        <li><a href="/writings">Writings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <a href="/startupdb" class="back-link">Startup DB</a>
+
+      <h1>Databricks</h1>
+
+      <div class="co-meta">San Francisco / Data &amp; AI / Founded 2013 / Private</div>
+
+      <div class="co-lede">
+        Databricks sells the place where a company keeps all of its data and does all of its
+        computing on top of it - reporting, dashboards, machine learning, and now AI agents.
+        The pitch is that those used to be two separate purchases, a data lake for cheap raw
+        storage and a data warehouse for clean queryable tables, and that you should only have
+        to buy one. They called the merged thing a <strong>lakehouse</strong>, and spent a decade
+        making the word mean something.
+      </div>
+
+      <div class="facts">
+        <div><div class="fact-num">$190B</div><div class="fact-label">Valuation, Aug 2026</div></div>
+        <div><div class="fact-num">$7B</div><div class="fact-label">Revenue run-rate</div></div>
+        <div><div class="fact-num">80%+</div><div class="fact-label">YoY growth</div></div>
+        <div><div class="fact-num">20,000+</div><div class="fact-label">Customers</div></div>
+        <div><div class="fact-num">2013</div><div class="fact-label">Founded</div></div>
+      </div>
+
+      <div class="sec">
+        <h2>What it actually does</h2>
+
+        <p>
+          Start with the problem. A large company generates data in a hundred places - transactions,
+          app logs, sensors, support tickets, documents, video. Historically it went to two homes.
+          A <strong>data warehouse</strong> (Teradata, later Snowflake) held clean, structured tables:
+          fast, governed, expensive, and useless for anything that isn't a row and a column.
+          A <strong>data lake</strong> (Hadoop, later S3) held everything else as raw files:
+          cheap and flexible, but with no transactions, no guarantees, and no real governance.
+          Analysts lived in the warehouse, data scientists lived in the lake, and companies paid
+          to copy data back and forth between them forever.
+        </p>
+
+        <p>
+          Databricks' answer is to leave the data in cheap object storage in open file formats,
+          and then add the parts that made a warehouse worth paying for - transactions, schema,
+          permissions, fast SQL - as a layer on top. One copy of the data, one permission model,
+          and every workload pointed at it. That is the lakehouse.
+        </p>
+
+        <h3>The pieces</h3>
+        <ul>
+          <li><strong>Apache Spark</strong> - the distributed compute engine the founders wrote before the company existed. Still the engine underneath a lot of it.</li>
+          <li><strong>Delta Lake</strong> - a transaction log written alongside Parquet files. This is the trick that gives a pile of files in S3 the behaviour of a database table.</li>
+          <li><strong>Unity Catalog</strong> - one permission and lineage system covering tables, files, models, and dashboards. The governance layer is what makes a large enterprise willing to consolidate.</li>
+          <li><strong>Databricks SQL and Photon</strong> - a warehouse-grade SQL surface with a C++ vectorized engine, built to take BI workloads off Snowflake.</li>
+          <li><strong>MLflow and Mosaic AI</strong> - experiment tracking, model serving, fine-tuning and agent tooling. The AI half of the product.</li>
+          <li><strong>Lakebase</strong> - serverless Postgres, bought in via Neon. Operational database sitting next to the analytical one, aimed at applications and agents.</li>
+        </ul>
+
+        <h3>How it makes money</h3>
+        <p>
+          Consumption, not seats. Customers buy compute measured in DBUs, and the software runs
+          inside the customer's own AWS, Azure, or GCP account rather than on Databricks
+          infrastructure. That has two consequences worth noticing: the cloud vendors are
+          distribution partners rather than pure enemies (Azure Databricks is a first-party
+          Microsoft service), and revenue expands automatically as a customer moves more
+          workloads onto the platform. Land with data engineering, expand into BI, then ML,
+          then AI.
+        </p>
+      </div>
+
+      <div class="sec">
+        <h2>History</h2>
+
+        <div class="tl">
+          <div class="tl-item">
+            <div class="tl-year">2009</div>
+            <div class="tl-body">Matei Zaharia starts Spark as a research project at UC Berkeley's AMPLab, as a faster answer to Hadoop MapReduce. Open-sourced the following year.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2013</div>
+            <div class="tl-body">Seven people out of AMPLab found Databricks - Ali Ghodsi, Matei Zaharia, Ion Stoica, Reynold Xin, Patrick Wendell, Andy Konwinski, Arsalan Tavakoli-Shiraji. Spark is donated to the Apache Software Foundation the same year, and Andreessen Horowitz puts in $14M. Giving away the engine and selling the platform is the strategy from day one.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2015</div>
+            <div class="tl-body">The commercial product ships on AWS: hosted Spark clusters plus collaborative notebooks. For years this is essentially "managed Spark".</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2016</div>
+            <div class="tl-body">Ali Ghodsi takes over as CEO from Ion Stoica, who returns to Berkeley.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2017</div>
+            <div class="tl-body">Azure Databricks launches as a first-party Microsoft service, sold and billed by Microsoft. An unusually good distribution deal, and a large part of why the company scaled in the enterprise as fast as it did.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2018</div>
+            <div class="tl-body">MLflow released as open source. Delta Lake introduced.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2019</div>
+            <div class="tl-body">Delta Lake is open-sourced under the Linux Foundation. Two rounds in one year take the valuation from $2.75B to $6.2B.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2020</div>
+            <div class="tl-body">The company publishes the lakehouse argument and starts naming the category rather than describing a product. Redash is acquired to fill in dashboards, and SQL Analytics launches - the first direct move onto warehouse territory.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2021</div>
+            <div class="tl-body">$1B at $28B in February, $1.6B at $38B in August. Photon ships, Unity Catalog is announced, GCP support lands. Snowflake, public since 2020, becomes the reference competitor for both companies' pitches.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2022</div>
+            <div class="tl-body">Crosses $1B in annualized revenue.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2023</div>
+            <div class="tl-body">ChatGPT resets the category. Databricks buys MosaicML for about $1.3B to own model training and serving rather than rent it, and raises $500M at $43B.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2024</div>
+            <div class="tl-body">Releases DBRX, an open model, as proof the AI story is real. Acquires Tabular, the company founded by the creators of Apache Iceberg - the rival table format - which effectively ends the format war by buying both sides. Closes a $10B Series J at $62B in December, one of the largest venture rounds ever raised.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2025</div>
+            <div class="tl-body">Buys Neon for about $1B and turns it into Lakebase, moving from analytics into the operational database that applications and agents actually write to. Tecton follows for around $900M. Series K in September raises $1B at over $100B, and a $5B round at $134B is announced in December.</div>
+          </div>
+          <div class="tl-item key">
+            <div class="tl-year">2026</div>
+            <div class="tl-body">The $134B round closes in February. In July a strategic round led by Coatue marks the company at $188B, closing in August near $190B with revenue run-rate at $7B growing more than 80% year over year. Ghodsi calls 2026 a bad year to go public and points at 2027 at the earliest.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>Funding</h2>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr><th class="t-year">Year</th><th>Round</th><th>Raised</th><th>Valuation</th><th class="t-dim">Lead</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="t-year">2013</td><td class="t-key">Series A</td><td class="t-num">$14M</td><td class="t-num t-dim">-</td><td class="t-dim">Andreessen Horowitz</td></tr>
+              <tr><td class="t-year">2014</td><td class="t-key">Series B</td><td class="t-num">$33M</td><td class="t-num t-dim">-</td><td class="t-dim">NEA</td></tr>
+              <tr><td class="t-year">2016</td><td class="t-key">Series C</td><td class="t-num">$60M</td><td class="t-num t-dim">-</td><td class="t-dim">NEA</td></tr>
+              <tr><td class="t-year">2017</td><td class="t-key">Series D</td><td class="t-num">$140M</td><td class="t-num t-dim">-</td><td class="t-dim">Andreessen Horowitz</td></tr>
+              <tr><td class="t-year">2019</td><td class="t-key">Series E</td><td class="t-num">$250M</td><td class="t-num">$2.75B</td><td class="t-dim">Andreessen Horowitz</td></tr>
+              <tr><td class="t-year">2019</td><td class="t-key">Series F</td><td class="t-num">$400M</td><td class="t-num">$6.2B</td><td class="t-dim">Andreessen Horowitz</td></tr>
+              <tr><td class="t-year">2021</td><td class="t-key">Series G</td><td class="t-num">$1B</td><td class="t-num">$28B</td><td class="t-dim">Franklin Templeton</td></tr>
+              <tr><td class="t-year">2021</td><td class="t-key">Series H</td><td class="t-num">$1.6B</td><td class="t-num">$38B</td><td class="t-dim">Morgan Stanley Counterpoint</td></tr>
+              <tr><td class="t-year">2023</td><td class="t-key">Series I</td><td class="t-num">$500M</td><td class="t-num">$43B</td><td class="t-dim">T. Rowe Price</td></tr>
+              <tr><td class="t-year">2024</td><td class="t-key">Series J</td><td class="t-num">$10B</td><td class="t-num">$62B</td><td class="t-dim">Thrive Capital</td></tr>
+              <tr><td class="t-year">2025</td><td class="t-key">Series K</td><td class="t-num">$1B</td><td class="t-num">$100B+</td><td class="t-dim">a16z, Insight, MGX, Thrive, WCM</td></tr>
+              <tr><td class="t-year">2026</td><td class="t-key">Series L</td><td class="t-num">$5B</td><td class="t-num">$134B</td><td class="t-dim">Closed Feb 2026, includes $2B debt</td></tr>
+              <tr><td class="t-year">2026</td><td class="t-key">Strategic</td><td class="t-num">~$3B</td><td class="t-num">$188-190B</td><td class="t-dim">Coatue</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>Acquisitions</h2>
+        <p>
+          Databricks buys primitives rather than revenue. Almost every deal below closes a
+          specific gap in the platform, and several of them bought a team that had already won
+          an open-source standard.
+        </p>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr><th class="t-year">Year</th><th>Target</th><th>Price</th><th class="t-dim">What it bought</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="t-year">2020</td><td class="t-key">Redash</td><td class="t-num t-dim">-</td><td class="t-dim">Open-source dashboards and SQL visualisation</td></tr>
+              <tr><td class="t-year">2021</td><td class="t-key">8080 Labs</td><td class="t-num t-dim">-</td><td class="t-dim">Low-code exploratory analysis for Python users</td></tr>
+              <tr><td class="t-year">2022</td><td class="t-key">Cortex Labs</td><td class="t-num t-dim">-</td><td class="t-dim">Model deployment and serving</td></tr>
+              <tr><td class="t-year">2023</td><td class="t-key">Okera</td><td class="t-num t-dim">-</td><td class="t-dim">Data governance, folded into Unity Catalog</td></tr>
+              <tr><td class="t-year">2023</td><td class="t-key">MosaicML</td><td class="t-num">~$1.3B</td><td class="t-dim">Model training and serving, became Mosaic AI</td></tr>
+              <tr><td class="t-year">2023</td><td class="t-key">Arcion</td><td class="t-num">~$100M</td><td class="t-dim">Change data capture and replication</td></tr>
+              <tr><td class="t-year">2024</td><td class="t-key">Einblick</td><td class="t-num t-dim">-</td><td class="t-dim">Natural language analytics</td></tr>
+              <tr><td class="t-year">2024</td><td class="t-key">Lilac AI</td><td class="t-num t-dim">-</td><td class="t-dim">Unstructured data curation for model training</td></tr>
+              <tr><td class="t-year">2024</td><td class="t-key">Tabular</td><td class="t-num">$1B+</td><td class="t-dim">Apache Iceberg creators, ended the table format war</td></tr>
+              <tr><td class="t-year">2025</td><td class="t-key">BladeBridge</td><td class="t-num t-dim">-</td><td class="t-dim">Automated migration off legacy warehouses</td></tr>
+              <tr><td class="t-year">2025</td><td class="t-key">Neon</td><td class="t-num">~$1B</td><td class="t-dim">Serverless Postgres, became Lakebase</td></tr>
+              <tr><td class="t-year">2025</td><td class="t-key">Tecton</td><td class="t-num">~$900M</td><td class="t-dim">Real-time ML feature platform</td></tr>
+              <tr><td class="t-year">2025</td><td class="t-key">Mooncake Labs</td><td class="t-num t-dim">-</td><td class="t-dim">Postgres to lakehouse transactional bridge</td></tr>
+              <tr><td class="t-year">2026</td><td class="t-key">Electric</td><td class="t-num t-dim">-</td><td class="t-dim">PGlite, embeddable Postgres for agent sandboxes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>Competition</h2>
+        <ul>
+          <li><strong>Snowflake</strong> - the mirror image. Snowflake started as a warehouse and grew down into data science and open formats; Databricks started as an engine over a lake and grew up into SQL and governance. They now sell against each other in nearly every enterprise deal.</li>
+          <li><strong>The cloud vendors</strong> - Microsoft Fabric, Google BigQuery, and AWS all ship competing first-party stacks while also hosting and reselling Databricks. Partner and competitor at the same time.</li>
+          <li><strong>The AI labs</strong> - as buyers shift budget from "store and query our data" to "build agents on our data", OpenAI and Anthropic sit adjacent to part of the same wallet.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <h2>Why I keep an eye on it</h2>
+        <p>
+          Four things I think are transferable to earlier-stage companies.
+        </p>
+        <ul>
+          <li><strong>Open source as distribution, not as product.</strong> Spark, Delta Lake, and MLflow were given away and became defaults. The company never sold them. It sold the operational burden of running them, which is the part enterprises will actually pay for.</li>
+          <li><strong>Naming the category is a competitive act.</strong> "Lakehouse" was a positioning decision before it was a working product, and it forced every competitor to argue on Databricks' terms.</li>
+          <li><strong>M&amp;A to buy standards.</strong> Tabular is the sharpest example: rather than winning the Delta versus Iceberg format war, they bought the other side's founders and made the fight irrelevant. Neon and Electric are the same move aimed at the agent era.</li>
+          <li><strong>Staying private is now a strategy.</strong> Thirteen years old, $7B run-rate, thirteen priced rounds, still no S-1. Private capital is deep enough that an IPO has become optional, which changes how a seed investor should think about the length of the hold.</li>
+        </ul>
+        <p>
+          The open question is whether the lakehouse remains the centre of gravity. Databricks
+          is betting that agents need governed access to enterprise data, so whoever owns the
+          data plane owns the agent layer too. The counter-case is that the model providers
+          push down into the data plane themselves. The Neon, Tecton, and Electric purchases
+          are the company placing that bet with cash.
+        </p>
+      </div>
+
+      <div class="sources">
+        Figures from Databricks press releases and reporting through August 2026.
+        Private-round valuations are as reported at the time of each round.
+        <br>
+        <a href="https://www.databricks.com/company/newsroom/press-releases/databricks-raising-strategic-round-funding-188-billion-valuation" target="_blank">Databricks newsroom, $188B strategic round, Jul 2026</a> /
+        <a href="https://www.databricks.com/company/newsroom/press-releases/databricks-surpasses-4b-revenue-run-rate-exceeding-1b-ai-revenue" target="_blank">Databricks newsroom, revenue run-rate</a> /
+        <a href="https://www.cnbc.com/2026/02/09/databricks-completes-5-billion-funding-round-with-2-billion-in-debt.html" target="_blank">CNBC, $134B round close, Feb 2026</a> /
+        <a href="https://techcrunch.com/2026/07/17/databricks-hits-188b-valuation-extending-its-run-as-ais-favorite-second-act/" target="_blank">TechCrunch, $188B</a> /
+        <a href="https://www.cnbc.com/2025/05/14/databricks-is-buying-database-startup-neon-for-about-1-billion.html" target="_blank">CNBC, Neon acquisition</a>
+        <br>
+        Last updated: 2026.08
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Bobo's Home</p>
+    </div>
+  </footer>
+
+  <script>
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      scrollProgress.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+  </script>
+</body>
+</html>
