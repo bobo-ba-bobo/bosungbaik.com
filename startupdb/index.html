@@ -307,8 +307,14 @@
     </div>
   </footer>
 
-  <script src="data.js"></script>
+  <script src="/startupdb/data.js"></script>
   <script>
+    if (typeof STARTUPS === 'undefined') {
+      document.getElementById('dbEmpty').textContent = 'Database failed to load.';
+      document.getElementById('dbEmpty').style.display = 'block';
+      throw new Error('startupdb: data.js did not load');
+    }
+
     const regionOf = (c) => REGIONS[c] || 'Other';
     const fmtVal = (v) => v < 1 ? '$' + Math.round(v * 1000) + 'M' : '$' + v + 'B';
     const BADGE = { private: 'Private', ipo: 'IPO', acquired: 'Acquired', defunct: 'Dead' };
