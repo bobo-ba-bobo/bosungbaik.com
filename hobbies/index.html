@@ -119,6 +119,32 @@
       color: #000;
     }
 
+    a.hobby-card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a.hobby-card:hover {
+      color: inherit;
+    }
+
+    .hobby-arrow {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 15px;
+      color: #bbb;
+      transform: translateX(-4px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hobby-card:hover .hobby-arrow {
+      transform: translateX(0);
+      opacity: 1;
+      color: #000;
+    }
+
     @media (max-width: 640px) {
       .hobbies-grid {
         grid-template-columns: 1fr;
@@ -205,31 +231,31 @@
 
         <div class="hobby-card">
           <div class="hobby-header">
-            <div class="hobby-name">Photography</div>
-            <div class="hobby-status">Occasional</div>
+            <div class="hobby-name">Real Madrid Fan</div>
+            <div class="hobby-status">Since 2014</div>
           </div>
           <div class="hobby-description">
-            Capturing moments with minimal gear. iPhone mostly, film camera sometimes. Check my VSCO for recent shots.
+            Picked the club in 2014 and never looked back. GOAT in my mind is Sergio Ramos - a centre-back who kept showing up in the 93rd minute when it mattered most.
           </div>
           <div class="hobby-meta">
-            <span class="hobby-tag">iPhone</span>
-            <span class="hobby-tag">Film</span>
+            <span class="hobby-tag">Since 2014</span>
+            <span class="hobby-tag">Sergio Ramos</span>
           </div>
         </div>
 
-        <div class="hobby-card">
+        <a href="/startupdb" class="hobby-card hobby-card-link">
           <div class="hobby-header">
-            <div class="hobby-name">Running</div>
-            <div class="hobby-status">Active</div>
+            <div class="hobby-name">Startup DB<span class="hobby-arrow">&#8594;</span></div>
+            <div class="hobby-status">Ongoing</div>
           </div>
           <div class="hobby-description">
-            Early morning runs to clear my head. Currently training for longer distances and enjoying the meditative rhythm of steady pace.
+            I like learning about new startups and pulling them apart. So I keep my own database of the companies an early-stage investor should be able to name on the spot.
           </div>
           <div class="hobby-meta">
-            <span class="hobby-tag">5-10km</span>
-            <span class="hobby-tag">Morning routine</span>
+            <span class="hobby-tag">Unicorns</span>
+            <span class="hobby-tag">IPO &amp; M&amp;A</span>
           </div>
-        </div>
+        </a>
 
         <div class="hobby-card">
           <div class="hobby-header">
