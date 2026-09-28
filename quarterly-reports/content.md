@@ -2,11 +2,68 @@
 
 ## 리포트 목록
 
+- 2026 Q2
 - 2026 Q1
 - 2025 Q4
 - 2025 Q3
 - 2025 Q2
 - 2025 Q1
+
+---
+
+## 2026 Q2
+
+### Let's become AI-pilled
+
+```
+Honestly, I've been far from a heavy AI user. I used chatbots and some AI apps fairly well, but they never really changed how I work, and I never felt that AI was actually doing a lot of things for me.
+```
+
+```
+In Q2, my goal was to have AI do everything for me. I mean EVERYTHING, from the tedious tasks I do every day to the random things I'd always wanted to try but never had. I'm still far from AI-pilled, and it's not like I'm tokenmaxxing every five hours. Still, I'm getting a lot better at making Claude Code work the way I want.
+```
+
+```
+I'm trying to make a habit of learning all the new things I can do: following people on GitHub (I'd had an account for over a year without knowing there was a community there), scrolling through X to see what tech people are up to, and asking Claude whether it can pull off the most random things.
+```
+
+```
+I still have a long way to go before I'm more AI-pilled than even the least AI-native developer, but there's a beginning to everything!
+```
+
+### Paying it forward
+
+```
+I haven't had a full-time job for long. Counting from my Kodebox days, it's been just over a year :) Now student clubs and people from here and there come to me for lectures and advice.
+```
+
+```
+Actually, a few hoobaes came to me for help even back when I was only doing internships. How much could I have known about careers or the industry back then, when I still have such a long way to go now? Even so, I tried to give anyone who came to me anything that might be useful to them.
+```
+
+```
+The next generation needs to be better off than the current one for us to keep thriving. I believe our system is designed so that the community flourishes as each new generation of talent brings more to it. So I try to remind myself that my senpais already paid it forward to me, and I want to do the same!
+```
+
+### f00tnotes¹
+
+```
+It's not the best name out there, but I made my own playground for studying! For now it's just a website and an Instagram account, but I'll explore the space and see what else I can do with it :))
+```
+
+```
+I named it footnotes because I want my studying to be about the details between the lines rather than the newspaper headlines. I plan to put a footnote on everything I don't know and leave notes in whatever way is easiest for me to understand. I don't know yet whether that's the best approach for me, though.
+```
+
+```
+Honestly, I may not even have enough time to work on it. Buying a domain right away and then doing very little with it may have been a rushed decision. But that's how I operate: I have to throw something up in the air and come back to catch it from time to time. Otherwise, I forget about it.
+```
+
+### No more interns
+
+```
+AI-native Mashup Ventures has decided to stop hiring interns. I'm losing friends at the office. I need more people to debate with!
+```
 
 ---
 
